@@ -28,7 +28,6 @@
 
 #import "MSNavigationPaneViewController.h"
 #import "MSDraggableView.h"
-#import "UIView+ViewHierarchyAction.h"
 
 #import <QuartzCore/QuartzCore.h>
 

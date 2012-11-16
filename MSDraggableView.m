@@ -29,11 +29,28 @@
 #import "MSDraggableView.h"
 #import "MSNavigationPaneViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UIView+ViewHierarchyAction.h"
 
 const CGFloat MSDraggableViewXYMinimumThreshold = 5.0;
 const CGFloat MSDraggableViewXVelocityThreshold = 8.0;
 const CGFloat MSDraggableViewXVelocitySlide = 15.0;
+
+typedef void (^ViewActionBlock)(UIView *view);
+
+@interface UIView (ViewHierarchyAction)
+
+- (void)superviewHierarchyAction:(ViewActionBlock)viewAction;
+
+@end
+
+@implementation UIView (ViewHierarchyAction)
+
+- (void)superviewHierarchyAction:(ViewActionBlock)viewAction
+{
+    viewAction(self);
+    [self.superview superviewHierarchyAction:viewAction];
+}
+
+@end
 
 @interface MSDraggableView() <UIGestureRecognizerDelegate> {
     
