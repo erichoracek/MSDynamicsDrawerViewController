@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, MSDraggableViewState) {
 @property (nonatomic, assign) MSDraggableViewState state;
 @property (nonatomic, assign) BOOL draggingEnabled;
 
-// Classes that the draggable view should forward its dragging to (e.g. UISlider)
+// Classes that the draggable view should forward dragging through to (UISlider by default)
 @property (nonatomic, readonly) NSMutableSet *touchForwardingClasses;
 
 @end
