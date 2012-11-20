@@ -105,7 +105,6 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     [self.view addSubview:_paneView];
 }
 
-
 #pragma mark Pane State
 
 - (MSNavigationPaneState)paneState
@@ -140,10 +139,8 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 		masterViewController.view.frame = _masterView.bounds;
 		[_masterViewController willMoveToParentViewController:nil];
 		[self addChildViewController:masterViewController];
-		self.view.userInteractionEnabled = NO;
         
         void(^transitionCompletion)(BOOL finished) = ^(BOOL finished) {
-            self.view.userInteractionEnabled = YES;
             [_masterViewController removeFromParentViewController];
             [masterViewController didMoveToParentViewController:self];
             _masterViewController = masterViewController;
@@ -178,10 +175,8 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 		paneViewController.view.frame = _paneView.bounds;
 		[_paneViewController willMoveToParentViewController:nil];
 		[self addChildViewController:paneViewController];
-		self.view.userInteractionEnabled = NO;
         
         void(^transitionCompletion)(BOOL finished) = ^(BOOL finished) {
-            self.view.userInteractionEnabled = YES;
             [_paneViewController removeFromParentViewController];
             [paneViewController didMoveToParentViewController:self];
             _paneViewController = paneViewController;
@@ -202,9 +197,7 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 {
     // Make sure that we don't have a nil completion block
     void(^localCompletion)() = ^{
-        
         self.view.userInteractionEnabled = YES;
-        
         if ([self.delegate respondsToSelector:@selector(navigationPaneViewController:didAnimateToPane:)]) {
             [self.delegate navigationPaneViewController:self didAnimateToPane:paneViewController];
         }
@@ -263,8 +256,10 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
                                     options:UIViewAnimationOptionCurveEaseInOut
                                  animations:movePaneToClosed
                                  completion:^(BOOL animationFinished) {
-                                     _paneView.state = MSDraggableViewStateClosed;
-                                     localCompletion();
+                                     if (animationFinished) {
+                                         _paneView.state = MSDraggableViewStateClosed;
+                                         localCompletion();
+                                     }
                                  }];
             });
         };
