@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/monospacecollective/MSNavigationPaneViewController'
   s.author       = { 'Eric Horacek' => 'eric@monospacecollective.com' }
   s.source       = { :git => 'https://github.com/monospacecollective/MSNavigationPaneViewController.git', :tag => '0.0.1' }
-  s.source_files = 'MSNavigationPaneViewController.{h,m}', 'MSDraggableView.{h,m}'
+  s.source_files = 'MSNavigationPaneViewController/*.{h,m}'
   s.requires_arc = true
   s.platform     = :ios, '5.0'
 end
