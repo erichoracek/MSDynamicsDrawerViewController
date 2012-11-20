@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3AB4ED2E165C003100EA8F50 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB4ED2D165C003100EA8F50 /* UIKit.framework */; };
+		3AB4ED30165C003100EA8F50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB4ED2F165C003100EA8F50 /* Foundation.framework */; };
+		3AB4ED32165C003100EA8F50 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB4ED31165C003100EA8F50 /* CoreGraphics.framework */; };
+		3AB4ED38165C003100EA8F50 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4ED36165C003100EA8F50 /* InfoPlist.strings */; };
+		3AB4ED3A165C003100EA8F50 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4ED39165C003100EA8F50 /* main.m */; };
+		3AB4ED3E165C003100EA8F50 /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4ED3D165C003100EA8F50 /* MSAppDelegate.m */; };
+		3AB4ED40165C003100EA8F50 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4ED3F165C003100EA8F50 /* Default.png */; };
+		3AB4ED42165C003100EA8F50 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4ED41165C003100EA8F50 /* Default@2x.png */; };
+		3AB4ED44165C003100EA8F50 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4ED43165C003100EA8F50 /* Default-568h@2x.png */; };
+		3AB4ED63165C013B00EA8F50 /* MSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4ED62165C013B00EA8F50 /* MSMasterViewController.m */; };
+		3AB4ED69165C029200EA8F50 /* MSNavigationPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4ED65165C029200EA8F50 /* MSNavigationPaneViewController.m */; };
+		3AB4ED6A165C029200EA8F50 /* MSDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4ED67165C029200EA8F50 /* MSDraggableView.m */; };
+		3AB4ED6C165C02D100EA8F50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB4ED6B165C02D100EA8F50 /* QuartzCore.framework */; };
+		3AB4ED6F165C0F4900EA8F50 /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4ED6D165C0F4900EA8F50 /* MSBarButtonIconNavigationPane.png */; };
+		3AC5656E165C14730093CE15 /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AC5656D165C14730093CE15 /* MSBarButtonIconNavigationPane@2x.png */; };
+		3AC56572165C25130093CE15 /* MSMonospaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC56571165C25130093CE15 /* MSMonospaceViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3AB4ED29165C003100EA8F50 /* MSNPVC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSNPVC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AB4ED2D165C003100EA8F50 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3AB4ED2F165C003100EA8F50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3AB4ED31165C003100EA8F50 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3AB4ED35165C003100EA8F50 /* MSNavigationPaneViewController Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MSNavigationPaneViewController Example-Info.plist"; sourceTree = "<group>"; };
+		3AB4ED37165C003100EA8F50 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3AB4ED39165C003100EA8F50 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3AB4ED3B165C003100EA8F50 /* MSNavigationPaneViewController Example-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MSNavigationPaneViewController Example-Prefix.pch"; sourceTree = "<group>"; };
+		3AB4ED3C165C003100EA8F50 /* MSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
+		3AB4ED3D165C003100EA8F50 /* MSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
+		3AB4ED3F165C003100EA8F50 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		3AB4ED41165C003100EA8F50 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		3AB4ED43165C003100EA8F50 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3AB4ED61165C013B00EA8F50 /* MSMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMasterViewController.h; sourceTree = "<group>"; };
+		3AB4ED62165C013B00EA8F50 /* MSMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMasterViewController.m; sourceTree = "<group>"; };
+		3AB4ED65165C029200EA8F50 /* MSNavigationPaneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSNavigationPaneViewController.m; path = ../MSNavigationPaneViewController/MSNavigationPaneViewController.m; sourceTree = "<group>"; };
+		3AB4ED66165C029200EA8F50 /* MSNavigationPaneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSNavigationPaneViewController.h; path = ../MSNavigationPaneViewController/MSNavigationPaneViewController.h; sourceTree = "<group>"; };
+		3AB4ED67165C029200EA8F50 /* MSDraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSDraggableView.m; path = ../MSNavigationPaneViewController/MSDraggableView.m; sourceTree = "<group>"; };
+		3AB4ED68165C029200EA8F50 /* MSDraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSDraggableView.h; path = ../MSNavigationPaneViewController/MSDraggableView.h; sourceTree = "<group>"; };
+		3AB4ED6B165C02D100EA8F50 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3AB4ED6D165C0F4900EA8F50 /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
+		3AC5656D165C14730093CE15 /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
+		3AC56570165C25130093CE15 /* MSMonospaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMonospaceViewController.h; sourceTree = "<group>"; };
+		3AC56571165C25130093CE15 /* MSMonospaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMonospaceViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3AB4ED26165C003100EA8F50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB4ED6C165C02D100EA8F50 /* QuartzCore.framework in Frameworks */,
+				3AB4ED2E165C003100EA8F50 /* UIKit.framework in Frameworks */,
+				3AB4ED30165C003100EA8F50 /* Foundation.framework in Frameworks */,
+				3AB4ED32165C003100EA8F50 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3AB4ED1E165C003100EA8F50 = {
+			isa = PBXGroup;
+			children = (
+				3AB4ED33165C003100EA8F50 /* MSNavigationPaneViewController Example */,
+				3AB4ED2C165C003100EA8F50 /* Frameworks */,
+				3AB4ED64165C027B00EA8F50 /* Vendor */,
+				3AB4ED2A165C003100EA8F50 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3AB4ED2A165C003100EA8F50 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4ED29165C003100EA8F50 /* MSNPVC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3AB4ED2C165C003100EA8F50 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4ED6B165C02D100EA8F50 /* QuartzCore.framework */,
+				3AB4ED2D165C003100EA8F50 /* UIKit.framework */,
+				3AB4ED2F165C003100EA8F50 /* Foundation.framework */,
+				3AB4ED31165C003100EA8F50 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AB4ED33165C003100EA8F50 /* MSNavigationPaneViewController Example */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4ED3C165C003100EA8F50 /* MSAppDelegate.h */,
+				3AB4ED3D165C003100EA8F50 /* MSAppDelegate.m */,
+				3AB4ED61165C013B00EA8F50 /* MSMasterViewController.h */,
+				3AB4ED62165C013B00EA8F50 /* MSMasterViewController.m */,
+				3AC56570165C25130093CE15 /* MSMonospaceViewController.h */,
+				3AC56571165C25130093CE15 /* MSMonospaceViewController.m */,
+				3AB4ED34165C003100EA8F50 /* Supporting Files */,
+			);
+			name = "MSNavigationPaneViewController Example";
+			path = MSNavigationPaneViewController;
+			sourceTree = "<group>";
+		};
+		3AB4ED34165C003100EA8F50 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4ED35165C003100EA8F50 /* MSNavigationPaneViewController Example-Info.plist */,
+				3AB4ED36165C003100EA8F50 /* InfoPlist.strings */,
+				3AB4ED39165C003100EA8F50 /* main.m */,
+				3AB4ED3B165C003100EA8F50 /* MSNavigationPaneViewController Example-Prefix.pch */,
+				3AB4ED3F165C003100EA8F50 /* Default.png */,
+				3AB4ED41165C003100EA8F50 /* Default@2x.png */,
+				3AB4ED43165C003100EA8F50 /* Default-568h@2x.png */,
+				3AB4ED6D165C0F4900EA8F50 /* MSBarButtonIconNavigationPane.png */,
+				3AC5656D165C14730093CE15 /* MSBarButtonIconNavigationPane@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3AB4ED64165C027B00EA8F50 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4ED66165C029200EA8F50 /* MSNavigationPaneViewController.h */,
+				3AB4ED65165C029200EA8F50 /* MSNavigationPaneViewController.m */,
+				3AB4ED68165C029200EA8F50 /* MSDraggableView.h */,
+				3AB4ED67165C029200EA8F50 /* MSDraggableView.m */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3AB4ED28165C003100EA8F50 /* MSNavigationPaneViewController Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AB4ED47165C003100EA8F50 /* Build configuration list for PBXNativeTarget "MSNavigationPaneViewController Example" */;
+			buildPhases = (
+				3AB4ED25165C003100EA8F50 /* Sources */,
+				3AB4ED26165C003100EA8F50 /* Frameworks */,
+				3AB4ED27165C003100EA8F50 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MSNavigationPaneViewController Example";
+			productName = MSNavigationPaneViewController;
+			productReference = 3AB4ED29165C003100EA8F50 /* MSNPVC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3AB4ED20165C003100EA8F50 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MS;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Monospace Ltd";
+			};
+			buildConfigurationList = 3AB4ED23165C003100EA8F50 /* Build configuration list for PBXProject "MSNavigationPaneViewController Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3AB4ED1E165C003100EA8F50;
+			productRefGroup = 3AB4ED2A165C003100EA8F50 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3AB4ED28165C003100EA8F50 /* MSNavigationPaneViewController Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3AB4ED27165C003100EA8F50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB4ED38165C003100EA8F50 /* InfoPlist.strings in Resources */,
+				3AB4ED40165C003100EA8F50 /* Default.png in Resources */,
+				3AB4ED42165C003100EA8F50 /* Default@2x.png in Resources */,
+				3AB4ED44165C003100EA8F50 /* Default-568h@2x.png in Resources */,
+				3AB4ED6F165C0F4900EA8F50 /* MSBarButtonIconNavigationPane.png in Resources */,
+				3AC5656E165C14730093CE15 /* MSBarButtonIconNavigationPane@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3AB4ED25165C003100EA8F50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB4ED3A165C003100EA8F50 /* main.m in Sources */,
+				3AB4ED3E165C003100EA8F50 /* MSAppDelegate.m in Sources */,
+				3AB4ED63165C013B00EA8F50 /* MSMasterViewController.m in Sources */,
+				3AB4ED69165C029200EA8F50 /* MSNavigationPaneViewController.m in Sources */,
+				3AB4ED6A165C029200EA8F50 /* MSDraggableView.m in Sources */,
+				3AC56572165C25130093CE15 /* MSMonospaceViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3AB4ED36165C003100EA8F50 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3AB4ED37165C003100EA8F50 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3AB4ED45165C003100EA8F50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3AB4ED46165C003100EA8F50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3AB4ED48165C003100EA8F50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Prefix.pch";
+				INFOPLIST_FILE = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Info.plist";
+				PRODUCT_NAME = MSNPVC;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3AB4ED49165C003100EA8F50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Prefix.pch";
+				INFOPLIST_FILE = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Info.plist";
+				PRODUCT_NAME = MSNPVC;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3AB4ED23165C003100EA8F50 /* Build configuration list for PBXProject "MSNavigationPaneViewController Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB4ED45165C003100EA8F50 /* Debug */,
+				3AB4ED46165C003100EA8F50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AB4ED47165C003100EA8F50 /* Build configuration list for PBXNativeTarget "MSNavigationPaneViewController Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB4ED48165C003100EA8F50 /* Debug */,
+				3AB4ED49165C003100EA8F50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3AB4ED20165C003100EA8F50 /* Project object */;
+}
