@@ -1,20 +1,28 @@
-# MGNavigationPaneViewController
+# Introduction
 
-Created by **Eric Horacek** for **[Monospace Ltd.](http://www.monospacecollective.com)**
+MGNavigationPaneViewController was created by **Eric Horacek** for **[Monospace Ltd.](http://www.monospacecollective.com)**
 
-The *MGNavigationPaneViewController* is a view controller that handles the presentation of two overlaid children view controllers. The "pane" view controller can moved with a swipe gesture to reveal the "master" view controller below.
+*MGNavigationPaneViewController* is a view controller class that handles the presentation of two overlaid child view controllers. The "pane" view can moved with a swipe gesture to reveal the "master" view below. This interface paradigm easily enables the navigation seen in Facebook, Path, and many others.
 
-This class was written with an emphasis on simplicity. It features a nice "bounce" animation when the user swipes the navigation pane in either direction, and doesn't require for you to subclass your view controllers. Additionally, the swipe gesture to reveal the "master" view controller doesn't interfere with *UITableView*s (or other *UIScrollView*s) added to the "pane" view controller's views.
+This class was written with an emphasis on simplicity. It features a nice "bounce" animation when the user flicks the navigation pane in either direction. It doesn't require for you to subclass your view controllers to add them as child view controllers. Additionally, the swipe gesture to reveal the "master" view controller doesn't interfere with *UITableView*s (or other *UIScrollView*s) added to the "pane" view controller's views.
 
-To forward touches through views that require a swipe gesture (so that the *MGNavigationPaneViewController* doesn't intercept them), simply add their *Class* to the *touchForwardingClasses* property on the *MSDraggableView* paneView property on your *MGNavigationPaneViewController*.
+To forward touches through views that require a swipe gesture (so that the *MGNavigationPaneViewController* doesn't intercept them), simply add their *Class* to the *touchForwardingClasses* property on the *paneView* property on your *MGNavigationPaneViewController*.
 
 # Example
 
 An example Xcode project that uses the *MGNavigationPaneViewController* in included in the "Example" directory.
 
+![Open](https://raw.github.com/monospacecollective/MGNavigationPaneViewController/master/Screenshots/Open.png)
+
+![Closed](https://raw.github.com/monospacecollective/MGNavigationPaneViewController/master/Screenshots/Closed.png)
+
 # Requirements
 
-Requires iOS 5.0.
+Requires iOS 5.0 & ARC.
+
+# Contributing
+
+Forks, patches and other feedback are welcome.
 
 # License
 
