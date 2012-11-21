@@ -12,9 +12,9 @@ To forward touches through views that require a swipe gesture (so that the *MGNa
 
 An example Xcode project that uses the *MGNavigationPaneViewController* in included in the "Example" directory.
 
-![Open](https://raw.github.com/monospacecollective/MGNavigationPaneViewController/master/Screenshots/Open.png)
+![Open](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Open.png)
 
-![Closed](https://raw.github.com/monospacecollective/MGNavigationPaneViewController/master/Screenshots/Closed.png)
+![Closed](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
 
 # Requirements
 
