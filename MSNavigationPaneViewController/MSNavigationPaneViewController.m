@@ -31,6 +31,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+//#define LAYOUT_DEBUG
+
 // Sizes
 const CGFloat MSNavigationPaneOpenStateMasterDisplayWidth = 267.0f;
 
@@ -103,6 +105,16 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     _paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _paneView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_paneView];
+    
+#if defined(LAYOUT_DEBUG)
+    _masterView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1];
+    _masterView.layer.borderColor = [[UIColor blueColor] CGColor];
+    _masterView.layer.borderWidth = 2.0;
+    
+    _paneView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.1];
+    _paneView.layer.borderColor = [[UIColor redColor] CGColor];
+    _paneView.layer.borderWidth = 2.0;
+#endif
 }
 
 #pragma mark Pane State
