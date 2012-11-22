@@ -7,7 +7,7 @@
 What differentiates *MSNavigationPaneViewController* from many other similar view controller classes:
 
 * This class was written with an emphasis on simplicity. Its interface is about as simple as they come, and is easy to extend.
-* It features a smooth bounce animation when the  flicks the navigation pane in either direction based on the velocity of the swipe gesture.
+* It features a smooth bounce animation when the navigation pane is flicked in either direction based on the velocity of the swipe gesture.
 * It doesn't require for you to subclass your pane or master view controllers to add them as child view controllers. 
 * The swipe gesture to reveal the master view controller doesn't interfere with UITableViews or other UIScrollViews added to the pane view controller's view.
 * When a new pane view controller is set using the *setPaneViewController:animated:completion:* method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
@@ -26,7 +26,7 @@ An example Xcode project that uses the *MSNavigationPaneViewController* in inclu
 
 # Requirements
 
-Requires iOS 5.0 & ARC.
+Requires iOS 5.0, ARC, and the QuartzCore Framework.
 
 # Contributing
 
