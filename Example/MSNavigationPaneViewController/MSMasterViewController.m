@@ -160,7 +160,6 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSMasterViewControllerCellReuseIdentifier forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     cell.textLabel.text = self.paneViewControllerTitles[@([self paneViewControllerTypeForIndexPath:indexPath])];
     return cell;
 }
