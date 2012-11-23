@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.summary      = 'Draggable navigation pane view controller for iPhone. Similar to the Path/Facebook navigation paradigm.'
   s.homepage     = 'https://github.com/monospacecollective/MSNavigationPaneViewController'
   s.author       = { 'Eric Horacek' => 'eric@monospacecollective.com' }
-  s.source       = { :git => 'https://github.com/monospacecollective/MSNavigationPaneViewController.git', :tag => '0.0.1' }
+  s.source       = { :git => 'https://github.com/monospacecollective/MSNavigationPaneViewController.git', :tag => s.version.to_s }
 
   s.source_files = 'MSNavigationPaneViewController/*.{h,m}'
   
