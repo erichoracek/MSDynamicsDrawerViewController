@@ -349,6 +349,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Prefix.pch";
 				INFOPLIST_FILE = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = MSNPVC;
 				WRAPPER_EXTENSION = app;
 			};
@@ -360,6 +361,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Prefix.pch";
 				INFOPLIST_FILE = "MSNavigationPaneViewController/MSNavigationPaneViewController Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = MSNPVC;
 				WRAPPER_EXTENSION = app;
 			};
