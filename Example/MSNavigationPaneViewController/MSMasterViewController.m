@@ -84,7 +84,6 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerClass:UITableViewCell.class forCellReuseIdentifier:MSMasterViewControllerCellReuseIdentifier];
 }
 
 #pragma mark - MSMasterViewController
@@ -159,7 +158,10 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSMasterViewControllerCellReuseIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSMasterViewControllerCellReuseIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MSMasterViewControllerCellReuseIdentifier];
+    }
     cell.textLabel.text = self.paneViewControllerTitles[@([self paneViewControllerTypeForIndexPath:indexPath])];
     return cell;
 }
