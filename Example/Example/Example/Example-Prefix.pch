@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'MSNavigationPaneViewController' target in the 'MSNavigationPaneViewController' project
+// Prefix header for all source files of the 'Example' target in the 'Example' project
 //
 
 #import <Availability.h>

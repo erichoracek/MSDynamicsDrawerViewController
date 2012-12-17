@@ -1,0 +1,390 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A116742167E901700DBD12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A116741167E901700DBD12B /* UIKit.framework */; };
+		3A116744167E901700DBD12B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A116743167E901700DBD12B /* Foundation.framework */; };
+		3A116746167E901700DBD12B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A116745167E901700DBD12B /* CoreGraphics.framework */; };
+		3A11674C167E901700DBD12B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A11674A167E901700DBD12B /* InfoPlist.strings */; };
+		3A11674E167E901700DBD12B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11674D167E901700DBD12B /* main.m */; };
+		3A116752167E901700DBD12B /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A116751167E901700DBD12B /* MSAppDelegate.m */; };
+		3A116754167E901700DBD12B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116753167E901700DBD12B /* Default.png */; };
+		3A116756167E901700DBD12B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116755167E901700DBD12B /* Default@2x.png */; };
+		3A116758167E901700DBD12B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116757167E901700DBD12B /* Default-568h@2x.png */; };
+		3A11675B167E901700DBD12B /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A116759167E901700DBD12B /* MainStoryboard.storyboard */; };
+		3A116769167E904A00DBD12B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A116768167E904A00DBD12B /* QuartzCore.framework */; };
+		3A1167B7167EAB7C00DBD12B /* MSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167B6167EAB7C00DBD12B /* MSMasterViewController.m */; };
+		3A1167BC167EAB9B00DBD12B /* MSNavigationPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167B8167EAB9B00DBD12B /* MSNavigationPaneViewController.m */; };
+		3A1167BD167EAB9B00DBD12B /* MSDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167BA167EAB9B00DBD12B /* MSDraggableView.m */; };
+		3A116844167EAD0B00DBD12B /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11683A167EAD0B00DBD12B /* Icon-72.png */; };
+		3A116845167EAD0B00DBD12B /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11683B167EAD0B00DBD12B /* Icon-72@2x.png */; };
+		3A116846167EAD0B00DBD12B /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11683C167EAD0B00DBD12B /* Icon-Small-50.png */; };
+		3A116847167EAD0B00DBD12B /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11683D167EAD0B00DBD12B /* Icon-Small-50@2x.png */; };
+		3A116848167EAD0B00DBD12B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11683E167EAD0B00DBD12B /* Icon-Small.png */; };
+		3A116849167EAD0B00DBD12B /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11683F167EAD0B00DBD12B /* Icon-Small@2x.png */; };
+		3A11684A167EAD0B00DBD12B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116840167EAD0B00DBD12B /* Icon.png */; };
+		3A11684B167EAD0B00DBD12B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116841167EAD0B00DBD12B /* Icon@2x.png */; };
+		3A11684C167EAD0B00DBD12B /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116842167EAD0B00DBD12B /* iTunesArtwork.png */; };
+		3A11684D167EAD0B00DBD12B /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A116843167EAD0B00DBD12B /* iTunesArtwork@2x.png */; };
+		3A116850167EAD1400DBD12B /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11684E167EAD1400DBD12B /* MSBarButtonIconNavigationPane.png */; };
+		3A116851167EAD1400DBD12B /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A11684F167EAD1400DBD12B /* MSBarButtonIconNavigationPane@2x.png */; };
+		3A116872167EAE2500DBD12B /* MSMonospaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A116871167EAE2500DBD12B /* MSMonospaceViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3A11673D167E901700DBD12B /* Storyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A116741167E901700DBD12B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3A116743167E901700DBD12B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3A116745167E901700DBD12B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3A116749167E901700DBD12B /* Storyboard Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Storyboard Example-Info.plist"; sourceTree = "<group>"; };
+		3A11674B167E901700DBD12B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A11674D167E901700DBD12B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3A11674F167E901700DBD12B /* Storyboard Example-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Storyboard Example-Prefix.pch"; sourceTree = "<group>"; };
+		3A116750167E901700DBD12B /* MSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
+		3A116751167E901700DBD12B /* MSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
+		3A116753167E901700DBD12B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		3A116755167E901700DBD12B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		3A116757167E901700DBD12B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3A11675A167E901700DBD12B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		3A116768167E904A00DBD12B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		3A1167B5167EAB7C00DBD12B /* MSMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMasterViewController.h; sourceTree = "<group>"; };
+		3A1167B6167EAB7C00DBD12B /* MSMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMasterViewController.m; sourceTree = "<group>"; };
+		3A1167B8167EAB9B00DBD12B /* MSNavigationPaneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSNavigationPaneViewController.m; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.m; sourceTree = "<group>"; };
+		3A1167B9167EAB9B00DBD12B /* MSDraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSDraggableView.h; path = ../../MSNavigationPaneViewController/MSDraggableView.h; sourceTree = "<group>"; };
+		3A1167BA167EAB9B00DBD12B /* MSDraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSDraggableView.m; path = ../../MSNavigationPaneViewController/MSDraggableView.m; sourceTree = "<group>"; };
+		3A1167BB167EAB9B00DBD12B /* MSNavigationPaneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSNavigationPaneViewController.h; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.h; sourceTree = "<group>"; };
+		3A11683A167EAD0B00DBD12B /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../../Images/Icon-72.png"; sourceTree = "<group>"; };
+		3A11683B167EAD0B00DBD12B /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../../Images/Icon-72@2x.png"; sourceTree = "<group>"; };
+		3A11683C167EAD0B00DBD12B /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "../../Images/Icon-Small-50.png"; sourceTree = "<group>"; };
+		3A11683D167EAD0B00DBD12B /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50@2x.png"; path = "../../Images/Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		3A11683E167EAD0B00DBD12B /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "../../Images/Icon-Small.png"; sourceTree = "<group>"; };
+		3A11683F167EAD0B00DBD12B /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "../../Images/Icon-Small@2x.png"; sourceTree = "<group>"; };
+		3A116840167EAD0B00DBD12B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Images/Icon.png; sourceTree = "<group>"; };
+		3A116841167EAD0B00DBD12B /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Images/Icon@2x.png"; sourceTree = "<group>"; };
+		3A116842167EAD0B00DBD12B /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = ../../Images/iTunesArtwork.png; sourceTree = "<group>"; };
+		3A116843167EAD0B00DBD12B /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "../../Images/iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		3A11684E167EAD1400DBD12B /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MSBarButtonIconNavigationPane.png; path = ../../Images/MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
+		3A11684F167EAD1400DBD12B /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MSBarButtonIconNavigationPane@2x.png"; path = "../../Images/MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
+		3A116870167EAE2500DBD12B /* MSMonospaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMonospaceViewController.h; path = ../../MSMonospaceViewController/MSMonospaceViewController.h; sourceTree = "<group>"; };
+		3A116871167EAE2500DBD12B /* MSMonospaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMonospaceViewController.m; path = ../../MSMonospaceViewController/MSMonospaceViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3A11673A167E901700DBD12B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A116742167E901700DBD12B /* UIKit.framework in Frameworks */,
+				3A116744167E901700DBD12B /* Foundation.framework in Frameworks */,
+				3A116746167E901700DBD12B /* CoreGraphics.framework in Frameworks */,
+				3A116769167E904A00DBD12B /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A116732167E901700DBD12B = {
+			isa = PBXGroup;
+			children = (
+				3A116747167E901700DBD12B /* Storyboard Example */,
+				3A116740167E901700DBD12B /* Frameworks */,
+				3A116787167EAA0800DBD12B /* Vendor */,
+				3A11673E167E901700DBD12B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3A11673E167E901700DBD12B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A11673D167E901700DBD12B /* Storyboard.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A116740167E901700DBD12B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3A116741167E901700DBD12B /* UIKit.framework */,
+				3A116743167E901700DBD12B /* Foundation.framework */,
+				3A116745167E901700DBD12B /* CoreGraphics.framework */,
+				3A116768167E904A00DBD12B /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A116747167E901700DBD12B /* Storyboard Example */ = {
+			isa = PBXGroup;
+			children = (
+				3A116750167E901700DBD12B /* MSAppDelegate.h */,
+				3A116751167E901700DBD12B /* MSAppDelegate.m */,
+				3A116759167E901700DBD12B /* MainStoryboard.storyboard */,
+				3A116796167EAA6B00DBD12B /* View Controllers */,
+				3A116748167E901700DBD12B /* Supporting Files */,
+			);
+			path = "Storyboard Example";
+			sourceTree = "<group>";
+		};
+		3A116748167E901700DBD12B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A116749167E901700DBD12B /* Storyboard Example-Info.plist */,
+				3A11674A167E901700DBD12B /* InfoPlist.strings */,
+				3A11674D167E901700DBD12B /* main.m */,
+				3A11674F167E901700DBD12B /* Storyboard Example-Prefix.pch */,
+				3A116753167E901700DBD12B /* Default.png */,
+				3A116755167E901700DBD12B /* Default@2x.png */,
+				3A116757167E901700DBD12B /* Default-568h@2x.png */,
+				3A11684E167EAD1400DBD12B /* MSBarButtonIconNavigationPane.png */,
+				3A11684F167EAD1400DBD12B /* MSBarButtonIconNavigationPane@2x.png */,
+				3A11683A167EAD0B00DBD12B /* Icon-72.png */,
+				3A11683B167EAD0B00DBD12B /* Icon-72@2x.png */,
+				3A11683C167EAD0B00DBD12B /* Icon-Small-50.png */,
+				3A11683D167EAD0B00DBD12B /* Icon-Small-50@2x.png */,
+				3A11683E167EAD0B00DBD12B /* Icon-Small.png */,
+				3A11683F167EAD0B00DBD12B /* Icon-Small@2x.png */,
+				3A116840167EAD0B00DBD12B /* Icon.png */,
+				3A116841167EAD0B00DBD12B /* Icon@2x.png */,
+				3A116842167EAD0B00DBD12B /* iTunesArtwork.png */,
+				3A116843167EAD0B00DBD12B /* iTunesArtwork@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3A116787167EAA0800DBD12B /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				3A1167B9167EAB9B00DBD12B /* MSDraggableView.h */,
+				3A1167BA167EAB9B00DBD12B /* MSDraggableView.m */,
+				3A1167BB167EAB9B00DBD12B /* MSNavigationPaneViewController.h */,
+				3A1167B8167EAB9B00DBD12B /* MSNavigationPaneViewController.m */,
+			);
+			name = Vendor;
+			path = ../Example;
+			sourceTree = "<group>";
+		};
+		3A116796167EAA6B00DBD12B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3A1167B5167EAB7C00DBD12B /* MSMasterViewController.h */,
+				3A1167B6167EAB7C00DBD12B /* MSMasterViewController.m */,
+				3A116870167EAE2500DBD12B /* MSMonospaceViewController.h */,
+				3A116871167EAE2500DBD12B /* MSMonospaceViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3A11673C167E901700DBD12B /* Storyboard Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A116761167E901700DBD12B /* Build configuration list for PBXNativeTarget "Storyboard Example" */;
+			buildPhases = (
+				3A116739167E901700DBD12B /* Sources */,
+				3A11673A167E901700DBD12B /* Frameworks */,
+				3A11673B167E901700DBD12B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Storyboard Example";
+			productName = "Storyboard Example";
+			productReference = 3A11673D167E901700DBD12B /* Storyboard.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A116734167E901700DBD12B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MS;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Monospace Ltd";
+			};
+			buildConfigurationList = 3A116737167E901700DBD12B /* Build configuration list for PBXProject "Storyboard Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3A116732167E901700DBD12B;
+			productRefGroup = 3A11673E167E901700DBD12B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3A11673C167E901700DBD12B /* Storyboard Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3A11673B167E901700DBD12B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A11674C167E901700DBD12B /* InfoPlist.strings in Resources */,
+				3A116754167E901700DBD12B /* Default.png in Resources */,
+				3A116756167E901700DBD12B /* Default@2x.png in Resources */,
+				3A116758167E901700DBD12B /* Default-568h@2x.png in Resources */,
+				3A11675B167E901700DBD12B /* MainStoryboard.storyboard in Resources */,
+				3A116844167EAD0B00DBD12B /* Icon-72.png in Resources */,
+				3A116845167EAD0B00DBD12B /* Icon-72@2x.png in Resources */,
+				3A116846167EAD0B00DBD12B /* Icon-Small-50.png in Resources */,
+				3A116847167EAD0B00DBD12B /* Icon-Small-50@2x.png in Resources */,
+				3A116848167EAD0B00DBD12B /* Icon-Small.png in Resources */,
+				3A116849167EAD0B00DBD12B /* Icon-Small@2x.png in Resources */,
+				3A11684A167EAD0B00DBD12B /* Icon.png in Resources */,
+				3A11684B167EAD0B00DBD12B /* Icon@2x.png in Resources */,
+				3A11684C167EAD0B00DBD12B /* iTunesArtwork.png in Resources */,
+				3A11684D167EAD0B00DBD12B /* iTunesArtwork@2x.png in Resources */,
+				3A116850167EAD1400DBD12B /* MSBarButtonIconNavigationPane.png in Resources */,
+				3A116851167EAD1400DBD12B /* MSBarButtonIconNavigationPane@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3A116739167E901700DBD12B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A11674E167E901700DBD12B /* main.m in Sources */,
+				3A116752167E901700DBD12B /* MSAppDelegate.m in Sources */,
+				3A1167B7167EAB7C00DBD12B /* MSMasterViewController.m in Sources */,
+				3A1167BC167EAB9B00DBD12B /* MSNavigationPaneViewController.m in Sources */,
+				3A1167BD167EAB9B00DBD12B /* MSDraggableView.m in Sources */,
+				3A116872167EAE2500DBD12B /* MSMonospaceViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3A11674A167E901700DBD12B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A11674B167E901700DBD12B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3A116759167E901700DBD12B /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A11675A167E901700DBD12B /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3A11675F167E901700DBD12B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3A116760167E901700DBD12B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3A116762167E901700DBD12B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Storyboard Example/Storyboard Example-Prefix.pch";
+				INFOPLIST_FILE = "Storyboard Example/Storyboard Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = Storyboard;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3A116763167E901700DBD12B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Storyboard Example/Storyboard Example-Prefix.pch";
+				INFOPLIST_FILE = "Storyboard Example/Storyboard Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = Storyboard;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3A116737167E901700DBD12B /* Build configuration list for PBXProject "Storyboard Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A11675F167E901700DBD12B /* Debug */,
+				3A116760167E901700DBD12B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A116761167E901700DBD12B /* Build configuration list for PBXNativeTarget "Storyboard Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A116762167E901700DBD12B /* Debug */,
+				3A116763167E901700DBD12B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3A116734167E901700DBD12B /* Project object */;
+}

@@ -72,12 +72,9 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (void)awakeFromNib
 {
-	if (self = [super initWithCoder:aDecoder]) {
-		[self initialize];
-    }
-    return self;
+    [self initialize];
 }
 
 - (NSUInteger)supportedInterfaceOrientations

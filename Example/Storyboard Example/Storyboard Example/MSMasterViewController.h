@@ -1,5 +1,5 @@
 //
-//  main.m
+//  MSMasterViewController.h
 //  MSNavigationPaneViewController
 //
 //  Created by Eric Horacek on 11/20/12.
@@ -27,12 +27,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSNavigationPaneViewController.h"
 
-#import "MSAppDelegate.h"
+typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
+    MSPaneViewControllerTypeRed,
+    MSPaneViewControllerTypeGreen,
+    MSPaneViewControllerTypeBlue,
+    MSPaneViewControllerTypeMonospace,
+    MSPaneViewControllerTypeCount,
+};
 
-int main(int argc, char *argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([MSAppDelegate class]));
-    }
-}
+@interface MSMasterViewController : UITableViewController
+
+@property (nonatomic, assign) MSPaneViewControllerType paneViewControllerType;
+@property (nonatomic, weak) MSNavigationPaneViewController *navigationPaneViewController;
+
+- (void)transitionToViewController:(MSPaneViewControllerType)paneViewControllerType;
+
+@end
