@@ -306,6 +306,8 @@ typedef void (^ViewActionBlock)(UIView *view);
 {
     if (_touchForwardingClasses == nil || _touchForwardingClasses.count == 0) {
         return YES;
+    if (!self.draggingEnabled) {
+        return NO;
     }
     
     // If the touch was in a touch forwarding view, don't handle the gesture
