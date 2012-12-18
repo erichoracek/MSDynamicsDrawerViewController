@@ -304,8 +304,6 @@ typedef void (^ViewActionBlock)(UIView *view);
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if (_touchForwardingClasses == nil || _touchForwardingClasses.count == 0) {
-        return YES;
     if (!self.draggingEnabled) {
         return NO;
     }
