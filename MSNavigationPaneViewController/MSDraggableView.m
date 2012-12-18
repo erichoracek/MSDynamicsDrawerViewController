@@ -100,7 +100,7 @@ typedef void (^ViewActionBlock)(UIView *view);
         animating = NO;
         xVelocity = 0.0;
         
-        _touchForwardingClasses = [NSMutableSet setWithObjects:UISlider.class, nil];
+        _touchForwardingClasses = [NSMutableSet setWithObjects:UISlider.class, UISwitch.class, nil];
         
         self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)];
         _panGestureRecognizer.minimumNumberOfTouches = 1;
