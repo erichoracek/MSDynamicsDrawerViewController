@@ -310,13 +310,20 @@ typedef void (^ViewActionBlock)(UIView *view);
     
     // If the touch was in a touch forwarding view, don't handle the gesture
     __block BOOL shouldReceiveTouch = YES;
+    
+    // Enumerate the view's superviews, checking for a touch-forwarding class
     [touch.view superviewHierarchyAction:^(UIView *view) {
-        [_touchForwardingClasses enumerateObjectsUsingBlock:^(Class touchForwardingClass, BOOL *stop) {
-            if ([view isKindOfClass:touchForwardingClass]) {
-                shouldReceiveTouch = NO;
-            }
-        }];
+        // Only enumerate while still receiving the touch
+        if (shouldReceiveTouch) {
+            [_touchForwardingClasses enumerateObjectsUsingBlock:^(Class touchForwardingClass, BOOL *stop) {
+                if ([view isKindOfClass:touchForwardingClass]) {
+                    shouldReceiveTouch = NO;
+                    *stop = YES;
+                }
+            }];
+        }
     }];
+    
     return shouldReceiveTouch;
 }
 
