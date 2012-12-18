@@ -12,13 +12,22 @@ There are a number of great reasons to use `MSNavigationPaneViewController` over
 * The swipe gesture to reveal the master view controller doesn't interfere with `UITableViews` or other `UIScrollViews` added to the pane view controller's view.
 * When a new pane view controller is set using the `setPaneViewController:animated:completion:` method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
 
-# Touch Forwarding
+# Touches
 
-To forward touches through views that require a swipe gesture (e.g. `UISlider`) so that your `MSNavigationPaneViewController` doesn't intercept them, simply add their `Class` to `navigationPaneViewController.paneView.touchForwardingClasses`.
+## Forwarding Touches
+
+To forward touches through views that require a swipe/pan gesture (e.g. `UISlider`, `UISwitch`, etc.) so that your `MSNavigationPaneViewController` doesn't intercept them, simply add their `Class` to `navigationPaneViewController.paneView.touchForwardingClasses`. Both `UISlider` and `UISwitch` are included by default.
+
+## Disabling Pane Dragging
+
+To disable dragging of the pane and prevent `MSNavigationPaneViewController` from intercepting touches, set `navigationPaneViewController.paneView.draggingEnabled` to `NO`.
 
 # Example
 
-An example Xcode project that uses `MSNavigationPaneViewController` in included in the "Example" directory.
+Two example Xcode projects that uses `MSNavigationPaneViewController` are included in the "Example" directory and in the `Examples.xcworkspace`:
+
+* `Example.xcodeproj` – Basic Use (No Storyboards or Nibs)
+* `Storyboard Example.xcodeproj` – Use with Storyboards
 
 ![Open](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Open.png)
 
