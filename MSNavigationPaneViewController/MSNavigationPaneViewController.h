@@ -42,6 +42,7 @@ extern const CGFloat MSNavigationPaneAnimationDurationSnapBack;
 typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
     MSNavigationPaneStateOpen,
     MSNavigationPaneStateClosed,
+    MSNavigationPaneStateOpenWide
 };
 
 @protocol MSNavigationPaneViewControllerDelegate;
@@ -59,6 +60,8 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
 
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated;
+- (void)animateMasterView:(MSNavigationPaneState)toState;
+- (void)animateMasterView:(MSNavigationPaneState)toState fraction:(CGFloat)fraction;
 
 @end
 
