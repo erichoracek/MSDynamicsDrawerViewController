@@ -134,21 +134,9 @@
 				3A1166A3167E8C3E00DBD12B /* InfoPlist.strings */,
 				3A1166A6167E8C3E00DBD12B /* main.m */,
 				3A1166A8167E8C3E00DBD12B /* Example-Prefix.pch */,
-				3A1166AC167E8C3E00DBD12B /* Default.png */,
-				3A1166AE167E8C3E00DBD12B /* Default@2x.png */,
-				3A1166B0167E8C3E00DBD12B /* Default-568h@2x.png */,
-				3A116853167EAD6B00DBD12B /* MSBarButtonIconNavigationPane.png */,
-				3A116854167EAD6B00DBD12B /* MSBarButtonIconNavigationPane@2x.png */,
-				3A116855167EAD6B00DBD12B /* Icon-72.png */,
-				3A116856167EAD6B00DBD12B /* Icon-72@2x.png */,
-				3A116857167EAD6B00DBD12B /* Icon-Small-50.png */,
-				3A116858167EAD6B00DBD12B /* Icon-Small-50@2x.png */,
-				3A116859167EAD6B00DBD12B /* Icon-Small.png */,
-				3A11685A167EAD6B00DBD12B /* Icon-Small@2x.png */,
-				3A11685B167EAD6B00DBD12B /* Icon.png */,
-				3A11685C167EAD6B00DBD12B /* Icon@2x.png */,
-				3A11685D167EAD6B00DBD12B /* iTunesArtwork.png */,
-				3A11685E167EAD6B00DBD12B /* iTunesArtwork@2x.png */,
+				3ABBBCC9168C18AD00CBB5C1 /* Default */,
+				3ABBBCCA168C18B200CBB5C1 /* Bar Button Icons */,
+				3ABBBCCB168C18BC00CBB5C1 /* Icon */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -174,6 +162,42 @@
 			);
 			name = "View Controllers";
 			path = ../../MSMonospaceViewController;
+			sourceTree = "<group>";
+		};
+		3ABBBCC9168C18AD00CBB5C1 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				3A1166AC167E8C3E00DBD12B /* Default.png */,
+				3A1166AE167E8C3E00DBD12B /* Default@2x.png */,
+				3A1166B0167E8C3E00DBD12B /* Default-568h@2x.png */,
+			);
+			name = Default;
+			sourceTree = "<group>";
+		};
+		3ABBBCCA168C18B200CBB5C1 /* Bar Button Icons */ = {
+			isa = PBXGroup;
+			children = (
+				3A116853167EAD6B00DBD12B /* MSBarButtonIconNavigationPane.png */,
+				3A116854167EAD6B00DBD12B /* MSBarButtonIconNavigationPane@2x.png */,
+			);
+			name = "Bar Button Icons";
+			sourceTree = "<group>";
+		};
+		3ABBBCCB168C18BC00CBB5C1 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				3A116855167EAD6B00DBD12B /* Icon-72.png */,
+				3A116856167EAD6B00DBD12B /* Icon-72@2x.png */,
+				3A116857167EAD6B00DBD12B /* Icon-Small-50.png */,
+				3A116858167EAD6B00DBD12B /* Icon-Small-50@2x.png */,
+				3A116859167EAD6B00DBD12B /* Icon-Small.png */,
+				3A11685A167EAD6B00DBD12B /* Icon-Small@2x.png */,
+				3A11685B167EAD6B00DBD12B /* Icon.png */,
+				3A11685C167EAD6B00DBD12B /* Icon@2x.png */,
+				3A11685D167EAD6B00DBD12B /* iTunesArtwork.png */,
+				3A11685E167EAD6B00DBD12B /* iTunesArtwork@2x.png */,
+			);
+			name = Icon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
