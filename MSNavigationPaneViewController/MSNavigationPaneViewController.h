@@ -58,6 +58,8 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
 @property (nonatomic, readonly) UIView *masterView;
 @property (nonatomic, readonly) MSDraggableView *paneView;
 
+@property (nonatomic, assign) BOOL shouldAnimateMasterView;
+
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated;
 - (void)animateMasterView:(MSNavigationPaneState)toState;

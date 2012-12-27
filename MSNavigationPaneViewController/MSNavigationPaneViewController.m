@@ -70,6 +70,10 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 
 - (void)animateMasterView:(MSNavigationPaneState)toState fraction:(CGFloat)fraction
 {
+    if (!_shouldAnimateMasterView) {
+        return;
+    }
+    
     CGFloat scale;
     if (toState == MSNavigationPaneStateClosed) {
         scale = 1.0f - kMSScaleCLosed * fraction;
@@ -79,8 +83,6 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
         scale = kMSScaleOpenWide;
     }
     [self.masterView.layer setTransform:CATransform3DMakeScale(scale, scale, scale)];
-    [self.masterView setNeedsDisplay];
-    [CATransaction flush];
 }
 
 - (void)animateMasterView:(MSNavigationPaneState)toState
@@ -129,6 +131,8 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     _paneView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_paneView];
     
+    _shouldAnimateMasterView = YES;
+    
 #if defined(LAYOUT_DEBUG)
     _masterView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1];
     _masterView.layer.borderColor = [[UIColor blueColor] CGColor];
@@ -169,6 +173,9 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 		[_masterView addSubview:_masterViewController.view];
 		[_masterViewController didMoveToParentViewController:self];
         
+        // set the initial scaling effect
+        [self animateMasterView:MSNavigationPaneStateClosed];
+
 	} else if (_masterViewController != masterViewController) {
         
 		masterViewController.view.frame = _masterView.bounds;
