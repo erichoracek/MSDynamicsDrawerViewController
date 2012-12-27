@@ -33,6 +33,8 @@ Two example Xcode projects that uses `MSNavigationPaneViewController` are includ
 
 ![Closed](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
 
+![Opening with animation of MasterView](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
+
 # Requirements
 
 Requires iOS 5.0, ARC, and the QuartzCore Framework.
