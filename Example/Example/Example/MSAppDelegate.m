@@ -35,6 +35,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.navigationPaneViewController = [[MSNavigationPaneViewController alloc] init];
+//    self.navigationPaneViewController.shouldAnimateMasterView = NO;
     
     MSMasterViewController *masterViewController = [[MSMasterViewController alloc] init];
     masterViewController.navigationPaneViewController = self.navigationPaneViewController;

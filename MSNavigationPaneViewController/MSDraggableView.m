@@ -82,6 +82,17 @@ typedef void (^ViewActionBlock)(UIView *view);
 @synthesize delegate;
 @synthesize draggingEnabled;
 
+- (void)animateMasterView:(CGRect)newFrame
+{
+    CGFloat fraction = ( MSNavigationPaneOpenStateMasterDisplayWidth - newFrame.origin.x) / self.frame.size.width;
+
+    MSNavigationPaneViewController *navigationPaneViewController = (MSNavigationPaneViewController *)[self.superview nextResponder];
+    NSAssert([navigationPaneViewController isKindOfClass:[MSNavigationPaneViewController class]], @"expected [self.superview nextResponder] to be of class MSNavigationPaneViewController");
+    [navigationPaneViewController animateMasterView:MSNavigationPaneStateClosed fraction:fraction];
+
+}
+
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -145,9 +156,12 @@ typedef void (^ViewActionBlock)(UIView *view);
                 CGRect newFrame = self.frame;
                 newFrame.origin.x += (locationInSelf.x - startLocation.x);
                 
-                if ((newFrame.origin.x > 0.0) && (newFrame.origin.x < MSNavigationPaneOpenStateMasterDisplayWidth)) {
+                if ((newFrame.origin.x > 0.0)
+                    /*&& (newFrame.origin.x < MSNavigationPaneOpenStateMasterDisplayWidth)
+                     */) {
                     self.frame = newFrame;
-                }
+                    [self animateMasterView:newFrame];
+                } 
             }
             break;
             
@@ -239,6 +253,7 @@ typedef void (^ViewActionBlock)(UIView *view);
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.frame = newFrame;
+                         [self animateMasterView:newFrame];
                      } completion:^(BOOL finished) {
                          [self slideToCompletionWithDuration:MSNavigationPaneAnimationDurationSnapBack];
                      }];
@@ -259,6 +274,7 @@ typedef void (^ViewActionBlock)(UIView *view);
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.frame = newFrame;
+                         [self animateMasterView:newFrame];
                      } completion:^(BOOL finished) {
                          [self slideBackWithDuration:MSNavigationPaneAnimationDurationSnapBack];
                      }];
@@ -274,6 +290,14 @@ typedef void (^ViewActionBlock)(UIView *view);
     [UIView animateWithDuration:duration
                      animations:^{
                          self.frame = newFrame;
+                         
+                         MSNavigationPaneViewController *navigationPaneViewController = (MSNavigationPaneViewController *)[self.superview nextResponder];
+                         NSAssert([navigationPaneViewController isKindOfClass:[MSNavigationPaneViewController class]], @"expected [self.superview nextResponder] to be of class MSNavigationPaneViewController");
+                         if (self.state == MSDraggableViewStateClosed) {
+                             [navigationPaneViewController animateMasterView:MSNavigationPaneStateOpen];
+                         } else {
+                             [navigationPaneViewController animateMasterView:MSNavigationPaneStateClosed];
+                         }
                      }
                      completion:^(BOOL finished) {
                          animating = NO;
@@ -294,6 +318,7 @@ typedef void (^ViewActionBlock)(UIView *view);
     [UIView animateWithDuration:duration
                      animations:^{
                          self.frame = newFrame;
+                         [self animateMasterView:newFrame];
                      }
                      completion:^(BOOL finished) {
                          animating = NO;

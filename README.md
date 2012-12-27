@@ -11,6 +11,7 @@ There are a number of great reasons to use `MSNavigationPaneViewController` over
 * It doesn't require for you to subclass your pane or master view controllers to add them as child view controllers. 
 * The swipe gesture to reveal the master view controller doesn't interfere with `UITableViews` or other `UIScrollViews` added to the pane view controller's view.
 * When a new pane view controller is set using the `setPaneViewController:animated:completion:` method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
+* Optionally, showing/hiding of the master view controller can be animated (nice CATransform3DMakeScale effect)
 
 # Touches
 
@@ -32,6 +33,8 @@ Two example Xcode projects that uses `MSNavigationPaneViewController` are includ
 ![Open](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Open.png)
 
 ![Closed](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
+
+![Opening with animation of MasterView](https://github.com/roland9/MSNavigationPaneViewController/blob/master/Screenshots/Opening.png?raw=true)
 
 # Requirements
 

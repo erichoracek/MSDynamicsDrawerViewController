@@ -62,6 +62,34 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 @dynamic paneState;
 @synthesize delegate;
 
+#pragma mark Master View Controller animations
+
+#define kMSScaleOpen 1.0f
+#define kMSScaleCLosed 0.05f
+#define kMSScaleOpenWide 1.05f
+
+- (void)animateMasterView:(MSNavigationPaneState)toState fraction:(CGFloat)fraction
+{
+    if (!_shouldAnimateMasterView) {
+        return;
+    }
+    
+    CGFloat scale;
+    if (toState == MSNavigationPaneStateClosed) {
+        scale = 1.0f - kMSScaleCLosed * fraction;
+    } else if (toState == MSNavigationPaneStateOpen) {
+        scale = kMSScaleOpen;
+    } else if (toState == MSNavigationPaneStateOpenWide) {
+        scale = kMSScaleOpenWide;
+    }
+    [self.masterView.layer setTransform:CATransform3DMakeScale(scale, scale, scale)];
+}
+
+- (void)animateMasterView:(MSNavigationPaneState)toState
+{
+    [self animateMasterView:toState fraction:1.0f];
+}
+
 #pragma mark UIViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -103,6 +131,8 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     _paneView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_paneView];
     
+    _shouldAnimateMasterView = YES;
+    
 #if defined(LAYOUT_DEBUG)
     _masterView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1];
     _masterView.layer.borderColor = [[UIColor blueColor] CGColor];
@@ -143,6 +173,9 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 		[_masterView addSubview:_masterViewController.view];
 		[_masterViewController didMoveToParentViewController:self];
         
+        // set the initial scaling effect
+        [self animateMasterView:MSNavigationPaneStateClosed];
+
 	} else if (_masterViewController != masterViewController) {
         
 		masterViewController.view.frame = _masterView.bounds;
@@ -224,12 +257,14 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     self.view.userInteractionEnabled = NO;
     
     void(^movePaneToSide)() = ^{
+        [self animateMasterView:MSNavigationPaneStateOpenWide];
         CGRect paneViewFrame = _paneView.frame;
         paneViewFrame.origin.x = CGRectGetWidth(self.view.frame) + 20.0;
         _paneView.frame = paneViewFrame;
     };
     
     void(^movePaneToClosed)() = ^{
+        [self animateMasterView:MSNavigationPaneStateClosed];
         CGRect paneViewFrame = _paneView.frame;
         paneViewFrame.origin.x = 0.0;
         _paneView.frame = paneViewFrame;
@@ -293,6 +328,7 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 - (void)setPaneState:(MSNavigationPaneState)aPaneState animated:(BOOL)animated
 {
     void(^animatePaneOpen)() = ^{
+        [self animateMasterView:MSNavigationPaneStateOpen];
         CGRect paneViewFrame = _paneView.frame;
         paneViewFrame.origin.x = MSNavigationPaneOpenStateMasterDisplayWidth;
         _paneView.frame = paneViewFrame;
@@ -303,6 +339,7 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
     };
     
     void(^animatePaneClosed)() = ^{
+        [self animateMasterView:MSNavigationPaneStateClosed];
         CGRect paneViewFrame = _paneView.frame;
         paneViewFrame.origin.x = 0.0;
         _paneView.frame = paneViewFrame;
