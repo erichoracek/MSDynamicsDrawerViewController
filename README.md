@@ -33,7 +33,7 @@ Two example Xcode projects that uses `MSNavigationPaneViewController` are includ
 
 ![Closed](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
 
-![Opening with animation of MasterView](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
+![Opening with animation of MasterView](https://github.com/roland9/MSNavigationPaneViewController/blob/master/Screenshots/Opening.png)
 
 # Requirements
 
