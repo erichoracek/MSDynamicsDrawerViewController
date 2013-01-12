@@ -30,11 +30,11 @@
 #import "MSNavigationPaneViewController.h"
 
 typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
-    MSPaneViewControllerTypeRed,
-    MSPaneViewControllerTypeGreen,
-    MSPaneViewControllerTypeBlue,
+    MSPaneViewControllerTypeAppearanceNone,
+    MSPaneViewControllerTypeAppearanceParallax,
+    MSPaneViewControllerTypeAppearanceZoom,
     MSPaneViewControllerTypeMonospace,
-    MSPaneViewControllerTypeCount,
+    MSPaneViewControllerTypeCount
 };
 
 @interface MSMasterViewController : UITableViewController

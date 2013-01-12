@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C2034" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3083" systemVersion="12C2034" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Navigation Pane View Controller-->
@@ -57,7 +57,7 @@
         <!--Table View Controller-->
         <scene sceneID="g2d-bS-F9e">
             <objects>
-                <tableViewController storyboardIdentifier="PaneViewControllerBlue" id="h9M-ot-NGe" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PaneViewControllerAppearanceZoom" id="h9M-ot-NGe" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0XK-8O-eJg">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,7 +100,7 @@
         <!--Table View Controller-->
         <scene sceneID="vEd-RZ-rrA">
             <objects>
-                <tableViewController storyboardIdentifier="PaneViewControllerGreen" id="7h8-Zd-Qfz" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PaneViewControllerAppearanceParallax" id="7h8-Zd-Qfz" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nTd-wc-O3m">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,7 +129,7 @@
         <!--Table View Controller-->
         <scene sceneID="Sua-JF-M42">
             <objects>
-                <tableViewController storyboardIdentifier="PaneViewControllerRed" id="foG-JD-RS1" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PaneViewControllerAppearanceNone" id="foG-JD-RS1" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oPm-yb-5DG">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

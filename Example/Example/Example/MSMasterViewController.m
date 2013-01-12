@@ -32,16 +32,16 @@
 NSString * const MSMasterViewControllerCellReuseIdentifier = @"MSMasterViewControllerCellReuseIdentifier";
 
 typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
-    MSMasterViewControllerTableViewSectionTypeColors,
+    MSMasterViewControllerTableViewSectionTypeAppearanceTypes,
     MSMasterViewControllerTableViewSectionTypeAbout,
-    MSMasterViewControllerTableViewSectionTypeCount,
+    MSMasterViewControllerTableViewSectionTypeCount
 };
 
 @interface MSMasterViewController ()
 
 @property (nonatomic, strong) NSDictionary *paneViewControllerTitles;
-@property (nonatomic, strong) NSDictionary *paneViewControllerTintColor;
 @property (nonatomic, strong) NSDictionary *paneViewControllerClasses;
+@property (nonatomic, strong) NSDictionary *paneViewControllerAppearanceTypes;
 @property (nonatomic, strong) NSArray *tableViewSectionBreaks;
 
 @end
@@ -56,22 +56,21 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
     if (self) {
         self.paneViewControllerType = NSUIntegerMax;
         self.paneViewControllerTitles = @{
-            @(MSPaneViewControllerTypeRed) : @"Red",
-            @(MSPaneViewControllerTypeGreen) : @"Green",
-            @(MSPaneViewControllerTypeBlue) : @"Blue",
-            @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd.",
+            @(MSPaneViewControllerTypeAppearanceNone) : @"None",
+            @(MSPaneViewControllerTypeAppearanceParallax) : @"Parallax",
+            @(MSPaneViewControllerTypeAppearanceZoom) : @"Zoom",
+            @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd."
         };
         self.paneViewControllerClasses = @{
-            @(MSPaneViewControllerTypeRed) : UITableViewController.class,
-            @(MSPaneViewControllerTypeGreen) : UITableViewController.class,
-            @(MSPaneViewControllerTypeBlue) : UITableViewController.class,
-            @(MSPaneViewControllerTypeMonospace) : MSMonospaceViewController.class,
+            @(MSPaneViewControllerTypeAppearanceNone) : UITableViewController.class,
+            @(MSPaneViewControllerTypeAppearanceParallax) : UITableViewController.class,
+            @(MSPaneViewControllerTypeAppearanceZoom) : UITableViewController.class,
+            @(MSPaneViewControllerTypeMonospace) : MSMonospaceViewController.class
         };
-        self.paneViewControllerTintColor = @{
-            @(MSPaneViewControllerTypeRed) : [UIColor colorWithRed:0.502 green:0.000 blue:0.000 alpha:1.000],
-            @(MSPaneViewControllerTypeGreen) : [UIColor colorWithRed:0.251 green:0.502 blue:0.000 alpha:1.000],
-            @(MSPaneViewControllerTypeBlue) : [UIColor colorWithRed:0.000 green:0.251 blue:0.502 alpha:1.000],
-            @(MSPaneViewControllerTypeMonospace) : [UIColor blackColor],
+        self.paneViewControllerAppearanceTypes = @{
+            @(MSPaneViewControllerTypeAppearanceNone) : @(MSNavigationPaneAppearanceTypeNone),
+            @(MSPaneViewControllerTypeAppearanceParallax) : @(MSNavigationPaneAppearanceTypeParallax),
+            @(MSPaneViewControllerTypeAppearanceZoom) : @(MSNavigationPaneAppearanceTypeZoom),
         };
         self.tableViewSectionBreaks = @[
             @(MSPaneViewControllerTypeMonospace),
@@ -79,11 +78,6 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
         ];
     }
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
 }
 
 #pragma mark - MSMasterViewController
@@ -94,7 +88,7 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
     if (indexPath.section == 0) {
         paneViewControllerType = indexPath.row;
     } else {
-        paneViewControllerType = [self.tableViewSectionBreaks[indexPath.section - 1] integerValue] + indexPath.row;
+        paneViewControllerType = ([self.tableViewSectionBreaks[(indexPath.section - 1)] integerValue] + indexPath.row);
     }
     NSAssert(paneViewControllerType < MSPaneViewControllerTypeCount, @"Invalid Index Path");
     return paneViewControllerType;
@@ -114,10 +108,7 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
     UIViewController *paneViewController = (UIViewController *)[[paneViewControllerClass alloc] init];
     paneViewController.navigationItem.title = self.paneViewControllerTitles[@(paneViewControllerType)];
     paneViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"MSBarButtonIconNavigationPane.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(navigationPaneBarButtonItemTapped:)];
-    
     UINavigationController *paneNavigationViewController = [[UINavigationController alloc] initWithRootViewController:paneViewController];
-    paneNavigationViewController.navigationBar.tintColor = self.paneViewControllerTintColor[@(paneViewControllerType)];
-    
     [self.navigationPaneViewController setPaneViewController:paneNavigationViewController animated:animateTransition completion:nil];
     
     self.paneViewControllerType = paneViewControllerType;
@@ -147,8 +138,8 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch (section) {
-        case MSMasterViewControllerTableViewSectionTypeColors:
-            return @"Colors";
+        case MSMasterViewControllerTableViewSectionTypeAppearanceTypes:
+            return @"Appearance Types";
         case MSMasterViewControllerTableViewSectionTypeAbout:
             return @"About";
         default:
@@ -162,7 +153,11 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MSMasterViewControllerCellReuseIdentifier];
     }
-    cell.textLabel.text = self.paneViewControllerTitles[@([self paneViewControllerTypeForIndexPath:indexPath])];
+    MSPaneViewControllerType paneViewControllerType = [self paneViewControllerTypeForIndexPath:indexPath];
+    cell.textLabel.text = self.paneViewControllerTitles[@(paneViewControllerType)];
+    if (self.paneViewControllerAppearanceTypes[@(paneViewControllerType)] && (self.navigationPaneViewController.appearanceType == [self.paneViewControllerAppearanceTypes[@(paneViewControllerType)] unsignedIntegerValue])) {
+        cell.textLabel.text = [NSString stringWithFormat:@"✓ %@", cell.textLabel.text];
+    }
     return cell;
 }
 
@@ -170,7 +165,13 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self transitionToViewController:[self paneViewControllerTypeForIndexPath:indexPath]];
+    MSPaneViewControllerType paneViewControllerType = [self paneViewControllerTypeForIndexPath:indexPath];
+    [self transitionToViewController:paneViewControllerType];
+    if (self.paneViewControllerAppearanceTypes[@(paneViewControllerType)]) {
+        self.navigationPaneViewController.appearanceType = [self.paneViewControllerAppearanceTypes[@(paneViewControllerType)] unsignedIntegerValue];
+        // Update row titles
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+    }
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

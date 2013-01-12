@@ -21,7 +21,7 @@
 
     self.navigationPaneViewController.masterViewController = masterViewController;
     
-    [masterViewController transitionToViewController:MSPaneViewControllerTypeRed];
+    [masterViewController transitionToViewController:MSPaneViewControllerTypeAppearanceNone];
     
     return YES;
 }
