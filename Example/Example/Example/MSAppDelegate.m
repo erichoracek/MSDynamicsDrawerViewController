@@ -41,7 +41,7 @@
     
     self.navigationPaneViewController.masterViewController = masterViewController;
     
-    [masterViewController transitionToViewController:MSPaneViewControllerTypeAppearanceDefault];
+    [masterViewController transitionToViewController:MSPaneViewControllerTypeAppearanceNone];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.navigationPaneViewController;
