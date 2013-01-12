@@ -8,9 +8,20 @@ There are a number of great reasons to use `MSNavigationPaneViewController` over
 
 * This class was written with an emphasis on simplicity. Its interface is about as simple as they come, and is easy to extend.
 * It features a smooth bounce animation when the navigation pane is flicked in either direction based on the velocity of the swipe gesture.
+* There are various appearance types available to customize its visual style.
 * It doesn't require for you to subclass your pane or master view controllers to add them as child view controllers. 
 * The swipe gesture to reveal the master view controller doesn't interfere with `UITableViews` or other `UIScrollViews` added to the pane view controller's view.
 * When a new pane view controller is set using the `setPaneViewController:animated:completion:` method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
+
+# Appearance Types
+
+There are a few types of appearance available for `MSNavigationPaneViewController`. They each change some aspect of the visual style of the pane view dragging. The appearance type of the navigation pane is set via the `navigationPaneViewController.appearanceType` accessor. The possible types are as follows:
+
+* **None** (`MSNavigationPaneAppearanceTypeNone`) – Default appearance. Doesn't change the master view's appearance in any way as the pane view is dragged.
+* **Parallax** (`MSNavigationPaneAppearanceTypeParallax`) – Scrolls the master view in from the right as the pane view is dragged.
+* **Zoom** (`MSNavigationPaneAppearanceTypeZoom`) – Zooms the master view in from an inset state as the pane view is dragged.
+
+The default value of the appearance type is `MSNavigationPaneAppearanceTypeNone`.
 
 # Touches
 
@@ -26,12 +37,11 @@ To disable dragging of the pane and prevent `MSNavigationPaneViewController` fro
 
 Two example Xcode projects that uses `MSNavigationPaneViewController` are included in the "Example" directory and in the `Examples.xcworkspace`:
 
-* `Example.xcodeproj` – Basic Use (No Storyboards or Nibs)
+* `Example.xcodeproj` – No Storyboards or Nibs
 * `Storyboard Example.xcodeproj` – Use with Storyboards
 
-![Open](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Open.png)
-
-![Closed](https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png)
+<img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Open.png" height="50%" /> &nbsp;
+<img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Closed.png" height="50%" />
 
 # Requirements
 
