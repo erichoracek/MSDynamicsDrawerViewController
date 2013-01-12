@@ -31,11 +31,14 @@ typedef NS_ENUM(NSUInteger, MSDraggableViewState) {
     MSDraggableViewStateClosed,
 };
 
-@protocol MSDraggableImageViewDelegate;
+@class MSNavigationPaneViewController;
+@protocol MSDraggableViewDelegate;
 
 @interface MSDraggableView : UIView
 
-@property (nonatomic, weak) id <MSDraggableImageViewDelegate> delegate;
+@property (nonatomic, weak) MSNavigationPaneViewController <MSDraggableViewDelegate> * navigationPaneViewController;
+@property (nonatomic, weak) id <MSDraggableViewDelegate> delegate;
+
 @property (nonatomic, assign) MSDraggableViewState state;
 @property (nonatomic, assign) BOOL draggingEnabled;
 
@@ -44,11 +47,12 @@ typedef NS_ENUM(NSUInteger, MSDraggableViewState) {
 
 @end
 
-@protocol MSDraggableImageViewDelegate <NSObject>
+@protocol MSDraggableViewDelegate <NSObject>
 
 @optional
 
-- (void)draggableView:(MSDraggableView *)draggableView draggedToState:(MSDraggableViewState)state;
+- (void)draggableView:(MSDraggableView *)draggableView wasDraggedToState:(MSDraggableViewState)state;
+- (void)draggableView:(MSDraggableView *)draggableView wasDraggedToFraction:(CGFloat)fraction;
 
 @end
 

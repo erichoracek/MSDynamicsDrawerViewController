@@ -54,12 +54,13 @@ typedef void (^ViewActionBlock)(UIView *view);
 
 @interface MSDraggableView() <UIGestureRecognizerDelegate> {
     
-    CGPoint startLocation;
-    CGPoint startLocationInSuperview;
-    CGFloat xVelocity;
-    BOOL animating;
-    MSDraggableViewState state;
+    MSDraggableViewState _state;
 }
+
+@property (nonatomic, assign) BOOL animating;
+@property (nonatomic, assign) CGPoint startLocation;
+@property (nonatomic, assign) CGPoint startLocationInSuperview;
+@property (nonatomic, assign) CGFloat xVelocity;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
@@ -79,8 +80,8 @@ typedef void (^ViewActionBlock)(UIView *view);
 @implementation MSDraggableView
 
 @dynamic state;
-@synthesize delegate;
-@synthesize draggingEnabled;
+
+#pragma mark - UIView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -97,8 +98,8 @@ typedef void (^ViewActionBlock)(UIView *view);
         self.layer.shadowRadius = 10.0;
         self.layer.masksToBounds = NO;
         
-        animating = NO;
-        xVelocity = 0.0;
+        self.animating = NO;
+        self.xVelocity = 0.0;
         
         _touchForwardingClasses = [NSMutableSet setWithObjects:UISlider.class, UISwitch.class, nil];
         
@@ -109,13 +110,33 @@ typedef void (^ViewActionBlock)(UIView *view);
         [self addGestureRecognizer:_panGestureRecognizer];
         
         // Start at the "closed" state
-        state = MSDraggableViewStateClosed;
+        self.state = MSDraggableViewStateClosed;
         
         // Start with dragging enabled
-        draggingEnabled = YES;
+        self.draggingEnabled = YES;
     }
     return self;
 }
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    CGFloat fraction = ((MSNavigationPaneOpenStateMasterDisplayWidth - self.frame.origin.x) / MSNavigationPaneOpenStateMasterDisplayWidth);
+    
+    // Clip to 0.0 < fraction < 1.0
+    fraction = (fraction < 0.0) ? 0.0 : fraction;
+    fraction = (fraction > 1.0) ? 1.0 : fraction;
+    
+    if ([self.delegate respondsToSelector:@selector(draggableView:wasDraggedToFraction:)]) {
+        [self.delegate draggableView:self wasDraggedToFraction:fraction];
+    }
+    if ([self.navigationPaneViewController respondsToSelector:@selector(draggableView:wasDraggedToFraction:)]) {
+        [self.navigationPaneViewController draggableView:self wasDraggedToFraction:fraction];
+    }
+}
+
+#pragma mark - MSDraggableView
 
 - (void)tapped:(UIPanGestureRecognizer *)gestureRecognizer
 {
@@ -131,19 +152,19 @@ typedef void (^ViewActionBlock)(UIView *view);
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan: {
             
-            startLocation = [gestureRecognizer locationInView:self];
-            xVelocity = 0.0;
+            self.startLocation = [gestureRecognizer locationInView:self];
+            self.xVelocity = 0.0;
             break;
             
         } case UIGestureRecognizerStateChanged: {
             
-            if (!animating) {
+            if (!self.animating) {
                 
                 CGPoint locationInSelf = [gestureRecognizer locationInView:self];
-                xVelocity = startLocation.x - locationInSelf.x;
+                self.xVelocity = self.startLocation.x - locationInSelf.x;
                 
                 CGRect newFrame = self.frame;
-                newFrame.origin.x += (locationInSelf.x - startLocation.x);
+                newFrame.origin.x += (locationInSelf.x - self.startLocation.x);
                 
                 if ((newFrame.origin.x > 0.0) && (newFrame.origin.x < MSNavigationPaneOpenStateMasterDisplayWidth)) {
                     self.frame = newFrame;
@@ -155,30 +176,30 @@ typedef void (^ViewActionBlock)(UIView *view);
             
             CGFloat halfWay = (MSNavigationPaneOpenStateMasterDisplayWidth / 2.0);
             BOOL pastHalfWay = NO;
-            if (state == MSDraggableViewStateClosed) {
+            if (self.state == MSDraggableViewStateClosed) {
                 pastHalfWay = (self.frame.origin.x > halfWay);
-            } else if (state == MSDraggableViewStateOpen) {
+            } else if (self.state == MSDraggableViewStateOpen) {
                 pastHalfWay = (self.frame.origin.x < halfWay);
             }
             
             // We've reached the velocity threshold
-            if (fabsf(xVelocity) > MSDraggableViewXVelocityThreshold) {
+            if (fabsf(_xVelocity) > MSDraggableViewXVelocityThreshold) {
                 // Velocity is positive
-                if (xVelocity > 0) {
-                    if (state == MSDraggableViewStateOpen) {
-                        [self bounceToCompletionWithDuration:MSNavigationPaneAnimationDurationSnap velocty:xVelocity];
-                    } else if (state == MSDraggableViewStateClosed) {
+                if (_xVelocity > 0) {
+                    if (_state == MSDraggableViewStateOpen) {
+                        [self bounceToCompletionWithDuration:MSNavigationPaneAnimationDurationSnap velocty:_xVelocity];
+                    } else if (_state == MSDraggableViewStateClosed) {
                         if (self.frame.origin.x > 0.0) {
-                            [self bounceBackWithDuration:MSNavigationPaneAnimationDurationSnap velocty:xVelocity];
+                            [self bounceBackWithDuration:MSNavigationPaneAnimationDurationSnap velocty:_xVelocity];
                         }
                     }
                 }
                 // Velocity is negative
-                else if (xVelocity < 0) {
-                    if (state == MSDraggableViewStateOpen) {
-                        [self bounceBackWithDuration:MSNavigationPaneAnimationDurationSnap velocty:xVelocity];
-                    } else if (state == MSDraggableViewStateClosed) {
-                        [self bounceToCompletionWithDuration:MSNavigationPaneAnimationDurationSnap velocty:xVelocity];
+                else if (_xVelocity < 0) {
+                    if (_state == MSDraggableViewStateOpen) {
+                        [self bounceBackWithDuration:MSNavigationPaneAnimationDurationSnap velocty:_xVelocity];
+                    } else if (_state == MSDraggableViewStateClosed) {
+                        [self bounceToCompletionWithDuration:MSNavigationPaneAnimationDurationSnap velocty:_xVelocity];
                     }
                 }
             }
@@ -199,18 +220,18 @@ typedef void (^ViewActionBlock)(UIView *view);
 
 - (MSDraggableViewState)state
 {
-    return state;
+    return _state;
 }
 
 - (void)setState:(MSDraggableViewState)aState
 {
-    state = aState;
-    if (state == MSDraggableViewStateOpen) {
+    _state = aState;
+    if (_state == MSDraggableViewStateOpen) {
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
         _tapGestureRecognizer.numberOfTouchesRequired = 1;
         _tapGestureRecognizer.numberOfTapsRequired = 1;
         [self addGestureRecognizer:_tapGestureRecognizer];
-    } else if (state == MSDraggableViewStateClosed) {
+    } else if (_state == MSDraggableViewStateClosed) {
         [self removeGestureRecognizer:self.tapGestureRecognizer];
     }
     
@@ -233,7 +254,7 @@ typedef void (^ViewActionBlock)(UIView *view);
     newFrame.origin.x = xLocation;
     
     // Bounce over the location, and then slide to completion
-    animating = YES;
+    _animating = YES;
     [UIView animateWithDuration:duration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
@@ -253,7 +274,7 @@ typedef void (^ViewActionBlock)(UIView *view);
     newFrame.origin.x = xLocation;
     
     // Bounce over the location, and then slide to completion
-    animating = YES;
+    _animating = YES;
     [UIView animateWithDuration:duration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
@@ -270,16 +291,19 @@ typedef void (^ViewActionBlock)(UIView *view);
     CGRect newFrame = self.frame;
     newFrame.origin.x = xLocation;
     
-    animating = YES;
+    _animating = YES;
     [UIView animateWithDuration:duration
                      animations:^{
                          self.frame = newFrame;
                      }
                      completion:^(BOOL finished) {
-                         animating = NO;
+                         _animating = NO;
                          self.state = !self.state;
-                         if ([delegate respondsToSelector:@selector(draggableView:draggedToState:)]) {
-                             [delegate draggableView:self draggedToState:state];
+                         if ([self.delegate respondsToSelector:@selector(draggableView:wasDraggedToState:)]) {
+                             [self.delegate draggableView:self wasDraggedToState:_state];
+                         }
+                         if ([self.navigationPaneViewController respondsToSelector:@selector(draggableView:wasDraggedToState:)]) {
+                             [self.navigationPaneViewController draggableView:self wasDraggedToState:_state];
                          }
                      }];
 }
@@ -290,17 +314,17 @@ typedef void (^ViewActionBlock)(UIView *view);
     CGRect newFrame = self.frame;
     newFrame.origin.x = xLocation;
     
-    animating = YES;
+    _animating = YES;
     [UIView animateWithDuration:duration
                      animations:^{
                          self.frame = newFrame;
                      }
                      completion:^(BOOL finished) {
-                         animating = NO;
+                         _animating = NO;
                      }];
 }
 
-#pragma mark - Gesture Recognizer Delegate
+#pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
@@ -315,7 +339,7 @@ typedef void (^ViewActionBlock)(UIView *view);
     [touch.view superviewHierarchyAction:^(UIView *view) {
         // Only enumerate while still receiving the touch
         if (shouldReceiveTouch) {
-            [_touchForwardingClasses enumerateObjectsUsingBlock:^(Class touchForwardingClass, BOOL *stop) {
+            [self.touchForwardingClasses enumerateObjectsUsingBlock:^(Class touchForwardingClass, BOOL *stop) {
                 if ([view isKindOfClass:touchForwardingClass]) {
                     shouldReceiveTouch = NO;
                     *stop = YES;

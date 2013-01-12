@@ -44,6 +44,12 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
     MSNavigationPaneStateClosed,
 };
 
+typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
+    MSNavigationPaneAppearanceTypeNone,
+    MSNavigationPaneAppearanceTypeZoom,
+    MSNavigationPaneAppearanceTypeParallax,
+};
+
 @protocol MSNavigationPaneViewControllerDelegate;
 
 @interface MSNavigationPaneViewController : UIViewController
@@ -51,6 +57,8 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
 @property (nonatomic, assign) id<MSNavigationPaneViewControllerDelegate> delegate;
 
 @property (nonatomic, assign) MSNavigationPaneState paneState;
+@property (nonatomic, assign) MSNavigationPaneAppearanceType appearanceType;
+
 @property (nonatomic, strong) UIViewController *paneViewController;
 @property (nonatomic, strong) UIViewController *masterViewController;
 

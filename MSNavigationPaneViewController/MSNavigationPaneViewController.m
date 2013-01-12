@@ -45,10 +45,15 @@ const CGFloat MSNavigationPaneAnimationDurationClosedToOpen = 0.3;
 const CGFloat MSNavigationPaneAnimationDurationSnap = 0.15;
 const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 
-@interface MSNavigationPaneViewController () {
+// Appearance Type Constants
+const CGFloat MSNavigationPaneAppearanceTypeZoomScaleFraction = 0.075;
+const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
+
+@interface MSNavigationPaneViewController () <MSDraggableViewDelegate> {
     
     UIViewController *_masterViewController;
     UIViewController *_paneViewController;
+    MSNavigationPaneAppearanceType _appearanceType;
 }
 
 - (void)initialize;
@@ -60,9 +65,10 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 @dynamic masterViewController;
 @dynamic paneViewController;
 @dynamic paneState;
+@dynamic appearanceType;
 @synthesize delegate;
 
-#pragma mark UIViewController
+#pragma mark - UIViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -93,12 +99,15 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
 {
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
+    _appearanceType = MSNavigationPaneAppearanceTypeNone;
+    
     _masterView = [[UIView alloc] initWithFrame:self.view.bounds];
     _masterView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _masterView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_masterView];
     
     _paneView = [[MSDraggableView alloc] initWithFrame:self.view.bounds];
+    _paneView.navigationPaneViewController = self;
     _paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _paneView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_paneView];
@@ -333,6 +342,38 @@ const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
             animatePaneOpen();
             animatePaneOpenCompletion(YES);
         }
+    }
+}
+
+- (void)setAppearanceType:(MSNavigationPaneAppearanceType)appearanceType
+{
+    // Reset scale transform if set to a new appearance type
+    if (appearanceType != MSNavigationPaneAppearanceTypeZoom) {
+        self.masterView.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+    }
+    // Reset translate transform if set to a new appearance type
+    if (appearanceType != MSNavigationPaneAppearanceTypeParallax) {
+        self.masterView.layer.transform = CATransform3DMakeTranslation(0.0, 0.0, 0.0);
+    }
+    _appearanceType = appearanceType;
+}
+
+- (MSNavigationPaneAppearanceType)appearanceType
+{
+    return _appearanceType;
+}
+
+#pragma mark - MSDraggableViewDelegate
+
+- (void)draggableView:(MSDraggableView *)draggableView wasDraggedToFraction:(CGFloat)fraction
+{
+    if (_appearanceType == MSNavigationPaneAppearanceTypeZoom) {
+        CGFloat scale = (1.0 - (fraction * MSNavigationPaneAppearanceTypeZoomScaleFraction));
+        self.masterView.layer.transform = CATransform3DMakeScale(scale, scale, scale);
+    }
+    else if (_appearanceType == MSNavigationPaneAppearanceTypeParallax) {
+        CGFloat xTranslate = -((MSNavigationPaneOpenStateMasterDisplayWidth * fraction) * MSNavigationPaneAppearanceTypeParallaxOffsetFraction);
+        self.masterView.layer.transform = CATransform3DMakeTranslation(xTranslate, 0.0, 0.0);
     }
 }
 
