@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MSNavigationPaneViewController'
-  s.version      = '0.0.3'
+  s.version      = '0.1.0'
   s.license      = 'MIT'
   s.platform     = :ios, '5.0'
 
