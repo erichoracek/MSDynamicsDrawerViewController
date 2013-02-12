@@ -41,6 +41,9 @@
     
     self.navigationPaneViewController.masterViewController = masterViewController;
     
+    self.navigationPaneViewController.openDirection = MSNavigationPaneOpenDirectionLeft;
+    self.navigationPaneViewController.paneViewSlideOffAnimationEnabled = NO;
+    
     [masterViewController transitionToViewController:MSPaneViewControllerTypeAppearanceNone];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

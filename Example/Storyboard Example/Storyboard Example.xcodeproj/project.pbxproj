@@ -17,7 +17,7 @@
 		3A116769167E904A00DBD12B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A116768167E904A00DBD12B /* QuartzCore.framework */; };
 		3A1167B7167EAB7C00DBD12B /* MSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167B6167EAB7C00DBD12B /* MSMasterViewController.m */; };
 		3A1167BC167EAB9B00DBD12B /* MSNavigationPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167B8167EAB9B00DBD12B /* MSNavigationPaneViewController.m */; };
-		3A1167BD167EAB9B00DBD12B /* MSDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167BA167EAB9B00DBD12B /* MSDraggableView.m */; };
+		3A1167BD167EAB9B00DBD12B /* MSPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1167BA167EAB9B00DBD12B /* MSPaneView.m */; };
 		3A116872167EAE2500DBD12B /* MSMonospaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A116871167EAE2500DBD12B /* MSMonospaceViewController.m */; };
 		3A5AC5FF16A20551006F5A3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC5F016A20551006F5A3F /* Default-568h@2x.png */; };
 		3A5AC60016A20551006F5A3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC5F116A20551006F5A3F /* Default.png */; };
@@ -52,8 +52,8 @@
 		3A1167B5167EAB7C00DBD12B /* MSMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMasterViewController.h; sourceTree = "<group>"; };
 		3A1167B6167EAB7C00DBD12B /* MSMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMasterViewController.m; sourceTree = "<group>"; };
 		3A1167B8167EAB9B00DBD12B /* MSNavigationPaneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSNavigationPaneViewController.m; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.m; sourceTree = "<group>"; };
-		3A1167B9167EAB9B00DBD12B /* MSDraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSDraggableView.h; path = ../../MSNavigationPaneViewController/MSDraggableView.h; sourceTree = "<group>"; };
-		3A1167BA167EAB9B00DBD12B /* MSDraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSDraggableView.m; path = ../../MSNavigationPaneViewController/MSDraggableView.m; sourceTree = "<group>"; };
+		3A1167B9167EAB9B00DBD12B /* MSPaneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPaneView.h; path = ../../MSNavigationPaneViewController/MSPaneView.h; sourceTree = "<group>"; };
+		3A1167BA167EAB9B00DBD12B /* MSPaneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPaneView.m; path = ../../MSNavigationPaneViewController/MSPaneView.m; sourceTree = "<group>"; };
 		3A1167BB167EAB9B00DBD12B /* MSNavigationPaneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSNavigationPaneViewController.h; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.h; sourceTree = "<group>"; };
 		3A116870167EAE2500DBD12B /* MSMonospaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMonospaceViewController.h; path = ../../MSMonospaceViewController/MSMonospaceViewController.h; sourceTree = "<group>"; };
 		3A116871167EAE2500DBD12B /* MSMonospaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMonospaceViewController.m; path = ../../MSMonospaceViewController/MSMonospaceViewController.m; sourceTree = "<group>"; };
@@ -145,8 +145,8 @@
 		3A116787167EAA0800DBD12B /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				3A1167B9167EAB9B00DBD12B /* MSDraggableView.h */,
-				3A1167BA167EAB9B00DBD12B /* MSDraggableView.m */,
+				3A1167B9167EAB9B00DBD12B /* MSPaneView.h */,
+				3A1167BA167EAB9B00DBD12B /* MSPaneView.m */,
 				3A1167BB167EAB9B00DBD12B /* MSNavigationPaneViewController.h */,
 				3A1167B8167EAB9B00DBD12B /* MSNavigationPaneViewController.m */,
 			);
@@ -271,7 +271,7 @@
 				3A116752167E901700DBD12B /* MSAppDelegate.m in Sources */,
 				3A1167B7167EAB7C00DBD12B /* MSMasterViewController.m in Sources */,
 				3A1167BC167EAB9B00DBD12B /* MSNavigationPaneViewController.m in Sources */,
-				3A1167BD167EAB9B00DBD12B /* MSDraggableView.m in Sources */,
+				3A1167BD167EAB9B00DBD12B /* MSPaneView.m in Sources */,
 				3A116872167EAE2500DBD12B /* MSMonospaceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

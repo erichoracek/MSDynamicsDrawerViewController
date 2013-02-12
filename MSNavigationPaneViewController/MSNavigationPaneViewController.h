@@ -26,18 +26,16 @@
 //  THE SOFTWARE.
 //
 
-#import "MSDraggableView.h"
-
 // Sizes
-extern const CGFloat MSNavigationPaneOpenStateMasterDisplayWidth;
+extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthLeft;
+extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthRight;
+extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthTop;
 
-// Animation Durations
-extern const CGFloat MSNavigationPaneAnimationDurationOpenToSide;
-extern const CGFloat MSNavigationPaneAnimationDurationSideToClosed;
-extern const CGFloat MSNavigationPaneAnimationDurationOpenToClosed;
-extern const CGFloat MSNavigationPaneAnimationDurationClosedToOpen;
-extern const CGFloat MSNavigationPaneAnimationDurationSnap;
-extern const CGFloat MSNavigationPaneAnimationDurationSnapBack;
+typedef NS_ENUM(NSUInteger, MSNavigationPaneOpenDirection) {
+    MSNavigationPaneOpenDirectionLeft,
+    MSNavigationPaneOpenDirectionTop,
+    MSNavigationPaneOpenDirectionRight,
+};
 
 typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
     MSNavigationPaneStateOpen,
@@ -48,6 +46,7 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
     MSNavigationPaneAppearanceTypeNone,
     MSNavigationPaneAppearanceTypeZoom,
     MSNavigationPaneAppearanceTypeParallax,
+    MSNavigationPaneAppearanceTypeFade,
 };
 
 @protocol MSNavigationPaneViewControllerDelegate;
@@ -56,14 +55,25 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 
 @property (nonatomic, assign) id<MSNavigationPaneViewControllerDelegate> delegate;
 
+@property (nonatomic, assign) MSNavigationPaneOpenDirection openDirection;
 @property (nonatomic, assign) MSNavigationPaneState paneState;
 @property (nonatomic, assign) MSNavigationPaneAppearanceType appearanceType;
+@property (nonatomic, assign) CGFloat openStateRevealWidth;
 
 @property (nonatomic, strong) UIViewController *paneViewController;
 @property (nonatomic, strong) UIViewController *masterViewController;
 
 @property (nonatomic, readonly) UIView *masterView;
-@property (nonatomic, readonly) MSDraggableView *paneView;
+@property (nonatomic, readonly) UIView *paneView;
+
+// If a pan gesture on the pane view should slide the pane view
+@property (nonatomic, assign) BOOL paneDraggingEnabled;
+
+// If setting a new pane view controller should cause an animation that slides off the old view controller before animating the new one back on
+@property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
+
+// Classes that the pane view should forward dragging through to (UISlider, UISwitch by default)
+@property (nonatomic, readonly) NSMutableSet *touchForwardingClasses;
 
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated;
@@ -76,5 +86,6 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController willAnimateToPane:(UIViewController *)paneViewController;
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didAnimateToPane:(UIViewController *)paneViewController;
+- (void)paneView:(UIView *)paneView wasDraggedToState:(MSNavigationPaneState)state;
 
 @end

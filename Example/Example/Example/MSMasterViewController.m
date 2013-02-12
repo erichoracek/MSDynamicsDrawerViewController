@@ -59,18 +59,21 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
             @(MSPaneViewControllerTypeAppearanceNone) : @"None",
             @(MSPaneViewControllerTypeAppearanceParallax) : @"Parallax",
             @(MSPaneViewControllerTypeAppearanceZoom) : @"Zoom",
+            @(MSPaneViewControllerTypeAppearanceFade) : @"Fade",
             @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd."
         };
         self.paneViewControllerClasses = @{
             @(MSPaneViewControllerTypeAppearanceNone) : UITableViewController.class,
             @(MSPaneViewControllerTypeAppearanceParallax) : UITableViewController.class,
             @(MSPaneViewControllerTypeAppearanceZoom) : UITableViewController.class,
+            @(MSPaneViewControllerTypeAppearanceFade) : UITableViewController.class,
             @(MSPaneViewControllerTypeMonospace) : MSMonospaceViewController.class
         };
         self.paneViewControllerAppearanceTypes = @{
             @(MSPaneViewControllerTypeAppearanceNone) : @(MSNavigationPaneAppearanceTypeNone),
             @(MSPaneViewControllerTypeAppearanceParallax) : @(MSNavigationPaneAppearanceTypeParallax),
             @(MSPaneViewControllerTypeAppearanceZoom) : @(MSNavigationPaneAppearanceTypeZoom),
+            @(MSPaneViewControllerTypeAppearanceFade) : @(MSNavigationPaneAppearanceTypeFade),
         };
         self.tableViewSectionBreaks = @[
             @(MSPaneViewControllerTypeMonospace),

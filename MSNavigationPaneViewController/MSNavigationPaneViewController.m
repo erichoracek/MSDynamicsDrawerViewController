@@ -27,14 +27,20 @@
 //
 
 #import "MSNavigationPaneViewController.h"
-#import "MSDraggableView.h"
-
+#import "PRTween.h"
 #import <QuartzCore/QuartzCore.h>
 
 //#define LAYOUT_DEBUG
 
 // Sizes
-const CGFloat MSNavigationPaneOpenStateMasterDisplayWidth = 267.0f;
+const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthLeft = 267.0;
+const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthRight = 267.0;
+const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthTop = 200.0;
+const CGFloat MSNavigationPaneOpenAnimationOvershot = 20.0;
+
+// Appearance Type Constants
+const CGFloat MSNavigationPaneAppearanceTypeZoomScaleFraction = 0.075;
+const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
 
 // Animation Durations
 const CGFloat MSNavigationPaneAnimationDurationOpenToSide = 0.2;
@@ -42,21 +48,52 @@ const CGFloat MSNavigationPaneAnimationDurationClosedToSide = 0.5;
 const CGFloat MSNavigationPaneAnimationDurationSideToClosed = 0.45;
 const CGFloat MSNavigationPaneAnimationDurationOpenToClosed = 0.3;
 const CGFloat MSNavigationPaneAnimationDurationClosedToOpen = 0.3;
-const CGFloat MSNavigationPaneAnimationDurationSnap = 0.15;
-const CGFloat MSNavigationPaneAnimationDurationSnapBack = 0.12;
+const CGFloat MSNavigationPaneAnimationDurationSnap = 0.2;
 
-// Appearance Type Constants
-const CGFloat MSNavigationPaneAppearanceTypeZoomScaleFraction = 0.075;
-const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
+// Velocity Thresholds
+const CGFloat MSDraggableViewVelocityThreshold = 8.0;
 
-@interface MSNavigationPaneViewController () <MSDraggableViewDelegate> {
+typedef void (^ViewActionBlock)(UIView *view);
+
+@interface UIView (ViewHierarchyAction)
+
+- (void)superviewHierarchyAction:(ViewActionBlock)viewAction;
+
+@end
+
+@implementation UIView (ViewHierarchyAction)
+
+- (void)superviewHierarchyAction:(ViewActionBlock)viewAction
+{
+    viewAction(self);
+    [self.superview superviewHierarchyAction:viewAction];
+}
+
+@end
+
+@interface MSNavigationPaneViewController () <UIGestureRecognizerDelegate> {
     
     UIViewController *_masterViewController;
     UIViewController *_paneViewController;
     MSNavigationPaneAppearanceType _appearanceType;
+    MSNavigationPaneState _paneState;
+    MSNavigationPaneOpenDirection _openDirection;
 }
 
+@property (nonatomic, assign) BOOL animatingPane;
+@property (nonatomic, assign) CGPoint paneStartLocation;
+@property (nonatomic, assign) CGPoint paneStartLocationInSuperview;
+@property (nonatomic, assign) CGFloat paneVelocity;
+
+@property (nonatomic, strong) UIPanGestureRecognizer *panePanGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *paneTapGestureRecognizer;
+
 - (void)initialize;
+- (void)animatePaneToState:(MSNavigationPaneState)state duration:(CGFloat)duration bounce:(BOOL)bounce;
+- (void)paneViewFrameChanged;
+- (CGFloat)paneViewClosedFraction;
+- (void)paneTapped:(UIPanGestureRecognizer *)gesureRecognizer;
+- (void)panePanned:(UITapGestureRecognizer *)gesureRecognizer;
 
 @end
 
@@ -66,7 +103,13 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
 @dynamic paneViewController;
 @dynamic paneState;
 @dynamic appearanceType;
-@synthesize delegate;
+
+#pragma mark - NSObject
+
+- (void)dealloc
+{
+    [self.paneView removeObserver:self forKeyPath:@"frame"];
+}
 
 #pragma mark - UIViewController
 
@@ -93,46 +136,55 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
     return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
-#pragma mark - ERNavigationPaneViewController
+#pragma mark - MSNavigationPaneViewController
 
 - (void)initialize
 {
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     _appearanceType = MSNavigationPaneAppearanceTypeNone;
+    _openDirection = MSNavigationPaneOpenDirectionTop;
+    _openStateRevealWidth = MSNavigationPaneDefaultOpenStateRevealWidthLeft;
+    _paneDraggingEnabled = YES;
+    _paneViewSlideOffAnimationEnabled = YES;
+    
+    _touchForwardingClasses = [NSMutableSet setWithObjects:UISlider.class, UISwitch.class, nil];
     
     _masterView = [[UIView alloc] initWithFrame:self.view.bounds];
     _masterView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _masterView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_masterView];
     
-    _paneView = [[MSDraggableView alloc] initWithFrame:self.view.bounds];
-    _paneView.navigationPaneViewController = self;
-    _paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _paneView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_paneView];
+    _paneView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    self.paneView.backgroundColor = [UIColor clearColor];
+    
+    // Ensure that the shadow extends beyond the edges of the screen
+    self.paneView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(self.paneView.frame, -40.0, 0.0)] CGPath];
+    self.paneView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.paneView.layer.shadowOpacity = 1.0;
+    self.paneView.layer.shadowRadius = 10.0;
+    self.paneView.layer.masksToBounds = NO;
+    
+    [self.view addSubview:self.paneView];
+    
+    [self.paneView addObserver:self forKeyPath:@"frame" options:NULL context:NULL];
+    
+    self.panePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panePanned:)];
+    self.panePanGestureRecognizer.minimumNumberOfTouches = 1;
+    self.panePanGestureRecognizer.maximumNumberOfTouches = 1;
+    self.panePanGestureRecognizer.delegate = self;
+    [self.paneView addGestureRecognizer:self.panePanGestureRecognizer];
     
 #if defined(LAYOUT_DEBUG)
     _masterView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.1];
     _masterView.layer.borderColor = [[UIColor blueColor] CGColor];
     _masterView.layer.borderWidth = 2.0;
     
-    _paneView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.1];
-    _paneView.layer.borderColor = [[UIColor redColor] CGColor];
-    _paneView.layer.borderWidth = 2.0;
+    self.paneView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.1];
+    self.paneView.layer.borderColor = [[UIColor redColor] CGColor];
+    self.paneView.layer.borderWidth = 2.0;
 #endif
-}
-
-#pragma mark Pane State
-
-- (MSNavigationPaneState)paneState
-{
-    return _paneView.state;
-}
-
-- (void)setPaneState:(MSNavigationPaneState)paneState
-{
-    [self setPaneState:paneState animated:NO];
 }
 
 #pragma mark View Controller Accessors
@@ -144,27 +196,27 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
 
 - (void)setMasterViewController:(UIViewController *)masterViewController
 {
-	if (_masterViewController == nil) {
+	if (self.masterViewController == nil) {
         
         masterViewController.view.frame = _masterView.bounds;
 		_masterViewController = masterViewController;
-		[self addChildViewController:_masterViewController];
-		[_masterView addSubview:_masterViewController.view];
-		[_masterViewController didMoveToParentViewController:self];
+		[self addChildViewController:self.masterViewController];
+		[_masterView addSubview:self.masterViewController.view];
+		[self.masterViewController didMoveToParentViewController:self];
         
-	} else if (_masterViewController != masterViewController) {
+	} else if (self.masterViewController != masterViewController) {
         
 		masterViewController.view.frame = _masterView.bounds;
-		[_masterViewController willMoveToParentViewController:nil];
+		[self.masterViewController willMoveToParentViewController:nil];
 		[self addChildViewController:masterViewController];
         
         void(^transitionCompletion)(BOOL finished) = ^(BOOL finished) {
-            [_masterViewController removeFromParentViewController];
+            [self.masterViewController removeFromParentViewController];
             [masterViewController didMoveToParentViewController:self];
             _masterViewController = masterViewController;
         };
         
-		[self transitionFromViewController:_masterViewController
+		[self transitionFromViewController:self.masterViewController
 						  toViewController:masterViewController
 								  duration:0
 								   options:UIViewAnimationOptionTransitionNone
@@ -180,27 +232,27 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
 
 - (void)setPaneViewController:(UIViewController *)paneViewController
 {
-	if (_paneViewController == nil) {
+	if (self.paneViewController == nil) {
         
-		paneViewController.view.frame = _paneView.bounds;
+		paneViewController.view.frame = self.paneView.bounds;
 		_paneViewController = paneViewController;
-		[self addChildViewController:_paneViewController];
-		[_paneView addSubview:_paneViewController.view];
-		[_paneViewController didMoveToParentViewController:self];
+		[self addChildViewController:self.paneViewController];
+		[self.paneView addSubview:self.paneViewController.view];
+		[self.paneViewController didMoveToParentViewController:self];
         
-	} else if (_paneViewController != paneViewController) {
+	} else if (self.paneViewController != paneViewController) {
         
-		paneViewController.view.frame = _paneView.bounds;
-		[_paneViewController willMoveToParentViewController:nil];
+		paneViewController.view.frame = self.paneView.bounds;
+		[self.paneViewController willMoveToParentViewController:nil];
 		[self addChildViewController:paneViewController];
         
         void(^transitionCompletion)(BOOL finished) = ^(BOOL finished) {
-            [_paneViewController removeFromParentViewController];
+            [self.paneViewController removeFromParentViewController];
             [paneViewController didMoveToParentViewController:self];
             _paneViewController = paneViewController;
         };
         
-		[self transitionFromViewController:_paneViewController
+		[self transitionFromViewController:self.paneViewController
 						  toViewController:paneViewController
 								  duration:0
 								   options:UIViewAnimationOptionTransitionNone
@@ -208,8 +260,6 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
 								completion:transitionCompletion];
 	}
 }
-
-#pragma mark Navigation Pane View Controller Methods
 
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion
 {
@@ -233,15 +283,25 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
     self.view.userInteractionEnabled = NO;
     
     void(^movePaneToSide)() = ^{
-        CGRect paneViewFrame = _paneView.frame;
-        paneViewFrame.origin.x = CGRectGetWidth(self.view.frame) + 20.0;
-        _paneView.frame = paneViewFrame;
+        CGRect paneViewFrame = self.paneView.frame;
+        switch (self.openDirection) {
+            case MSNavigationPaneOpenDirectionLeft:
+                paneViewFrame.origin.x = CGRectGetWidth(self.view.frame) + MSNavigationPaneOpenAnimationOvershot;
+                break;
+            case MSNavigationPaneOpenDirectionTop:
+                paneViewFrame.origin.y = CGRectGetHeight(self.view.frame) + MSNavigationPaneOpenAnimationOvershot;
+                break;
+            case MSNavigationPaneOpenDirectionRight:
+                paneViewFrame.origin.x = -MSNavigationPaneOpenAnimationOvershot;
+                break;
+        }
+        self.paneView.frame = paneViewFrame;
     };
     
     void(^movePaneToClosed)() = ^{
-        CGRect paneViewFrame = _paneView.frame;
-        paneViewFrame.origin.x = 0.0;
-        _paneView.frame = paneViewFrame;
+        CGRect paneViewFrame = self.paneView.frame;
+        paneViewFrame.origin = CGPointMake(0.0, 0.0);
+        self.paneView.frame = paneViewFrame;
     };
     
     // If we're trying to animate to the currently visible pane view controller, just close
@@ -252,7 +312,7 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:movePaneToClosed
                          completion:^(BOOL animationFinished) {
-                             _paneView.state = MSDraggableViewStateClosed;
+                             self.paneState = MSNavigationPaneStateClosed;
                              localCompletion();
                          }];
     }
@@ -264,7 +324,7 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
             self.paneViewController = paneViewController;
             
             // Force redraw of the pane view (for smooth animation)
-            [_paneView setNeedsDisplay];
+            [self.paneView setNeedsDisplay];
             [CATransaction flush];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -275,7 +335,7 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
                                  animations:movePaneToClosed
                                  completion:^(BOOL animationFinished) {
                                      if (animationFinished) {
-                                         _paneView.state = MSDraggableViewStateClosed;
+                                         self.paneState = MSNavigationPaneStateClosed;
                                          localCompletion();
                                      }
                                  }];
@@ -293,35 +353,179 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
             [self.delegate navigationPaneViewController:self willAnimateToPane:paneViewController];
         }
         
-        [UIView animateWithDuration:duration
-                         animations:movePaneToSide
-                         completion:newPaneCompletion];
+        if (self.paneViewSlideOffAnimationEnabled) {
+            [UIView animateWithDuration:duration
+                             animations:movePaneToSide
+                             completion:newPaneCompletion];
+        } else {
+            newPaneCompletion(YES);
+        }
     }
 }
 
-- (void)setPaneState:(MSNavigationPaneState)aPaneState animated:(BOOL)animated
+#pragma mark Pane View Animation
+
+- (CGFloat)paneViewClosedFraction
 {
-    void(^animatePaneOpen)() = ^{
-        CGRect paneViewFrame = _paneView.frame;
-        paneViewFrame.origin.x = MSNavigationPaneOpenStateMasterDisplayWidth;
-        _paneView.frame = paneViewFrame;
+    CGFloat fraction;
+    switch (self.openDirection) {
+        case MSNavigationPaneOpenDirectionLeft:
+            fraction = ((self.openStateRevealWidth - self.paneView.frame.origin.x) / self.openStateRevealWidth);
+            break;
+        case MSNavigationPaneOpenDirectionTop:
+            fraction = ((self.openStateRevealWidth - self.paneView.frame.origin.y) / self.openStateRevealWidth);
+            break;
+        case MSNavigationPaneOpenDirectionRight:
+            fraction = ((self.openStateRevealWidth - self.paneView.frame.origin.x) / self.openStateRevealWidth);
+            break;
+    }
+    
+    // Clip to 0.0 < fraction < 1.0
+    fraction = (fraction < 0.0) ? 0.0 : fraction;
+    fraction = (fraction > 1.0) ? 1.0 : fraction;
+    
+    return fraction;
+}
+
+- (void)paneViewFrameChanged
+{
+    CGFloat fraction = [self paneViewClosedFraction];
+    
+    if (self.appearanceType == MSNavigationPaneAppearanceTypeZoom) {
+        CGFloat scale = (1.0 - (fraction * MSNavigationPaneAppearanceTypeZoomScaleFraction));
+        self.masterView.layer.transform = CATransform3DMakeScale(scale, scale, scale);
+    }
+    else if (self.appearanceType == MSNavigationPaneAppearanceTypeParallax) {
+        CGFloat translate = -((self.openStateRevealWidth * fraction) * MSNavigationPaneAppearanceTypeParallaxOffsetFraction);
+        CATransform3D transform;
+        switch (self.openDirection) {
+            case MSNavigationPaneOpenDirectionLeft:
+                transform = CATransform3DMakeTranslation(translate, 0.0, 0.0);
+                break;
+            case MSNavigationPaneOpenDirectionTop:
+                transform = CATransform3DMakeTranslation(0.0, translate, 0.0);
+                break;
+            case MSNavigationPaneOpenDirectionRight:
+                transform = CATransform3DMakeTranslation(-translate, 0.0, 0.0);
+                break;
+        }
+        self.masterView.layer.transform = transform;
+    }
+    else if (self.appearanceType == MSNavigationPaneAppearanceTypeFade) {
+        self.masterView.alpha = (1.0 - fraction);
+    }
+}
+
+- (void)animatePaneToState:(MSNavigationPaneState)state duration:(CGFloat)duration bounce:(BOOL)bounce
+{
+    CGFloat startPosition;
+    switch (self.openDirection) {
+        case MSNavigationPaneOpenDirectionLeft:
+        case MSNavigationPaneOpenDirectionRight:
+            startPosition = self.paneView.frame.origin.x;
+            break;
+        case MSNavigationPaneOpenDirectionTop:
+            startPosition = self.paneView.frame.origin.y;
+            break;
+    }
+    
+    CGFloat endPosition;
+    switch (state) {
+        case MSNavigationPaneStateOpen:
+            endPosition = self.openStateRevealWidth;
+            break;
+        case MSNavigationPaneStateClosed:
+            endPosition = 0.0;
+            break;
+    }
+    
+    void(^tweenUpdate)(PRTweenPeriod *period) = ^(PRTweenPeriod *period) {
+        CGRect newFrame = self.paneView.frame;
+        switch (self.openDirection) {
+            case MSNavigationPaneOpenDirectionLeft:
+            case MSNavigationPaneOpenDirectionRight:
+                newFrame.origin = CGPointMake(period.tweenedValue, 0.0);
+                break;
+            case MSNavigationPaneOpenDirectionTop:
+                newFrame.origin = CGPointMake(0.0, period.tweenedValue);
+                break;
+        }
+        self.paneView.frame = newFrame;
     };
     
-    void(^animatePaneOpenCompletion)(BOOL animationFinished) = ^(BOOL animationFinished) {
-        _paneView.state = MSDraggableViewStateOpen;
+    void(^tweenCompletion)() = ^() {
+        self.animatingPane = NO;
+        if (self.paneState != state) {
+            self.paneState = state;
+            if ([self.delegate respondsToSelector:@selector(paneView:wasDraggedToState:)]) {
+                [self.delegate paneView:self.paneView wasDraggedToState:self.paneState];
+            }
+        }
     };
     
-    void(^animatePaneClosed)() = ^{
-        CGRect paneViewFrame = _paneView.frame;
-        paneViewFrame.origin.x = 0.0;
-        _paneView.frame = paneViewFrame;
+    self.animatingPane = YES;
+    PRTweenPeriod *tweenPeriod = [PRTweenPeriod periodWithStartValue:startPosition endValue:endPosition duration:duration];
+    PRTweenTimingFunction timingFunction = (bounce ? &PRTweenTimingFunctionBackOut : &PRTweenTimingFunctionQuadInOut);
+    [[PRTween sharedInstance] addTweenPeriod:tweenPeriod updateBlock:tweenUpdate completionBlock:tweenCompletion timingFunction:timingFunction];
+}
+
+#pragma mark Appearance Type
+
+- (void)setAppearanceType:(MSNavigationPaneAppearanceType)appearanceType
+{
+    // Reset scale transform if set to a new appearance type
+    if (appearanceType != MSNavigationPaneAppearanceTypeZoom) {
+        self.masterView.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+    }
+    // Reset translate transform if set to a new appearance type
+    if (appearanceType != MSNavigationPaneAppearanceTypeParallax) {
+        self.masterView.layer.transform = CATransform3DMakeTranslation(0.0, 0.0, 0.0);
+    }
+    if (appearanceType != MSNavigationPaneAppearanceTypeFade) {
+        self.masterView.alpha = 1.0;
+    }
+    _appearanceType = appearanceType;
+}
+
+- (MSNavigationPaneAppearanceType)appearanceType
+{
+    return _appearanceType;
+}
+
+#pragma mark Pane State
+
+- (MSNavigationPaneState)paneState
+{
+    return _paneState;
+}
+
+- (void)setPaneState:(MSNavigationPaneState)paneState
+{
+    [self setPaneState:paneState animated:NO];
+}
+
+- (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated
+{
+    void(^completion)() = ^ {
+        _paneState = paneState;
+        // Disable interation when pane is closed
+        for (UIView *subview in self.paneView.subviews) {
+            subview.userInteractionEnabled = (self.paneState == MSNavigationPaneStateClosed);
+        }
     };
     
-    void(^animatePaneClosedCompletion)(BOOL animationFinished) = ^(BOOL animationFinished) {
-        _paneView.state = MSDraggableViewStateClosed;
-    };
-    
-    if (aPaneState == MSNavigationPaneStateClosed) {
+    if (paneState == MSNavigationPaneStateClosed) {
+        
+        void(^animatePaneClosed)() = ^{
+            CGRect paneViewFrame = self.paneView.frame;
+            paneViewFrame.origin = CGPointMake(0.0, 0.0);
+            self.paneView.frame = paneViewFrame;
+        };
+        
+        void(^animatePaneClosedCompletion)(BOOL animationFinished) = ^(BOOL animationFinished) {
+            completion();
+            [self.paneView removeGestureRecognizer:self.paneTapGestureRecognizer];
+        };
         
         if (animated) {
             [UIView animateWithDuration:MSNavigationPaneAnimationDurationClosedToOpen
@@ -332,7 +536,31 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
             animatePaneClosedCompletion(YES);
         }
         
-    } else if (aPaneState == MSNavigationPaneStateOpen) {
+    } else if (paneState == MSNavigationPaneStateOpen) {
+        
+        void(^animatePaneOpen)() = ^{
+            CGRect paneViewFrame = self.paneView.frame;
+            switch (self.openDirection) {
+                case MSNavigationPaneOpenDirectionLeft:
+                    paneViewFrame.origin.x = self.openStateRevealWidth;
+                    break;
+                case MSNavigationPaneOpenDirectionTop:
+                    paneViewFrame.origin.y = self.openStateRevealWidth;
+                    break;
+                case MSNavigationPaneOpenDirectionRight:
+                    paneViewFrame.origin.x = (CGRectGetWidth(self.view.frame) - self.openStateRevealWidth);
+                    break;
+            }
+            self.paneView.frame = paneViewFrame;
+        };
+        
+        void(^animatePaneOpenCompletion)(BOOL animationFinished) = ^(BOOL animationFinished) {
+            completion();
+            self.paneTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(paneTapped:)];
+            self.paneTapGestureRecognizer.numberOfTouchesRequired = 1;
+            self.paneTapGestureRecognizer.numberOfTapsRequired = 1;
+            [self.paneView addGestureRecognizer:self.paneTapGestureRecognizer];
+        };
         
         if (animated) {
             [UIView animateWithDuration:MSNavigationPaneAnimationDurationOpenToClosed
@@ -345,35 +573,135 @@ const CGFloat MSNavigationPaneAppearanceTypeParallaxOffsetFraction = 0.35;
     }
 }
 
-- (void)setAppearanceType:(MSNavigationPaneAppearanceType)appearanceType
+#pragma mark Open Direction
+
+- (MSNavigationPaneOpenDirection)openDirection
 {
-    // Reset scale transform if set to a new appearance type
-    if (appearanceType != MSNavigationPaneAppearanceTypeZoom) {
-        self.masterView.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
-    }
-    // Reset translate transform if set to a new appearance type
-    if (appearanceType != MSNavigationPaneAppearanceTypeParallax) {
-        self.masterView.layer.transform = CATransform3DMakeTranslation(0.0, 0.0, 0.0);
-    }
-    _appearanceType = appearanceType;
+    return _openDirection;
 }
 
-- (MSNavigationPaneAppearanceType)appearanceType
+- (void)setOpenDirection:(MSNavigationPaneOpenDirection)openDirection
 {
-    return _appearanceType;
+    // Close the pane if it's currently open (before we update the direction)
+    if (self.paneState == MSNavigationPaneStateOpen) {
+        self.paneState = MSNavigationPaneStateClosed;
+    }
+    
+    _openDirection = openDirection;
+
+    switch (self.openDirection) {
+        case MSNavigationPaneOpenDirectionLeft:
+        case MSNavigationPaneOpenDirectionRight:
+            self.paneView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(self.paneView.frame, 0.0, -40.0)] CGPath];
+            break;
+        case MSNavigationPaneOpenDirectionTop:
+            self.paneView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(self.paneView.frame, -40.0, 0.0)] CGPath];
+            break;
+    }
 }
 
-#pragma mark - MSDraggableViewDelegate
+#pragma mark - UIGestureRecognizer Callbacks
 
-- (void)draggableView:(MSDraggableView *)draggableView wasDraggedToFraction:(CGFloat)fraction
+- (void)paneTapped:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    if (_appearanceType == MSNavigationPaneAppearanceTypeZoom) {
-        CGFloat scale = (1.0 - (fraction * MSNavigationPaneAppearanceTypeZoomScaleFraction));
-        self.masterView.layer.transform = CATransform3DMakeScale(scale, scale, scale);
+    [self animatePaneToState:MSNavigationPaneStateClosed duration:MSNavigationPaneAnimationDurationOpenToClosed bounce:NO];
+}
+
+- (void)panePanned:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    if (!self.paneDraggingEnabled || self.animatingPane) {
+        return;
     }
-    else if (_appearanceType == MSNavigationPaneAppearanceTypeParallax) {
-        CGFloat xTranslate = -((MSNavigationPaneOpenStateMasterDisplayWidth * fraction) * MSNavigationPaneAppearanceTypeParallaxOffsetFraction);
-        self.masterView.layer.transform = CATransform3DMakeTranslation(xTranslate, 0.0, 0.0);
+    
+    switch (gestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan: {
+            self.paneStartLocation = [gestureRecognizer locationInView:self.paneView];
+            self.paneVelocity = 0.0;
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            CGPoint panLocationInPaneView = [gestureRecognizer locationInView:self.paneView];
+            // Pane Sliding
+            CGRect newFrame = self.paneView.frame;
+            switch (self.openDirection) {
+                case MSNavigationPaneOpenDirectionLeft:
+                case MSNavigationPaneOpenDirectionRight:
+                    newFrame.origin.x += (panLocationInPaneView.x - self.paneStartLocation.x);
+                    if ((newFrame.origin.x > 0.0) && (newFrame.origin.x < self.openStateRevealWidth)) {
+                        self.paneView.frame = newFrame;
+                    }
+                    break;
+                case MSNavigationPaneOpenDirectionTop:
+                    newFrame.origin.y += (panLocationInPaneView.y - self.paneStartLocation.y);
+                    if ((newFrame.origin.y > 0.0) && (newFrame.origin.y < self.openStateRevealWidth)) {
+                        self.paneView.frame = newFrame;
+                    }
+                    break;
+            }
+            // Velocity
+            switch (self.openDirection) {
+                case MSNavigationPaneOpenDirectionLeft:
+                case MSNavigationPaneOpenDirectionRight:
+                    self.paneVelocity = -(self.paneStartLocation.x - panLocationInPaneView.x);
+                    break;
+                case MSNavigationPaneOpenDirectionTop:
+                    self.paneVelocity = -(self.paneStartLocation.y - panLocationInPaneView.y);
+                    break;
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            // We've reached the velocity threshold, bounce to the appropriate state
+            if (fabsf(self.paneVelocity) > MSDraggableViewVelocityThreshold) {
+                MSNavigationPaneState state = ((self.paneVelocity > 0) ? MSNavigationPaneStateOpen : MSNavigationPaneStateClosed);
+                [self animatePaneToState:state duration:MSNavigationPaneAnimationDurationSnap bounce:YES];
+            }
+            // If we're released past half-way, snap to completion with no bounce, otherwise, snap to back to the starting position with no bounce
+            else {
+                MSNavigationPaneState state = (([self paneViewClosedFraction] > 0.5) ? MSNavigationPaneStateClosed : MSNavigationPaneStateOpen);
+                [self animatePaneToState:state duration:MSNavigationPaneAnimationDurationSnap bounce:YES];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (!self.paneDraggingEnabled) {
+        return NO;
+    }
+    __block BOOL shouldReceiveTouch = YES;
+    // Enumerate the view's superviews, checking for a touch-forwarding class
+    [touch.view superviewHierarchyAction:^(UIView *view) {
+        // Only enumerate while still receiving the touch
+        if (shouldReceiveTouch) {
+            // If the touch was in a touch forwarding view, don't handle the gesture
+            [self.touchForwardingClasses enumerateObjectsUsingBlock:^(Class touchForwardingClass, BOOL *stop) {
+                if ([view isKindOfClass:touchForwardingClass]) {
+                    shouldReceiveTouch = NO;
+                    *stop = YES;
+                }
+            }];
+        }
+    }];
+    return shouldReceiveTouch;
+}
+
+#pragma mark - NSKeyValueObserving
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"frame"] && (object == self.paneView)) {
+        CGRect newFrame = CGRectNull;
+        if([object valueForKeyPath:keyPath] != [NSNull null]) {
+            newFrame = [[object valueForKeyPath:keyPath] CGRectValue];
+            [self paneViewFrameChanged];
+        }
     }
 }
 

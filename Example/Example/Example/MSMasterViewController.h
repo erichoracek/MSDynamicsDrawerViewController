@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
     MSPaneViewControllerTypeAppearanceNone,
     MSPaneViewControllerTypeAppearanceParallax,
     MSPaneViewControllerTypeAppearanceZoom,
+    MSPaneViewControllerTypeAppearanceFade,
     MSPaneViewControllerTypeMonospace,
     MSPaneViewControllerTypeCount
 };
