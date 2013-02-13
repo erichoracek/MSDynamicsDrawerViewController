@@ -51,7 +51,7 @@ const CGFloat MSNavigationPaneAnimationDurationClosedToOpen = 0.3;
 const CGFloat MSNavigationPaneAnimationDurationSnap = 0.2;
 
 // Velocity Thresholds
-const CGFloat MSDraggableViewVelocityThreshold = 8.0;
+const CGFloat MSDraggableViewVelocityThreshold = 5.0;
 
 typedef void (^ViewActionBlock)(UIView *view);
 
@@ -124,16 +124,6 @@ typedef void (^ViewActionBlock)(UIView *view);
 - (void)awakeFromNib
 {
     [self initialize];
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark - MSNavigationPaneViewController
@@ -291,9 +281,6 @@ typedef void (^ViewActionBlock)(UIView *view);
             case MSNavigationPaneOpenDirectionTop:
                 paneViewFrame.origin.y = CGRectGetHeight(self.view.frame) + MSNavigationPaneOpenAnimationOvershot;
                 break;
-            case MSNavigationPaneOpenDirectionRight:
-                paneViewFrame.origin.x = -MSNavigationPaneOpenAnimationOvershot;
-                break;
         }
         self.paneView.frame = paneViewFrame;
     };
@@ -375,9 +362,6 @@ typedef void (^ViewActionBlock)(UIView *view);
         case MSNavigationPaneOpenDirectionTop:
             fraction = ((self.openStateRevealWidth - self.paneView.frame.origin.y) / self.openStateRevealWidth);
             break;
-        case MSNavigationPaneOpenDirectionRight:
-            fraction = ((self.openStateRevealWidth - self.paneView.frame.origin.x) / self.openStateRevealWidth);
-            break;
     }
     
     // Clip to 0.0 < fraction < 1.0
@@ -405,9 +389,6 @@ typedef void (^ViewActionBlock)(UIView *view);
             case MSNavigationPaneOpenDirectionTop:
                 transform = CATransform3DMakeTranslation(0.0, translate, 0.0);
                 break;
-            case MSNavigationPaneOpenDirectionRight:
-                transform = CATransform3DMakeTranslation(-translate, 0.0, 0.0);
-                break;
         }
         self.masterView.layer.transform = transform;
     }
@@ -421,7 +402,6 @@ typedef void (^ViewActionBlock)(UIView *view);
     CGFloat startPosition;
     switch (self.openDirection) {
         case MSNavigationPaneOpenDirectionLeft:
-        case MSNavigationPaneOpenDirectionRight:
             startPosition = self.paneView.frame.origin.x;
             break;
         case MSNavigationPaneOpenDirectionTop:
@@ -443,7 +423,6 @@ typedef void (^ViewActionBlock)(UIView *view);
         CGRect newFrame = self.paneView.frame;
         switch (self.openDirection) {
             case MSNavigationPaneOpenDirectionLeft:
-            case MSNavigationPaneOpenDirectionRight:
                 newFrame.origin = CGPointMake(period.tweenedValue, 0.0);
                 break;
             case MSNavigationPaneOpenDirectionTop:
@@ -547,9 +526,6 @@ typedef void (^ViewActionBlock)(UIView *view);
                 case MSNavigationPaneOpenDirectionTop:
                     paneViewFrame.origin.y = self.openStateRevealWidth;
                     break;
-                case MSNavigationPaneOpenDirectionRight:
-                    paneViewFrame.origin.x = (CGRectGetWidth(self.view.frame) - self.openStateRevealWidth);
-                    break;
             }
             self.paneView.frame = paneViewFrame;
         };
@@ -591,7 +567,6 @@ typedef void (^ViewActionBlock)(UIView *view);
 
     switch (self.openDirection) {
         case MSNavigationPaneOpenDirectionLeft:
-        case MSNavigationPaneOpenDirectionRight:
             self.paneView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(self.paneView.frame, 0.0, -40.0)] CGPath];
             break;
         case MSNavigationPaneOpenDirectionTop:
@@ -624,29 +599,40 @@ typedef void (^ViewActionBlock)(UIView *view);
             // Pane Sliding
             CGRect newFrame = self.paneView.frame;
             switch (self.openDirection) {
-                case MSNavigationPaneOpenDirectionLeft:
-                case MSNavigationPaneOpenDirectionRight:
+                case MSNavigationPaneOpenDirectionLeft: {
                     newFrame.origin.x += (panLocationInPaneView.x - self.paneStartLocation.x);
-                    if ((newFrame.origin.x > 0.0) && (newFrame.origin.x < self.openStateRevealWidth)) {
-                        self.paneView.frame = newFrame;
+                    if (newFrame.origin.x < 0.0) {
+                        newFrame.origin.x = -nearbyintf(sqrtf(fabs(newFrame.origin.x) * 2.0));
+                    } else if (newFrame.origin.x > self.openStateRevealWidth) {
+                        newFrame.origin.x = (self.openStateRevealWidth + nearbyintf(sqrtf((newFrame.origin.x - self.openStateRevealWidth) * 2.0)));
                     }
+                    self.paneView.frame = newFrame;
                     break;
-                case MSNavigationPaneOpenDirectionTop:
+                }
+                case MSNavigationPaneOpenDirectionTop: {
                     newFrame.origin.y += (panLocationInPaneView.y - self.paneStartLocation.y);
-                    if ((newFrame.origin.y > 0.0) && (newFrame.origin.y < self.openStateRevealWidth)) {
-                        self.paneView.frame = newFrame;
+                    if (newFrame.origin.y < 0.0) {
+                        newFrame.origin.y = -nearbyintf(sqrtf(fabs(newFrame.origin.y) * 2.0));
+                    } else if (newFrame.origin.y > self.openStateRevealWidth) {
+                        newFrame.origin.y = (self.openStateRevealWidth + nearbyintf(sqrtf((newFrame.origin.y - self.openStateRevealWidth) * 2.0)));
                     }
+                    self.paneView.frame = newFrame;
                     break;
+                }
             }
             // Velocity
+            CGFloat velocity;
             switch (self.openDirection) {
                 case MSNavigationPaneOpenDirectionLeft:
-                case MSNavigationPaneOpenDirectionRight:
-                    self.paneVelocity = -(self.paneStartLocation.x - panLocationInPaneView.x);
+                    velocity = -(self.paneStartLocation.x - panLocationInPaneView.x);
                     break;
                 case MSNavigationPaneOpenDirectionTop:
-                    self.paneVelocity = -(self.paneStartLocation.y - panLocationInPaneView.y);
+                    velocity = -(self.paneStartLocation.y - panLocationInPaneView.y);
                     break;
+            }
+            // For some reason, velocity can be 0 due to an error in the API, so just ignore it
+            if (velocity != 0) {
+                self.paneVelocity = velocity;
             }
             break;
         }

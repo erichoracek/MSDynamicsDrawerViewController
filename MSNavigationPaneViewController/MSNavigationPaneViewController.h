@@ -34,7 +34,6 @@ extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthTop;
 typedef NS_ENUM(NSUInteger, MSNavigationPaneOpenDirection) {
     MSNavigationPaneOpenDirectionLeft,
     MSNavigationPaneOpenDirectionTop,
-    MSNavigationPaneOpenDirectionRight,
 };
 
 typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
