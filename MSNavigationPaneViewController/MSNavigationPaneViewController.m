@@ -126,6 +126,11 @@ typedef void (^ViewActionBlock)(UIView *view);
     [self initialize];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
 #pragma mark - MSNavigationPaneViewController
 
 - (void)initialize
