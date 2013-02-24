@@ -57,13 +57,15 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 @property (nonatomic, assign) MSNavigationPaneOpenDirection openDirection;
 @property (nonatomic, assign) MSNavigationPaneState paneState;
 @property (nonatomic, assign) MSNavigationPaneAppearanceType appearanceType;
-@property (nonatomic, assign) CGFloat openStateRevealWidth;
 
 @property (nonatomic, strong) UIViewController *paneViewController;
 @property (nonatomic, strong) UIViewController *masterViewController;
 
 @property (nonatomic, readonly) UIView *masterView;
 @property (nonatomic, readonly) UIView *paneView;
+
+// The width that the pane should open to reveal the master
+@property (nonatomic, assign) CGFloat openStateRevealWidth;
 
 // If a pan gesture on the pane view should slide the pane view
 @property (nonatomic, assign) BOOL paneDraggingEnabled;
