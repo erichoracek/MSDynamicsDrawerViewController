@@ -1,9 +1,9 @@
 //
-//  MSMonospaceViewController.m
-//  MSNavigationPaneViewController Example
+//  MSAppDelegate.h
+//  MSNavigationPaneViewController
 //
 //  Created by Eric Horacek on 11/20/12.
-//  Copyright (c) 2012 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -26,35 +26,13 @@
 //  THE SOFTWARE.
 //
 
-#import "MSMonospaceViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface MSMonospaceViewController ()
+@class MSNavigationPaneViewController;
 
-@property (nonatomic, strong) UIWebView *webView;
+@interface MSAppDelegate : UIResponder <UIApplicationDelegate>
 
-@end
-
-@implementation MSMonospaceViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor blackColor];
-    
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    self.webView.opaque = NO;
-    self.webView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.webView];
-    
-    NSURLRequest *URLRequest = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://www.monospacecollective.com"]];
-    [self.webView loadRequest:URLRequest];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    self.webView = nil;
-}
+@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) MSNavigationPaneViewController *navigationPaneViewController;
 
 @end

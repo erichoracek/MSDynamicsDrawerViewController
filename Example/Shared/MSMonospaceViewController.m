@@ -1,9 +1,9 @@
 //
-//  MSMasterViewController.h
-//  MSNavigationPaneViewController
+//  MSMonospaceViewController.m
+//  MSNavigationPaneViewController Example
 //
 //  Created by Eric Horacek on 11/20/12.
-//  Copyright (c) 2012 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -26,23 +26,32 @@
 //  THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import "MSNavigationPaneViewController.h"
+#import "MSMonospaceViewController.h"
 
-typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
-    MSPaneViewControllerTypeAppearanceNone,
-    MSPaneViewControllerTypeAppearanceParallax,
-    MSPaneViewControllerTypeAppearanceZoom,
-    MSPaneViewControllerTypeAppearanceFade,
-    MSPaneViewControllerTypeMonospace,
-    MSPaneViewControllerTypeCount
-};
+@interface MSMonospaceViewController ()
 
-@interface MSMasterViewController : UITableViewController
+@property (nonatomic, strong) UIWebView *webView;
 
-@property (nonatomic, assign) MSPaneViewControllerType paneViewControllerType;
-@property (nonatomic, weak) MSNavigationPaneViewController *navigationPaneViewController;
+@end
 
-- (void)transitionToViewController:(MSPaneViewControllerType)paneViewControllerType;
+@implementation MSMonospaceViewController
+
+- (void)loadView
+{
+    self.webView = [[UIWebView alloc] init];
+    self.view = self.webView;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    self.webView.backgroundColor = [UIColor blackColor];
+    
+    NSURLRequest *URLRequest = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://www.monospacecollective.com"]];
+    [self.webView loadRequest:URLRequest];
+}
 
 @end

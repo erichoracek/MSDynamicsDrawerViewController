@@ -12,11 +12,8 @@
 		3A11669F167E8C3E00DBD12B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11669E167E8C3E00DBD12B /* CoreGraphics.framework */; };
 		3A1166A5167E8C3E00DBD12B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A1166A3167E8C3E00DBD12B /* InfoPlist.strings */; };
 		3A1166A7167E8C3E00DBD12B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1166A6167E8C3E00DBD12B /* main.m */; };
-		3A1166AB167E8C3E00DBD12B /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1166AA167E8C3E00DBD12B /* MSAppDelegate.m */; };
-		3A1166FE167E8DBF00DBD12B /* MSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1166FB167E8DBF00DBD12B /* MSMasterViewController.m */; };
 		3A116729167E8EF300DBD12B /* MSNavigationPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A116725167E8EF300DBD12B /* MSNavigationPaneViewController.m */; };
 		3A11672C167E8F1900DBD12B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11672B167E8F1900DBD12B /* QuartzCore.framework */; };
-		3A11686D167EAE0E00DBD12B /* MSMonospaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A11686C167EAE0E00DBD12B /* MSMonospaceViewController.m */; };
 		3A5AC61E16A20575006F5A3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC60F16A20575006F5A3F /* Default-568h@2x.png */; };
 		3A5AC61F16A20575006F5A3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC61016A20575006F5A3F /* Default.png */; };
 		3A5AC62016A20575006F5A3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC61116A20575006F5A3F /* Default@2x.png */; };
@@ -32,6 +29,11 @@
 		3A5AC62A16A20575006F5A3F /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC61B16A20575006F5A3F /* iTunesArtwork@2x.png */; };
 		3A5AC62B16A20575006F5A3F /* MSBarButtonIconNavigationPane.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC61C16A20575006F5A3F /* MSBarButtonIconNavigationPane.png */; };
 		3A5AC62C16A20575006F5A3F /* MSBarButtonIconNavigationPane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC61D16A20575006F5A3F /* MSBarButtonIconNavigationPane@2x.png */; };
+		3A6CB9DD16D965B300B4F041 /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9D816D965B300B4F041 /* MSAppDelegate.m */; };
+		3A6CB9DE16D965B300B4F041 /* MSExampleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9DA16D965B300B4F041 /* MSExampleTableViewController.m */; };
+		3A6CB9DF16D965B300B4F041 /* MSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9DC16D965B300B4F041 /* MSMasterViewController.m */; };
+		3A6CB9E216D965D700B4F041 /* MSMonospaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9E116D965D700B4F041 /* MSMonospaceViewController.m */; };
+		3A6CB9E516D96AE000B4F041 /* MSExampleControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9E416D96AE000B4F041 /* MSExampleControlsViewController.m */; };
 		3AE8F93B16C86D1100D724F3 /* PRTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8F93816C86D1100D724F3 /* PRTween.m */; };
 		3AE8F93C16C86D1100D724F3 /* PRTweenTimingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8F93A16C86D1100D724F3 /* PRTweenTimingFunctions.m */; };
 /* End PBXBuildFile section */
@@ -45,15 +47,9 @@
 		3A1166A4167E8C3E00DBD12B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A1166A6167E8C3E00DBD12B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3A1166A8167E8C3E00DBD12B /* Example-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Prefix.pch"; sourceTree = "<group>"; };
-		3A1166A9167E8C3E00DBD12B /* MSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
-		3A1166AA167E8C3E00DBD12B /* MSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
-		3A1166FA167E8DBF00DBD12B /* MSMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMasterViewController.h; path = ../Example/Example/MSMasterViewController.h; sourceTree = "<group>"; };
-		3A1166FB167E8DBF00DBD12B /* MSMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMasterViewController.m; path = ../Example/Example/MSMasterViewController.m; sourceTree = "<group>"; };
 		3A116725167E8EF300DBD12B /* MSNavigationPaneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSNavigationPaneViewController.m; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.m; sourceTree = "<group>"; };
 		3A116728167E8EF300DBD12B /* MSNavigationPaneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSNavigationPaneViewController.h; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.h; sourceTree = "<group>"; };
 		3A11672B167E8F1900DBD12B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		3A11686B167EAE0E00DBD12B /* MSMonospaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMonospaceViewController.h; sourceTree = "<group>"; };
-		3A11686C167EAE0E00DBD12B /* MSMonospaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMonospaceViewController.m; sourceTree = "<group>"; };
 		3A5AC60F16A20575006F5A3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3A5AC61016A20575006F5A3F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		3A5AC61116A20575006F5A3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -69,6 +65,16 @@
 		3A5AC61B16A20575006F5A3F /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		3A5AC61C16A20575006F5A3F /* MSBarButtonIconNavigationPane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MSBarButtonIconNavigationPane.png; sourceTree = "<group>"; };
 		3A5AC61D16A20575006F5A3F /* MSBarButtonIconNavigationPane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSBarButtonIconNavigationPane@2x.png"; sourceTree = "<group>"; };
+		3A6CB9D716D965B300B4F041 /* MSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
+		3A6CB9D816D965B300B4F041 /* MSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
+		3A6CB9D916D965B300B4F041 /* MSExampleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSExampleTableViewController.h; sourceTree = "<group>"; };
+		3A6CB9DA16D965B300B4F041 /* MSExampleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSExampleTableViewController.m; sourceTree = "<group>"; };
+		3A6CB9DB16D965B300B4F041 /* MSMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMasterViewController.h; sourceTree = "<group>"; };
+		3A6CB9DC16D965B300B4F041 /* MSMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMasterViewController.m; sourceTree = "<group>"; };
+		3A6CB9E016D965D700B4F041 /* MSMonospaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMonospaceViewController.h; sourceTree = "<group>"; };
+		3A6CB9E116D965D700B4F041 /* MSMonospaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMonospaceViewController.m; sourceTree = "<group>"; };
+		3A6CB9E316D96AE000B4F041 /* MSExampleControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSExampleControlsViewController.h; sourceTree = "<group>"; };
+		3A6CB9E416D96AE000B4F041 /* MSExampleControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSExampleControlsViewController.m; sourceTree = "<group>"; };
 		3AE8F93716C86D1100D724F3 /* PRTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PRTween.h; path = ../../Vendor/PRTween/lib/PRTween.h; sourceTree = "<group>"; };
 		3AE8F93816C86D1100D724F3 /* PRTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PRTween.m; path = ../../Vendor/PRTween/lib/PRTween.m; sourceTree = "<group>"; };
 		3AE8F93916C86D1100D724F3 /* PRTweenTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PRTweenTimingFunctions.h; path = ../../Vendor/PRTween/lib/PRTweenTimingFunctions.h; sourceTree = "<group>"; };
@@ -122,9 +128,7 @@
 		3A1166A0167E8C3E00DBD12B /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				3A1166A9167E8C3E00DBD12B /* MSAppDelegate.h */,
-				3A1166AA167E8C3E00DBD12B /* MSAppDelegate.m */,
-				3A11678E167EAA5300DBD12B /* View Controllers */,
+				3A6CB9D616D965B300B4F041 /* Shared */,
 				3A1166A1167E8C3E00DBD12B /* Supporting Files */,
 			);
 			path = Example;
@@ -151,18 +155,6 @@
 			name = Vendor;
 			sourceTree = "<group>";
 		};
-		3A11678E167EAA5300DBD12B /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				3A1166FA167E8DBF00DBD12B /* MSMasterViewController.h */,
-				3A1166FB167E8DBF00DBD12B /* MSMasterViewController.m */,
-				3A11686B167EAE0E00DBD12B /* MSMonospaceViewController.h */,
-				3A11686C167EAE0E00DBD12B /* MSMonospaceViewController.m */,
-			);
-			name = "View Controllers";
-			path = ../../MSMonospaceViewController;
-			sourceTree = "<group>";
-		};
 		3A5AC60E16A20575006F5A3F /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +177,24 @@
 			name = Images;
 			path = ../Images;
 			sourceTree = SOURCE_ROOT;
+		};
+		3A6CB9D616D965B300B4F041 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3A6CB9D716D965B300B4F041 /* MSAppDelegate.h */,
+				3A6CB9D816D965B300B4F041 /* MSAppDelegate.m */,
+				3A6CB9DB16D965B300B4F041 /* MSMasterViewController.h */,
+				3A6CB9DC16D965B300B4F041 /* MSMasterViewController.m */,
+				3A6CB9D916D965B300B4F041 /* MSExampleTableViewController.h */,
+				3A6CB9DA16D965B300B4F041 /* MSExampleTableViewController.m */,
+				3A6CB9E316D96AE000B4F041 /* MSExampleControlsViewController.h */,
+				3A6CB9E416D96AE000B4F041 /* MSExampleControlsViewController.m */,
+				3A6CB9E016D965D700B4F041 /* MSMonospaceViewController.h */,
+				3A6CB9E116D965D700B4F041 /* MSMonospaceViewController.m */,
+			);
+			name = Shared;
+			path = ../../Shared;
+			sourceTree = "<group>";
 		};
 		3AE8F93516C86CD300D724F3 /* MSNavigationPaneViewController */ = {
 			isa = PBXGroup;
@@ -285,12 +295,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1166A7167E8C3E00DBD12B /* main.m in Sources */,
-				3A1166AB167E8C3E00DBD12B /* MSAppDelegate.m in Sources */,
-				3A1166FE167E8DBF00DBD12B /* MSMasterViewController.m in Sources */,
 				3A116729167E8EF300DBD12B /* MSNavigationPaneViewController.m in Sources */,
-				3A11686D167EAE0E00DBD12B /* MSMonospaceViewController.m in Sources */,
 				3AE8F93B16C86D1100D724F3 /* PRTween.m in Sources */,
 				3AE8F93C16C86D1100D724F3 /* PRTweenTimingFunctions.m in Sources */,
+				3A6CB9DD16D965B300B4F041 /* MSAppDelegate.m in Sources */,
+				3A6CB9DE16D965B300B4F041 /* MSExampleTableViewController.m in Sources */,
+				3A6CB9DF16D965B300B4F041 /* MSMasterViewController.m in Sources */,
+				3A6CB9E216D965D700B4F041 /* MSMonospaceViewController.m in Sources */,
+				3A6CB9E516D96AE000B4F041 /* MSExampleControlsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,8 +376,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -376,8 +389,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

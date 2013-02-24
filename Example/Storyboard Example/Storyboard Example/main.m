@@ -1,9 +1,9 @@
 //
 //  main.m
-//  Storyboard Example
+//  MSNavigationPaneViewController
 //
 //  Created by Eric Horacek on 12/16/12.
-//  Copyright (c) 2012 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

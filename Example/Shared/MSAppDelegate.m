@@ -3,7 +3,7 @@
 //  MSNavigationPaneViewController
 //
 //  Created by Eric Horacek on 11/20/12.
-//  Copyright (c) 2012 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -34,21 +34,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#if defined(STORYBOARD)
+    self.navigationPaneViewController = (MSNavigationPaneViewController *)self.window.rootViewController;
+#else
     self.navigationPaneViewController = [[MSNavigationPaneViewController alloc] init];
+#endif
     
+#if defined(STORYBOARD)
+    MSMasterViewController *masterViewController = (MSMasterViewController *)[self.navigationPaneViewController.storyboard instantiateViewControllerWithIdentifier:@"MasterViewController"];
+#else
     MSMasterViewController *masterViewController = [[MSMasterViewController alloc] init];
+#endif
     masterViewController.navigationPaneViewController = self.navigationPaneViewController;
-    
     self.navigationPaneViewController.masterViewController = masterViewController;
     
-    self.navigationPaneViewController.openDirection = MSNavigationPaneOpenDirectionLeft;
-    self.navigationPaneViewController.paneViewSlideOffAnimationEnabled = NO;
-    
-    [masterViewController transitionToViewController:MSPaneViewControllerTypeAppearanceNone];
-    
+#if !defined(STORYBOARD)
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.navigationPaneViewController;
     [self.window makeKeyAndVisible];
+#endif
     
     return YES;
 }

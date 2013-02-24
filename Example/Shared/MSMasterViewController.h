@@ -1,9 +1,9 @@
 //
-//  MSAppDelegate.h
+//  MSMasterViewController.h
 //  MSNavigationPaneViewController
 //
 //  Created by Eric Horacek on 11/20/12.
-//  Copyright (c) 2012 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -27,12 +27,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSNavigationPaneViewController.h"
 
-@class MSNavigationPaneViewController;
+typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
+    MSPaneViewControllerTypeAppearanceNone,
+    MSPaneViewControllerTypeAppearanceParallax,
+    MSPaneViewControllerTypeAppearanceZoom,
+    MSPaneViewControllerTypeAppearanceFade,
+    MSPaneViewControllerTypeControls,
+    MSPaneViewControllerTypeMonospace,
+    MSPaneViewControllerTypeCount
+};
 
-@interface MSAppDelegate : UIResponder <UIApplicationDelegate>
+@interface MSMasterViewController : UITableViewController
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) MSNavigationPaneViewController *navigationPaneViewController;
+@property (nonatomic, assign) MSPaneViewControllerType paneViewControllerType;
+@property (nonatomic, weak) MSNavigationPaneViewController *navigationPaneViewController;
+
+- (void)transitionToViewController:(MSPaneViewControllerType)paneViewControllerType;
 
 @end
