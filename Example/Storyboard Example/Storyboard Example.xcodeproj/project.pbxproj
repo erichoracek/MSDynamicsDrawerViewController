@@ -394,7 +394,7 @@
 					"STORYBOARD=1",
 				);
 				INFOPLIST_FILE = "Storyboard Example/Storyboard Example-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Storyboard;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -408,7 +408,7 @@
 				GCC_PREFIX_HEADER = "Storyboard Example/Storyboard Example-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "STORYBOARD=1";
 				INFOPLIST_FILE = "Storyboard Example/Storyboard Example-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Storyboard;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
