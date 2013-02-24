@@ -38,7 +38,7 @@ The default value of the appearance type is `MSNavigationPaneAppearanceTypeNone`
 
 To forward touches through views that require a swipe/pan gesture so that the `MSNavigationPaneViewController` doesn't intercept them, simply add their `Class` to `touchForwardingClasses`:
 
-```objective-c
+```  objective-c
 [navigationPaneViewController.touchForwardingClasses addObject:UISwitch.class];
 ```
 
@@ -48,7 +48,7 @@ Both `UISlider` and `UISwitch` are included by default.
 
 To disable dragging of the pane and prevent `MSNavigationPaneViewController` from intercepting touches, set 
 
-```objective-c
+```  objective-c
 navigationPaneViewController.draggingEnabled == NO;
 ```
 
@@ -58,7 +58,7 @@ Two examples for `MSNavigationPaneViewController` are included in the "Example" 
 
 The example projects depend on `PRTween`, which is included as a git submodule. To install, run the following:
 
-```bash
+```  bash
 $ git submodule init
 $ git submodule update
 ```
