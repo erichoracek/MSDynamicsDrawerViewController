@@ -34,7 +34,6 @@
 
 // Sizes
 const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthLeft = 267.0;
-const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthRight = 267.0;
 const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthTop = 200.0;
 const CGFloat MSNavigationPaneOpenAnimationOvershot = 20.0;
 
