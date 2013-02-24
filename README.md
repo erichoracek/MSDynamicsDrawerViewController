@@ -49,7 +49,7 @@ Both `UISlider` and `UISwitch` are included by default.
 To disable dragging of the pane and prevent `MSNavigationPaneViewController` from intercepting touches, set 
 
 ```  objective-c
-navigationPaneViewController.draggingEnabled == NO;
+navigationPaneViewController.draggingEnabled = NO;
 ```
 
 # Examples
