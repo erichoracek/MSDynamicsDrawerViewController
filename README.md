@@ -15,7 +15,7 @@ There are a number of great reasons to use `MSNavigationPaneViewController` over
 
 # Open Directions
 
-* **Left** (Default) (`MSNavigationPaneOpenDirectionLeft`) – Default direction. The navigation pane opens from the left. A left-right swipe can also reveal the master view.
+* **Left** (`MSNavigationPaneOpenDirectionLeft`) – Default open direction. The navigation pane opens from the left. A left-right swipe can also reveal the master view.
 
 * **Top** (`MSNavigationPaneOpenDirectionTop`) – The navigation pane opens from the top. A top-bottom swipe can also reveal the master view.
 
