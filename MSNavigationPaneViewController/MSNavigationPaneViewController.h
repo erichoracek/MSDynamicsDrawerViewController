@@ -77,7 +77,7 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 @property (nonatomic, readonly) NSMutableSet *touchForwardingClasses;
 
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion;
-- (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated;
+- (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated completion:(void (^)(void))completion;
 
 @end
 
@@ -87,6 +87,6 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController willAnimateToPane:(UIViewController *)paneViewController;
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didAnimateToPane:(UIViewController *)paneViewController;
-- (void)paneView:(UIView *)paneView wasDraggedToState:(MSNavigationPaneState)state;
+- (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didUpdateToPaneState:(MSNavigationPaneState)state;
 
 @end
