@@ -8,15 +8,14 @@ There are a number of great reasons to use `MSNavigationPaneViewController` over
 
 * This class was written with an emphasis on simplicity. Its interface is about as simple as they come, and is easy to extend.
 * It features a smooth bounce animation when the navigation pane is flicked in either direction based on the velocity of the swipe gesture.
-* There are various appearance types available to customize its visual style.
+* There are various appearance types and open directions available to customize its visual style.
 * It doesn't require for you to subclass your pane or master view controllers to add them as child view controllers. 
 * The swipe gesture to reveal the master view controller doesn't interfere with `UITableViews` or other `UIScrollViews` added to the pane view controller's view.
 * When a new pane view controller is set using the `setPaneViewController:animated:completion:` method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
 
 # Open Directions
 
-* **Left** (Default) (`MSNavigationPaneOpenDirectionLeft`) – The navigation pane opens from the left. A left-right swipe can also reveal the master view.
-
+* **Left** (Default) (`MSNavigationPaneOpenDirectionLeft`) – Default direction. The navigation pane opens from the left. A left-right swipe can also reveal the master view.
 
 * **Top** (`MSNavigationPaneOpenDirectionTop`) – The navigation pane opens from the top. A top-bottom swipe can also reveal the master view.
 
@@ -37,20 +36,32 @@ The default value of the appearance type is `MSNavigationPaneAppearanceTypeNone`
 
 ## Forwarding Touches
 
-To forward touches through views that require a swipe/pan gesture (e.g. `UISlider`, `UISwitch`, etc.) so that your `MSNavigationPaneViewController` doesn't intercept them, simply add their `Class` to `navigationPaneViewController.paneView.touchForwardingClasses`. Both `UISlider` and `UISwitch` are included by default.
+To forward touches through views that require a swipe/pan gesture so that the `MSNavigationPaneViewController` doesn't intercept them, simply add their `Class` to `touchForwardingClasses`:
+
+```objective-c
+[navigationPaneViewController.touchForwardingClasses addObject:UISwitch.class];
+```
+
+Both `UISlider` and `UISwitch` are included by default.
 
 ## Disabling Pane Dragging
 
-To disable dragging of the pane and prevent `MSNavigationPaneViewController` from intercepting touches, set `navigationPaneViewController.paneView.draggingEnabled` to `NO`.
+To disable dragging of the pane and prevent `MSNavigationPaneViewController` from intercepting touches, set 
 
-# Example
+```objective-c
+navigationPaneViewController.draggingEnabled == NO;
+```
+
+# Examples
 
 Two examples for `MSNavigationPaneViewController` are included in the "Example" directory, to run them open `Examples.xcworkspace`:
 
 The example projects depend on `PRTween`, which is included as a git submodule. To install, run the following:
 
-    $ git submodule init
-    $ git submodule update
+```bash
+$ git submodule init
+$ git submodule update
+```
 
 * `Example.xcodeproj` – No Storyboards or Nibs
 * `Storyboard Example.xcodeproj` – Use with Storyboards
@@ -65,7 +76,7 @@ Forks, patches and other feedback are welcome.
 
 # License
 
-*Copyright (c) 2012 Monospace Ltd. All rights reserved.*
+*Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.*
 
 *This code is distributed under the terms and conditions of the MIT license.*
 
