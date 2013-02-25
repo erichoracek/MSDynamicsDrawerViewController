@@ -35,8 +35,8 @@ $ git submodule update
 
 * **Top** (`MSNavigationPaneOpenDirectionTop`) – The navigation pane opens from the top. A top-bottom swipe can also reveal the master view.
 
-<img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Left.png" height="50%" /> &nbsp;
-<img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Top.png" height="50%" />
+<img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Left.png" height="490" width="320" alt="Left Open Direction" /> &nbsp;
+<img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Top.png" height="490" width="320" alt="Top Open Direction" />
 
 # Appearance
 
