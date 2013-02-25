@@ -46,6 +46,14 @@ There are a few types of appearance available for `MSNavigationPaneViewControlle
 * **Zoom** (`MSNavigationPaneAppearanceTypeZoom`) – Zooms the master view in from an inset state as the pane view is dragged.
 * **Fade** (`MSNavigationPaneAppearanceTypeFade`) – Fades the master view from an alpha of `1.0` to `0.0` as the pane view is dragged.
 
+## Reveal Width
+
+To change the distance that the pane view snaps open to, set:
+
+```  objective-c
+navigationPaneViewController.openStateRevealWidth = 100.0; // Or whatever width you'd like.
+```
+
 # Touches
 
 ## Forwarding Touches
