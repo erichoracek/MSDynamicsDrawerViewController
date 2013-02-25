@@ -2,16 +2,32 @@
 
 **MSNavigationPaneViewController** was written by **Eric Horacek** for **[Monospace Ltd.](http://www.monospacecollective.com)**
 
-`MSNavigationPaneViewController` is a view controller that handles the presentation of two overlaid child view controllers. The "pane" view can moved with a swipe gesture to reveal the "master" view below. This interface paradigm easily enables the navigation seen in Facebook, Path, and many others.
+`MSNavigationPaneViewController` is a container view controller that handles the presentation of two overlaid child view controllers. The "pane" view can moved with a swipe gesture to reveal the "master" view below. This interface paradigm easily enables the navigation seen in Facebook, Path, and many others. 
 
 There are a number of great reasons to use `MSNavigationPaneViewController` over of the many other similar overlaid view controller classes:
 
-* This class was written with an emphasis on simplicity. Its interface is about as simple as they come, and is easy to extend.
-* It features a smooth bounce animation when the navigation pane is flicked in either direction based on the velocity of the swipe gesture.
-* There are various appearance types and open directions available to customize its visual style.
-* It doesn't require for you to subclass your pane or master view controllers to add them as child view controllers. 
-* The swipe gesture to reveal the master view controller doesn't interfere with `UITableViews` or other `UIScrollViews` added to the pane view controller's view.
-* When a new pane view controller is set using the `setPaneViewController:animated:completion:` method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
+* **Simplicity** – This class was written with an emphasis on simplicity. Its interface is about as simple as they come, and is easy to extend.
+* **Pane Swiping** – You can swipe the pane to reveal the master view, and there's a nice bounce animation when the navigation pane finishes sliding.
+* **Styling** – There are various appearance types, animations, and open directions available to customize the visual style.
+* **Easy Integration** – It doesn't require for you to subclass your pane or master view controllers to add them as child view controllers. 
+* **Animations** – When a new pane view controller is set using the `setPaneViewController:animated:completion:` method, it is first animated off to the right, replaced, and then animated back to the left. This prevents a jarring "pop-in" effect when a new pane view controller replaces the current view.
+* **Containment APIs** – It uses the `UIViewController` containment APIs introduced in iOS 5, so you can rest assured that there's no hackiness going on to get nice overlaid view controllers.
+
+To really get a good feel for it, you should run the `MSNavigationPaneViewController` example on device—otherwise it's difficult to get a decent idea of how the swiping gestures are implemented.
+
+# Examples
+
+Two examples for `MSNavigationPaneViewController` are included in the "Example" directory within `Examples.xcworkspace`:
+
+* `Example.xcodeproj` – No Storyboards or Nibs
+* `Storyboard Example.xcodeproj` – Use with Storyboards
+
+The example projects depend on `PRTween`, which is included as a git submodule. To install, run the following:
+
+```  bash
+$ git submodule init
+$ git submodule update
+```
 
 # Open Directions
 
@@ -22,15 +38,13 @@ There are a number of great reasons to use `MSNavigationPaneViewController` over
 <img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Left.png" height="50%" /> &nbsp;
 <img src="https://raw.github.com/monospacecollective/MSNavigationPaneViewController/master/Screenshots/Top.png" height="50%" />
 
-# Appearance Types
+# Appearance
 
 There are a few types of appearance available for `MSNavigationPaneViewController`. They each change some aspect of the visual style of the pane view dragging. The appearance type of the navigation pane is set via the `navigationPaneViewController.appearanceType` accessor. The possible types are as follows:
 
-* **None** (`MSNavigationPaneAppearanceTypeNone`) – Default appearance. Doesn't change the master view's appearance in any way as the pane view is dragged.
 * **Parallax** (`MSNavigationPaneAppearanceTypeParallax`) – Scrolls the master view in from the right as the pane view is dragged.
 * **Zoom** (`MSNavigationPaneAppearanceTypeZoom`) – Zooms the master view in from an inset state as the pane view is dragged.
-
-The default value of the appearance type is `MSNavigationPaneAppearanceTypeNone`.
+* **Fade** (`MSNavigationPaneAppearanceTypeFade`) – Fades the master view from an alpha of `1.0` to `0.0` as the pane view is dragged.
 
 # Touches
 
@@ -51,20 +65,6 @@ To disable dragging of the pane and prevent `MSNavigationPaneViewController` fro
 ```  objective-c
 navigationPaneViewController.draggingEnabled = NO;
 ```
-
-# Examples
-
-Two examples for `MSNavigationPaneViewController` are included in the "Example" directory, to run them open `Examples.xcworkspace`:
-
-The example projects depend on `PRTween`, which is included as a git submodule. To install, run the following:
-
-```  bash
-$ git submodule init
-$ git submodule update
-```
-
-* `Example.xcodeproj` – No Storyboards or Nibs
-* `Storyboard Example.xcodeproj` – Use with Storyboards
 
 # Requirements
 
