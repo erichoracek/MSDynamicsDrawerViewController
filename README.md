@@ -40,7 +40,7 @@ $ git submodule update
 
 # Appearance
 
-There are a few types of appearance available for `MSNavigationPaneViewController`. They each change some aspect of the visual style of the pane view dragging. The appearance type of the navigation pane is set via the `navigationPaneViewController.appearanceType` accessor. The possible types are as follows:
+There are a few types of appearance available for `MSNavigationPaneViewController`. They each change some aspect of the visual style of the pane view dragging. The appearance type of the navigation pane is set via the `appearanceType` property. The possible types are as follows:
 
 * **Parallax** (`MSNavigationPaneAppearanceTypeParallax`) – Scrolls the master view in from the right as the pane view is dragged.
 * **Zoom** (`MSNavigationPaneAppearanceTypeZoom`) – Zooms the master view in from an inset state as the pane view is dragged.
