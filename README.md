@@ -1,6 +1,6 @@
 # Introduction
 
-**MSNavigationPaneViewController** was written by **Eric Horacek** for **[Monospace Ltd.](http://www.monospacecollective.com)**
+**MSNavigationPaneViewController** was written by **[Eric Horacek](https://twitter.com/erichoracek)** for **[Monospace Ltd.](http://www.monospacecollective.com)**
 
 `MSNavigationPaneViewController` is a container view controller that handles the presentation of two overlaid child view controllers. The "pane" view can moved with a swipe gesture to reveal the "master" view below. This interface paradigm easily enables the navigation seen in Facebook, Path, and many others. 
 
