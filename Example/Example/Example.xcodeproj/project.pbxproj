@@ -129,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				3A6CB9D616D965B300B4F041 /* Shared */,
+				3A5AC60E16A20575006F5A3F /* Images */,
 				3A1166A1167E8C3E00DBD12B /* Supporting Files */,
 			);
 			path = Example;
@@ -137,7 +138,6 @@
 		3A1166A1167E8C3E00DBD12B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				3A5AC60E16A20575006F5A3F /* Images */,
 				3A1166A2167E8C3E00DBD12B /* Example-Info.plist */,
 				3A1166A3167E8C3E00DBD12B /* InfoPlist.strings */,
 				3A1166A6167E8C3E00DBD12B /* main.m */,
