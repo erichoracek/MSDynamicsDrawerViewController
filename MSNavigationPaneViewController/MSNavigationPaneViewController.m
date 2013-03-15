@@ -131,6 +131,11 @@ typedef void (^ViewActionBlock)(UIView *view);
     return YES;
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return self.masterViewController.supportedInterfaceOrientations;
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     // This prevents weird transform issues, set the transform to identity for the duration of the rotation, disables updates during rotation
