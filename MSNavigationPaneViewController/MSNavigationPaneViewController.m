@@ -156,6 +156,7 @@ typedef void (^ViewActionBlock)(UIView *view);
 {
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
+    _paneState = MSNavigationPaneStateClosed;
     _appearanceType = MSNavigationPaneAppearanceTypeNone;
     _openDirection = MSNavigationPaneOpenDirectionLeft;
     _openStateRevealWidth = MSNavigationPaneDefaultOpenStateRevealWidthLeft;
