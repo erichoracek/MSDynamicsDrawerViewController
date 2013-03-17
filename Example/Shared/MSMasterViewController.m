@@ -98,49 +98,52 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 {
     self.paneViewControllerType = NSUIntegerMax;
     self.paneViewControllerTitles = @{
-                                      @(MSPaneViewControllerTypeAppearanceNone) : @"None",
-                                      @(MSPaneViewControllerTypeAppearanceParallax) : @"Parallax",
-                                      @(MSPaneViewControllerTypeAppearanceZoom) : @"Zoom",
-                                      @(MSPaneViewControllerTypeAppearanceFade) : @"Fade",
-                                      @(MSPaneViewControllerTypeControls) : @"Controls",
-                                      @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd."
-                                      };
+        @(MSPaneViewControllerTypeAppearanceNone) : @"None",
+        @(MSPaneViewControllerTypeAppearanceParallax) : @"Parallax",
+        @(MSPaneViewControllerTypeAppearanceZoom) : @"Zoom",
+        @(MSPaneViewControllerTypeAppearanceFade) : @"Fade",
+        @(MSPaneViewControllerTypeControls) : @"Controls",
+        @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd."
+    };
+    
 #if defined(STORYBOARD)
     self.paneViewControllerIdentifiers = @{
-                                           @(MSPaneViewControllerTypeAppearanceNone) : @"PaneViewControllerAppearanceNone",
-                                           @(MSPaneViewControllerTypeAppearanceParallax) : @"PaneViewControllerAppearanceParallax",
-                                           @(MSPaneViewControllerTypeAppearanceZoom) : @"PaneViewControllerAppearanceZoom",
-                                           @(MSPaneViewControllerTypeAppearanceFade) : @"PaneViewControllerAppearanceFade",
-                                           @(MSPaneViewControllerTypeControls) : @"PaneViewControllerControls",
-                                           @(MSPaneViewControllerTypeMonospace) : @"PaneViewControllerMonospace",
-                                           };
+        @(MSPaneViewControllerTypeAppearanceNone) : @"PaneViewControllerAppearanceNone",
+        @(MSPaneViewControllerTypeAppearanceParallax) : @"PaneViewControllerAppearanceParallax",
+        @(MSPaneViewControllerTypeAppearanceZoom) : @"PaneViewControllerAppearanceZoom",
+        @(MSPaneViewControllerTypeAppearanceFade) : @"PaneViewControllerAppearanceFade",
+        @(MSPaneViewControllerTypeControls) : @"PaneViewControllerControls",
+        @(MSPaneViewControllerTypeMonospace) : @"PaneViewControllerMonospace",
+    };
 #else
     self.paneViewControllerClasses = @{
-                                       @(MSPaneViewControllerTypeAppearanceNone) : MSExampleTableViewController.class,
-                                       @(MSPaneViewControllerTypeAppearanceParallax) : MSExampleTableViewController.class,
-                                       @(MSPaneViewControllerTypeAppearanceZoom) : MSExampleTableViewController.class,
-                                       @(MSPaneViewControllerTypeAppearanceFade) : MSExampleTableViewController.class,
-                                       @(MSPaneViewControllerTypeControls) : MSExampleControlsViewController.class,
-                                       @(MSPaneViewControllerTypeMonospace) : MSMonospaceViewController.class
-                                       };
+        @(MSPaneViewControllerTypeAppearanceNone) : MSExampleTableViewController.class,
+        @(MSPaneViewControllerTypeAppearanceParallax) : MSExampleTableViewController.class,
+        @(MSPaneViewControllerTypeAppearanceZoom) : MSExampleTableViewController.class,
+        @(MSPaneViewControllerTypeAppearanceFade) : MSExampleTableViewController.class,
+        @(MSPaneViewControllerTypeControls) : MSExampleControlsViewController.class,
+        @(MSPaneViewControllerTypeMonospace) : MSMonospaceViewController.class
+    };
 #endif
     
     self.paneViewControllerAppearanceTypes = @{
-                                               @(MSPaneViewControllerTypeAppearanceNone) : @(MSNavigationPaneAppearanceTypeNone),
-                                               @(MSPaneViewControllerTypeAppearanceParallax) : @(MSNavigationPaneAppearanceTypeParallax),
-                                               @(MSPaneViewControllerTypeAppearanceZoom) : @(MSNavigationPaneAppearanceTypeZoom),
-                                               @(MSPaneViewControllerTypeAppearanceFade) : @(MSNavigationPaneAppearanceTypeFade),
-                                               };
+        @(MSPaneViewControllerTypeAppearanceNone) : @(MSNavigationPaneAppearanceTypeNone),
+        @(MSPaneViewControllerTypeAppearanceParallax) : @(MSNavigationPaneAppearanceTypeParallax),
+        @(MSPaneViewControllerTypeAppearanceZoom) : @(MSNavigationPaneAppearanceTypeZoom),
+        @(MSPaneViewControllerTypeAppearanceFade) : @(MSNavigationPaneAppearanceTypeFade),
+    };
+    
     self.sectionTitles = @{
-                           @(MSMasterViewControllerTableViewSectionTypeAppearanceTypes) : @"Appearance Types",
-                           @(MSMasterViewControllerTableViewSectionTypeControls) : @"Controls",
-                           @(MSMasterViewControllerTableViewSectionTypeAbout) : @"About",
-                           };
+        @(MSMasterViewControllerTableViewSectionTypeAppearanceTypes) : @"Appearance Types",
+        @(MSMasterViewControllerTableViewSectionTypeControls) : @"Controls",
+        @(MSMasterViewControllerTableViewSectionTypeAbout) : @"About",
+    };
+    
     self.tableViewSectionBreaks = @[
-                                    @(MSPaneViewControllerTypeControls),
-                                    @(MSPaneViewControllerTypeMonospace),
-                                    @(MSPaneViewControllerTypeCount)
-                                    ];
+        @(MSPaneViewControllerTypeControls),
+        @(MSPaneViewControllerTypeMonospace),
+        @(MSPaneViewControllerTypeCount)
+    ];
 }
 
 - (MSPaneViewControllerType)paneViewControllerTypeForIndexPath:(NSIndexPath *)indexPath
