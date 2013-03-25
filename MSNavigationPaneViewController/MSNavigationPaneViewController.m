@@ -436,6 +436,12 @@ typedef void (^ViewActionBlock)(UIView *view);
 
 - (void)animatePaneToState:(MSNavigationPaneState)state duration:(CGFloat)duration bounce:(BOOL)bounce
 {
+
+     // Notify delegate of pane state change
+    if ([self.delegate respondsToSelector:@selector(navigationPaneViewController:willUpdateToPaneState:)]) {
+        [self.delegate navigationPaneViewController:self willUpdateToPaneState:state];
+    }
+
     CGFloat startPosition;
     switch (self.openDirection) {
         case MSNavigationPaneOpenDirectionLeft:

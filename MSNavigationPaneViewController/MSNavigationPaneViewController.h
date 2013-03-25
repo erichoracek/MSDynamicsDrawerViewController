@@ -88,5 +88,6 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController willAnimateToPane:(UIViewController *)paneViewController;
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didAnimateToPane:(UIViewController *)paneViewController;
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didUpdateToPaneState:(MSNavigationPaneState)state;
+- (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController willUpdateToPaneState:(MSNavigationPaneState)state;
 
 @end
