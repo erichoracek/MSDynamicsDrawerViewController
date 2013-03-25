@@ -571,9 +571,11 @@ typedef void (^ViewActionBlock)(UIView *view);
         
         void(^animatePaneOpenCompletion)(BOOL animationFinished) = ^(BOOL animationFinished) {
             internalCompletion();
-            self.paneTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(paneTapped:)];
-            self.paneTapGestureRecognizer.numberOfTouchesRequired = 1;
-            self.paneTapGestureRecognizer.numberOfTapsRequired = 1;
+            if (!self.paneTapGestureRecognizer) {
+                self.paneTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(paneTapped:)];
+                self.paneTapGestureRecognizer.numberOfTouchesRequired = 1;
+                self.paneTapGestureRecognizer.numberOfTapsRequired = 1;
+            }
             [self.paneView addGestureRecognizer:self.paneTapGestureRecognizer];
         };
         
