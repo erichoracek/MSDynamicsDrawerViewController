@@ -64,6 +64,9 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 @property (nonatomic, readonly) UIView *masterView;
 @property (nonatomic, readonly) UIView *paneView;
 
+// Disabling dragging to the opposite direction - default to NO
+@property (nonatomic,assign) BOOL disableOppositeDragging;
+
 // The width that the pane should open to reveal the master
 @property (nonatomic, assign) CGFloat openStateRevealWidth;
 
