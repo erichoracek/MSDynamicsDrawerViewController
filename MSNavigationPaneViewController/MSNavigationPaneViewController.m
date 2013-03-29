@@ -644,7 +644,8 @@ typedef void (^ViewActionBlock)(UIView *view);
                 case MSNavigationPaneOpenDirectionLeft: {
                     newFrame.origin.x += (panLocationInPaneView.x - self.paneStartLocation.x);
                     if (newFrame.origin.x < 0.0) {
-                        newFrame.origin.x = -nearbyintf(sqrtf(fabs(newFrame.origin.x) * 2.0));
+                        if(!self.disableOppositeDragging) newFrame.origin.x = -nearbyintf(sqrtf(fabs(newFrame.origin.x) * 2.0));
+                        else newFrame.origin.x = 0;
                     } else if (newFrame.origin.x > self.openStateRevealWidth) {
                         newFrame.origin.x = (self.openStateRevealWidth + nearbyintf(sqrtf((newFrame.origin.x - self.openStateRevealWidth) * 2.0)));
                     }
@@ -654,7 +655,8 @@ typedef void (^ViewActionBlock)(UIView *view);
                 case MSNavigationPaneOpenDirectionTop: {
                     newFrame.origin.y += (panLocationInPaneView.y - self.paneStartLocation.y);
                     if (newFrame.origin.y < 0.0) {
-                        newFrame.origin.y = -nearbyintf(sqrtf(fabs(newFrame.origin.y) * 2.0));
+                        if(!self.disableOppositeDragging) newFrame.origin.y = -nearbyintf(sqrtf(fabs(newFrame.origin.y) * 2.0));
+                        else newFrame.origin.y = 0;
                     } else if (newFrame.origin.y > self.openStateRevealWidth) {
                         newFrame.origin.y = (self.openStateRevealWidth + nearbyintf(sqrtf((newFrame.origin.y - self.openStateRevealWidth) * 2.0)));
                     }
@@ -680,14 +682,14 @@ typedef void (^ViewActionBlock)(UIView *view);
         }
         case UIGestureRecognizerStateEnded: {
             // We've reached the velocity threshold, bounce to the appropriate state
-            if (fabsf(self.paneVelocity) > MSDraggableViewVelocityThreshold) {
+            if (fabsf(self.paneVelocity) > MSDraggableViewVelocityThreshold && !self.disableOppositeDragging) {
                 MSNavigationPaneState state = ((self.paneVelocity > 0) ? MSNavigationPaneStateOpen : MSNavigationPaneStateClosed);
                 [self animatePaneToState:state duration:MSNavigationPaneAnimationDurationSnap bounce:YES];
             }
             // If we're released past half-way, snap to completion with no bounce, otherwise, snap to back to the starting position with no bounce
             else {
                 MSNavigationPaneState state = (([self paneViewClosedFraction] > 0.5) ? MSNavigationPaneStateClosed : MSNavigationPaneStateOpen);
-                [self animatePaneToState:state duration:MSNavigationPaneAnimationDurationSnap bounce:YES];
+                [self animatePaneToState:state duration:MSNavigationPaneAnimationDurationSnap bounce:NO];
             }
             break;
         }
