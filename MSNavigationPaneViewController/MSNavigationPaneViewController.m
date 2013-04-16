@@ -156,6 +156,8 @@ typedef void (^ViewActionBlock)(UIView *view);
 {
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
+    _panningArea = self.view.frame;
+    
     _paneState = MSNavigationPaneStateClosed;
     _appearanceType = MSNavigationPaneAppearanceTypeNone;
     _openDirection = MSNavigationPaneOpenDirectionLeft;
@@ -638,6 +640,10 @@ typedef void (^ViewActionBlock)(UIView *view);
         }
         case UIGestureRecognizerStateChanged: {
             CGPoint panLocationInPaneView = [gestureRecognizer locationInView:self.paneView];
+            
+            // If you want to pan the view, the first touch needs to be contained in this area
+            if (! CGRectContainsPoint(self.panningArea, self.paneStartLocation)) return;
+            
             // Pane Sliding
             CGRect newFrame = self.paneView.frame;
             switch (self.openDirection) {

@@ -54,6 +54,9 @@
     [self.window makeKeyAndVisible];
 #endif
     
+    // Restrict panning area
+    self.navigationPaneViewController.panningArea = CGRectMake(0, 0, 80, self.navigationPaneViewController.view.frame.size.height);
+    
     return YES;
 }
 

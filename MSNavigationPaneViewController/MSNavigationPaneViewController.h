@@ -64,6 +64,9 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 @property (nonatomic, readonly) UIView *masterView;
 @property (nonatomic, readonly) UIView *paneView;
 
+// If you want to pan the view, the first touch needs to be contained in this area
+@property (nonatomic, assign) CGRect panningArea;
+
 // The width that the pane should open to reveal the master
 @property (nonatomic, assign) CGFloat openStateRevealWidth;
 
