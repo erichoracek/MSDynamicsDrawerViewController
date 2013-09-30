@@ -13,6 +13,4 @@ Pod::Spec.new do |s|
   
   s.requires_arc = true
   s.frameworks   = 'QuartzCore'
-  
-  s.dependency 'PRTween', '~> 0.0.1'
 end
