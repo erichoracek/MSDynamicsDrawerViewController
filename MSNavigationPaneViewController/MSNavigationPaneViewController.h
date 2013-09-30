@@ -26,19 +26,24 @@
 //  THE SOFTWARE.
 //
 
+//#import "MSParallaxAppearanceAdjuster.h"
+
 // Sizes
 extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthLeft;
 extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthRight;
 extern const CGFloat MSNavigationPaneDefaultOpenStateRevealWidthTop;
 
-typedef NS_ENUM(NSUInteger, MSNavigationPaneOpenDirection) {
-    MSNavigationPaneOpenDirectionLeft,
-    MSNavigationPaneOpenDirectionTop,
+typedef NS_ENUM(NSUInteger, MSNavigationPaneRevealDirection) {
+    MSNavigationPaneRevealDirectionTop    = 1 << 0,
+    MSNavigationPaneRevealDirectionLeft   = 1 << 1,
+    MSNavigationPaneRevealDirectionBottom = 1 << 3,
+    MSNavigationPaneRevealDirectionRight  = 1 << 2,
 };
 
 typedef NS_ENUM(NSUInteger, MSNavigationPaneState) {
-    MSNavigationPaneStateOpen,
     MSNavigationPaneStateClosed,
+    MSNavigationPaneStateOpen, // Revealed to the openWidth
+    MSNavigationPaneStateOpenWide
 };
 
 typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
@@ -54,7 +59,6 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 
 @property (nonatomic, assign) id<MSNavigationPaneViewControllerDelegate> delegate;
 
-@property (nonatomic, assign) MSNavigationPaneOpenDirection openDirection;
 @property (nonatomic, assign) MSNavigationPaneState paneState;
 @property (nonatomic, assign) MSNavigationPaneAppearanceType appearanceType;
 
@@ -65,6 +69,7 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 @property (nonatomic, readonly) UIView *paneView;
 
 // The width that the pane should open to reveal the master
+#warning remove
 @property (nonatomic, assign) CGFloat openStateRevealWidth;
 
 // If a pan gesture on the pane view should slide the pane view
@@ -73,11 +78,24 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 // If setting a new pane view controller should cause an animation that slides off the old view controller before animating the new one back on
 @property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
 
-// Classes that the pane view should forward dragging through to (UISlider, UISwitch by default)
+// Classes that the pane view should forward dragging through to (UISlider and UISwitch by default)
 @property (nonatomic, readonly) NSMutableSet *touchForwardingClasses;
 
+@property (nonatomic, readonly) NSMutableSet *paneAdjustmentHandlers;
+
+- (void)setRevealDirections:(MSNavigationPaneRevealDirection)revealDirections;
+
+- (void)setMasterViewController:(UIViewController *)masterViewController forRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
+- (UIViewController *)masterViewController forRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
+
+- (void)setRevealWidth:(CGFloat)revealWidth forDirection:(MSNavigationPaneRevealDirection)revealDirection;
+- (CGFloat)revealWidthForDirection:(MSNavigationPaneRevealDirection)revealDirection;
+
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion;
+
 - (void)setPaneState:(MSNavigationPaneState)paneState animated:(BOOL)animated completion:(void (^)(void))completion;
+
+- (void)bounceAgainstGravity;
 
 @end
 
@@ -89,5 +107,13 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didAnimateToPane:(UIViewController *)paneViewController;
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didUpdateToPaneState:(MSNavigationPaneState)state;
 - (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController willUpdateToPaneState:(MSNavigationPaneState)state;
+
+@end
+
+@protocol MSNavigationPaneAppearanceAdjuster <NSObject>
+
+- (void)setupAppearance;
+- (void)removeAppearance;
+- (void)navigationPaneViewController:(MSNavigationPaneViewController *)navigationPaneViewController didUpdateRevealFraction:(CGFloat)revealFraction forRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
 
 @end
