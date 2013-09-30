@@ -12,7 +12,6 @@
 		3A11669F167E8C3E00DBD12B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11669E167E8C3E00DBD12B /* CoreGraphics.framework */; };
 		3A1166A5167E8C3E00DBD12B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A1166A3167E8C3E00DBD12B /* InfoPlist.strings */; };
 		3A1166A7167E8C3E00DBD12B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1166A6167E8C3E00DBD12B /* main.m */; };
-		3A116729167E8EF300DBD12B /* MSNavigationPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A116725167E8EF300DBD12B /* MSNavigationPaneViewController.m */; };
 		3A11672C167E8F1900DBD12B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11672B167E8F1900DBD12B /* QuartzCore.framework */; };
 		3A5AC61E16A20575006F5A3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC60F16A20575006F5A3F /* Default-568h@2x.png */; };
 		3A5AC61F16A20575006F5A3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5AC61016A20575006F5A3F /* Default.png */; };
@@ -34,11 +33,11 @@
 		3A6CB9DF16D965B300B4F041 /* MSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9DC16D965B300B4F041 /* MSMasterViewController.m */; };
 		3A6CB9E216D965D700B4F041 /* MSMonospaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9E116D965D700B4F041 /* MSMonospaceViewController.m */; };
 		3A6CB9E516D96AE000B4F041 /* MSExampleControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CB9E416D96AE000B4F041 /* MSExampleControlsViewController.m */; };
-		3AE8F93B16C86D1100D724F3 /* PRTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8F93816C86D1100D724F3 /* PRTween.m */; };
-		3AE8F93C16C86D1100D724F3 /* PRTweenTimingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8F93A16C86D1100D724F3 /* PRTweenTimingFunctions.m */; };
+		64426731F992431F8994F641 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC49385B7B83484EBE303C5E /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		3A116696167E8C3E00DBD12B /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A11669A167E8C3E00DBD12B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A11669C167E8C3E00DBD12B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,8 +46,6 @@
 		3A1166A4167E8C3E00DBD12B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A1166A6167E8C3E00DBD12B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3A1166A8167E8C3E00DBD12B /* Example-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Prefix.pch"; sourceTree = "<group>"; };
-		3A116725167E8EF300DBD12B /* MSNavigationPaneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSNavigationPaneViewController.m; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.m; sourceTree = "<group>"; };
-		3A116728167E8EF300DBD12B /* MSNavigationPaneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSNavigationPaneViewController.h; path = ../../MSNavigationPaneViewController/MSNavigationPaneViewController.h; sourceTree = "<group>"; };
 		3A11672B167E8F1900DBD12B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A5AC60F16A20575006F5A3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3A5AC61016A20575006F5A3F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -75,10 +72,7 @@
 		3A6CB9E116D965D700B4F041 /* MSMonospaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMonospaceViewController.m; sourceTree = "<group>"; };
 		3A6CB9E316D96AE000B4F041 /* MSExampleControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSExampleControlsViewController.h; sourceTree = "<group>"; };
 		3A6CB9E416D96AE000B4F041 /* MSExampleControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSExampleControlsViewController.m; sourceTree = "<group>"; };
-		3AE8F93716C86D1100D724F3 /* PRTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PRTween.h; path = ../../Vendor/PRTween/lib/PRTween.h; sourceTree = "<group>"; };
-		3AE8F93816C86D1100D724F3 /* PRTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PRTween.m; path = ../../Vendor/PRTween/lib/PRTween.m; sourceTree = "<group>"; };
-		3AE8F93916C86D1100D724F3 /* PRTweenTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PRTweenTimingFunctions.h; path = ../../Vendor/PRTween/lib/PRTweenTimingFunctions.h; sourceTree = "<group>"; };
-		3AE8F93A16C86D1100D724F3 /* PRTweenTimingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PRTweenTimingFunctions.m; path = ../../Vendor/PRTween/lib/PRTweenTimingFunctions.m; sourceTree = "<group>"; };
+		FC49385B7B83484EBE303C5E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +84,7 @@
 				3A11669B167E8C3E00DBD12B /* UIKit.framework in Frameworks */,
 				3A11669D167E8C3E00DBD12B /* Foundation.framework in Frameworks */,
 				3A11669F167E8C3E00DBD12B /* CoreGraphics.framework in Frameworks */,
+				64426731F992431F8994F641 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +96,8 @@
 			children = (
 				3A1166A0167E8C3E00DBD12B /* Example */,
 				3A116699167E8C3E00DBD12B /* Frameworks */,
-				3A11670A167E8DD500DBD12B /* Vendor */,
 				3A116697167E8C3E00DBD12B /* Products */,
+				0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +116,7 @@
 				3A11669A167E8C3E00DBD12B /* UIKit.framework */,
 				3A11669C167E8C3E00DBD12B /* Foundation.framework */,
 				3A11669E167E8C3E00DBD12B /* CoreGraphics.framework */,
+				FC49385B7B83484EBE303C5E /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -144,15 +140,6 @@
 				3A1166A8167E8C3E00DBD12B /* Example-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3A11670A167E8DD500DBD12B /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				3AE8F93516C86CD300D724F3 /* MSNavigationPaneViewController */,
-				3AE8F93616C86CE200D724F3 /* PRTween */,
-			);
-			name = Vendor;
 			sourceTree = "<group>";
 		};
 		3A5AC60E16A20575006F5A3F /* Images */ = {
@@ -196,26 +183,6 @@
 			path = ../../Shared;
 			sourceTree = "<group>";
 		};
-		3AE8F93516C86CD300D724F3 /* MSNavigationPaneViewController */ = {
-			isa = PBXGroup;
-			children = (
-				3A116728167E8EF300DBD12B /* MSNavigationPaneViewController.h */,
-				3A116725167E8EF300DBD12B /* MSNavigationPaneViewController.m */,
-			);
-			name = MSNavigationPaneViewController;
-			sourceTree = "<group>";
-		};
-		3AE8F93616C86CE200D724F3 /* PRTween */ = {
-			isa = PBXGroup;
-			children = (
-				3AE8F93716C86D1100D724F3 /* PRTween.h */,
-				3AE8F93816C86D1100D724F3 /* PRTween.m */,
-				3AE8F93916C86D1100D724F3 /* PRTweenTimingFunctions.h */,
-				3AE8F93A16C86D1100D724F3 /* PRTweenTimingFunctions.m */,
-			);
-			name = PRTween;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,9 +190,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A1166B4167E8C3E00DBD12B /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
+				C47987546ECE4163B7FC9B24 /* Check Pods Manifest.lock */,
 				3A116692167E8C3E00DBD12B /* Sources */,
 				3A116693167E8C3E00DBD12B /* Frameworks */,
 				3A116694167E8C3E00DBD12B /* Resources */,
+				AD420442A29C4DDE99A2FC7D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -289,15 +258,43 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		AD420442A29C4DDE99A2FC7D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+		C47987546ECE4163B7FC9B24 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3A116692167E8C3E00DBD12B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3A1166A7167E8C3E00DBD12B /* main.m in Sources */,
-				3A116729167E8EF300DBD12B /* MSNavigationPaneViewController.m in Sources */,
-				3AE8F93B16C86D1100D724F3 /* PRTween.m in Sources */,
-				3AE8F93C16C86D1100D724F3 /* PRTweenTimingFunctions.m in Sources */,
 				3A6CB9DD16D965B300B4F041 /* MSAppDelegate.m in Sources */,
 				3A6CB9DE16D965B300B4F041 /* MSExampleTableViewController.m in Sources */,
 				3A6CB9DF16D965B300B4F041 /* MSMasterViewController.m in Sources */,
@@ -372,11 +369,13 @@
 		};
 		3A1166B5167E8C3E00DBD12B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Horacek (M54X49C8U5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -385,11 +384,12 @@
 		};
 		3A1166B6167E8C3E00DBD12B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

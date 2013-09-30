@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7ECBC801-AF24-40AC-B364-0C7E5A7DA4A8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Example</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>39F19656-3426-4230-8556-3A10F53DA444</key>
+		<string>ssh://github.com/monospacecollective/MSNavigationPaneViewController.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Example/Example/Example.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>39F19656-3426-4230-8556-3A10F53DA444</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/monospacecollective/MSNavigationPaneViewController.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>39F19656-3426-4230-8556-3A10F53DA444</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>39F19656-3426-4230-8556-3A10F53DA444</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MSNavigationPaneViewController</string>
+		</dict>
+	</array>
+</dict>
+</plist>

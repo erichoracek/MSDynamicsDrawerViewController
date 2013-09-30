@@ -7,6 +7,7 @@
 //
 
 #import "MSExampleTableViewController.h"
+#import "MSNavigationPaneViewController.h"
 
 NSString * const MSExampleTableViewControllerCellReuseIdentifier = @"MSExampleTableViewControllerCellReuseIdentifier";
 
@@ -19,6 +20,11 @@ NSString * const MSExampleTableViewControllerCellReuseIdentifier = @"MSExampleTa
 @implementation MSExampleTableViewController
 
 #pragma mark - UIViewController
+
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+}
 
 - (void)viewDidLoad
 {
@@ -58,6 +64,8 @@ NSString * const MSExampleTableViewControllerCellReuseIdentifier = @"MSExampleTa
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [(MSNavigationPaneViewController *)[self.navigationController parentViewController] bounceAgainstGravity];
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

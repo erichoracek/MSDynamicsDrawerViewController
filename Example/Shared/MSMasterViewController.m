@@ -55,7 +55,7 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 @property (nonatomic, strong) UIBarButtonItem *paneStateBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *paneRevealBarButtonItem;
 
-- (void)updateNavigationPaneForOpenDirection:(MSNavigationPaneOpenDirection)openDirection;
+- (void)updateNavigationPaneForRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
 - (void)navigationPaneRevealBarButtonItemTapped:(id)sender;
 - (void)navigationPaneStateBarButtonItemTapped:(id)sender;
 
@@ -87,6 +87,9 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
 {
     [super viewDidLoad];
     self.navigationPaneViewController.delegate = self;
+    
+    // Content inset for status bar
+    self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
     
     // Default to the "None" appearance type
     [self transitionToViewController:MSPaneViewControllerTypeAppearanceNone];
@@ -180,11 +183,11 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
     self.paneRevealBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"MSBarButtonIconNavigationPane.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(navigationPaneRevealBarButtonItemTapped:)];
     paneViewController.navigationItem.leftBarButtonItem = self.paneRevealBarButtonItem;
     
-    self.paneStateBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStyleBordered target:self action:@selector(navigationPaneStateBarButtonItemTapped:)];
-    paneViewController.navigationItem.rightBarButtonItem = self.paneStateBarButtonItem;
-
-    // Update pane state button titles
-    [self updateNavigationPaneForOpenDirection:self.navigationPaneViewController.openDirection];
+//    self.paneStateBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStyleBordered target:self action:@selector(navigationPaneStateBarButtonItemTapped:)];
+//    paneViewController.navigationItem.rightBarButtonItem = self.paneStateBarButtonItem;
+//
+//    // Update pane state button titles
+//    [self updateNavigationPaneForRevealDirection:self.navigationPaneViewController.revealDirection];
     
     UINavigationController *paneNavigationViewController = [[UINavigationController alloc] initWithRootViewController:paneViewController];
     [self.navigationPaneViewController setPaneViewController:paneNavigationViewController animated:animateTransition completion:nil];
@@ -192,33 +195,33 @@ typedef NS_ENUM(NSUInteger, MSMasterViewControllerTableViewSectionType) {
     self.paneViewControllerType = paneViewControllerType;
 }
 
-- (void)updateNavigationPaneForOpenDirection:(MSNavigationPaneOpenDirection)openDirection
-{
-    if (openDirection == MSNavigationPaneOpenDirectionLeft) {
-        self.paneStateBarButtonItem.title = @"Top Reveal";
-        self.navigationPaneViewController.openStateRevealWidth = 265.0;
-        self.navigationPaneViewController.paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
-    } else {
-        self.paneStateBarButtonItem.title = @"Left Reveal";
-        self.navigationPaneViewController.openStateRevealWidth = self.tableView.contentSize.height;
-        self.navigationPaneViewController.paneViewSlideOffAnimationEnabled = NO;
-    }
-}
+//- (void)updateNavigationPaneForRevealDirection:(MSNavigationPaneRevealDirection)revealDirection
+//{
+//    if (revealDirection == MSNavigationPaneRevealDirectionLeft) {
+//        self.paneStateBarButtonItem.title = @"Top Reveal";
+//        self.navigationPaneViewController.openStateRevealWidth = 265.0;
+//        self.navigationPaneViewController.paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+//    } else {
+//        self.paneStateBarButtonItem.title = @"Left Reveal";
+//        self.navigationPaneViewController.openStateRevealWidth = self.tableView.contentSize.height;
+//        self.navigationPaneViewController.paneViewSlideOffAnimationEnabled = NO;
+//    }
+//}
 
 - (void)navigationPaneRevealBarButtonItemTapped:(id)sender
 {
     [self.navigationPaneViewController setPaneState:MSNavigationPaneStateOpen animated:YES completion:nil];
 }
 
-- (void)navigationPaneStateBarButtonItemTapped:(id)sender
-{
-    if (self.navigationPaneViewController.openDirection == MSNavigationPaneOpenDirectionLeft) {
-        self.navigationPaneViewController.openDirection = MSNavigationPaneOpenDirectionTop;
-    } else {
-        self.navigationPaneViewController.openDirection =  MSNavigationPaneOpenDirectionLeft;
-    }
-    [self updateNavigationPaneForOpenDirection:self.navigationPaneViewController.openDirection];
-}
+//- (void)navigationPaneStateBarButtonItemTapped:(id)sender
+//{
+//    if (self.navigationPaneViewController.revealDirection == MSNavigationPaneRevealDirectionLeft) {
+//        self.navigationPaneViewController.revealDirection = MSNavigationPaneRevealDirectionTop;
+//    } else {
+//        self.navigationPaneViewController.revealDirection =  MSNavigationPaneRevealDirectionLeft;
+//    }
+//    [self updateNavigationPaneForRevealDirection:self.navigationPaneViewController.revealDirection];
+//}
 
 #pragma mark - UITableViewDataSource
 

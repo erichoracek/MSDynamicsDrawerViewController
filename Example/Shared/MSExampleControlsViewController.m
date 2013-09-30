@@ -45,7 +45,7 @@
     
     CGFloat controlDescriptionMargin = 20.0;
     CGSize controlDescriptionSize = [self.controlDescription.text sizeWithFont:self.controlDescription.font constrainedToSize:CGSizeMake(CGRectGetWidth(self.view.frame) - (controlDescriptionMargin * 2.0), CGRectGetHeight(self.view.frame) - (controlDescriptionMargin * 2.0))];
-    self.controlDescription.frame = (CGRect){{controlDescriptionMargin, controlDescriptionMargin}, controlDescriptionSize};
+    self.controlDescription.frame = (CGRect){{controlDescriptionMargin, controlDescriptionMargin + 64.0}, controlDescriptionSize};
 
     CGFloat controlMargin = 50.0;
     self.exampleSwitch.center = CGPointMake(nearbyintf(self.view.center.x), nearbyintf(self.view.center.y) - (controlMargin / 2.0));
