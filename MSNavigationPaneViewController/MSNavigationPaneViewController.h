@@ -86,7 +86,7 @@ typedef NS_ENUM(NSUInteger, MSNavigationPaneAppearanceType) {
 - (void)setRevealDirections:(MSNavigationPaneRevealDirection)revealDirections;
 
 - (void)setMasterViewController:(UIViewController *)masterViewController forRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
-- (UIViewController *)masterViewController forRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
+- (UIViewController *)masterViewControllerForRevealDirection:(MSNavigationPaneRevealDirection)revealDirection;
 
 - (void)setRevealWidth:(CGFloat)revealWidth forDirection:(MSNavigationPaneRevealDirection)revealDirection;
 - (CGFloat)revealWidthForDirection:(MSNavigationPaneRevealDirection)revealDirection;
