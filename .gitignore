@@ -46,3 +46,6 @@ Pods/
 Podfile.lock
 lcl_config_components.h.pods
 lcl_config_extensions.h.pods
+
+# Appledoc
+docset-installed.txt

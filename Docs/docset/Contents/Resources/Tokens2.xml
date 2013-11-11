@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/MSDynamicsDrawerParallaxStyler.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerParallaxStyler</TokenIdentifier>
+			<Abstract type="html">Creates a parallax effect on the drawerView while sliding the paneView within a MSDynamicsDrawerViewController.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/setParallaxOffsetFraction:</TokenIdentifier>
+			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
+			
+			
+			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerParallaxStyler/parallaxOffsetFraction</TokenIdentifier>
+			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
+			
+			
+			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerParallaxStyler/styler</TokenIdentifier>
+			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			
+			<Declaration>+ (instancetype)styler</Declaration>
+			
+			
+			<Anchor>//api/name/styler</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
+			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			
+			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that is being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>paneClosedFraction</Name>
+					<Abstract type="html">The fraction that MSDynamicsDrawerViewController instance&apos;s pane is closed. 1.0 when closed, 0.0 when opened.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the MSDynamicsDrawerViewController instance is opening in. Will not be masked.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/stylerWasRemovedFromDynamicsDrawerViewController:</TokenIdentifier>
+			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			
+			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that was being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
