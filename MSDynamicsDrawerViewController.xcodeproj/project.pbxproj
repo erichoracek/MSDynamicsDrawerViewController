@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3A210B6D18309E6E00A49F11 /* MSDynamicsDrawerStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A210B6B18309E6E00A49F11 /* MSDynamicsDrawerStyler.m */; };
 		3AAD490F1830929B003FAFA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AAD490E1830929B003FAFA8 /* Foundation.framework */; };
 		3AAD49141830929B003FAFA8 /* MSDynamicsDrawerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3AAD49131830929B003FAFA8 /* MSDynamicsDrawerViewController.h */; };
 		3AAD49161830929B003FAFA8 /* MSDynamicsDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAD49151830929B003FAFA8 /* MSDynamicsDrawerViewController.m */; };
@@ -56,6 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A210B6B18309E6E00A49F11 /* MSDynamicsDrawerStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerStyler.m; sourceTree = "<group>"; };
+		3A210B6C18309E6E00A49F11 /* MSDynamicsDrawerStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerStyler.h; sourceTree = "<group>"; };
 		3AAD490B1830929B003FAFA8 /* libMSDynamicsDrawerViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMSDynamicsDrawerViewController.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AAD490E1830929B003FAFA8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3AAD49121830929B003FAFA8 /* MSDynamicsDrawerViewController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MSDynamicsDrawerViewController-Prefix.pch"; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 		3AAD49101830929B003FAFA8 /* MSDynamicsDrawerViewController */ = {
 			isa = PBXGroup;
 			children = (
+				3A210B6C18309E6E00A49F11 /* MSDynamicsDrawerStyler.h */,
+				3A210B6B18309E6E00A49F11 /* MSDynamicsDrawerStyler.m */,
 				3AAD49131830929B003FAFA8 /* MSDynamicsDrawerViewController.h */,
 				3AAD49151830929B003FAFA8 /* MSDynamicsDrawerViewController.m */,
 				3AAD49111830929B003FAFA8 /* Supporting Files */,
@@ -256,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AAD49161830929B003FAFA8 /* MSDynamicsDrawerViewController.m in Sources */,
+				3A210B6D18309E6E00A49F11 /* MSDynamicsDrawerStyler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +478,7 @@
 				3AAD493C183094D3003FAFA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
