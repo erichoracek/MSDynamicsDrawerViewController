@@ -280,8 +280,8 @@
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
-		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneBounceElasticity</TokenIdentifier>
-		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneBounceMagnitude</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
 		
 	</RelatedTokens>
 	
@@ -298,8 +298,8 @@
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
-		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneBounceElasticity</TokenIdentifier>
-		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneBounceMagnitude</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
 		
 	</RelatedTokens>
 	
@@ -316,51 +316,51 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneGravityMagnitude:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setGravityMagnitude:</TokenIdentifier>
 			<Abstract type="html">The magnitude of the gravity vector that affects the pane view.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, assign) CGFloat paneGravityMagnitude</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat gravityMagnitude</Declaration>
 			
 			
-			<Anchor>//api/name/paneGravityMagnitude</Anchor>
+			<Anchor>//api/name/gravityMagnitude</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneGravityMagnitude</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/gravityMagnitude</TokenIdentifier>
 			<Abstract type="html">The magnitude of the gravity vector that affects the pane view.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, assign) CGFloat paneGravityMagnitude</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat gravityMagnitude</Declaration>
 			
 			
-			<Anchor>//api/name/paneGravityMagnitude</Anchor>
+			<Anchor>//api/name/gravityMagnitude</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneElasticity:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setElasticity:</TokenIdentifier>
 			<Abstract type="html">The elasticity applied to the pane view.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, assign) CGFloat paneElasticity</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat elasticity</Declaration>
 			
 			
-			<Anchor>//api/name/paneElasticity</Anchor>
+			<Anchor>//api/name/elasticity</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneElasticity</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/elasticity</TokenIdentifier>
 			<Abstract type="html">The elasticity applied to the pane view.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, assign) CGFloat paneElasticity</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat elasticity</Declaration>
 			
 			
-			<Anchor>//api/name/paneElasticity</Anchor>
+			<Anchor>//api/name/elasticity</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneBounceElasticity:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setBounceElasticity:</TokenIdentifier>
 			<Abstract type="html">The amount of elasticity applied to the pane view when it is bounced open.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
@@ -370,14 +370,14 @@
 		
 	</RelatedTokens>
 	
-			<Declaration>@property (nonatomic, assign) CGFloat paneBounceElasticity</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat bounceElasticity</Declaration>
 			
 			
-			<Anchor>//api/name/paneBounceElasticity</Anchor>
+			<Anchor>//api/name/bounceElasticity</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneBounceElasticity</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
 			<Abstract type="html">The amount of elasticity applied to the pane view when it is bounced open.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
@@ -387,14 +387,14 @@
 		
 	</RelatedTokens>
 	
-			<Declaration>@property (nonatomic, assign) CGFloat paneBounceElasticity</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat bounceElasticity</Declaration>
 			
 			
-			<Anchor>//api/name/paneBounceElasticity</Anchor>
+			<Anchor>//api/name/bounceElasticity</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneBounceMagnitude:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setBounceMagnitude:</TokenIdentifier>
 			<Abstract type="html">The magnitude of the push vector that is applied to the pane view when bouncePaneOpen is called.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
@@ -404,14 +404,14 @@
 		
 	</RelatedTokens>
 	
-			<Declaration>@property (nonatomic, assign) CGFloat paneBounceMagnitude</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat bounceMagnitude</Declaration>
 			
 			
-			<Anchor>//api/name/paneBounceMagnitude</Anchor>
+			<Anchor>//api/name/bounceMagnitude</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneBounceMagnitude</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
 			<Abstract type="html">The magnitude of the push vector that is applied to the pane view when bouncePaneOpen is called.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
@@ -421,10 +421,10 @@
 		
 	</RelatedTokens>
 	
-			<Declaration>@property (nonatomic, assign) CGFloat paneBounceMagnitude</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat bounceMagnitude</Declaration>
 			
 			
-			<Anchor>//api/name/paneBounceMagnitude</Anchor>
+			<Anchor>//api/name/bounceMagnitude</Anchor>
 		</Token>
 		
 		<Token>
