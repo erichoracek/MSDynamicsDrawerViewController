@@ -31,11 +31,11 @@
 #import "MSDynamicsDrawerViewController.h"
 
 /**
- `MSDynamicsDrawerStyler` is a protocol that defines the interface for an object that can style a `MSDynamicsDrawerViewController`. Instances of `MSDynamicsDrawerStyler` are added to `MSDynamicsDrawerViewController` via the `addStyler:forDrawerDirection:` method.
+ `MSDynamicsDrawerStyler` is a protocol that defines the interface for an object that can style a `MSDynamicsDrawerViewController`. Instances of `MSDynamicsDrawerStyler` are added to `MSDynamicsDrawerViewController` via the `addStyler:forDirection:` method.
  
  ## Creating a Custom Styler
  
- As user interacts with the instance of `MSDynamicsDrawerViewController`, the styler class is messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDrawerDirection:`, which allows the styler to changes attributes of the `drawerView` or `paneView` relative to the `paneClosedFraction`.
+ As user interacts with the instance of `MSDynamicsDrawerViewController`, the styler class is messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:`, which allows the styler to changes attributes of the `drawerView` or `paneView` relative to the `paneClosedFraction`.
  
  It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
  */
