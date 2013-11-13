@@ -29,6 +29,14 @@
 #import "MSBounceViewController.h"
 
 NSString * const MSBounceCellReuseIdentifier = @"Bounce Cell";
+NSString * const MSBounceDynamicsCellReuseIdentifier = @"Bounce Dynamics Cell";
+
+typedef NS_ENUM(NSInteger, MSBounceSectionType) {
+    MSBounceSectionTypeBounce,
+    MSBounceSectionTypeBounceMagnitude,
+    MSBounceSectionTypeBounceElasticity,
+    MSBounceSectionTypeCount,
+};
 
 @implementation MSBounceViewController
 
@@ -38,6 +46,7 @@ NSString * const MSBounceCellReuseIdentifier = @"Bounce Cell";
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSBounceCellReuseIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSBounceDynamicsCellReuseIdentifier];
 }
 
 #pragma mark - UITableViewController
@@ -48,61 +57,133 @@ NSString * const MSBounceCellReuseIdentifier = @"Bounce Cell";
     return self;
 }
 
+#pragma mark - MSDynamicsViewController
+
+- (void)sliderDidUpdateValue:(UISlider *)slider
+{
+    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+    switch (slider.tag) {
+        case MSBounceSectionTypeBounceMagnitude:
+            dynamicsDrawerViewController.bounceMagnitude = slider.value;
+            break;
+        case MSBounceSectionTypeBounceElasticity:
+            dynamicsDrawerViewController.bounceElasticity = slider.value;
+            break;
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return MSBounceSectionTypeCount;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
-    __block NSInteger possibleDirectionCount = 0;
-    MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
-        possibleDirectionCount++;
-    });
-    return possibleDirectionCount;
+    switch (section) {
+        case MSBounceSectionTypeBounce: {
+            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+            NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
+            __block NSInteger possibleDirectionCount = 0;
+            MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
+                possibleDirectionCount++;
+            });
+            return possibleDirectionCount;
+        }
+        default:
+            return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceCellReuseIdentifier forIndexPath:indexPath];
-    
-    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
-    __block NSInteger possibleDrawerDirectionRow = 0;
-    MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
-        if (indexPath.row == possibleDrawerDirectionRow) {
-            NSString *title;
-            switch (maskedValue) {
-                case MSDynamicsDrawerDirectionLeft:
-                    title = @"→";
-                    break;
-                case MSDynamicsDrawerDirectionRight:
-                    title = @"←";
-                    break;
-                case MSDynamicsDrawerDirectionTop:
-                    title = @"↓";
-                    break;
-                case MSDynamicsDrawerDirectionBottom:
-                    title = @"↑";
-                    break;
-                default:
-                    break;
-            }
-            cell.textLabel.text = title;
+    switch (indexPath.section) {
+        case MSBounceSectionTypeBounce: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceCellReuseIdentifier forIndexPath:indexPath];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.textColor = self.view.window.tintColor;
+            
+            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+            NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
+            __block NSInteger possibleDrawerDirectionRow = 0;
+            MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
+                if (indexPath.row == possibleDrawerDirectionRow) {
+                    NSString *title;
+                    switch (maskedValue) {
+                        case MSDynamicsDrawerDirectionLeft:
+                            title = @"→";
+                            break;
+                        case MSDynamicsDrawerDirectionRight:
+                            title = @"←";
+                            break;
+                        case MSDynamicsDrawerDirectionTop:
+                            title = @"↓";
+                            break;
+                        case MSDynamicsDrawerDirectionBottom:
+                            title = @"↑";
+                            break;
+                        default:
+                            break;
+                    }
+                    cell.textLabel.text = title;
+                }
+                possibleDrawerDirectionRow++;
+            });
+            return cell;
         }
-        possibleDrawerDirectionRow++;
-    });
-    
-    return cell;
+        default: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceDynamicsCellReuseIdentifier forIndexPath:indexPath];
+            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+            UISlider *slider = (UISlider *)cell.accessoryView;
+            if (!slider || ![slider isKindOfClass:[UISlider class]]) {
+                slider = [UISlider new];
+                [slider addTarget:self action:@selector(sliderDidUpdateValue:) forControlEvents:UIControlEventValueChanged];
+                cell.accessoryView = slider;
+            }
+            slider.frame = (CGRect){slider.frame.origin, {200.0, slider.frame.size.height}};
+            slider.tag = indexPath.section;
+            switch (indexPath.section) {
+                case MSBounceSectionTypeBounceMagnitude: {
+                    slider.minimumValue = 0.0;
+                    slider.maximumValue = 200.0;
+                    slider.value = dynamicsDrawerViewController.bounceMagnitude;
+                    break;
+                }
+                case MSBounceSectionTypeBounceElasticity: {
+                    slider.minimumValue = 0.0;
+                    slider.maximumValue = 1.0;
+                    slider.value = dynamicsDrawerViewController.bounceElasticity;
+                    break;
+                }
+            }
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", @(slider.value)];
+            return cell;
+        }
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Bounce Open";
+    switch (section) {
+        case MSBounceSectionTypeBounce:
+            return @"Bounce Open in Direction";
+        case MSBounceSectionTypeBounceMagnitude:
+            return @"Bounce Magnitude";
+        case MSBounceSectionTypeBounceElasticity:
+            return @"Bounce Elasticity";
+    }
+    return nil;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    return @"Invoke the 'bouncePaneOpenInDirection:' method to bounce the pane view open to reveal the drawer view underneath.\n\nA bounce can be used to indicate that there's a drawer view controller underneath that can be accessed by swiping, similar to the iOS lock screen camera bounce.";
+    switch (section) {
+        case MSBounceSectionTypeBounce:
+            return @"Invoke the 'bouncePaneOpenInDirection:' method to bounce the pane view open to reveal the drawer view underneath.\n\nA bounce can be used to indicate that there's a drawer view controller underneath that can be accessed by swiping, similar to the iOS lock screen camera bounce.";
+    }
+    return nil;
 }
 
 #pragma mark - UITableViewDelegate
@@ -118,6 +199,11 @@ NSString * const MSBounceCellReuseIdentifier = @"Bounce Cell";
         }
         possibleDrawerDirectionRow++;
     });
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return (indexPath.section == MSBounceSectionTypeBounce);
 }
 
 @end
