@@ -59,10 +59,10 @@ typedef NS_ENUM(NSInteger, MSDynamicsSectionType) {
     MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
     switch (slider.tag) {
         case MSDynamicsSectionTypeGravityMagnitude:
-            dynamicsDrawerViewController.paneGravityMagnitude = slider.value;
+            dynamicsDrawerViewController.gravityMagnitude = slider.value;
             break;
         case MSDynamicsSectionTypeElasticity:
-            dynamicsDrawerViewController.paneElasticity = slider.value;
+            dynamicsDrawerViewController.elasticity = slider.value;
             break;
     }
     [self.tableView reloadData];
@@ -96,18 +96,17 @@ typedef NS_ENUM(NSInteger, MSDynamicsSectionType) {
         case MSDynamicsSectionTypeGravityMagnitude: {
             slider.minimumValue = 0.0;
             slider.maximumValue = 10.0;
-            slider.value = dynamicsDrawerViewController.paneGravityMagnitude;
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", @(dynamicsDrawerViewController.paneGravityMagnitude)];
+            slider.value = dynamicsDrawerViewController.gravityMagnitude;
             break;
         }
         case MSDynamicsSectionTypeElasticity: {
             slider.minimumValue = 0.0;
             slider.maximumValue = 1.0;
-            slider.value = dynamicsDrawerViewController.paneElasticity;
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", @(dynamicsDrawerViewController.paneElasticity)];
+            slider.value = dynamicsDrawerViewController.elasticity;
             break;
         }
     }
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", @(slider.value)];
     return cell;
 }
 
@@ -120,6 +119,13 @@ typedef NS_ENUM(NSInteger, MSDynamicsSectionType) {
             return @"Elasticity";
     }
     return nil;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
 }
 
 @end
