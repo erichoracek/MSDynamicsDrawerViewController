@@ -159,7 +159,7 @@ id <MSDynamicsDrawerStyler> parallaxStyler = [MSDynamicsDrawerParallaxStyler sty
 [dynamicsDrawerViewController addStyler:parallaxStyler forDirection:(MSDynamicsDrawerDirectionLeft | MSDynamicsDrawerDirectionRight)];
 ```
 
-## Default Styler Classes
+### Default Styler Classes
  
 There are a few default stylers included with `MSDynamicsDrawerViewController`. The `Stylers` menu option in the example project enables you to try these individually or in combination.
 
@@ -172,7 +172,7 @@ There are a few default stylers included with `MSDynamicsDrawerViewController`. 
 * **Scale Styler** `MSDynamicsDrawerScaleStyler`
   Creates a zoom-in scaling effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedScale` property to change the scale that occurs when the `paneView` is closed.
 
-## Creating a Custom Styler
+### Creating a Custom Styler
 
 As user interacts with a `MSDynamicsDrawerViewController`, the styler classes that are associated with the active drawer direction are messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDrawerDirection:`. This method enables the styler to changes attributes of the `drawerView`, `paneView`, etc. relative to the `paneClosedFraction`.
 
