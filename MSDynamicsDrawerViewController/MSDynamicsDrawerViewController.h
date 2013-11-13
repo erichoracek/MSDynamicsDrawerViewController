@@ -117,19 +117,41 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 - (UIViewController *)drawerViewControllerForDirection:(MSDynamicsDrawerDirection)direction;
 
-///----------------------
-/// @name Accessing State
-///----------------------
+/**
+ If setting a new `paneViewController` should have an animation that slides off the old view controller before animating the new one into its place.
+ 
+ This animation only occurs when the method `setPaneViewController:animated:completion:` is invoked with an `animated` parameter of `YES`.
+ 
+ @see paneViewController
+ @see setPaneViewController:animated:completion:
+ */
+@property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
+
+///----------------------------------
+/// @name Accessing & Modifying State
+///----------------------------------
 
 /**
  The state of the pane view as defined in a `MSDynamicsDrawerPaneState`.
  
- The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal width for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen.
+ The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal width for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is more than one drawer view controller set, use `setPaneState:inDirection:` instead and specify a direction.
  
+ @see setPaneState:inDirection:
  @see setPaneState:animated:allowUserInterruption:completion:
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
  */
 @property (nonatomic, assign) MSDynamicsDrawerPaneState paneState;
+
+/**
+ The state of the pane view as defined in a `MSDynamicsDrawerPaneState`.
+ 
+  The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal width for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is only one drawer view controller set, use `paneState` property instead.
+ 
+ @see paneState
+ @see setPaneState:animated:allowUserInterruption:completion:
+ @see setPaneState:inDirection:animated:allowUserInterruption:completion:
+ */
+- (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Sets the state of the pane view as defined in a `MSDynamicsDrawerPaneState`.
@@ -142,6 +164,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param completion Called upon completion of the update to the pane state. If the user interrupts the transition, the completion will be called when the internal dynamic animator completes.
  
  @see paneState
+ @see setPaneState:inDirection:
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
  */
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
@@ -158,19 +181,34 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param completion Called upon completion of the update to the pane state. If the user interrupts the transition, the completion will be called when the internal dynamic animator completes.
  
  @see paneState
+ @see setPaneState:inDirection:
  @see setPaneState:animated:allowUserInterruption:completion:
  */
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 
 /**
- If setting a new `paneViewController` should have an animation that slides off the old view controller before animating the new one into its place.
+ Bounces the `paneView` open to reveal the `drawerView` underneath.
  
- This animation only occurs when the method `setPaneViewController:animated:completion:` is invoked with an `animated` parameter of `YES`.
+ If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
  
- @see paneViewController
- @see setPaneViewController:animated:completion:
+ @see bouncePaneOpenInDirection:
+ @see bounceElasticity
+ @see bounceMagnitude
  */
-@property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
+- (void)bouncePaneOpen;
+
+/**
+ Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath.
+ 
+ If there is only one drawer view controller, use `bouncePaneOpen` instead. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
+ 
+ @param direction The direction that the `paneView` will be bounced open in.
+  ?
+ @see bouncePaneOpen
+ @see bounceElasticity
+ @see bounceMagnitude
+ */
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  The directions that the `paneView` can be opened in.
@@ -178,30 +216,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  Corresponds to the directions that there are drawer view controllers set for. If more than one drawer view controller is set, this will be a bitmask of the directions that the drawer view controllers are set in.
  */
 @property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection;
-
-/**
- Bounces the `paneView` open to reveal the `drawerView` underneath.
- 
- If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `paneBounceElasticity` and `paneBounceMagnitude` are used as the dynamics values for the `paneView`.
- 
- @see bouncePaneOpenInDirection:
- @see paneBounceElasticity
- @see paneBounceMagnitude
- */
-- (void)bouncePaneOpen;
-
-/**
- Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath.
- 
- If there is only one drawer view controller, use `bouncePaneOpen` instead. When invoked, `paneBounceElasticity` and `paneBounceMagnitude` are used as the dynamics values for the `paneView`.
- 
- @param direction The direction that the `paneView` will be bounced open in.
-  ?
- @see bouncePaneOpen
- @see paneBounceElasticity
- @see paneBounceMagnitude
- */
-- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction;
 
 ///-------------------------------------
 /// @name Configuring Dynamics Behaviors
@@ -212,14 +226,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  Default value of `2.0`. A magnitude value of `1.0` represents an acceleration of 1000 points / second².
  */
-@property (nonatomic, assign) CGFloat paneGravityMagnitude;
+@property (nonatomic, assign) CGFloat gravityMagnitude;
 
 /**
  The elasticity applied to the pane view.
  
  Default value of `0.0`. Valid range is from `0.0` for no bounce upon collision, to `1.0` for completely elastic collisions.
  */
-@property (nonatomic, assign) CGFloat paneElasticity;
+@property (nonatomic, assign) CGFloat elasticity;
 
 /**
  The amount of elasticity applied to the pane view when it is bounced open.
@@ -229,7 +243,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see bouncePaneOpen
  @see bouncePaneOpenInDirection:
  */
-@property (nonatomic, assign) CGFloat paneBounceElasticity;
+@property (nonatomic, assign) CGFloat bounceElasticity;
 
 /**
  The magnitude of the push vector that is applied to the pane view when bouncePaneOpen is called.
@@ -239,7 +253,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see bouncePaneOpen
  @see bouncePaneOpenInDirection:
  */
-@property (nonatomic, assign) CGFloat paneBounceMagnitude;
+@property (nonatomic, assign) CGFloat bounceMagnitude;
 
 ///--------------------------
 ///@name Configuring Gestures

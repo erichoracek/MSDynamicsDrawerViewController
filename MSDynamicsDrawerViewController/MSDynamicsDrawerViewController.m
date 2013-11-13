@@ -134,7 +134,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (nonatomic, strong) UIPushBehavior *panePushBehavior;
 @property (nonatomic, strong) UIDynamicItemBehavior *paneElasticityBehavior;
-@property (nonatomic, strong) UIDynamicItemBehavior *paneBounceElasticityBehavior;
+@property (nonatomic, strong) UIDynamicItemBehavior *bounceElasticityBehavior;
 @property (nonatomic, strong) UIGravityBehavior *paneGravityBehavior;
 @property (nonatomic, strong) UICollisionBehavior *paneBoundaryCollisionBehavior;
 @property (nonatomic, copy) void (^dynamicAnimatorCompletion)(void);
@@ -264,10 +264,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.panePushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.paneView] mode:UIPushBehaviorModeInstantaneous];
     self.paneElasticityBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paneView]];
     
-    self.paneGravityMagnitude = 2.0;
-    self.paneElasticity = 0.0;
-    self.paneBounceElasticity = 0.5;
-    self.paneBounceMagnitude = 60.0;
+    self.gravityMagnitude = 2.0;
+    self.elasticity = 0.0;
+    self.bounceElasticity = 0.5;
+    self.bounceMagnitude = 60.0;
     
     __weak typeof(self) weakSelf = self;
     self.paneGravityBehavior.action = ^{
@@ -275,7 +275,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     };
     
 #if defined(DEBUG_DYNAMICS)
-    self.paneGravityMagnitude = 0.05;
+    self.gravityMagnitude = 0.05;
 #endif
     
 #if defined(DEBUG_LAYOUT)
@@ -300,7 +300,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible/multiple directions");
     self.currentDrawerDirection = direction;
-    [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed pushMagnitude:self.paneBounceMagnitude pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen drawerDirection:direction] pushElasticity:self.paneBounceElasticity];
+    [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed pushMagnitude:self.bounceMagnitude pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen direction:direction] pushElasticity:self.bounceElasticity];
 }
 
 #pragma mark Generic View Controller Containment
@@ -477,10 +477,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)addDynamicsBehaviorsToCreatePaneState:(MSDynamicsDrawerPaneState)paneState;
 {
-    [self addDynamicsBehaviorsToCreatePaneState:paneState pushMagnitude:0.0 pushAngle:0.0 pushElasticity:self.paneElasticity];
+    [self addDynamicsBehaviorsToCreatePaneState:paneState pushMagnitude:0.0 pushAngle:0.0 pushElasticity:self.elasticity];
 }
 
-- (void)addDynamicsBehaviorsToCreatePaneState:(MSDynamicsDrawerPaneState)paneState pushMagnitude:(CGFloat)pushMagnitude pushAngle:(CGFloat)pushAngle pushElasticity:(CGFloat)paneElasticity
+- (void)addDynamicsBehaviorsToCreatePaneState:(MSDynamicsDrawerPaneState)paneState pushMagnitude:(CGFloat)pushMagnitude pushAngle:(CGFloat)pushAngle pushElasticity:(CGFloat)elasticity
 {
     if (self.currentDrawerDirection == MSDynamicsDrawerDirectionNone) {
         return;
@@ -489,15 +489,15 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     [self setPaneViewControllerViewUserInteractionEnabled:(paneState == MSDynamicsDrawerPaneStateClosed)];
     
     [self.paneBoundaryCollisionBehavior removeAllBoundaries];
-    [self.paneBoundaryCollisionBehavior addBoundaryWithIdentifier:MSDynamicsDrawerBoundaryIdentifier forPath:[self boundaryPathForState:paneState drawerDirection:self.currentDrawerDirection]];
+    [self.paneBoundaryCollisionBehavior addBoundaryWithIdentifier:MSDynamicsDrawerBoundaryIdentifier forPath:[self boundaryPathForState:paneState direction:self.currentDrawerDirection]];
     [self.dynamicAnimator addBehavior:self.paneBoundaryCollisionBehavior];
     
-    self.paneGravityBehavior.magnitude = [self paneGravityMagnitude];
-    self.paneGravityBehavior.angle = [self gravityAngleForState:paneState drawerDirection:self.currentDrawerDirection];
+    self.paneGravityBehavior.magnitude = [self gravityMagnitude];
+    self.paneGravityBehavior.angle = [self gravityAngleForState:paneState direction:self.currentDrawerDirection];
     [self.dynamicAnimator addBehavior:self.paneGravityBehavior];
     
-    if (paneElasticity != 0.0) {
-        self.paneElasticityBehavior.elasticity = paneElasticity;
+    if (elasticity != 0.0) {
+        self.paneElasticityBehavior.elasticity = elasticity;
         [self.dynamicAnimator addBehavior:self.self.paneElasticityBehavior];
     }
     
@@ -509,7 +509,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     }
 }
 
-- (UIBezierPath *)boundaryPathForState:(MSDynamicsDrawerPaneState)state drawerDirection:(MSDynamicsDrawerDirection)direction
+- (UIBezierPath *)boundaryPathForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction
 {
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Indeterminate boundary for non-cardinal reveal direction");
     CGRect boundary = CGRectZero;
@@ -557,7 +557,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return [UIBezierPath bezierPathWithRect:boundary];
 }
 
-- (CGFloat)gravityAngleForState:(MSDynamicsDrawerPaneState)state drawerDirection:(MSDynamicsDrawerDirection)rirection
+- (CGFloat)gravityAngleForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)rirection
 {
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(rirection), @"Indeterminate gravity angle for non-cardinal reveal direction");
     switch (rirection) {
@@ -700,6 +700,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState
 {
     [self setPaneState:paneState animated:NO allowUserInterruption:NO completion:nil];
+}
+
+- (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction
+{
+    [self setPaneState:paneState inDirection:direction animated:NO allowUserInterruption:NO completion:nil];
 }
 
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
@@ -1058,7 +1063,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 } else {
                     NSAssert(NO, @"Invalid state, reveal direction niether positive nor negative");
                 }
-                [self addDynamicsBehaviorsToCreatePaneState:state pushMagnitude:(fabsf(panVelocity) * MSPaneViewVelocityMultiplier) pushAngle:[self gravityAngleForState:state drawerDirection:self.currentDrawerDirection] pushElasticity:self.paneElasticity];
+                [self addDynamicsBehaviorsToCreatePaneState:state pushMagnitude:(fabsf(panVelocity) * MSPaneViewVelocityMultiplier) pushAngle:[self gravityAngleForState:state direction:self.currentDrawerDirection] pushElasticity:self.elasticity];
             }
             // If we're released past half-way, snap to completion with no bounce, otherwise, snap to back to the starting position with no bounce
             else {
