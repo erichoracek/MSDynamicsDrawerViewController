@@ -174,6 +174,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    self.dynamicAnimator.delegate = self;
     [self.view addSubview:self.drawerView];
     [self.view addSubview:self.paneView];
     self.drawerView.frame = (CGRect){CGPointZero, self.view.frame.size};
@@ -257,8 +259,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.paneTapGestureRecognizer.delegate = self;
     [self.paneView addGestureRecognizer:self.paneTapGestureRecognizer];
     
-    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-    self.dynamicAnimator.delegate = self;
     self.paneBoundaryCollisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paneView]];
     self.paneGravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.paneView]];
     self.panePushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.paneView] mode:UIPushBehaviorModeInstantaneous];
