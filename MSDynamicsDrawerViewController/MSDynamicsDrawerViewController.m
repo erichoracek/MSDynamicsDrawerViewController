@@ -180,6 +180,18 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.paneView.frame = (CGRect){CGPointZero, self.view.frame.size};
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     [self.paneView addObserver:self forKeyPath:@"frame" options:0 context:NULL];
+    
+    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    self.dynamicAnimator.delegate = self;
+    self.paneBoundaryCollisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paneView]];
+    self.paneGravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.paneView]];
+    self.panePushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.paneView] mode:UIPushBehaviorModeInstantaneous];
+    self.paneElasticityBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paneView]];
+    
+    __weak typeof(self) weakSelf = self;
+    self.paneGravityBehavior.action = ^{
+        [weakSelf didUpdateDynamicAnimatorAction];
+    };
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -257,22 +269,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.paneTapGestureRecognizer.delegate = self;
     [self.paneView addGestureRecognizer:self.paneTapGestureRecognizer];
     
-    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-    self.dynamicAnimator.delegate = self;
-    self.paneBoundaryCollisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paneView]];
-    self.paneGravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.paneView]];
-    self.panePushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.paneView] mode:UIPushBehaviorModeInstantaneous];
-    self.paneElasticityBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paneView]];
-    
     self.gravityMagnitude = 2.0;
     self.elasticity = 0.0;
     self.bounceElasticity = 0.5;
     self.bounceMagnitude = 60.0;
-    
-    __weak typeof(self) weakSelf = self;
-    self.paneGravityBehavior.action = ^{
-        [weakSelf didUpdateDynamicAnimatorAction];
-    };
     
 #if defined(DEBUG_DYNAMICS)
     self.gravityMagnitude = 0.05;

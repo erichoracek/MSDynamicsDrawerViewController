@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4511" systemVersion="13A3017" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jvz-VO-niW">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3745"/>
+    </dependencies>
+    <scenes>
+        <!--Dynamics Drawer View Controller-->
+        <scene sceneID="GKj-s5-q00">
+            <objects>
+                <viewController id="jvz-VO-niW" customClass="MSDynamicsDrawerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="H85-wZ-zM0"/>
+                        <viewControllerLayoutGuide type="bottom" id="Uvs-ah-tRZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9le-gA-zrI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4na-S0-jeq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-122" y="9"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="eZ8-46-tO0">
+            <objects>
+                <tableViewController storyboardIdentifier="Menu" id="b6X-Fl-rar" customClass="MSMenuViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dNf-Br-2NF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="b6X-Fl-rar" id="NwU-le-xPY"/>
+                            <outlet property="delegate" destination="b6X-Fl-rar" id="wCO-zg-4UH"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qzp-XX-arv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-122" y="677"/>
+        </scene>
+        <!--Logo View Controller-->
+        <scene sceneID="0kG-zz-tq3">
+            <objects>
+                <viewController storyboardIdentifier="Logo" id="qnF-rY-DNY" customClass="MSLogoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="br3-UJ-pyb"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cp8-AB-tam"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aFu-sZ-taX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QXO-Zd-sTB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="239" y="677"/>
+        </scene>
+        <!--Stylers View Controller-->
+        <scene sceneID="x4o-9x-ylL">
+            <objects>
+                <tableViewController storyboardIdentifier="Stylers" id="xNR-w7-1fw" customClass="MSStylersViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ZL4-oD-eVX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="xNR-w7-1fw" id="18p-Je-d1g"/>
+                            <outlet property="delegate" destination="xNR-w7-1fw" id="3FR-0n-cEq"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B2u-1Z-Pey" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-122" y="1341"/>
+        </scene>
+        <!--Dynamics View Controller-->
+        <scene sceneID="ng6-9g-7SI">
+            <objects>
+                <tableViewController storyboardIdentifier="Dynamics" id="eGg-lI-vDy" customClass="MSDynamicsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ajv-Ku-YbF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="eGg-lI-vDy" id="4ch-Q9-n6r"/>
+                            <outlet property="delegate" destination="eGg-lI-vDy" id="kp4-7I-EKR"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zd8-9N-bdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="239" y="1341"/>
+        </scene>
+        <!--Bounce View Controller-->
+        <scene sceneID="MSU-P7-pAy">
+            <objects>
+                <tableViewController storyboardIdentifier="Bounce" id="t1O-Ec-gmh" customClass="MSBounceViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="WMM-f1-xRR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="t1O-Ec-gmh" id="BaO-Wh-b4Z"/>
+                            <outlet property="delegate" destination="t1O-Ec-gmh" id="yl3-D0-714"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mXh-JU-tJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="600" y="1341"/>
+        </scene>
+        <!--Gestures View Controller-->
+        <scene sceneID="LgX-bi-WrM">
+            <objects>
+                <tableViewController storyboardIdentifier="Gestures" id="5ZM-gp-hER" customClass="MSGesturesViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="VdC-KJ-NrI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="5ZM-gp-hER" id="tFB-YM-48w"/>
+                            <outlet property="delegate" destination="5ZM-gp-hER" id="lda-Sx-oKp"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qLN-Pd-18a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="958" y="1341"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="oGo-o0-Zyy">
+            <objects>
+                <tableViewController id="KuU-LA-2qk" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FvC-2j-nbf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="KuU-LA-2qk" id="FJu-dL-dQb"/>
+                            <outlet property="delegate" destination="KuU-LA-2qk" id="65E-bA-85o"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ehh-8b-OM2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1317" y="1341"/>
+        </scene>
+        <!--Controls View Controller-->
+        <scene sceneID="dGR-55-Szq">
+            <objects>
+                <tableViewController storyboardIdentifier="Controls" id="mP3-u8-dHe" customClass="MSControlsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="hrz-6N-5hK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="mP3-u8-dHe" id="2dy-8R-ZJs"/>
+                            <outlet property="delegate" destination="mP3-u8-dHe" id="36f-XA-Q77"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Ln-Ak-BiV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1677" y="1341"/>
+        </scene>
+        <!--Monospace Web View Controller-->
+        <scene sceneID="ydp-My-WwF">
+            <objects>
+                <viewController storyboardIdentifier="Monospace" id="ahm-7w-QdK" customClass="MSMonospaceWebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xIg-ms-QNe"/>
+                        <viewControllerLayoutGuide type="bottom" id="89j-H4-SFG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wel-SH-2dp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WTj-4X-qa0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2753" y="1341"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="4qf-cx-cs2">
+            <objects>
+                <viewController storyboardIdentifier="Map" id="55w-WS-oSw" customClass="MSMapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5r8-OO-zxG"/>
+                        <viewControllerLayoutGuide type="bottom" id="R0v-tv-Xok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IH1-gt-5LE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ACh-PI-DB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2037" y="1341"/>
+        </scene>
+        <!--Long Table View Controller-->
+        <scene sceneID="id4-xL-0dG">
+            <objects>
+                <tableViewController storyboardIdentifier="Long Table" id="2K6-N5-iuZ" customClass="MSLongTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="3Xg-8R-6fw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="2K6-N5-iuZ" id="CfZ-C3-9Bl"/>
+                            <outlet property="delegate" destination="2K6-N5-iuZ" id="dXA-vg-9Bi"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ShP-pA-eZx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2395" y="1341"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

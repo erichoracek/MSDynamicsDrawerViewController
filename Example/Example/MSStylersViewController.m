@@ -35,12 +35,22 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 @property (nonatomic, strong) NSArray *stylerClasses;
 @property (nonatomic, strong) NSArray *stylerNames;
 @property (nonatomic, strong) NSArray *stylerDescriptions;
+@property (nonatomic, strong) NSDictionary *directionNames;
 
 @end
 
 @implementation MSStylersViewController
 
 #pragma mark - UIViewController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -59,23 +69,36 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.stylerClasses = @[
-            [MSDynamicsDrawerScaleStyler class],
-            [MSDynamicsDrawerFadeStyler class],
-            [MSDynamicsDrawerParallaxStyler class]
-        ];
-        self.stylerNames = @[
-            @"Scale",
-            @"Fade",
-            @"Parallax"
-        ];
-        self.stylerDescriptions = @[
-            @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
-            @"The 'Fade' styler fades the drawer view as the pane view is opened",
-            @"The 'Parallax' styler translates the drawer view inwards as the pane view is opened",
-        ];
+        [self initialize];
     }
     return self;
+}
+
+#pragma mark - MSStylersViewController
+
+- (void)initialize
+{
+    self.stylerClasses = @[
+        [MSDynamicsDrawerScaleStyler class],
+        [MSDynamicsDrawerFadeStyler class],
+        [MSDynamicsDrawerParallaxStyler class]
+    ];
+    self.stylerNames = @[
+        @"Scale",
+        @"Fade",
+        @"Parallax"
+    ];
+    self.stylerDescriptions = @[
+        @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
+        @"The 'Fade' styler fades the drawer view as the pane view is opened",
+        @"The 'Parallax' styler translates the drawer view inwards as the pane view is opened",
+    ];
+    self.directionNames = @{
+        @(MSDynamicsDrawerDirectionLeft) : @"Left",
+        @(MSDynamicsDrawerDirectionRight) : @"Right",
+        @(MSDynamicsDrawerDirectionTop) : @"Top",
+        @(MSDynamicsDrawerDirectionBottom) : @"Bottom",
+    };
 }
 
 #pragma mark - UITableViewDataSource
@@ -104,23 +127,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
     __block NSInteger possibleDrawerDirectionRow = 0;
     MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
         if (indexPath.row == possibleDrawerDirectionRow) {
-            NSString *title;
-            switch (drawerDirection) {
-                case MSDynamicsDrawerDirectionLeft:
-                    title = @"Left";
-                    break;
-                case MSDynamicsDrawerDirectionRight:
-                    title = @"Right";
-                    break;
-                case MSDynamicsDrawerDirectionTop:
-                    title = @"Top";
-                    break;
-                case MSDynamicsDrawerDirectionBottom:
-                    title = @"Bottom";
-                    break;
-                default:
-                    break;
-            }
+            NSString *title = self.directionNames[@(drawerDirection)];
             BOOL stylerEnabled = NO;
             Class stylerClass = self.stylerClasses[indexPath.section];
             for (id <MSDynamicsDrawerStyler> styler in [dynamicsDrawerViewController stylersForDirection:drawerDirection]) {
@@ -129,12 +136,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
                     break;
                 }
             }
-            if (stylerEnabled) {
-                title = [NSString stringWithFormat:@"✔︎ %@", title];
-            } else {
-                title = [NSString stringWithFormat:@"✘ %@", title];
-            }
-            cell.textLabel.text = title;
+            cell.textLabel.text = [NSString stringWithFormat:(stylerEnabled ? @"✔︎ %@" : @"✘ %@"), title];
         }
         possibleDrawerDirectionRow++;
     });
