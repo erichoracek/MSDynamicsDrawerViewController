@@ -127,6 +127,11 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 @property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
 
+/**
+ If the status bar should align with the pane view as the pane view frame is adjusted by both the user gestures and the internal dynamic animator.
+ */
+@property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView;
+
 ///----------------------------------
 /// @name Accessing & Modifying State
 ///----------------------------------
