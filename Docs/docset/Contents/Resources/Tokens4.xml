@@ -153,6 +153,28 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setShouldAlignStatusBarToPaneView:</TokenIdentifier>
+			<Abstract type="html">If the status bar should align with the pane view as the pane view frame is adjusted by both the user gestures and the internal dynamic animator.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView</Declaration>
+			
+			
+			<Anchor>//api/name/shouldAlignStatusBarToPaneView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/shouldAlignStatusBarToPaneView</TokenIdentifier>
+			<Abstract type="html">If the status bar should align with the pane view as the pane view frame is adjusted by both the user gestures and the internal dynamic animator.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView</Declaration>
+			
+			
+			<Anchor>//api/name/shouldAlignStatusBarToPaneView</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:</TokenIdentifier>
 			<Abstract type="html">The state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
