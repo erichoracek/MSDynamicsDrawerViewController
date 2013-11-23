@@ -294,14 +294,27 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)bouncePaneOpen
 {
+    [self bouncePaneOpenWithCompletion:nil];
+}
+
+- (void)bouncePaneOpenWithCompletion:(void (^)(void))completion
+{
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to bounce open with multiple possible reveal directions");
-    [self bouncePaneOpenInDirection:self.currentDrawerDirection];
+    [self bouncePaneOpenInDirection:self.currentDrawerDirection completion:completion];
 }
 
 - (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction
 {
+    [self bouncePaneOpenInDirection:direction completion:nil];
+}
+
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction completion:(void (^)(void))completion
+{
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible/multiple directions");
     self.currentDrawerDirection = direction;
+    if (completion) {
+        self.dynamicAnimatorCompletion = completion;
+    }
     [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed pushMagnitude:self.bounceMagnitude pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen direction:direction] pushElasticity:self.bounceElasticity];
 }
 

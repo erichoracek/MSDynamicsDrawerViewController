@@ -197,10 +197,25 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
  
  @see bouncePaneOpenInDirection:
+ @see bouncePaneOpenInDirection:completion:
  @see bounceElasticity
  @see bounceMagnitude
  */
 - (void)bouncePaneOpen;
+
+/**
+ Bounces the `paneView` open to reveal the `drawerView` underneath. Executes `completion` when the dynamic animation finishes.
+ 
+ If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
+ 
+ @param completion A block that is run when the dynamic animator finishes animating the bounce.
+ ?
+ @see bouncePaneOpenInDirection:
+ @see bouncePaneOpenInDirection:completion:
+ @see bounceElasticity
+ @see bounceMagnitude
+ */
+- (void)bouncePaneOpenWithCompletion:(void (^)(void))completion;
 
 /**
  Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath.
@@ -209,11 +224,27 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  @param direction The direction that the `paneView` will be bounced open in.
   ?
+ @see bouncePaneOpenInDirection:completion:
  @see bouncePaneOpen
  @see bounceElasticity
  @see bounceMagnitude
  */
 - (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath. Executes `completion` when the dynamic animation finishes.
+ 
+ If there is only one drawer view controller, use `bouncePaneOpenWithCompletion:` instead. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
+ 
+ @param direction The direction that the `paneView` will be bounced open in.
+ @param completion A block that is run when the dynamic animator finishes animating the bounce.
+ ?
+ @see bouncePaneOpenInDirection:
+ @see bouncePaneOpen
+ @see bounceElasticity
+ @see bounceMagnitude
+ */
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction completion:(void (^)(void))completion;
 
 /**
  The directions that the `paneView` can be opened in.
