@@ -66,7 +66,7 @@
 		3A1166A8167E8C3E00DBD12B /* Example-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Prefix.pch"; sourceTree = "<group>"; };
 		3A11672B167E8F1900DBD12B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A3CB25E183AE98B0089BED5 /* MSDynamicsDrawerViewController Storyboard Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MSDynamicsDrawerViewController Storyboard Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A3CB25F183AE98B0089BED5 /* Storyboard Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Storyboard Example-Info.plist"; path = "/Users/erh/Development/MSDynamicsDrawerViewController/Example/Storyboard Example-Info.plist"; sourceTree = "<absolute>"; };
+		3A3CB25F183AE98B0089BED5 /* Storyboard Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Storyboard Example-Info.plist"; sourceTree = "<group>"; };
 		3A3CB260183AE9B40089BED5 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		3A4AA44D18133EB4006EC889 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3A558AA4182B136300319DA5 /* MSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
