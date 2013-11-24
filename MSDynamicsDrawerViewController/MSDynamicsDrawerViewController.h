@@ -192,22 +192,11 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 
 /**
- Bounces the `paneView` open to reveal the `drawerView` underneath.
- 
- If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
- 
- @see bouncePaneOpenInDirection:
- @see bouncePaneOpenInDirection:completion:
- @see bounceElasticity
- @see bounceMagnitude
- */
-- (void)bouncePaneOpen;
-
-/**
  Bounces the `paneView` open to reveal the `drawerView` underneath. Executes `completion` when the dynamic animation finishes.
  
- If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
+ If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:allowUserInterruption:completion:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
  
+ @param allowUserInterruption If the user should be able to interrupt the bounce animation with gestures.
  @param completion A block that is run when the dynamic animator finishes animating the bounce.
  ?
  @see bouncePaneOpenInDirection:
@@ -215,28 +204,15 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see bounceElasticity
  @see bounceMagnitude
  */
-- (void)bouncePaneOpenWithCompletion:(void (^)(void))completion;
-
-/**
- Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath.
- 
- If there is only one drawer view controller, use `bouncePaneOpen` instead. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
- 
- @param direction The direction that the `paneView` will be bounced open in.
-  ?
- @see bouncePaneOpenInDirection:completion:
- @see bouncePaneOpen
- @see bounceElasticity
- @see bounceMagnitude
- */
-- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction;
+- (void)bouncePaneOpenAllowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 
 /**
  Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath. Executes `completion` when the dynamic animation finishes.
  
- If there is only one drawer view controller, use `bouncePaneOpenWithCompletion:` instead. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
+ If there is only one drawer view controller, use `bouncePaneOpenAllowUserInterruption:completion:` instead. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
  
  @param direction The direction that the `paneView` will be bounced open in.
+ @param allowUserInterruption If the user should be able to interrupt the bounce animation with gestures.
  @param completion A block that is run when the dynamic animator finishes animating the bounce.
  ?
  @see bouncePaneOpenInDirection:
@@ -244,7 +220,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see bounceElasticity
  @see bounceMagnitude
  */
-- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction completion:(void (^)(void))completion;
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 
 /**
  The directions that the `paneView` can be opened in.
