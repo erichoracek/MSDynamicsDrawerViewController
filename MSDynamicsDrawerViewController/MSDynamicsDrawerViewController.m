@@ -292,10 +292,20 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 #pragma mark Bouncing
 
+- (void)bouncePaneOpen
+{
+    [self bouncePaneOpenAllowUserInterruption:YES completion:nil];
+}
+
 - (void)bouncePaneOpenAllowUserInterruption:(BOOL)allowInterrupt completion:(void (^)(void))completion
 {
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to bounce open with multiple possible reveal directions");
     [self bouncePaneOpenInDirection:self.currentDrawerDirection allowUserInterruption:allowInterrupt completion:completion];
+}
+
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction
+{
+    [self bouncePaneOpenInDirection:direction allowUserInterruption:YES completion:nil];
 }
 
 - (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction allowUserInterruption:(BOOL)allowInterrupt completion:(void (^)(void))completion
