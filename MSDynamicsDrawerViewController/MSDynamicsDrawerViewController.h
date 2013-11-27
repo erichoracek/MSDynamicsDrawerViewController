@@ -218,7 +218,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see bounceElasticity
  @see bounceMagnitude
  */
-- (void)bouncePaneOpenAllowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
+- (void)bouncePaneOpenAllowingUserInterruption:(BOOL)allowingUserInterruption completion:(void (^)(void))completion;
 
 /**
  Bounces the `paneView` open in the specified direction, revealing the `drawerView` underneath.
