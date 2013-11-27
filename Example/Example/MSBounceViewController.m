@@ -194,7 +194,7 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
     __block NSInteger possibleDrawerDirectionRow = 0;
     MSDynamicsDrawerDirectionActionForMaskedValues(dynamicsDrawerViewController.possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
         if (indexPath.row == possibleDrawerDirectionRow) {
-            [dynamicsDrawerViewController bouncePaneOpenInDirection:drawerDirection];
+            [dynamicsDrawerViewController bouncePaneOpenInDirection:drawerDirection allowUserInterruption:NO completion:nil];
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         }
         possibleDrawerDirectionRow++;

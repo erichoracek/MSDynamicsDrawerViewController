@@ -294,15 +294,40 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)bouncePaneOpen
 {
+    [self bouncePaneOpenAllowUserInterruption:YES completion:nil];
+}
+
+- (void)bouncePaneOpenAllowUserInterruption:(BOOL)allowInterrupt completion:(void (^)(void))completion
+{
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to bounce open with multiple possible reveal directions");
-    [self bouncePaneOpenInDirection:self.currentDrawerDirection];
+    [self bouncePaneOpenInDirection:self.currentDrawerDirection allowUserInterruption:allowInterrupt completion:completion];
 }
 
 - (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction
 {
+    [self bouncePaneOpenInDirection:direction allowUserInterruption:YES completion:nil];
+}
+
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction allowUserInterruption:(BOOL)allowInterrupt completion:(void (^)(void))completion
+{
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible/multiple directions");
+    
+    __weak typeof(self) weakSelf = self;
+    void(^bounceCompletion)(void) = ^{
+        [weakSelf setViewUserInteractionEnabled:YES];
+        if (completion) {
+            completion();
+        }
+    };
+    
     self.currentDrawerDirection = direction;
-    [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed pushMagnitude:self.bounceMagnitude pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen direction:direction] pushElasticity:self.bounceElasticity];
+    self.dynamicAnimatorCompletion = bounceCompletion;
+    
+    [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed
+                                  pushMagnitude:self.bounceMagnitude
+                                      pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen direction:direction]
+                                 pushElasticity:self.bounceElasticity];
+    [self setViewUserInteractionEnabled:allowInterrupt];
 }
 
 #pragma mark Generic View Controller Containment
