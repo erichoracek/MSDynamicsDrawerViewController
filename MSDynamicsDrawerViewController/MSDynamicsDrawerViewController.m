@@ -294,13 +294,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)bouncePaneOpen
 {
-    [self bouncePaneOpenAllowUserInterruption:YES completion:nil];
+    [self bouncePaneOpenAllowingUserInterruption:YES completion:nil];
 }
 
-- (void)bouncePaneOpenAllowUserInterruption:(BOOL)allowInterrupt completion:(void (^)(void))completion
+- (void)bouncePaneOpenAllowingUserInterruption:(BOOL)allowingUserInterruption completion:(void (^)(void))completion
 {
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to bounce open with multiple possible reveal directions");
-    [self bouncePaneOpenInDirection:self.currentDrawerDirection allowUserInterruption:allowInterrupt completion:completion];
+    [self bouncePaneOpenInDirection:self.currentDrawerDirection allowUserInterruption:allowingUserInterruption completion:completion];
 }
 
 - (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction
@@ -308,26 +308,20 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     [self bouncePaneOpenInDirection:direction allowUserInterruption:YES completion:nil];
 }
 
-- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction allowUserInterruption:(BOOL)allowInterrupt completion:(void (^)(void))completion
+- (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible/multiple directions");
     
-    __weak typeof(self) weakSelf = self;
-    void(^bounceCompletion)(void) = ^{
-        [weakSelf setViewUserInteractionEnabled:YES];
-        if (completion) {
-            completion();
-        }
-    };
-    
     self.currentDrawerDirection = direction;
-    self.dynamicAnimatorCompletion = bounceCompletion;
+
+    [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed pushMagnitude:self.bounceMagnitude pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen direction:direction] pushElasticity:self.bounceElasticity];
     
-    [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed
-                                  pushMagnitude:self.bounceMagnitude
-                                      pushAngle:[self gravityAngleForState:MSDynamicsDrawerPaneStateOpen direction:direction]
-                                 pushElasticity:self.bounceElasticity];
-    [self setViewUserInteractionEnabled:allowInterrupt];
+    if (!allowUserInterruption) [self setViewUserInteractionEnabled:NO];
+    __weak typeof(self) weakSelf = self;
+    self.dynamicAnimatorCompletion = ^{
+        if (!allowUserInterruption) [weakSelf setViewUserInteractionEnabled:YES];
+        if (completion != nil) completion();
+    };
 }
 
 #pragma mark Generic View Controller Containment
@@ -759,8 +753,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.currentDrawerDirection = direction;
     
     if (animated) {
-        if (!allowUserInterruption) [self setViewUserInteractionEnabled:NO];
+        
         [self addDynamicsBehaviorsToCreatePaneState:paneState];
+        
+        if (!allowUserInterruption) [self setViewUserInteractionEnabled:NO];
         __weak typeof(self) weakSelf = self;
         self.dynamicAnimatorCompletion = ^{
             if (!allowUserInterruption) [weakSelf setViewUserInteractionEnabled:YES];
