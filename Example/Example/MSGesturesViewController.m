@@ -113,12 +113,7 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
                     gestureEnabled = [dynamicsDrawerViewController paneTapToCloseEnabledForDirection:drawerDirection];
                     break;
             }
-            if (gestureEnabled) {
-                title = [NSString stringWithFormat:@"✔︎ %@", title];
-            } else {
-                title = [NSString stringWithFormat:@"✘ %@", title];
-            }
-            cell.textLabel.text = title;
+            cell.textLabel.text = [NSString stringWithFormat:(gestureEnabled ? @"✔︎ %@" : @"✘ %@"), title];
         }
         possibleDrawerDirectionRow++;
     });

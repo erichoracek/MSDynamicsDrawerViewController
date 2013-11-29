@@ -42,17 +42,29 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#if !defined(STORYBOARD)
     self.dynamicsDrawerViewController = [MSDynamicsDrawerViewController new];
+#else
+    self.dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.window.rootViewController;
+#endif
     
     // Add some example stylers
     [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerScaleStyler styler], [MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
     [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerParallaxStyler styler]] forDirection:MSDynamicsDrawerDirectionRight];
     
+#if !defined(STORYBOARD)
     MSMenuViewController *menuViewController = [MSMenuViewController new];
+#else
+    MSMenuViewController *menuViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
+#endif
     menuViewController.dynamicsDrawerViewController = self.dynamicsDrawerViewController;
     [self.dynamicsDrawerViewController setDrawerViewController:menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
     
+#if !defined(STORYBOARD)
     MSLogoViewController *logoViewController = [MSLogoViewController new];
+#else
+    MSLogoViewController *logoViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Logo"];
+#endif
     [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight];
     
     // Transition to the first view controller

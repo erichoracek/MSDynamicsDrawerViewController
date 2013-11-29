@@ -93,6 +93,8 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView registerClass:[MSMenuCell class] forCellReuseIdentifier:MSMenuCellReuseIdentifier];
+    [self.tableView registerClass:[MSMenuTableViewHeader class] forHeaderFooterViewReuseIdentifier:MSDrawerHeaderReuseIdentifier];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorColor = [UIColor colorWithWhite:1.0 alpha:0.25];
 }
@@ -108,28 +110,16 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 {
     self.paneViewControllerType = NSUIntegerMax;
     self.paneViewControllerTitles = @{
-        // Options
         @(MSPaneViewControllerTypeStylers) : @"Stylers",
         @(MSPaneViewControllerTypeDynamics) : @"Dynamics",
         @(MSPaneViewControllerTypeBounce) : @"Bounce",
         @(MSPaneViewControllerTypeGestures) : @"Gestures",
-        // Examples
         @(MSPaneViewControllerTypeControls) : @"Controls",
         @(MSPaneViewControllerTypeMap) : @"Map",
         @(MSPaneViewControllerTypeLongTable) : @"Long Table",
-        // About
         @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd."
     };
-    
-#if defined(STORYBOARD)
-    self.paneViewControllerIdentifiers = @{
-        @(MSPaneViewControllerTypeStylers) : @"PaneViewControllerStylers",
-        @(MSPaneViewControllerTypeDynamics) : @"PaneViewControllerTypeDynamics",
-        @(MSPaneViewControllerTypeBounce) : @"PaneViewControllerOptions",
-        @(MSPaneViewControllerTypeControls) : @"PaneViewControllerControls",
-        @(MSPaneViewControllerTypeMonospace) : @"PaneViewControllerMonospace",
-    };
-#else
+#if !defined(STORYBOARD)
     self.paneViewControllerClasses = @{
         @(MSPaneViewControllerTypeStylers) : [MSStylersViewController class],
         @(MSPaneViewControllerTypeDynamics) : [MSDynamicsViewController class],
@@ -140,8 +130,18 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         @(MSPaneViewControllerTypeLongTable) : [MSLongTableViewController class],
         @(MSPaneViewControllerTypeMonospace) : [MSMonospaceWebViewController class]
     };
+#else
+    self.paneViewControllerIdentifiers = @{
+        @(MSPaneViewControllerTypeStylers) : @"Stylers",
+        @(MSPaneViewControllerTypeDynamics) : @"Dynamics",
+        @(MSPaneViewControllerTypeBounce) : @"Bounce",
+        @(MSPaneViewControllerTypeGestures) : @"Gestures",
+        @(MSPaneViewControllerTypeControls) : @"Controls",
+        @(MSPaneViewControllerTypeMap) : @"Map",
+        @(MSPaneViewControllerTypeLongTable) : @"Long Table",
+        @(MSPaneViewControllerTypeMonospace) : @"Monospace"
+    };
 #endif
-    
     self.sectionTitles = @{
         @(MSMenuViewControllerTableViewSectionTypeOptions) : @"Options",
         @(MSMenuViewControllerTableViewSectionTypeExamples) : @"Examples",
@@ -153,9 +153,6 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         @(MSPaneViewControllerTypeMonospace),
         @(MSPaneViewControllerTypeCount)
     ];
-    
-    [self.tableView registerClass:[MSMenuCell class] forCellReuseIdentifier:MSMenuCellReuseIdentifier];
-    [self.tableView registerClass:[MSMenuTableViewHeader class] forHeaderFooterViewReuseIdentifier:MSDrawerHeaderReuseIdentifier];
 }
 
 - (MSPaneViewControllerType)paneViewControllerTypeForIndexPath:(NSIndexPath *)indexPath
@@ -181,7 +178,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     BOOL animateTransition = self.dynamicsDrawerViewController.paneViewController != nil;
     
 #if defined(STORYBOARD)
-    UIViewController *paneViewController = [self.dynamicsDrawerViewController.storyboard instantiateViewControllerWithIdentifier:self.paneViewControllerIdentifiers[@(paneViewControllerType)]];
+    UIViewController *paneViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.paneViewControllerIdentifiers[@(paneViewControllerType)]];
 #else
     Class paneViewControllerClass = self.paneViewControllerClasses[@(paneViewControllerType)];
     UIViewController *paneViewController = (UIViewController *)[paneViewControllerClass new];
