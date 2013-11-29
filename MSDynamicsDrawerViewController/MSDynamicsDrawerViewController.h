@@ -302,24 +302,44 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 ///--------------------------
 
 /**
- Sets if a user-initiated pan gesture on the `paneView` can move the pane in the specified direction.
+ Sets if a user-initiated pan gesture on the `paneView` can reveal the pane in the specified direction.
  
- @param paneDraggingEnabled Whether dragging should be enabled.
- @param direction The direction that dragging should be enabled for. Accepts masked direction values.
+ @param paneDraggingEnabled Whether dragging to reveal should be enabled.
+ @param direction The direction that dragging to reveal should be enabled for. Accepts masked direction values.
  
  @see paneDragRevealEnabledForDirection:
  */
 - (void)setPaneDragRevealEnabled:(BOOL)paneDraggingEnabled forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Returns if a user-initiated pan gesture on the `paneView` can move the pane in the specified direction.
+ Returns if a user-initiated pan gesture on the `paneView` can reveal the pane in the specified direction.
  
  @param direction The direction to check against. Does not accept masked direction values.
- @return If dragging is enabled in the specified direction.
+ @return If dragging to reveal is enabled in the specified direction.
  
  @see setPaneDragRevealEnabled:forDirection:
  */
 - (BOOL)paneDragRevealEnabledForDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Sets if a user-initiated pan gesture on the `paneView` can close the pane in the specified direction.
+ 
+ @param paneDraggingEnabled Whether dragging to close should be enabled.
+ @param direction The direction that dragging to close should be enabled for. Accepts masked direction values.
+ 
+ @see paneDragCloseEnabledForDirection:
+ */
+- (void)setPaneDragCloseEnabled:(BOOL)paneDraggingEnabled forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Returns if a user-initiated pan gesture on the `paneView` can close the pane in the specified direction.
+ 
+ @param direction The direction to check against. Does not accept masked direction values.
+ @return If dragging to close is enabled in the specified direction.
+ 
+ @see setPaneDragCloseEnabled:forDirection:
+ */
+- (BOOL)paneDragCloseEnabledForDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Sets if a user-initiated tap gesture on the `paneView` can close it while it is opened.
