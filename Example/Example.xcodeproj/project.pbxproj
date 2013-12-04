@@ -563,7 +563,7 @@
 					"COCOAPODS=1",
 					"STORYBOARD=1",
 				);
-				INFOPLIST_FILE = "Storyboard Example-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Example/Storyboard Example-Info.plist";
 				PRODUCT_NAME = "MSDynamicsDrawerViewController Storyboard Example";
 				WRAPPER_EXTENSION = app;
 			};
@@ -582,7 +582,7 @@
 					"COCOAPODS=1",
 					"STORYBOARD=1",
 				);
-				INFOPLIST_FILE = "Storyboard Example-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Example/Storyboard Example-Info.plist";
 				PRODUCT_NAME = "MSDynamicsDrawerViewController Storyboard Example";
 				WRAPPER_EXTENSION = app;
 			};
