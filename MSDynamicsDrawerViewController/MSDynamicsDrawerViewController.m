@@ -1144,7 +1144,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return YES;
 }
 
-#pragma mark - UIDynamicAnimatorDelegates
+#pragma mark - UIDynamicAnimatorDelegate
 
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator
 {
