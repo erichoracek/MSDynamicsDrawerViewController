@@ -33,6 +33,7 @@
 #import "MSGesturesViewController.h"
 #import "MSControlsViewController.h"
 #import "MSMapViewController.h"
+#import "MSEditableTableViewController.h"
 #import "MSLongTableViewController.h"
 #import "MSMonospaceWebViewController.h"
 #import "MSMenuTableViewHeader.h"
@@ -116,6 +117,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         @(MSPaneViewControllerTypeGestures) : @"Gestures",
         @(MSPaneViewControllerTypeControls) : @"Controls",
         @(MSPaneViewControllerTypeMap) : @"Map",
+        @(MSPaneViewControllerTypeEditableTable) : @"Editable Table",
         @(MSPaneViewControllerTypeLongTable) : @"Long Table",
         @(MSPaneViewControllerTypeMonospace) : @"Monospace Ltd."
     };
@@ -127,6 +129,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         @(MSPaneViewControllerTypeGestures) : [MSGesturesViewController class],
         @(MSPaneViewControllerTypeControls) : [MSControlsViewController class],
         @(MSPaneViewControllerTypeMap) : [MSMapViewController class],
+        @(MSPaneViewControllerTypeEditableTable) : [MSEditableTableViewController class],
         @(MSPaneViewControllerTypeLongTable) : [MSLongTableViewController class],
         @(MSPaneViewControllerTypeMonospace) : [MSMonospaceWebViewController class]
     };
@@ -138,6 +141,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         @(MSPaneViewControllerTypeGestures) : @"Gestures",
         @(MSPaneViewControllerTypeControls) : @"Controls",
         @(MSPaneViewControllerTypeMap) : @"Map",
+        @(MSPaneViewControllerTypeEditableTable) : @"Editable Table",
         @(MSPaneViewControllerTypeLongTable) : @"Long Table",
         @(MSPaneViewControllerTypeMonospace) : @"Monospace"
     };

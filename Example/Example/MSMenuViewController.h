@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
     MSPaneViewControllerTypeGestures,
     MSPaneViewControllerTypeControls,
     MSPaneViewControllerTypeMap,
+    MSPaneViewControllerTypeEditableTable,
     MSPaneViewControllerTypeLongTable,
     MSPaneViewControllerTypeMonospace,
     MSPaneViewControllerTypeCount
