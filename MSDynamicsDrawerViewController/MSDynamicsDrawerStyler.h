@@ -112,3 +112,10 @@
 @property (nonatomic, assign) CGFloat closedScale;
 
 @end
+
+/**
+ Creates a zoom-in scaling effect on the `drawerView` while sliding the `paneView` within a `MSDynamicsDrawerViewController`.
+ */
+@interface MSDynamicsDrawerResizeStyler : NSObject <MSDynamicsDrawerStyler>
+
+@end

@@ -146,4 +146,54 @@
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
 
+
+@end
+
+@implementation MSDynamicsDrawerResizeStyler
+
+#pragma mark - NSObject
+
+- (instancetype)init
+{
+    self = [super init];
+    return self;
+}
+
+#pragma mark - MSDynamicsDrawerStyler
+
++ (instancetype)styler
+{
+    return [self new];
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
+{
+    CGRect paneViewFrame = dynamicsDrawerViewController.paneView.frame;
+    CGRect drawerViewFrame = dynamicsDrawerViewController.drawerView.frame;
+    CGFloat drawerWidth = drawerViewFrame.size.width;
+    CGFloat drawerHeight = drawerViewFrame.size.height;
+    switch (direction) {
+        case MSDynamicsDrawerDirectionLeft:
+            drawerWidth =  paneViewFrame.origin.x;
+            break;
+        case MSDynamicsDrawerDirectionRight:
+            drawerWidth = paneViewFrame.origin.x + paneViewFrame.size.width;
+            break;
+        case MSDynamicsDrawerDirectionTop:
+            drawerHeight = paneViewFrame.origin.y;
+            break;
+        case MSDynamicsDrawerDirectionBottom:
+            drawerHeight = paneViewFrame.origin.x + paneViewFrame.size.height;
+        default:
+            break;
+    }
+    drawerViewFrame.size.width = drawerWidth;
+    drawerViewFrame.size.height = drawerHeight;
+    dynamicsDrawerViewController.drawerView.frame = drawerViewFrame;
+}
+
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+{
+    //TODO: implement
+}
 @end
