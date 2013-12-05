@@ -814,7 +814,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return paneViewOrigin;
 }
 
-- (BOOL)paneViewIsPositionedInState:(MSDynamicsDrawerPaneState *)paneState
+- (BOOL)paneViewIsPositionedInState:(inout MSDynamicsDrawerPaneState *)paneState
 {
     BOOL validState = NO;
     for (MSDynamicsDrawerPaneState currentPaneState = MSDynamicsDrawerPaneStateClosed; currentPaneState <= MSDynamicsDrawerPaneStateOpenWide; currentPaneState++) {
