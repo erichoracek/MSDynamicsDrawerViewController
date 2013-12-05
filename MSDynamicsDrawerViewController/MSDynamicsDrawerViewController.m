@@ -1144,6 +1144,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return YES;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    // If the other gesture recognizer's view is a UITableViewCell's internal UIScrollView, require failure
+    if ([[otherGestureRecognizer view] isKindOfClass:[UIScrollView class]] && [[otherGestureRecognizer.view superview] isKindOfClass:[UITableViewCell class]]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 #pragma mark - UIDynamicAnimatorDelegate
 
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator
