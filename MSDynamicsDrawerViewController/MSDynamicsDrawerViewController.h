@@ -30,6 +30,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol MSDynamicsDrawerStyler;
+@protocol MSDynamicsDrawerViewControllerDelegate;
 
 extern const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal;
 extern const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical;
@@ -241,7 +242,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  ?
  @see bouncePaneOpen
  @see bouncePaneOpenAllowUserInterruption:completion:
- @ese bouncePaneOpenInDirection:allowUserInterruption:completion:
+ @see bouncePaneOpenInDirection:allowUserInterruption:completion:
  @see bounceElasticity
  @see bounceMagnitude
  */
@@ -426,7 +427,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param revealWidth The width that the `paneView` opens when revealing the `drawerView`.
  @param direction The direction that the `revealWidth` should be applied in. Accepts masked direction values.
  
- @see
+ @see revealWidthForDirection:
  */
 - (void)setRevealWidth:(CGFloat)revealWidth forDirection:(MSDynamicsDrawerDirection)direction;
 
@@ -435,6 +436,8 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  @param direction The direction that the reveal width should be returned for. Does not accept masked direction values.
  @return The reveal width for the specified direction.
+ 
+ @see setRevealWidth:forDirection:
  */
 - (CGFloat)revealWidthForDirection:(MSDynamicsDrawerDirection)direction;
 
@@ -463,6 +466,17 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 @property (nonatomic, readonly) UIView *paneView;
 
+///////////////////////////////////////
+/// @name Accessing the Delegate Object
+///////////////////////////////////////
+
+/**
+ The delegate you want to receive dynamics drawer view controller messages.
+ 
+ The dynamics drawer view controller informs its delegate of changes to the state of the drawer view controller. For more information about the methods you can implement in your delegate, `MSDynamicsDrawerViewControllerDelegate`.
+ */
+@property (nonatomic, weak) id <MSDynamicsDrawerViewControllerDelegate> delegate;
+
 @end
 
 ///----------------
@@ -483,5 +497,38 @@ typedef void (^MSDynamicsDrawerActionBlock)(MSDynamicsDrawerDirection maskedValu
  @see MSDynamicsDrawerActionBlock
  */
 void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection direction, MSDynamicsDrawerActionBlock action);
+
+@protocol MSDynamicsDrawerViewControllerDelegate <NSObject>
+
+@optional
+
+/**
+ Tells the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param paneState The pane state that the view controller will attempt to update to.
+ @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController willUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Tells the delegate that the drawer view controller did update to a pane state in the specified direction.
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param paneState The pane state that the view controller did update to.
+ @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Tells the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param paneState The pane state that the view controller will attempt to update to.
+ @param direction The direction that the drawer view controller is opened in.
+ */
+- (void)dynamicsDrawerViewControllerDidFinishAnimating:(MSDynamicsDrawerViewController *)drawerViewController;
+
+@end
 
 #import "MSDynamicsDrawerStyler.h"

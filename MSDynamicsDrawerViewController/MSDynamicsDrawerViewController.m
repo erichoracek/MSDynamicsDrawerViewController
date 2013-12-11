@@ -793,12 +793,25 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible or multiple directions");
     
+    MSDynamicsDrawerDirection previousDirection = self.currentDrawerDirection;
+    
     void(^internalCompletion)() = ^ {
-        _paneState = paneState;
         if (completion != nil) completion();
     };
     
-    self.currentDrawerDirection = direction;
+    if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:willUpdateToPaneState:forDirection:)]) {
+        if (paneState & (MSDynamicsDrawerPaneStateOpen | MSDynamicsDrawerPaneStateOpenWide)) {
+            [self.delegate dynamicsDrawerViewController:self willUpdateToPaneState:paneState forDirection:direction];
+        } else {
+            [self.delegate dynamicsDrawerViewController:self willUpdateToPaneState:paneState forDirection:self.currentDrawerDirection];
+        }
+    }
+    
+    if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
+        self.currentDrawerDirection = direction;
+    } else {
+        self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
+    }
     
     if (animated) {
         
@@ -811,8 +824,18 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             internalCompletion();
         };
     } else {
+        _paneState = paneState;
         self.paneView.frame = (CGRect){[self paneViewOriginForPaneState:paneState], self.paneView.frame.size};
         internalCompletion();
+        
+        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
+            if (self.paneState & (MSDynamicsDrawerPaneStateOpen | MSDynamicsDrawerPaneStateOpenWide)) {
+                [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:self.currentDrawerDirection];
+            } else {
+                [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:previousDirection];
+            }
+        }
+
     }
 }
 
@@ -1226,10 +1249,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     // Update to the new pane state
     MSDynamicsDrawerPaneState updatedPaneState;
     if ([self paneViewIsPositionedInState:&updatedPaneState]) {
-        if (updatedPaneState == MSDynamicsDrawerPaneStateClosed) {
-            self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
+        if (self.paneState != updatedPaneState) {
+            self.paneState = updatedPaneState;
         }
-        self.paneState = updatedPaneState;
     }
     
     [self setPaneViewControllerViewUserInteractionEnabled:(self.paneState == MSDynamicsDrawerPaneStateClosed)];
@@ -1238,6 +1260,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     [UIViewController attemptRotationToDeviceOrientation];
     
     if (self.dynamicAnimatorCompletion) {
+        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewControllerDidFinishAnimating:)]) {
+            [self.delegate dynamicsDrawerViewControllerDidFinishAnimating:self];
+        }
         self.dynamicAnimatorCompletion();
         self.dynamicAnimatorCompletion = nil;
     }
