@@ -259,6 +259,13 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 @property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection;
 
+/**
+ Whether only pans from the edges should be accepted to slide open drawers. If set to YES, pans originating in the center of the screen will not be processed.
+
+ Defaults to NO.
+ */
+@property (nonatomic, assign) BOOL acceptsEdgePanOnly;
+
 ///-------------------------------------
 /// @name Configuring Dynamics Behaviors
 ///-------------------------------------
