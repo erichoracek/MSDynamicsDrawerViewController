@@ -824,9 +824,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             internalCompletion();
         };
     } else {
-        _paneState = paneState;
+
+        [self _setPaneState:paneState];
         self.paneView.frame = (CGRect){[self paneViewOriginForPaneState:paneState], self.paneView.frame.size};
         internalCompletion();
+
         
         if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
             if (self.paneState & (MSDynamicsDrawerPaneStateOpen | MSDynamicsDrawerPaneStateOpenWide)) {
@@ -837,6 +839,15 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         }
 
     }
+}
+
+- (void)_setPaneState:(MSDynamicsDrawerPaneState)paneState{
+    [self willChangeValueForKey:NSStringFromSelector(@selector(paneState))];
+    _paneState = paneState;
+    if ((paneState == MSDynamicsDrawerPaneStateClosed)) {
+        self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
+    }
+    [self didChangeValueForKey:NSStringFromSelector(@selector(paneState))];
 }
 
 - (CGPoint)paneViewOriginForPaneState:(MSDynamicsDrawerPaneState)paneState
@@ -1250,7 +1261,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     MSDynamicsDrawerPaneState updatedPaneState;
     if ([self paneViewIsPositionedInState:&updatedPaneState]) {
         if (self.paneState != updatedPaneState) {
-            self.paneState = updatedPaneState;
+            [self _setPaneState:updatedPaneState];
         }
     }
     
