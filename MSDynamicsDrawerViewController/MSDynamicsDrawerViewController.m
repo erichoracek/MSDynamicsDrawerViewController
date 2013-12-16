@@ -806,13 +806,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             [self.delegate dynamicsDrawerViewController:self willUpdateToPaneState:paneState forDirection:self.currentDrawerDirection];
         }
     }
-    
     if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
         self.currentDrawerDirection = direction;
-    } else {
-        self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
     }
-    
+
     if (animated) {
         
         [self addDynamicsBehaviorsToCreatePaneState:paneState];
@@ -837,7 +834,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:previousDirection];
             }
         }
-
     }
 }
 
