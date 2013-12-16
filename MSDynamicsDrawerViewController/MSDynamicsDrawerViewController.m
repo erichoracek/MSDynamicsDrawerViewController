@@ -51,7 +51,7 @@ typedef void (^ViewActionBlock)(UIView *view);
 }
 @end
 
-static BOOL MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawerDirection)
+BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawerDirection)
 {
     switch (drawerDirection) {
         case MSDynamicsDrawerDirectionNone:
@@ -65,7 +65,7 @@ static BOOL MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawe
     }
 }
 
-static BOOL MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection)
+BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection)
 {
     switch (drawerDirection) {
         case MSDynamicsDrawerDirectionTop:
@@ -78,7 +78,7 @@ static BOOL MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawer
     }
 }
 
-static BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
+BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
 {
     switch (drawerDirection) {
         case MSDynamicsDrawerDirectionNone:
@@ -164,8 +164,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-		[self initialize];
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        [self initialize];
     }
     return self;
 }
@@ -583,13 +583,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(rirection), @"Indeterminate gravity angle for non-cardinal reveal direction");
     switch (rirection) {
         case MSDynamicsDrawerDirectionTop:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI_2 : (3.0 * M_PI_2));
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI_2 : (3.0 * M_PI_2));
         case MSDynamicsDrawerDirectionLeft:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? 0.0 : M_PI);
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? 0.0 : M_PI);
         case MSDynamicsDrawerDirectionBottom:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? (3.0 * M_PI_2) : M_PI_2);
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? (3.0 * M_PI_2) : M_PI_2);
         case MSDynamicsDrawerDirectionRight:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI : 0.0);
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI : 0.0);
         default:
             return 0.0;
     }
@@ -1094,7 +1094,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                     }
                 }
                 if ((potentialPanDrawerDirection != MSDynamicsDrawerDirectionNone)             // Potential reveal direction is not none
-                    && (self.possibleDrawerDirection & potentialPanDrawerDirection)                  // Potential reveal direction is possible
+                    && (self.possibleDrawerDirection & potentialPanDrawerDirection)            // Potential reveal direction is possible
                     && ([self paneDragRevealEnabledForDirection:potentialPanDrawerDirection])) // Pane drag reveal is enabled for the potential reveal direction
                     
                 {
