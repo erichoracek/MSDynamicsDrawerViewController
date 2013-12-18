@@ -64,7 +64,7 @@
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 0.0);
     CGAffineTransform drawerViewTransform = dynamicsDrawerViewController.drawerView.transform;
@@ -100,7 +100,7 @@
     dynamicsDrawerViewController.drawerView.alpha = ((1.0 - self.closedAlpha) * (1.0  - paneClosedFraction));
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     dynamicsDrawerViewController.drawerView.alpha = 1.0;
 }
@@ -137,7 +137,7 @@
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.0, 1.0);
     CGAffineTransform drawerViewTransform = dynamicsDrawerViewController.drawerView.transform;
@@ -146,6 +146,11 @@
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
 
+@end
+
+@interface MSDynamicsDrawerResizeStyler ()
+
+@property (nonatomic, assign) BOOL useRevealWidthAsMinimumResizeRevealWidth;
 
 @end
 
@@ -156,6 +161,9 @@
 - (instancetype)init
 {
     self = [super init];
+    if (self) {
+        self.useRevealWidthAsMinimumResizeRevealWidth = YES;
+    }
     return self;
 }
 
@@ -168,32 +176,57 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
+    if (direction == MSDynamicsDrawerDirectionNone) {
+        return;
+    }
+    
     CGRect paneViewFrame = dynamicsDrawerViewController.paneView.frame;
-    CGRect drawerViewFrame = dynamicsDrawerViewController.drawerView.frame;
-    CGFloat drawerWidth = drawerViewFrame.size.width;
-    CGFloat drawerHeight = drawerViewFrame.size.height;
+    CGRect drawerViewFrame = [[dynamicsDrawerViewController drawerViewControllerForDirection:direction] view].frame;
+    
+    CGFloat minimumResizeRevealWidth = self.useRevealWidthAsMinimumResizeRevealWidth ? [dynamicsDrawerViewController revealWidthForDirection:direction] : self.minimumResizeRevealWidth;
+    
+    if (dynamicsDrawerViewController.currentRevealWidth < minimumResizeRevealWidth) {
+        drawerViewFrame.size.width = [dynamicsDrawerViewController revealWidthForDirection:direction];
+    } else {
+        switch (direction) {
+            case MSDynamicsDrawerDirectionLeft:
+                drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
+                drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
+                break;
+            case MSDynamicsDrawerDirectionTop:
+            case MSDynamicsDrawerDirectionBottom:
+                drawerViewFrame.size.height = dynamicsDrawerViewController.currentRevealWidth;
+            default:
+                break;
+        }
+    }
+    
     switch (direction) {
-        case MSDynamicsDrawerDirectionLeft:
-            drawerWidth =  paneViewFrame.origin.x;
-            break;
         case MSDynamicsDrawerDirectionRight:
-            drawerWidth = paneViewFrame.origin.x + paneViewFrame.size.width;
-            break;
-        case MSDynamicsDrawerDirectionTop:
-            drawerHeight = paneViewFrame.origin.y;
-            break;
+            drawerViewFrame.origin.x = CGRectGetMaxX(paneViewFrame);
         case MSDynamicsDrawerDirectionBottom:
-            drawerHeight = paneViewFrame.origin.x + paneViewFrame.size.height;
+            drawerViewFrame.origin.x = CGRectGetMaxY(paneViewFrame);
         default:
             break;
     }
-    drawerViewFrame.size.width = drawerWidth;
-    drawerViewFrame.size.height = drawerHeight;
-    dynamicsDrawerViewController.drawerView.frame = drawerViewFrame;
+    
+    [[dynamicsDrawerViewController drawerViewControllerForDirection:direction] view].frame = drawerViewFrame;
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    //TODO: implement
+    // Reset the drawer view controller's view to be the size of the drawerView (before the styler was added)
+    CGRect drawerViewFrame = [[dynamicsDrawerViewController drawerViewControllerForDirection:direction] view].frame;
+    drawerViewFrame.size = dynamicsDrawerViewController.drawerView.frame.size;
+    [[dynamicsDrawerViewController drawerViewControllerForDirection:direction] view].frame = drawerViewFrame;
 }
+
+#pragma mark - MSDynamicsDrawerResizeStyler
+
+- (void)setMinimumResizeRevealWidth:(CGFloat)minimumResizeRevealWidth
+{
+    self.useRevealWidthAsMinimumResizeRevealWidth = NO;
+    _minimumResizeRevealWidth = minimumResizeRevealWidth;
+}
+
 @end
