@@ -639,8 +639,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 existsInCurrentStylers = YES;
             }
         }
-        if (existsInCurrentStylers && [styler respondsToSelector:@selector(stylerWasAddedToDynamicsDrawerViewController:)]) {
-            [styler stylerWasAddedToDynamicsDrawerViewController:self];
+        if (existsInCurrentStylers) {
+            if ([styler respondsToSelector:@selector(stylerWasAddedToDynamicsDrawerViewController:forDirection:)]) {
+                [styler stylerWasAddedToDynamicsDrawerViewController:self forDirection:direction];
+            }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            if ([styler respondsToSelector:@selector(stylerWasAddedToDynamicsDrawerViewController:)]) {
+                [styler stylerWasAddedToDynamicsDrawerViewController:self];
+            }
+#pragma clang diagnostic pop
         }
     });
     [self updateStylers];
@@ -657,8 +665,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 containedCount++;
             }
         }
-        if ((containedCount == 0) && [styler respondsToSelector:@selector(stylerWasRemovedFromDynamicsDrawerViewController:)]) {
-            [styler stylerWasRemovedFromDynamicsDrawerViewController:self];
+        if (containedCount == 0) {
+            if ([styler respondsToSelector:@selector(stylerWasRemovedFromDynamicsDrawerViewController:forDirection:)]) {
+                [styler stylerWasRemovedFromDynamicsDrawerViewController:self forDirection:direction];
+            }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            if ([styler respondsToSelector:@selector(stylerWasRemovedFromDynamicsDrawerViewController:)]) {
+                [styler stylerWasRemovedFromDynamicsDrawerViewController:self];
+            }
+#pragma clang diagnostic pop
         }
     });
     [self updateStylers];
@@ -898,6 +914,20 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (CGFloat)openStateRevealWidth
 {
     return [self revealWidthForDirection:self.currentDrawerDirection];
+}
+
+- (CGFloat)currentRevealWidth
+{
+    switch (self.currentDrawerDirection) {
+        case MSDynamicsDrawerDirectionLeft:
+        case MSDynamicsDrawerDirectionRight:
+            return fabs(self.paneView.frame.origin.x);
+        case MSDynamicsDrawerDirectionTop:
+        case MSDynamicsDrawerDirectionBottom:
+            return fabs(self.paneView.frame.origin.y);
+        default:
+            return 0.0;
+    }
 }
 
 #pragma mark Gestures
