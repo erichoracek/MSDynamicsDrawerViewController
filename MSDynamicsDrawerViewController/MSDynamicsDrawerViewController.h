@@ -132,6 +132,11 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 @property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView;
 
+/**
+ If the drawer should be moved to pane view, instead of keeping it static in background. Useful for transparent views.
+ */
+@property (nonatomic, assign) BOOL shouldMoveDrawerToPaneView;
+
 ///----------------------------------
 /// @name Accessing & Modifying State
 ///----------------------------------

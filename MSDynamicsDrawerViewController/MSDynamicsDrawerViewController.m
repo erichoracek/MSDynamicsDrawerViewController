@@ -333,7 +333,12 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         [newViewController willMoveToParentViewController:self];
         [newViewController beginAppearanceTransition:YES animated:NO];
 		[self addChildViewController:newViewController];
-        newViewController.view.frame = (CGRect){CGPointZero, containerView.frame.size};
+        
+        if (!self.shouldMoveDrawerToPaneView)
+        {
+            newViewController.view.frame = (CGRect){CGPointZero, containerView.frame.size};
+        }
+        
 		[containerView addSubview:newViewController.view];
 		[newViewController didMoveToParentViewController:self];
         [newViewController endAppearanceTransition];
@@ -359,7 +364,12 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         [existingViewController didMoveToParentViewController:nil];
         [existingViewController endAppearanceTransition];
         [newViewController beginAppearanceTransition:YES animated:NO];
-        newViewController.view.frame = (CGRect){CGPointZero, containerView.frame.size};
+        
+        if (!self.shouldMoveDrawerToPaneView)
+        {
+            newViewController.view.frame = (CGRect){CGPointZero, containerView.frame.size};
+        }
+        
         [self addChildViewController:newViewController];
         [containerView addSubview:newViewController.view];
         [newViewController didMoveToParentViewController:self];
@@ -713,6 +723,29 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         statusBar.transform = CGAffineTransformMakeTranslation(self.paneView.frame.origin.x, self.paneView.frame.origin.y);
     }
     
+    //
+    // Move drawer out of the way
+    //
+    if (self.shouldMoveDrawerToPaneView)
+    {
+        if (self.currentDrawerDirection == MSDynamicsDrawerDirectionLeft)
+        {
+            self.drawerViewController.view.transform = CGAffineTransformMakeTranslation(self.paneView.frame.origin.x - self.drawerViewController.view.frame.size.width, self.paneView.frame.origin.y);
+        }
+        else if (self.currentDrawerDirection == MSDynamicsDrawerDirectionRight)
+        {
+            self.drawerViewController.view.transform = CGAffineTransformMakeTranslation(self.paneView.frame.origin.x + self.paneView.frame.size.width, self.paneView.frame.origin.y);
+        }
+        else if (self.currentDrawerDirection == MSDynamicsDrawerDirectionTop)
+        {
+            self.drawerViewController.view.transform = CGAffineTransformMakeTranslation(self.paneView.frame.origin.x, self.paneView.frame.origin.y - self.drawerViewController.view.frame.size.height);
+        }
+        else if (self.currentDrawerDirection == MSDynamicsDrawerDirectionBottom)
+        {
+            self.drawerViewController.view.transform = CGAffineTransformMakeTranslation(self.paneView.frame.origin.x, self.paneView.frame.origin.y + self.paneView.frame.size.height);
+        }
+    }
+    
     [self updateStylers];
 }
 
@@ -818,6 +851,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 {
     BOOL validState = NO;
     for (MSDynamicsDrawerPaneState currentPaneState = MSDynamicsDrawerPaneStateClosed; currentPaneState <= MSDynamicsDrawerPaneStateOpenWide; currentPaneState++) {
+        
+        
         CGPoint paneStatePaneViewOrigin = [self paneViewOriginForPaneState:currentPaneState];
         CGPoint currentPaneViewOrigin = (CGPoint){roundf(self.paneView.frame.origin.x), roundf(self.paneView.frame.origin.y)};
         CGFloat epsilon = 2.0;
@@ -840,7 +875,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)setCurrentDrawerDirection:(MSDynamicsDrawerDirection)currentDrawerDirection
 {
     NSAssert(MSDynamicsDrawerDirectionIsNonMasked(currentDrawerDirection), @"Only accepts non-masked directions as current reveal direction");
-    
+
     if (_currentDrawerDirection == currentDrawerDirection) return;
     _currentDrawerDirection = currentDrawerDirection;
     
@@ -1093,6 +1128,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             }
             // If we're released past half-way, snap to completion with no bounce, otherwise, snap to back to the starting position with no bounce
             else {
+
                 MSDynamicsDrawerPaneState state = (([self paneViewClosedFraction] > 0.5) ? MSDynamicsDrawerPaneStateClosed : MSDynamicsDrawerPaneStateOpen);
                 [self addDynamicsBehaviorsToCreatePaneState:state];
             }
