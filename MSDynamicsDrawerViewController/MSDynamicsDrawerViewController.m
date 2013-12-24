@@ -34,7 +34,6 @@
 
 const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal = 267.0;
 const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical = 300.0;
-const CGFloat MSDynamicsDrawerOpenAnimationOvershot = 30.0;
 const CGFloat MSPaneViewVelocityThreshold = 5.0;
 const CGFloat MSPaneViewVelocityMultiplier = 5.0;
 
@@ -275,6 +274,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.elasticity = 0.0;
     self.bounceElasticity = 0.5;
     self.bounceMagnitude = 60.0;
+    self.paneStateOpenWideEdgeOffset = 20.0;
     
 #if defined(DEBUG_DYNAMICS)
     self.gravityMagnitude = 0.05;
@@ -539,26 +539,26 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         boundary.size.height = (CGRectGetHeight(self.paneView.frame) + 1.0);
         switch (state) {
             case MSDynamicsDrawerPaneStateClosed:
-                boundary.size.width = ((CGRectGetWidth(self.paneView.frame) * 2.0) + MSDynamicsDrawerOpenAnimationOvershot + 2.0);
+                boundary.size.width = ((CGRectGetWidth(self.paneView.frame) * 2.0) + self.paneStateOpenWideEdgeOffset + 2.0);
                 break;
             case MSDynamicsDrawerPaneStateOpen:
                 boundary.size.width = ((CGRectGetWidth(self.paneView.frame) + self.openStateRevealWidth) + 2.0);
                 break;
             case MSDynamicsDrawerPaneStateOpenWide:
-                boundary.size.width = ((CGRectGetWidth(self.paneView.frame) * 2.0) + MSDynamicsDrawerOpenAnimationOvershot + 2.0);
+                boundary.size.width = ((CGRectGetWidth(self.paneView.frame) * 2.0) + self.paneStateOpenWideEdgeOffset + 2.0);
                 break;
         }
     } else if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionVertical) {
         boundary.size.width = (CGRectGetWidth(self.paneView.frame) + 1.0);
         switch (state) {
             case MSDynamicsDrawerPaneStateClosed:
-                boundary.size.height = ((CGRectGetHeight(self.paneView.frame) * 2.0) + MSDynamicsDrawerOpenAnimationOvershot + 2.0);
+                boundary.size.height = ((CGRectGetHeight(self.paneView.frame) * 2.0) + self.paneStateOpenWideEdgeOffset + 2.0);
                 break;
             case MSDynamicsDrawerPaneStateOpen:
                 boundary.size.height = ((CGRectGetHeight(self.paneView.frame) + self.openStateRevealWidth) + 2.0);
                 break;
             case MSDynamicsDrawerPaneStateOpenWide:
-                boundary.size.height = ((CGRectGetHeight(self.paneView.frame) * 2.0) + MSDynamicsDrawerOpenAnimationOvershot + 2.0);
+                boundary.size.height = ((CGRectGetHeight(self.paneView.frame) * 2.0) + self.paneStateOpenWideEdgeOffset + 2.0);
                 break;
         }
     }
@@ -729,6 +729,38 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         statusBar.transform = CGAffineTransformMakeTranslation(self.paneView.frame.origin.x, self.paneView.frame.origin.y);
     }
     
+    // If we've reached the open wide state, remove all behaviors (so that `dynamicAnimatorDidPause:` is invoked and the state is updated)
+    void(^reachedOpenWideState)() = ^{
+        if (self.paneState != MSDynamicsDrawerPaneStateOpenWide) {
+            [self.dynamicAnimator removeAllBehaviors];
+        }
+    };
+    CGPoint openWidePoint = [self paneViewOriginForPaneState:MSDynamicsDrawerPaneStateOpenWide];
+    switch (self.currentDrawerDirection) {
+        case MSDynamicsDrawerDirectionLeft:
+            if (self.paneView.frame.origin.x >= openWidePoint.x) {
+                reachedOpenWideState();
+            }
+            break;
+        case MSDynamicsDrawerDirectionRight:
+            if (self.paneView.frame.origin.x <= openWidePoint.x) {
+                reachedOpenWideState();
+            }
+            break;
+        case MSDynamicsDrawerDirectionTop:
+            if (self.paneView.frame.origin.y <= openWidePoint.y) {
+                reachedOpenWideState();
+            }
+            break;
+        case MSDynamicsDrawerDirectionBottom:
+            if (self.paneView.frame.origin.y >= openWidePoint.x) {
+                reachedOpenWideState();
+            }
+            break;
+        default:
+            break;
+    }
+    
     [self updateStylers];
 }
 
@@ -809,16 +841,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         case MSDynamicsDrawerPaneStateOpenWide:
             switch (self.currentDrawerDirection) {
                 case MSDynamicsDrawerDirectionLeft:
-                    paneViewOrigin.x = CGRectGetWidth(self.view.frame);
+                    paneViewOrigin.x = (CGRectGetWidth(self.view.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 case MSDynamicsDrawerDirectionTop:
-                    paneViewOrigin.y = CGRectGetHeight(self.view.frame);
+                    paneViewOrigin.y = (CGRectGetHeight(self.view.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 case MSDynamicsDrawerDirectionBottom:
-                    paneViewOrigin.y = 0.0;
+                    paneViewOrigin.y = (CGRectGetHeight(self.view.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 case MSDynamicsDrawerDirectionRight:
-                    paneViewOrigin.x = 0.0;
+                    paneViewOrigin.x = -(CGRectGetWidth(self.view.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 default:
                     break;
