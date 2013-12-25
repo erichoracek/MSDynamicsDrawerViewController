@@ -172,6 +172,9 @@ There are a few default stylers included with `MSDynamicsDrawerViewController`. 
 * **Scale Styler** `MSDynamicsDrawerScaleStyler`
   Creates a zoom-in scaling effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedScale` property to change the scale that occurs when the `paneView` is closed.
 
+* **Drawer Resize Styler** `MSDynamicsDrawerResizeStyler`
+  Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealWidth` property. Modify the `minimumResizeRevealWidth` property to change the threshold at which the resizing begins.
+
 ### Creating a Custom Styler
 
 As user interacts with a `MSDynamicsDrawerViewController`, the styler classes that are associated with the active drawer direction are messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDrawerDirection:`. This method enables the styler to changes attributes of the `drawerView`, `paneView`, etc. relative to the `paneClosedFraction`.

@@ -81,17 +81,20 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
     self.stylerClasses = @[
         [MSDynamicsDrawerScaleStyler class],
         [MSDynamicsDrawerFadeStyler class],
-        [MSDynamicsDrawerParallaxStyler class]
+        [MSDynamicsDrawerParallaxStyler class],
+        [MSDynamicsDrawerResizeStyler class]
     ];
     self.stylerNames = @[
         @"Scale",
         @"Fade",
-        @"Parallax"
+        @"Parallax",
+        @"Drawer Resize"
     ];
     self.stylerDescriptions = @[
         @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
         @"The 'Fade' styler fades the drawer view as the pane view is opened",
         @"The 'Parallax' styler translates the drawer view inwards as the pane view is opened",
+        @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal width",
     ];
     self.directionNames = @{
         @(MSDynamicsDrawerDirectionLeft) : @"Left",
