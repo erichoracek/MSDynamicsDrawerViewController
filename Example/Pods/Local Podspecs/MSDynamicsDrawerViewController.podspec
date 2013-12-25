@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MSDynamicsDrawerViewController'
-  s.version      = '1.0.2'
+  s.version      = '1.1.0'
   s.license      = 'MIT'
   s.platform     = :ios, '7.0'
   
