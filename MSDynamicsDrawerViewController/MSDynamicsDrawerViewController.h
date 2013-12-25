@@ -120,10 +120,11 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 /**
  If setting a new `paneViewController` should have an animation that slides off the old view controller before animating the new one into its place.
  
- This animation only occurs when the method `setPaneViewController:animated:completion:` is invoked with an `animated` parameter of `YES`.
+ This animation only occurs when the method `setPaneViewController:animated:completion:` is invoked with an `animated` parameter of `YES`. This is functionally equivalent to always setting the `paneState` to `MSDynamicsDrawerPaneStateOpenWide` prior to replacing the pane view controller. To adjust the amount that the `paneView` slides past the edge of the `MSDynamicsDrawerViewController` instance's view during the transition, use `paneStateOpenWideEdgeOffset`.
  
  @see paneViewController
  @see setPaneViewController:animated:completion:
+ @see paneStateOpenWideEdgeOffset
  */
 @property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
 
@@ -190,6 +191,17 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneState:animated:allowUserInterruption:completion:
  */
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
+
+/**
+ The amount that the paneView should be offset from the edge of the screen when set to the `MSDynamicsDrawerPaneStateOpenWide`.
+ 
+ This property controls the amount that the pane view is offset from the edge of the `MSDynamicsDrawerViewController` instance's view when the pane view is in the `MSDynamicsDrawerPaneStateOpenWide` `paneState`. When `paneViewSlideOffAnimationEnabled` is set to `YES`, this property controls the amount that the `paneView` slides beyond the edge of the screen before being replaced, and thus controls the duration of the `setPaneViewController:animated:` animation. If the `paneView` has a shadow, this property can be used to slide the `paneView` far enough beyond the edge of the screen so that its shadow isn't visible during the transition. Default value of to `20.0`.
+ 
+ @see paneState
+ @see paneViewSlideOffAnimationEnabled
+ @see setPaneViewController:animated:
+ */
+@property (nonatomic, assign) CGFloat paneStateOpenWideEdgeOffset;
 
 /**
  Bounces the `paneView` open to reveal the `drawerView` underneath.
