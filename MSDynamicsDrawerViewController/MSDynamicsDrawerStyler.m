@@ -180,27 +180,27 @@
         return;
     }
     
-    CGRect paneViewFrame = dynamicsDrawerViewController.paneView.frame;
     CGRect drawerViewFrame = [[dynamicsDrawerViewController drawerViewControllerForDirection:direction] view].frame;
     
-    CGFloat minimumResizeRevealWidth = self.useRevealWidthAsMinimumResizeRevealWidth ? [dynamicsDrawerViewController revealWidthForDirection:direction] : self.minimumResizeRevealWidth;
-    
+    CGFloat minimumResizeRevealWidth = (self.useRevealWidthAsMinimumResizeRevealWidth ? [dynamicsDrawerViewController revealWidthForDirection:direction] : self.minimumResizeRevealWidth);
     if (dynamicsDrawerViewController.currentRevealWidth < minimumResizeRevealWidth) {
         drawerViewFrame.size.width = [dynamicsDrawerViewController revealWidthForDirection:direction];
     } else {
         switch (direction) {
             case MSDynamicsDrawerDirectionLeft:
-                drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
+            case MSDynamicsDrawerDirectionRight:
                 drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
                 break;
             case MSDynamicsDrawerDirectionTop:
             case MSDynamicsDrawerDirectionBottom:
                 drawerViewFrame.size.height = dynamicsDrawerViewController.currentRevealWidth;
+                break;
             default:
                 break;
         }
     }
     
+    CGRect paneViewFrame = dynamicsDrawerViewController.paneView.frame;
     switch (direction) {
         case MSDynamicsDrawerDirectionRight:
             drawerViewFrame.origin.x = CGRectGetMaxX(paneViewFrame);
