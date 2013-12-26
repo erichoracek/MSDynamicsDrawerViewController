@@ -204,8 +204,10 @@
     switch (direction) {
         case MSDynamicsDrawerDirectionRight:
             drawerViewFrame.origin.x = CGRectGetMaxX(paneViewFrame);
+            break;
         case MSDynamicsDrawerDirectionBottom:
             drawerViewFrame.origin.x = CGRectGetMaxY(paneViewFrame);
+            break;
         default:
             break;
     }
