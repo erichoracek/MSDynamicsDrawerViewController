@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>MSDynamicsDrawerParallaxStyler Class Reference</title>
+		<title>MSDynamicsDrawerResizeStyler Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
@@ -17,7 +17,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">MSDynamicsDrawerParallaxStyler Class Reference</h1>
+				<h1 class="hideInXcode">MSDynamicsDrawerResizeStyler Class Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -40,7 +40,7 @@
 	
 	<option value="properties">Properties</option>
 	
-	<option value="//api/name/parallaxOffsetFraction">&nbsp;&nbsp;&nbsp;&nbsp;parallaxOffsetFraction</option>
+	<option value="//api/name/minimumResizeRevealWidth">&nbsp;&nbsp;&nbsp;&nbsp;minimumResizeRevealWidth</option>
 	
 	
 	
@@ -82,7 +82,7 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/parallaxOffsetFraction">parallaxOffsetFraction</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/minimumResizeRevealWidth">minimumResizeRevealWidth</a></span></li>
 	
 </ul></li>
 
@@ -109,7 +109,7 @@
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="MSDynamicsDrawerParallaxStyler Class Reference" name="top"></a>
+				<a title="MSDynamicsDrawerResizeStyler Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -118,7 +118,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">MSDynamicsDrawerParallaxStyler Class Reference</h1>
+						<h1 class="title title-header">MSDynamicsDrawerResizeStyler Class Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -142,7 +142,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>Creates a parallax effect on the <code>drawerView</code> while sliding the <code>paneView</code> within a <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a>.</p>
+						<p>Resizes the drawer view controller&rsquo;s view to fit within the visible space that a drawer is opened to as derived from the <code>currentRevealWidth</code> property.</p>
 					</div>
 					
 					
@@ -160,8 +160,8 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/parallaxOffsetFraction">&nbsp;&nbsp;parallaxOffsetFraction</a></code>
-		<span class="tooltip"><p>The amount that the parallax should offset the <code>drawerView</code> when the <code>paneView</code> is closed, as a fraction of the visible reveal width.</p></span>
+		<code><a href="#//api/name/minimumResizeRevealWidth">&nbsp;&nbsp;minimumResizeRevealWidth</a></code>
+		<span class="tooltip"><p>The minimum reveal width that the drawer view controller&rsquo;s view should be resized to equal the <code>currentRevealWidth</code> at.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -208,18 +208,18 @@
 						<h2 class="subtitle subtitle-methods">Properties</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/parallaxOffsetFraction" title="parallaxOffsetFraction"></a>
-	<h3 class="subsubtitle method-title">parallaxOffsetFraction</h3>
+	<a name="//api/name/minimumResizeRevealWidth" title="minimumResizeRevealWidth"></a>
+	<h3 class="subsubtitle method-title">minimumResizeRevealWidth</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The amount that the parallax should offset the <code>drawerView</code> when the <code>paneView</code> is closed, as a fraction of the visible reveal width.</p>
+		<p>The minimum reveal width that the drawer view controller&rsquo;s view should be resized to equal the <code>currentRevealWidth</code> at.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</code></div>
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) CGFloat minimumResizeRevealWidth</code></div>
 
     
 	
@@ -231,7 +231,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p><code>0.35</code> by default.</p>
+		<p>The default behavior is to use the <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> instance&rsquo;s <code>revealWidthForDirection:</code> in the direction that the drawer is opened in as the value for the minimum resize reveal width. When set to a specific value, the drawer view controller&rsquo;s view is resized to fit the <code>currentRevealWidth</code> once the drawer is opened to the <code>minimumResizeRevealWidth</code>. If this value is set to <code>0</code>, then the drawer view controller&rsquo;s view will always be resized to fit within the visible area of the drawer.</p>
 	</div>
 	
 	

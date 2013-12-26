@@ -1,18 +1,18 @@
 <?xml version="1.0" standalone="no"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:docset="http://developer.apple.com/rss/docset_extensions" xml:lang="en">
-    <id>http://monospacecollective.com/monospace/monospace.atom/20131118221407</id>
+    <id>http://monospacecollective.com/monospace/monospace.atom/20131225205502</id>
     <title type="text">MSDynamicsDrawerViewController Documentation</title>
     <rights>Copyright © 2013 monospace. All rights reserved.</rights>
     <link rel="self" href="http://monospacecollective.com/monospace/monospace.atom"></link>
     <docset:publisherName>monospace</docset:publisherName>
     <docset:publisherID>com.monospace.documentation</docset:publisherID>
-    <updated>2013-11-18T22:14:07-07:00</updated>
+    <updated>2013-12-25T20:55:02-08:00</updated>
     <entry>
-        <id>tag:monospacecollective.com,2013-11-18:com.monospace.MSDynamicsDrawerViewController/1.0.0</id>
+        <id>tag:monospacecollective.com,2013-12-25:com.monospace.MSDynamicsDrawerViewController/1.0.0</id>
         <title type="text">MSDynamicsDrawerViewController Documentation</title>
-        <updated>2013-11-18T22:14:07-07:00</updated>
+        <updated>2013-12-25T20:55:02-08:00</updated>
         <content type="text">MSDynamicsDrawerViewController Documentation (v1.0.0)</content>
-        <link rel="enclosure" type="application/octet-stream" href="http://monospacecollective.com/monospace/com.monospace.MSDynamicsDrawerViewController-1.0.xar" length="93127"></link>
+        <link rel="enclosure" type="application/octet-stream" href="http://monospacecollective.com/monospace/com.monospace.MSDynamicsDrawerViewController-1.0.xar" length="106667"></link>
         <docset:identifier>com.monospace.MSDynamicsDrawerViewController</docset:identifier>
         <docset:version>1.0.0</docset:version>
         <docset:minimumXcodeVersion>3.0.0</docset:minimumXcodeVersion>

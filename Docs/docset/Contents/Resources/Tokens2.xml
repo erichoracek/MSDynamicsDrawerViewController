@@ -67,19 +67,22 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/stylerWasRemovedFromDynamicsDrawerViewController:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
 			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
 			
-			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController</Declaration>
+			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>dynamicsDrawerViewController</Name>
 					<Abstract type="html">The MSDynamicsDrawerViewController that was being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the styler is being removed for. Can be a masked value.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:</Anchor>
+			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</Anchor>
 		</Token>
 		
 	</File>

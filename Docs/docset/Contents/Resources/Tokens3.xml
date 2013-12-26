@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/MSDynamicsDrawerScaleStyler.html">
+	<File path="Classes/MSDynamicsDrawerResizeStyler.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerScaleStyler</TokenIdentifier>
-			<Abstract type="html">Creates a zoom-in scaling effect on the drawerView while sliding the paneView within a MSDynamicsDrawerViewController.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerResizeStyler</TokenIdentifier>
+			<Abstract type="html">Resizes the drawer view controller&apos;s view to fit within the visible space that a drawer is opened to as derived from the currentRevealWidth property.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<NodeRef refid="3"/>
@@ -12,29 +12,29 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerScaleStyler/setClosedScale:</TokenIdentifier>
-			<Abstract type="html">The amount that the drawerView is scaled when the paneView is closed. The drawerView is transformed from the closedScale when closed to 1.0 when open. 0.1 by default.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/setMinimumResizeRevealWidth:</TokenIdentifier>
+			<Abstract type="html">The minimum reveal width that the drawer view controller&apos;s view should be resized to equal the currentRevealWidth at.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, assign) CGFloat closedScale</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat minimumResizeRevealWidth</Declaration>
 			
 			
-			<Anchor>//api/name/closedScale</Anchor>
+			<Anchor>//api/name/minimumResizeRevealWidth</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerScaleStyler/closedScale</TokenIdentifier>
-			<Abstract type="html">The amount that the drawerView is scaled when the paneView is closed. The drawerView is transformed from the closedScale when closed to 1.0 when open. 0.1 by default.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerResizeStyler/minimumResizeRevealWidth</TokenIdentifier>
+			<Abstract type="html">The minimum reveal width that the drawer view controller&apos;s view should be resized to equal the currentRevealWidth at.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, assign) CGFloat closedScale</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat minimumResizeRevealWidth</Declaration>
 			
 			
-			<Anchor>//api/name/closedScale</Anchor>
+			<Anchor>//api/name/minimumResizeRevealWidth</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerScaleStyler/styler</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerResizeStyler/styler</TokenIdentifier>
 			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
 			
@@ -45,7 +45,7 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerScaleStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
 			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
 			
@@ -67,19 +67,22 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerScaleStyler/stylerWasRemovedFromDynamicsDrawerViewController:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
 			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
 			
-			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController</Declaration>
+			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>dynamicsDrawerViewController</Name>
 					<Abstract type="html">The MSDynamicsDrawerViewController that was being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the styler is being removed for. Can be a masked value.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:</Anchor>
+			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</Anchor>
 		</Token>
 		
 	</File>
