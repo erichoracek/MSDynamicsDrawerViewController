@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>1A40D78B-0056-409E-80DC-69F4D2DBA802</string>
+	<string>07C64F50-57A6-436C-946D-D9611D72A4AF</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Example</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B39AB4FD-F25E-4050-AE2E-D52A3E7E798B</key>
-		<string>ssh://github.com/monospacecollective/MSNavigationPaneViewController.git</string>
+		<key>41349822-4B1E-4143-811B-CDF42E95204E</key>
+		<string>ssh://github.com/monospacecollective/MSDynamicsDrawerViewController.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Example/Example.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B39AB4FD-F25E-4050-AE2E-D52A3E7E798B</key>
+		<key>41349822-4B1E-4143-811B-CDF42E95204E</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/monospacecollective/MSNavigationPaneViewController.git</string>
+	<string>ssh://github.com/monospacecollective/MSDynamicsDrawerViewController.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B39AB4FD-F25E-4050-AE2E-D52A3E7E798B</string>
+	<string>41349822-4B1E-4143-811B-CDF42E95204E</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B39AB4FD-F25E-4050-AE2E-D52A3E7E798B</string>
+			<string>41349822-4B1E-4143-811B-CDF42E95204E</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MSDynamicsDrawerViewController</string>
 		</dict>
