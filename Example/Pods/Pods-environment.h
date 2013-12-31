@@ -9,6 +9,6 @@
 // MSDynamicsDrawerViewController
 #define COCOAPODS_POD_AVAILABLE_MSDynamicsDrawerViewController
 #define COCOAPODS_VERSION_MAJOR_MSDynamicsDrawerViewController 1
-#define COCOAPODS_VERSION_MINOR_MSDynamicsDrawerViewController 1
-#define COCOAPODS_VERSION_PATCH_MSDynamicsDrawerViewController 1
+#define COCOAPODS_VERSION_MINOR_MSDynamicsDrawerViewController 2
+#define COCOAPODS_VERSION_PATCH_MSDynamicsDrawerViewController 0
 

@@ -1,5 +1,5 @@
 PODS:
-  - MSDynamicsDrawerViewController (1.1.1)
+  - MSDynamicsDrawerViewController (1.2.0)
 
 DEPENDENCIES:
   - MSDynamicsDrawerViewController (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MSDynamicsDrawerViewController: c9ff202b2a8fdf828248f5995dd0dcae59c6de04
+  MSDynamicsDrawerViewController: 7c8744fef9e9f14223d0e0abcf7ea42543bd0000
 
-COCOAPODS: 0.28.0
+COCOAPODS: 0.29.0
