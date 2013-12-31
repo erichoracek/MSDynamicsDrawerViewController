@@ -27,6 +27,7 @@
 					<Path>index.html</Path>
 					<Subnodes>
 						<NodeRef refid="6"/>
+						<NodeRef refid="7"/>
 						
 					</Subnodes>
 				</Node>
@@ -61,6 +62,10 @@
 		<Node id="6">
 			<Name>MSDynamicsDrawerStyler</Name>
 			<Path>Protocols/MSDynamicsDrawerStyler.html</Path>
+		</Node>
+		<Node id="7">
+			<Name>MSDynamicsDrawerViewControllerDelegate</Name>
+			<Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
 		</Node>
 		
 	</Library>

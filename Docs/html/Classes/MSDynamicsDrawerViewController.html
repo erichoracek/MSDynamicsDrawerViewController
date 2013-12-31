@@ -44,6 +44,8 @@
 	
 	<option value="//api/name/bounceMagnitude">&nbsp;&nbsp;&nbsp;&nbsp;bounceMagnitude</option>
 	
+	<option value="//api/name/delegate">&nbsp;&nbsp;&nbsp;&nbsp;delegate</option>
+	
 	<option value="//api/name/drawerView">&nbsp;&nbsp;&nbsp;&nbsp;drawerView</option>
 	
 	<option value="//api/name/elasticity">&nbsp;&nbsp;&nbsp;&nbsp;elasticity</option>
@@ -145,6 +147,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Container Views">Container Views</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Accessing the Delegate Object">Accessing the Delegate Object</a></span></li>
+	
 </ul></li>
 
 
@@ -156,6 +160,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bounceElasticity">bounceElasticity</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bounceMagnitude">bounceMagnitude</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delegate">delegate</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/drawerView">drawerView</a></span></li>
 	
@@ -571,6 +577,21 @@
 </li>
 						</ul>
 						
+						
+						<a title="Accessing the Delegate Object" name="task_Accessing the Delegate Object"></a>
+						<h3 class="subsubtitle task-title">Accessing the Delegate Object</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+		<span class="tooltip"><p>The delegate you want to receive dynamics drawer view controller messages.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
 					</div>
 					
 					
@@ -674,6 +695,47 @@
 			
 		</ul>
 	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerViewController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="subsubtitle method-title">delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The delegate you want to receive dynamics drawer view controller messages.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, weak) id&lt;MSDynamicsDrawerViewControllerDelegate&gt; delegate</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The dynamics drawer view controller informs its delegate of changes to the state of the drawer view controller. For more information about the methods you can implement in your delegate, <a href="../Protocols/MSDynamicsDrawerViewControllerDelegate.html"><code>MSDynamicsDrawerViewControllerDelegate</code></a>.</p>
+	</div>
+	
+	
+	
+	
 	
 	
 	
@@ -900,6 +962,8 @@
 			<li><code><p><a href="#//api/name/paneState">@property paneState</a></p></code></li>
 			
 			<li><code><p><a href="#//api/name/paneViewSlideOffAnimationEnabled">@property paneViewSlideOffAnimationEnabled</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/setPaneViewController:animated:completion:">&ndash; setPaneViewController:animated:completion:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -1308,6 +1372,8 @@
 			
 			<li><code><p><a href="#//api/name/bouncePaneOpenInDirection:">&ndash; bouncePaneOpenInDirection:</a></p></code></li>
 			
+			<li><code><p><a href="#//api/name/bouncePaneOpenAllowingUserInterruption:completion:">&ndash; bouncePaneOpenAllowingUserInterruption:completion:</a></p></code></li>
+			
 			<li><code><p><a href="#//api/name/bouncePaneOpenInDirection:allowUserInterruption:completion:">&ndash; bouncePaneOpenInDirection:allowUserInterruption:completion:</a></p></code></li>
 			
 			<li><code><p><a href="#//api/name/bounceElasticity">@property bounceElasticity</a></p></code></li>
@@ -1347,13 +1413,13 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>completion</em></dt>
-			<dd><p>A block that is run when the dynamic animator finishes animating the bounce.</p></dd>
+			<dt><em>allowingUserInterruption</em></dt>
+			<dd><p>If the user should be able to interrupt the bounce animation with gestures.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>allowUserInterruption</em></dt>
-			<dd><p>If the user should be able to interrupt the bounce animation with gestures.</p></dd>
+			<dt><em>completion</em></dt>
+			<dd><p>A block that is run when the dynamic animator finishes animating the bounce.</p></dd>
 		</dl>
 		
 	</div>
@@ -1448,8 +1514,9 @@
 			
 			<li><code><p><a href="#//api/name/bouncePaneOpen">&ndash; bouncePaneOpen</a></p></code></li>
 			
-			<li><code><p>bouncePaneOpenAllowUserInterruption:completion:
-@ese <a href="#//api/name/bouncePaneOpenInDirection:allowUserInterruption:completion:">&ndash; bouncePaneOpenInDirection:allowUserInterruption:completion:</a></p></code></li>
+			<li><code><p><a href="#//api/name/bouncePaneOpenAllowingUserInterruption:completion:">&ndash; bouncePaneOpenAllowingUserInterruption:completion:</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/bouncePaneOpenInDirection:allowUserInterruption:completion:">&ndash; bouncePaneOpenInDirection:allowUserInterruption:completion:</a></p></code></li>
 			
 			<li><code><p><a href="#//api/name/bounceElasticity">@property bounceElasticity</a></p></code></li>
 			
@@ -1524,6 +1591,8 @@
 		<ul>
 			
 			<li><code><p><a href="#//api/name/bouncePaneOpen">&ndash; bouncePaneOpen</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/bouncePaneOpenAllowingUserInterruption:completion:">&ndash; bouncePaneOpenAllowingUserInterruption:completion:</a></p></code></li>
 			
 			<li><code><p><a href="#//api/name/bouncePaneOpenInDirection:">&ndash; bouncePaneOpenInDirection:</a></p></code></li>
 			
@@ -1921,6 +1990,15 @@
 	
 	
 	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/setRevealWidth:forDirection:">&ndash; setRevealWidth:forDirection:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
 	
 	
 	<div class="method-subsection declared-in-section">
@@ -2077,7 +2155,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>paneState</em></dt>
-			<dd><p>The state of the pane view.</p></dd>
+			<dd><p>The state that the pane view controller should be updated to be in.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -2151,6 +2229,21 @@
 
     
 	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>paneState</em></dt>
+			<dd><p>The state that the pane view controller should be updated to be in.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>direction</em></dt>
+			<dd><p>The direction that the <a href="#//api/name/paneState"><code>paneState</code></a> update should be applied in.</p></dd>
+		</dl>
+		
+	</div>
+	
 	
 	
 	
@@ -2210,7 +2303,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>paneState</em></dt>
-			<dd><p>The state of the pane view.</p></dd>
+			<dd><p>The state that the pane view controller should be updated to be in.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -2431,9 +2524,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>direction</em></dt>
-			<dd><p>The direction that the <a href="#//api/name/revealWidth"><code>revealWidth</code></a> should be applied in. Accepts masked direction values.</p>
-
-<p>@see</p></dd>
+			<dd><p>The direction that the <a href="#//api/name/revealWidth"><code>revealWidth</code></a> should be applied in. Accepts masked direction values.</p></dd>
 		</dl>
 		
 	</div>
@@ -2452,6 +2543,15 @@
 	
 	
 	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/revealWidthForDirection:">&ndash; revealWidthForDirection:</a></p></code></li>
+			
+		</ul>
+	</div>
 	
 	
 	
@@ -2540,7 +2640,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 monospace. All rights reserved. (Last updated: 2013-12-25)</span><br />
+						<p><span class="copyright">&copy; 2013 monospace. All rights reserved. (Last updated: 2013-12-30)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						
