@@ -30,6 +30,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol MSDynamicsDrawerStyler;
+@protocol MSDynamicsDrawerViewControllerDelegate;
 
 extern const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal;
 extern const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical;
@@ -153,6 +154,9 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
   The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal width for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is only one drawer view controller set, use `paneState` property instead.
  
+ @param paneState The state that the pane view controller should be updated to be in.
+ @param direction The direction that the `paneState` update should be applied in.
+ 
  @see paneState
  @see setPaneState:animated:allowUserInterruption:completion:
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
@@ -164,7 +168,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  If the value for the `animated` parameter is `NO`, then this method is functionally equivalent to using the `paneState` setter. If there is more than one drawer view controller set, use `setPaneState:inDirection:animated:allowUserInterruption:completion:` instead and specify a direction.
  
- @param paneState The state of the pane view.
+ @param paneState The state that the pane view controller should be updated to be in.
  @param animated Whether the transition should be animated.
  @param allowUserInterruption If the user should be able to interrupt the pane state transition with gestures.
  @param completion Called upon completion of the update to the pane state. If the user interrupts the transition, the completion will be called when the internal dynamic animator completes.
@@ -180,7 +184,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  If the value for the `animated` parameter is `NO`, then this method is functionally equivalent to using the `paneState` setter. If there is only one drawer view controller set, use `setPaneState:animated:allowUserInterruption:completion:` instead.
  
- @param paneState The state of the pane view.
+ @param paneState The state that the pane view controller should be updated to be in.
  @param direction The direction that the `paneState` update should be applied in.
  @param animated Whether the transition should be animated.
  @param allowUserInterruption If the user should be able to interrupt the pane state transition with gestures.
@@ -199,7 +203,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  @see paneState
  @see paneViewSlideOffAnimationEnabled
- @see setPaneViewController:animated:
+ @see setPaneViewController:animated:completion:
  */
 @property (nonatomic, assign) CGFloat paneStateOpenWideEdgeOffset;
 
@@ -209,7 +213,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`. The bounce can be interrupted by a user touch. To override this behavior, use `bouncePaneOpenAllowUserInterruption:completion:`
  
  @see bouncePaneOpenInDirection:
- @see bouncePaneOpenAllowUserInterruption:completion:
+ @see bouncePaneOpenAllowingUserInterruption:completion:
  @see bouncePaneOpenInDirection:allowUserInterruption:completion:
  @see bounceElasticity
  @see bounceMagnitude
@@ -221,7 +225,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  If there is more than one drawer view controller set, use `bouncePaneOpenInDirection:allowUserInterruption:completion:`. When invoked, `bounceElasticity` and `bounceMagnitude` are used as the dynamics values for the `paneView`.
  
- @param allowUserInterruption If the user should be able to interrupt the bounce animation with gestures.
+ @param allowingUserInterruption If the user should be able to interrupt the bounce animation with gestures.
  @param completion A block that is run when the dynamic animator finishes animating the bounce.
  
  @see bouncePaneOpen
@@ -240,8 +244,8 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param direction The direction that the `paneView` will be bounced open in.
  ?
  @see bouncePaneOpen
- @see bouncePaneOpenAllowUserInterruption:completion:
- @ese bouncePaneOpenInDirection:allowUserInterruption:completion:
+ @see bouncePaneOpenAllowingUserInterruption:completion:
+ @see bouncePaneOpenInDirection:allowUserInterruption:completion:
  @see bounceElasticity
  @see bounceMagnitude
  */
@@ -257,7 +261,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param completion A block that is run when the dynamic animator finishes animating the bounce.
  
  @see bouncePaneOpen
- @see bouncePaneOpenAllowUserInterruption:completion:
+ @see bouncePaneOpenAllowingUserInterruption:completion:
  @see bouncePaneOpenInDirection:
  @see bounceElasticity
  @see bounceMagnitude
@@ -426,7 +430,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param revealWidth The width that the `paneView` opens when revealing the `drawerView`.
  @param direction The direction that the `revealWidth` should be applied in. Accepts masked direction values.
  
- @see
+ @see revealWidthForDirection:
  */
 - (void)setRevealWidth:(CGFloat)revealWidth forDirection:(MSDynamicsDrawerDirection)direction;
 
@@ -435,6 +439,8 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  @param direction The direction that the reveal width should be returned for. Does not accept masked direction values.
  @return The reveal width for the specified direction.
+ 
+ @see setRevealWidth:forDirection:
  */
 - (CGFloat)revealWidthForDirection:(MSDynamicsDrawerDirection)direction;
 
@@ -463,6 +469,17 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 @property (nonatomic, readonly) UIView *paneView;
 
+///////////////////////////////////////
+/// @name Accessing the Delegate Object
+///////////////////////////////////////
+
+/**
+ The delegate you want to receive dynamics drawer view controller messages.
+ 
+ The dynamics drawer view controller informs its delegate of changes to the state of the drawer view controller. For more information about the methods you can implement in your delegate, `MSDynamicsDrawerViewControllerDelegate`.
+ */
+@property (nonatomic, weak) id <MSDynamicsDrawerViewControllerDelegate> delegate;
+
 @end
 
 ///----------------
@@ -483,5 +500,34 @@ typedef void (^MSDynamicsDrawerActionBlock)(MSDynamicsDrawerDirection maskedValu
  @see MSDynamicsDrawerActionBlock
  */
 void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection direction, MSDynamicsDrawerActionBlock action);
+
+/**
+ To respond to the updates to `paneState` for an instance of `MSDynamicsDrawerViewController`, configure a custom class to adopt the `MSDynamicsDrawerViewControllerDelegate` protocol and set it as the `delegate` object.
+ */
+@protocol MSDynamicsDrawerViewControllerDelegate <NSObject>
+
+@optional
+
+/**
+ Informs the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.
+ 
+ It is important to note that the user is able to interrupt this change, and therefore is it not guaranteed that this update will occur. If desired, the user can be prevented from interrputing by passing `NO` for the `allowingUserInterruption` parameter in methods that udpate the `paneState`. For the aforementioned reasons, this method does not always pair with an invocation of `dynamicsDrawerViewController:didUpdateToPaneState:forDirection:`.
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param paneState The pane state that the view controller will attempt to update to.
+ @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Informs the delegate that the drawer view controller did update to a pane state in the specified direction.
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param paneState The pane state that the view controller did update to.
+ @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+@end
 
 #import "MSDynamicsDrawerStyler.h"

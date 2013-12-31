@@ -225,7 +225,15 @@
 	</RelatedTokens>
 	
 			<Declaration>- (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>paneState</Name>
+					<Abstract type="html">The state that the pane view controller should be updated to be in.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the paneState update should be applied in.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/setPaneState:inDirection:</Anchor>
 		</Token>
@@ -246,7 +254,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>paneState</Name>
-					<Abstract type="html">The state of the pane view.</Abstract>
+					<Abstract type="html">The state that the pane view controller should be updated to be in.</Abstract>
 				</Parameter><Parameter>
 					<Name>animated</Name>
 					<Abstract type="html">Whether the transition should be animated.</Abstract>
@@ -278,7 +286,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>paneState</Name>
-					<Abstract type="html">The state of the pane view.</Abstract>
+					<Abstract type="html">The state that the pane view controller should be updated to be in.</Abstract>
 				</Parameter><Parameter>
 					<Name>direction</Name>
 					<Abstract type="html">The direction that the paneState update should be applied in.</Abstract>
@@ -305,6 +313,7 @@
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewSlideOffAnimationEnabled</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
 		
 	</RelatedTokens>
 	
@@ -322,6 +331,7 @@
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewSlideOffAnimationEnabled</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
 		
 	</RelatedTokens>
 	
@@ -338,6 +348,7 @@
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenAllowingUserInterruption:completion:</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:allowUserInterruption:completion:</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
@@ -367,11 +378,11 @@
 			<Declaration>- (void)bouncePaneOpenAllowingUserInterruption:(BOOL)allowingUserInterruption completion:(void ( ^ ) ( void ))completion</Declaration>
 			<Parameters>
 				<Parameter>
+					<Name>allowingUserInterruption</Name>
+					<Abstract type="html">If the user should be able to interrupt the bounce animation with gestures.</Abstract>
+				</Parameter><Parameter>
 					<Name>completion</Name>
 					<Abstract type="html">A block that is run when the dynamic animator finishes animating the bounce.</Abstract>
-				</Parameter><Parameter>
-					<Name>allowUserInterruption</Name>
-					<Abstract type="html">If the user should be able to interrupt the bounce animation with gestures.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -385,6 +396,7 @@
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenAllowingUserInterruption:completion:</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:allowUserInterruption:completion:</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
@@ -410,6 +422,7 @@
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenAllowingUserInterruption:completion:</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
@@ -779,6 +792,11 @@
 			<Abstract type="html">Sets the width that the paneView opens when revealing the drawerView underneath for the specified direction.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/revealWidthForDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
 			<Declaration>- (void)setRevealWidth:(CGFloat)revealWidth forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
 				<Parameter>
@@ -786,9 +804,7 @@
 					<Abstract type="html">The width that the paneView opens when revealing the drawerView.</Abstract>
 				</Parameter><Parameter>
 					<Name>direction</Name>
-					<Abstract type="html">The direction that the revealWidth should be applied in. Accepts masked direction values.
-
-@see</Abstract>
+					<Abstract type="html">The direction that the revealWidth should be applied in. Accepts masked direction values.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -800,6 +816,11 @@
 			<Abstract type="html">Returns the reveal width that the paneView opens when revealing the drawerView for the specified direction</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setRevealWidth:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
 			<Declaration>- (CGFloat)revealWidthForDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
 				<Parameter>
@@ -864,6 +885,28 @@
 			
 			
 			<Anchor>//api/name/paneView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate you want to receive dynamics drawer view controller messages.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id&lt;MSDynamicsDrawerViewControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate you want to receive dynamics drawer view controller messages.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id&lt;MSDynamicsDrawerViewControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
 		</Token>
 		
 	</File>

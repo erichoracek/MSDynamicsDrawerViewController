@@ -51,7 +51,7 @@ typedef void (^ViewActionBlock)(UIView *view);
 }
 @end
 
-static BOOL MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawerDirection)
+BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawerDirection)
 {
     switch (drawerDirection) {
         case MSDynamicsDrawerDirectionNone:
@@ -65,7 +65,7 @@ static BOOL MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawe
     }
 }
 
-static BOOL MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection)
+BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection)
 {
     switch (drawerDirection) {
         case MSDynamicsDrawerDirectionTop:
@@ -78,7 +78,7 @@ static BOOL MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawer
     }
 }
 
-static BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
+BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
 {
     switch (drawerDirection) {
         case MSDynamicsDrawerDirectionNone:
@@ -164,8 +164,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-		[self initialize];
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        [self initialize];
     }
     return self;
 }
@@ -528,6 +528,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         [self.dynamicAnimator addBehavior:self.panePushBehavior];
         self.panePushBehavior.active = YES;
     }
+    
+    // Only inform the delegate if the `paneState` differs from the current pane state
+    if (paneState != self.paneState) {
+        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
+            [self.delegate dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:self.currentDrawerDirection];
+        }
+    }
 }
 
 - (UIBezierPath *)boundaryPathForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction
@@ -583,13 +590,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(rirection), @"Indeterminate gravity angle for non-cardinal reveal direction");
     switch (rirection) {
         case MSDynamicsDrawerDirectionTop:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI_2 : (3.0 * M_PI_2));
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI_2 : (3.0 * M_PI_2));
         case MSDynamicsDrawerDirectionLeft:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? 0.0 : M_PI);
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? 0.0 : M_PI);
         case MSDynamicsDrawerDirectionBottom:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? (3.0 * M_PI_2) : M_PI_2);
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? (3.0 * M_PI_2) : M_PI_2);
         case MSDynamicsDrawerDirectionRight:
-            return ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI : 0.0);
+            return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI : 0.0);
         default:
             return 0.0;
     }
@@ -794,16 +801,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible or multiple directions");
     
     void(^internalCompletion)() = ^ {
-        _paneState = paneState;
+        [self _setPaneState:paneState];
         if (completion != nil) completion();
     };
     
-    self.currentDrawerDirection = direction;
-    
+    if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
+        self.currentDrawerDirection = direction;
+    }
+
     if (animated) {
-        
         [self addDynamicsBehaviorsToCreatePaneState:paneState];
-        
         if (!allowUserInterruption) [self setViewUserInteractionEnabled:NO];
         __weak typeof(self) weakSelf = self;
         self.dynamicAnimatorCompletion = ^{
@@ -813,6 +820,28 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     } else {
         self.paneView.frame = (CGRect){[self paneViewOriginForPaneState:paneState], self.paneView.frame.size};
         internalCompletion();
+    }
+}
+
+- (void)_setPaneState:(MSDynamicsDrawerPaneState)paneState
+{
+    MSDynamicsDrawerDirection previousDirection = self.currentDrawerDirection;
+    // Update `currentDirection` regardless of if the invocation changes the `paneState` value
+    if (paneState == MSDynamicsDrawerPaneStateClosed) {
+        self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
+    }
+    
+    if (_paneState != paneState) {
+        [self willChangeValueForKey:NSStringFromSelector(@selector(paneState))];
+        _paneState = paneState;
+        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
+            if (self.paneState & (MSDynamicsDrawerPaneStateOpen | MSDynamicsDrawerPaneStateOpenWide)) {
+                [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:self.currentDrawerDirection];
+            } else {
+                [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:previousDirection];
+            }
+        }
+        [self didChangeValueForKey:NSStringFromSelector(@selector(paneState))];
     }
 }
 
@@ -862,7 +891,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return paneViewOrigin;
 }
 
-- (BOOL)paneViewIsPositionedInState:(inout MSDynamicsDrawerPaneState *)paneState
+- (BOOL)paneViewIsPositionedInValidState:(inout MSDynamicsDrawerPaneState *)paneState
 {
     BOOL validState = NO;
     for (MSDynamicsDrawerPaneState currentPaneState = MSDynamicsDrawerPaneStateClosed; currentPaneState <= MSDynamicsDrawerPaneStateOpenWide; currentPaneState++) {
@@ -1071,7 +1100,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                     }
                 }
                 if ((potentialPanDrawerDirection != MSDynamicsDrawerDirectionNone)             // Potential reveal direction is not none
-                    && (self.possibleDrawerDirection & potentialPanDrawerDirection)                  // Potential reveal direction is possible
+                    && (self.possibleDrawerDirection & potentialPanDrawerDirection)            // Potential reveal direction is possible
                     && ([self paneDragRevealEnabledForDirection:potentialPanDrawerDirection])) // Pane drag reveal is enabled for the potential reveal direction
                     
                 {
@@ -1199,7 +1228,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         return shouldReceiveTouch;
     } else if (gestureRecognizer == self.paneTapGestureRecognizer) {
         MSDynamicsDrawerPaneState paneState;
-        if ([self paneViewIsPositionedInState:&paneState]) {
+        if ([self paneViewIsPositionedInValidState:&paneState]) {
             return (paneState != MSDynamicsDrawerPaneStateClosed);
         }
     }
@@ -1220,26 +1249,24 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator
 {
-    // When dynamic animator has paused, a pane state has been reached, so remove all behaviors
-    [self.dynamicAnimator removeAllBehaviors];
-    
-    // Update to the new pane state
+    // Check to we if we've reached a valid state
     MSDynamicsDrawerPaneState updatedPaneState;
-    if ([self paneViewIsPositionedInState:&updatedPaneState]) {
-        if (updatedPaneState == MSDynamicsDrawerPaneStateClosed) {
-            self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
+    if ([self paneViewIsPositionedInValidState:&updatedPaneState]) {
+        
+        [self _setPaneState:updatedPaneState];
+        
+        [self setPaneViewControllerViewUserInteractionEnabled:(self.paneState == MSDynamicsDrawerPaneStateClosed)];
+        
+        // Since a valid pane state has been reached, remove all behaviors
+        [self.dynamicAnimator removeAllBehaviors];
+        
+        // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if rotation has been initiated during dynamics)
+        [UIViewController attemptRotationToDeviceOrientation];
+        
+        if (self.dynamicAnimatorCompletion) {
+            self.dynamicAnimatorCompletion();
+            self.dynamicAnimatorCompletion = nil;
         }
-        self.paneState = updatedPaneState;
-    }
-    
-    [self setPaneViewControllerViewUserInteractionEnabled:(self.paneState == MSDynamicsDrawerPaneStateClosed)];
-
-    // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if rotation has been initiated during dynamics)
-    [UIViewController attemptRotationToDeviceOrientation];
-    
-    if (self.dynamicAnimatorCompletion) {
-        self.dynamicAnimatorCompletion();
-        self.dynamicAnimatorCompletion = nil;
     }
 }
 

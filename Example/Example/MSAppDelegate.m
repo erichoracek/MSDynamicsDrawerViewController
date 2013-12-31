@@ -32,7 +32,7 @@
 #import "MSDynamicsDrawerStyler.h"
 #import "MSLogoViewController.h"
 
-@interface MSAppDelegate ()
+@interface MSAppDelegate () <MSDynamicsDrawerViewControllerDelegate>
 
 @property (nonatomic, strong) UIImageView *windowBackground;
 
@@ -47,6 +47,8 @@
 #else
     self.dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.window.rootViewController;
 #endif
+    
+//    self.dynamicsDrawerViewController.delegate = self;
     
     // Add some example stylers
     [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerScaleStyler styler], [MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
@@ -87,6 +89,48 @@
         _windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Window Background"]];
     }
     return _windowBackground;
+}
+
+- (NSString *)descriptionForPaneState:(MSDynamicsDrawerPaneState)paneState
+{
+    switch (paneState) {
+        case MSDynamicsDrawerPaneStateOpen:
+            return @"MSDynamicsDrawerPaneStateOpen";
+        case MSDynamicsDrawerPaneStateClosed:
+            return @"MSDynamicsDrawerPaneStateClosed";
+        case MSDynamicsDrawerPaneStateOpenWide:
+            return @"MSDynamicsDrawerPaneStateOpenWide";
+        default:
+            return nil;
+    }
+}
+
+- (NSString *)descriptionForDirection:(MSDynamicsDrawerDirection)direction
+{
+    switch (direction) {
+        case MSDynamicsDrawerDirectionTop:
+            return @"MSDynamicsDrawerDirectionTop";
+        case MSDynamicsDrawerDirectionLeft:
+            return @"MSDynamicsDrawerDirectionLeft";
+        case MSDynamicsDrawerDirectionBottom:
+            return @"MSDynamicsDrawerDirectionBottom";
+        case MSDynamicsDrawerDirectionRight:
+            return @"MSDynamicsDrawerDirectionRight";
+        default:
+            return nil;
+    }
+}
+
+#pragma mark - MSDynamicsDrawerViewControllerDelegate
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    NSLog(@"Drawer view controller may update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    NSLog(@"Drawer view controller did update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
 }
 
 @end
