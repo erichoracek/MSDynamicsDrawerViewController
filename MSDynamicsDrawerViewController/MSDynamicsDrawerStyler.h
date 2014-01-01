@@ -131,3 +131,16 @@
 @property (nonatomic, assign) CGFloat minimumResizeRevealWidth;
 
 @end
+
+/**
+ Adds a shadow to the `paneView`
+ 
+ The default behavor is a shadowRadius of 5.0f and opacity of 0.6f with a color of blackColor
+ */
+@interface MSDynamicsDrawerShadowStyler : NSObject <MSDynamicsDrawerStyler>
+
+@property (nonatomic, assign) UIColor *shadowColor;
+@property (nonatomic, assign) CGFloat shadowRadius;
+@property (nonatomic, assign) CGFloat shadowOpacity;
+
+@end
