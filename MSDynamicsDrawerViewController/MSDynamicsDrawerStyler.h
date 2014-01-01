@@ -58,6 +58,24 @@
 @optional
 
 /**
+ Invoked when the `MSDynamicsDrawerViewController` is changing its paneState.
+ 
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
+ @param paneState The state that the `MSDynamicsDrawerViewController` `paneView` is updating To.
+ @param direction The direction that the `MSDynamicsDrawerViewController` instance is in. Will not be masked.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController willUpdateToState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Invoked when the `MSDynamicsDrawerViewController` did change its paneState.
+ 
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
+ @param paneState The state that the `MSDynamicsDrawerViewController` `paneView` is updating To.
+ @param direction The direction that the `MSDynamicsDrawerViewController` instance is in. Will not be masked.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
  Used to set up the appearance of the styler when it is added to a `MSDynamicsDrawerViewController` instance.
  
  @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.

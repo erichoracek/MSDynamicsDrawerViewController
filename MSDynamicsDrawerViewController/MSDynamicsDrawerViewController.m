@@ -713,6 +713,35 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     }
 }
 
+- (void)updateStateForStylers:(MSDynamicsDrawerPaneState)toState
+{
+	// Prevent weird animation issues on rotation
+    if (self.animatingRotation) {
+        return;
+    }
+
+    NSMutableSet *activeStylers = [NSMutableSet new];
+    if (MSDynamicsDrawerDirectionIsCardinal(self.currentDrawerDirection)) {
+        [activeStylers unionSet:self.stylers[@(self.currentDrawerDirection)]];
+    } else {
+        for (NSSet *stylers in [self.stylers allValues]) {
+            [activeStylers unionSet:stylers];
+        }
+    }
+    for (id <MSDynamicsDrawerStyler> styler in activeStylers) {
+		if (toState == self.paneState) {  //Did Change
+			if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToState:forDirection:)]) {
+				[styler dynamicsDrawerViewController:self didUpdateToState:toState forDirection:self.currentDrawerDirection];
+			}
+		}else {
+			if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:willUpdateToState:forDirection:)]) {
+				[styler dynamicsDrawerViewController:self willUpdateToState:toState forDirection:self.currentDrawerDirection];
+			}
+		}
+    }
+}
+
+
 - (NSArray *)stylersForDirection:(MSDynamicsDrawerDirection)direction;
 {
     NSMutableSet *stlyerCollection = [NSMutableSet new];
@@ -800,6 +829,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible or multiple directions");
     
+	[self updateStateForStylers:paneState];
+
     void(^internalCompletion)() = ^ {
         [self _setPaneState:paneState];
         if (completion != nil) completion();
@@ -834,6 +865,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     if (_paneState != paneState) {
         [self willChangeValueForKey:NSStringFromSelector(@selector(paneState))];
         _paneState = paneState;
+		//Tell the stylers of the change
+		[self updateStateForStylers:paneState];
         if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
             if (self.paneState & (MSDynamicsDrawerPaneStateOpen | MSDynamicsDrawerPaneStateOpenWide)) {
                 [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:self.currentDrawerDirection];
@@ -1053,6 +1086,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 {
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.currentDrawerDirection), @"Invalid state, must be opened to close");
     if ([self paneTapToCloseEnabledForDirection:self.currentDrawerDirection]) {
+		[self updateStateForStylers:MSDynamicsDrawerPaneStateClosed];
         [self addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed];
     }
 }
@@ -1065,6 +1099,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan: {
+			[self updateStateForStylers:!self.paneState];
             panStartLocationInPane = [gestureRecognizer locationInView:self.paneView];
             panVelocity = 0.0;
             panDrawerDirection = (MSDynamicsDrawerDirectionNone | self.currentDrawerDirection);
