@@ -157,8 +157,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)dealloc
 {
-    if (self.isViewLoaded) {
-        [self.paneView removeObserver:self forKeyPath:@"frame"];
+    @try {
+        [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(frame))];
+    }
+    @catch (NSException __unused *exception) {
+        
     }
 }
 
