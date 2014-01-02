@@ -129,7 +129,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 @property (nonatomic, strong) NSMutableSet *touchForwardingClasses;
 @property (nonatomic, strong) UIPanGestureRecognizer *panePanGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *paneTapGestureRecognizer;
-// Dyanimcs
+// Dynamics
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (nonatomic, strong) UIPushBehavior *panePushBehavior;
 @property (nonatomic, strong) UIDynamicItemBehavior *paneElasticityBehavior;
@@ -157,12 +157,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)dealloc
 {
-    @try {
-        [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(frame))];
-    }
-    @catch (NSException __unused *exception) {
-        
-    }
+    [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(frame))];
 }
 
 #pragma mark - UIViewController
@@ -183,7 +178,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.drawerView.frame = (CGRect){CGPointZero, self.view.frame.size};
     self.paneView.frame = (CGRect){CGPointZero, self.view.frame.size};
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [self.paneView addObserver:self forKeyPath:@"frame" options:0 context:NULL];
     
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     self.dynamicAnimator.delegate = self;
@@ -261,6 +255,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.drawerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.paneView = [UIView new];
+    [self.paneView addObserver:self forKeyPath:@"frame" options:0 context:NULL];
     self.paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.panePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panePanned:)];
