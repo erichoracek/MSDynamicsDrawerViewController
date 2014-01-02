@@ -157,7 +157,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)dealloc
 {
-    [self.paneView removeObserver:self forKeyPath:@"frame"];
+    if (self.isViewLoaded) {
+        [self.paneView removeObserver:self forKeyPath:@"frame"];
+    }
 }
 
 #pragma mark - UIViewController
