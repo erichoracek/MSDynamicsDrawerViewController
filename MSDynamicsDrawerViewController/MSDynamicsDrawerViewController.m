@@ -255,7 +255,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.drawerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.paneView = [UIView new];
-    [self.paneView addObserver:self forKeyPath:@"frame" options:0 context:NULL];
+    [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(frame)) options:0 context:NULL];
     self.paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.panePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panePanned:)];
