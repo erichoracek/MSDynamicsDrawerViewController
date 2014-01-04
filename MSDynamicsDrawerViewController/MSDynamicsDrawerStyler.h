@@ -58,6 +58,24 @@
 @optional
 
 /**
+ Invoked when the `MSDynamicsDrawerViewController` is changing its paneState.
+ 
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
+ @param paneState The state that the `MSDynamicsDrawerViewController` `paneView` is updating To.
+ @param direction The direction that the `MSDynamicsDrawerViewController` instance is in. Will not be masked.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController willUpdateToState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Invoked when the `MSDynamicsDrawerViewController` did change its paneState.
+ 
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
+ @param paneState The state that the `MSDynamicsDrawerViewController` `paneView` is updating To.
+ @param direction The direction that the `MSDynamicsDrawerViewController` instance is in. Will not be masked.
+ */
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
  Used to set up the appearance of the styler when it is added to a `MSDynamicsDrawerViewController` instance.
  
  @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
@@ -129,5 +147,18 @@
  The default behavior is to use the `MSDynamicsDrawerViewController` instance's `revealWidthForDirection:` in the direction that the drawer is opened in as the value for the minimum resize reveal width. When set to a specific value, the drawer view controller's view is resized to fit the `currentRevealWidth` once the drawer is opened to the `minimumResizeRevealWidth`. If this value is set to `0`, then the drawer view controller's view will always be resized to fit within the visible area of the drawer.
  */
 @property (nonatomic, assign) CGFloat minimumResizeRevealWidth;
+
+@end
+
+/**
+ Adds a shadow to the `paneView`
+ 
+ The default behavor is a shadowRadius of 5.0f and opacity of 0.6f with a color of blackColor
+ */
+@interface MSDynamicsDrawerShadowStyler : NSObject <MSDynamicsDrawerStyler>
+
+@property (nonatomic, assign) UIColor *shadowColor;
+@property (nonatomic, assign) CGFloat shadowRadius;
+@property (nonatomic, assign) CGFloat shadowOpacity;
 
 @end

@@ -232,3 +232,82 @@
 }
 
 @end
+
+@interface MSDynamicsDrawerShadowStyler ()
+
+@property (nonatomic, retain) CALayer *shadowLayer;
+
+@end
+
+@implementation MSDynamicsDrawerShadowStyler
+
+#pragma mark - NSObject
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+		self.shadowColor = [UIColor blackColor];
+        self.shadowRadius = 5.0;
+		self.shadowOpacity = 0.60f;
+    }
+    return self;
+}
+
+#pragma mark - MSDynamicsDrawerStyler
+
++ (instancetype)styler
+{
+    return [self new];
+}
+
+- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+
+	self.shadowLayer = [CALayer layer];
+	self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:dynamicsDrawerViewController.paneView.frame] CGPath];
+    self.shadowLayer.shadowColor = self.shadowColor.CGColor;
+    self.shadowLayer.shadowOpacity = self.shadowOpacity;
+    self.shadowLayer.shadowRadius = self.shadowRadius;
+    self.shadowLayer.masksToBounds = NO;
+	[dynamicsDrawerViewController.paneView.layer insertSublayer:self.shadowLayer atIndex:0];
+
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
+{
+	CGRect paneViewRect = (CGRect){CGPointZero, dynamicsDrawerViewController.paneView.frame.size};
+	self.shadowLayer.shadowRadius = self.shadowRadius;
+
+	switch (direction) {
+		case MSDynamicsDrawerDirectionRight:
+			paneViewRect.origin.x += self.shadowRadius * 1.2; //Lets make sure to suck it in on the left
+			self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(paneViewRect, 0.0, -10.0)] CGPath];
+			break;
+		case MSDynamicsDrawerDirectionLeft:
+			paneViewRect.origin.x -= self.shadowRadius * 1.2;
+			paneViewRect.size.width -= self.shadowRadius;
+			self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(paneViewRect, 0.0, -10.0)] CGPath];
+			break;
+		case MSDynamicsDrawerDirectionTop:
+			paneViewRect.size.height -= self.shadowRadius;
+			self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(paneViewRect, -10.0, 0.0)] CGPath];
+			break;
+		case MSDynamicsDrawerDirectionBottom:
+			paneViewRect.origin.y += self.shadowRadius * 1.2;
+			self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:CGRectInset(paneViewRect, -10.0, 0.0)] CGPath];
+			break;
+		default:
+			break;
+	}
+
+}
+
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+	[self.shadowLayer removeFromSuperlayer];
+}
+
+@end
+
+
