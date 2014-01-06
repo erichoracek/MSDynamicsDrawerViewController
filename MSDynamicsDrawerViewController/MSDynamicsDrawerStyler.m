@@ -60,6 +60,10 @@
         drawerViewTransform.tx = CGAffineTransformMakeTranslation(translate, 0.0).tx;
     } else if (direction & MSDynamicsDrawerDirectionVertical) {
         drawerViewTransform.ty = CGAffineTransformMakeTranslation(0.0, translate).ty;
+    } else {
+        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 0.0);
+        drawerViewTransform.tx = translate.tx;
+        drawerViewTransform.ty = translate.ty;
     }
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
