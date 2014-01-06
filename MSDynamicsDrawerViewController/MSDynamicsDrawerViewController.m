@@ -620,6 +620,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         case MSDynamicsDrawerDirectionRight:
             fraction = (1.0 - (fabsf(self.paneView.frame.origin.x) / self.openStateRevealWidth));
             break;
+        case MSDynamicsDrawerDirectionNone:
+            fraction = 1.0; // If we have no direction, we want
+            break;
         default:
             break;
     }

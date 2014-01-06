@@ -97,7 +97,11 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
-    dynamicsDrawerViewController.drawerView.alpha = ((1.0 - self.closedAlpha) * (1.0  - paneClosedFraction));
+    if (direction & MSDynamicsDrawerDirectionAll) {
+        dynamicsDrawerViewController.drawerView.alpha = ((1.0 - self.closedAlpha) * (1.0  - paneClosedFraction));
+    } else {
+        dynamicsDrawerViewController.drawerView.alpha = 1.0;
+    }
 }
 
 - (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
@@ -129,7 +133,12 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
-    CGFloat scale = (1.0 - (paneClosedFraction * self.closedScale));
+    CGFloat scale;
+    if (direction & MSDynamicsDrawerDirectionAll) {
+        scale = (1.0 - (paneClosedFraction * self.closedScale));
+    } else {
+        scale = 1.0;
+    }
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
     CGAffineTransform drawerViewTransform = dynamicsDrawerViewController.drawerView.transform;
     drawerViewTransform.a = scaleTransform.a;
@@ -186,17 +195,10 @@
     if (dynamicsDrawerViewController.currentRevealWidth < minimumResizeRevealWidth) {
         drawerViewFrame.size.width = [dynamicsDrawerViewController revealWidthForDirection:direction];
     } else {
-        switch (direction) {
-            case MSDynamicsDrawerDirectionLeft:
-            case MSDynamicsDrawerDirectionRight:
-                drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
-                break;
-            case MSDynamicsDrawerDirectionTop:
-            case MSDynamicsDrawerDirectionBottom:
-                drawerViewFrame.size.height = dynamicsDrawerViewController.currentRevealWidth;
-                break;
-            default:
-                break;
+        if (direction & MSDynamicsDrawerDirectionHorizontal) {
+            drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
+        } else if (direction & MSDynamicsDrawerDirectionVertical) {
+            drawerViewFrame.size.height = dynamicsDrawerViewController.currentRevealWidth;
         }
     }
     

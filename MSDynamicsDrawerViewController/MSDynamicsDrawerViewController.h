@@ -48,6 +48,7 @@ typedef NS_OPTIONS(NSInteger, MSDynamicsDrawerDirection) {
     MSDynamicsDrawerDirectionRight      = UIRectEdgeRight,
     MSDynamicsDrawerDirectionHorizontal = (UIRectEdgeLeft | UIRectEdgeRight),
     MSDynamicsDrawerDirectionVertical   = (UIRectEdgeTop | UIRectEdgeBottom),
+    MSDynamicsDrawerDirectionAll        = UIRectEdgeAll
 };
 
 /**
