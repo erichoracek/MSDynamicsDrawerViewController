@@ -1,58 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/MSDynamicsDrawerViewControllerDelegate.html">
+	<File path="Protocols/MSDynamicsDrawerStyler.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/MSDynamicsDrawerViewControllerDelegate</TokenIdentifier>
-			<Abstract type="html">To respond to the updates to paneState for an instance of MSDynamicsDrawerViewController, configure a custom class to adopt the MSDynamicsDrawerViewControllerDelegate protocol and set it as the delegate object.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/MSDynamicsDrawerStyler</TokenIdentifier>
+			<Abstract type="html">MSDynamicsDrawerStyler is a protocol that defines the interface for an object that can style a MSDynamicsDrawerViewController. Instances of MSDynamicsDrawerStyler are added to MSDynamicsDrawerViewController via the addStyler:forDirection: method.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<NodeRef refid="7"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerViewControllerDelegate/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</TokenIdentifier>
-			<Abstract type="html">Informs the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/styler</TokenIdentifier>
+			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
 			
-			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>drawerViewController</Name>
-					<Abstract type="html">The drawer view controller that the delegate is registered with.</Abstract>
-				</Parameter><Parameter>
-					<Name>paneState</Name>
-					<Abstract type="html">The pane state that the view controller will attempt to update to.</Abstract>
-				</Parameter><Parameter>
-					<Name>direction</Name>
-					<Abstract type="html">When the pane state is updating to MSDynamicsDrawerPaneStateClosed: the direction that the drawer view controller is transitioning from. When the pane state is updating to MSDynamicsDrawerPaneStateOpen or MSDynamicsDrawerPaneStateOpenWide: the direction that the drawer view controller is transitioning to.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>+ (instancetype)styler</Declaration>
 			
-			<Anchor>//api/name/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</Anchor>
+			
+			<Anchor>//api/name/styler</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerViewControllerDelegate/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</TokenIdentifier>
-			<Abstract type="html">Informs the delegate that the drawer view controller did update to a pane state in the specified direction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
+			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
 			
-			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>drawerViewController</Name>
-					<Abstract type="html">The drawer view controller that the delegate is registered with.</Abstract>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that is being styled by the MSDynamicsDrawerStyler instance.</Abstract>
 				</Parameter><Parameter>
-					<Name>paneState</Name>
-					<Abstract type="html">The pane state that the view controller did update to.</Abstract>
+					<Name>paneClosedFraction</Name>
+					<Abstract type="html">The fraction that MSDynamicsDrawerViewController instance&apos;s pane is closed. 1.0 when closed, 0.0 when opened.</Abstract>
 				</Parameter><Parameter>
 					<Name>direction</Name>
-					<Abstract type="html">When the pane state is updating to MSDynamicsDrawerPaneStateClosed: the direction that the drawer view controller is transitioning from. When the pane state is updating to MSDynamicsDrawerPaneStateOpen or MSDynamicsDrawerPaneStateOpenWide: the direction that the drawer view controller is transitioning to.</Abstract>
+					<Abstract type="html">The direction that the MSDynamicsDrawerViewController instance is opening in. Will not be masked.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</Anchor>
+			<Anchor>//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/stylerWasAddedToDynamicsDrawerViewController:forDirection:</TokenIdentifier>
+			<Abstract type="html">Used to set up the appearance of the styler when it is added to a MSDynamicsDrawerViewController instance.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			
+			<Declaration>- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that is now being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the styler is being added for. Can be a masked value.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stylerWasAddedToDynamicsDrawerViewController:forDirection:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
+			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			
+			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that was being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the styler is being removed for. Can be a masked value.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</Anchor>
 		</Token>
 		
 	</File>

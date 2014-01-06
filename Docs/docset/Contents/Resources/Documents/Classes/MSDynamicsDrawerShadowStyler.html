@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>MSDynamicsDrawerStyler Protocol Reference</title>
+		<title>MSDynamicsDrawerShadowStyler Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
@@ -17,7 +17,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">MSDynamicsDrawerStyler Protocol Reference</h1>
+				<h1 class="hideInXcode">MSDynamicsDrawerShadowStyler Class Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -36,6 +36,17 @@
 	
 	
 	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/shadowColor">&nbsp;&nbsp;&nbsp;&nbsp;shadowColor</option>
+	
+	<option value="//api/name/shadowOffset">&nbsp;&nbsp;&nbsp;&nbsp;shadowOffset</option>
+	
+	<option value="//api/name/shadowOpacity">&nbsp;&nbsp;&nbsp;&nbsp;shadowOpacity</option>
+	
+	<option value="//api/name/shadowRadius">&nbsp;&nbsp;&nbsp;&nbsp;shadowRadius</option>
 	
 	
 	
@@ -77,6 +88,18 @@
 
 
 
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowColor">shadowColor</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowOffset">shadowOffset</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowOpacity">shadowOpacity</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowRadius">shadowRadius</a></span></li>
+	
+</ul></li>
+
 
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
@@ -102,7 +125,7 @@
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="MSDynamicsDrawerStyler Protocol Reference" name="top"></a>
+				<a title="MSDynamicsDrawerShadowStyler Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -111,18 +134,21 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">MSDynamicsDrawerStyler Protocol Reference</h1>
+						<h1 class="title title-header">MSDynamicsDrawerShadowStyler Class Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<td class="specification-title">Conforms to</td>
+	<td class="specification-title">Inherits from</td>
 	<td class="specification-value">NSObject</td>
 </tr><tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value"><a href="../Protocols/MSDynamicsDrawerStyler.html">MSDynamicsDrawerStyler</a></td>
+</tr><tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">MSDynamicsDrawerStyler.h</td>
+	<td class="specification-value">MSDynamicsDrawerStyler.h<br />MSDynamicsDrawerStyler.m</td>
 </tr>
 						</tbody></table></div>
 					
@@ -132,13 +158,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p><code>MSDynamicsDrawerStyler</code> is a protocol that defines the interface for an object that can style a <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a>. Instances of <code>MSDynamicsDrawerStyler</code> are added to <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> via the <code>addStyler:forDirection:</code> method.</p>
-
-<h2>Creating a Custom Styler</h2>
-
-<p>As user interacts with the instance of <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a>, the <a href="#//api/name/styler">styler</a> class is messaged via the method <a href="#//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:"><code>dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</code></a>, which allows the <a href="#//api/name/styler">styler</a> to changes attributes of the <code>drawerView</code> or <code>paneView</code> relative to the <code>paneClosedFraction</code>.</p>
-
-<p>It&rsquo;s recommended that custom stylers don&rsquo;t change the <code>frame</code> attribute of the <code>paneView</code> or the <code>drawerView</code> on the <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> instance. These are constantly modified both by the user&rsquo;s gestures and the internal UIKit Dynamics within <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a>. The behavior of <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> when the frame is externally modified is undefined.</p>
+						<p>Adds a shadow to the <code>paneView</code> within a <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> to create an effect of the <code>paneView</code> casting a shadow over the <code>drawerView</code>.</p>
 					</div>
 					
 					
@@ -151,7 +171,43 @@
 						
 						
 						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shadowColor">&nbsp;&nbsp;shadowColor</a></code>
+		<span class="tooltip"><p>The color of the shadow.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shadowRadius">&nbsp;&nbsp;shadowRadius</a></code>
+		<span class="tooltip"><p>The blur radius (in points) used to render the shadow.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shadowOpacity">&nbsp;&nbsp;shadowOpacity</a></code>
+		<span class="tooltip"><p>The opacity of the shadow.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shadowOffset">&nbsp;&nbsp;shadowOffset</a></code>
+		<span class="tooltip"><p>The offset (in points) of the layer’s shadow.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
 						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
 
 						<ul class="task-list">
 							<li>
@@ -160,18 +216,18 @@
 		<span class="tooltip"><p>Creates and returns a styler with default configuration.</p></span>
 	</span>
 	
-	<span class="task-item-suffix">required method</span>
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:">&ndash;&nbsp;dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</a></code>
-		<span class="tooltip"><p>Invoked when the <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> has an update to its pane closed fraction.</p></span>
-	</span>
 	
-	<span class="task-item-suffix">required method</span>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/stylerWasAddedToDynamicsDrawerViewController:forDirection:">&ndash;&nbsp;stylerWasAddedToDynamicsDrawerViewController:forDirection:</a></code>
 		<span class="tooltip"><p>Used to set up the appearance of the <a href="../Protocols/MSDynamicsDrawerStyler.html#//api/name/styler">styler</a> when it is added to a <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> instance.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:">&ndash;&nbsp;dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</a></code>
+		<span class="tooltip"><p>Invoked when the <a href="../Classes/MSDynamicsDrawerViewController.html"><code>MSDynamicsDrawerViewController</code></a> has an update to its pane closed fraction.</p></span>
 	</span>
 	
 	
@@ -190,6 +246,176 @@
 					
 					
 					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/shadowColor" title="shadowColor"></a>
+	<h3 class="subsubtitle method-title">shadowColor</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The color of the shadow.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) UIColor *shadowColor</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Default value of <code>[UIColor blackColor]</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerStyler.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shadowOffset" title="shadowOffset"></a>
+	<h3 class="subsubtitle method-title">shadowOffset</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The offset (in points) of the layer’s shadow.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) CGSize shadowOffset</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The default value of this property is <code>(0.0, 0.0)</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerStyler.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shadowOpacity" title="shadowOpacity"></a>
+	<h3 class="subsubtitle method-title">shadowOpacity</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The opacity of the shadow.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) CGFloat shadowOpacity</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The value in this property must be in the range <code>0.0</code> (transparent) to <code>1.0</code> (opaque). The default value of this property is <code>1.0</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerStyler.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shadowRadius" title="shadowRadius"></a>
+	<h3 class="subsubtitle method-title">shadowRadius</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The blur radius (in points) used to render the shadow.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) CGFloat shadowRadius</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Default value of <code>10.0</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerStyler.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
 					
 					
 					

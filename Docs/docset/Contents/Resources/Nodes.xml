@@ -16,6 +16,7 @@
 						<NodeRef refid="3"/>
 						<NodeRef refid="4"/>
 						<NodeRef refid="5"/>
+						<NodeRef refid="6"/>
 						
 					</Subnodes>
 				</Node>
@@ -26,8 +27,8 @@
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
-						<NodeRef refid="6"/>
 						<NodeRef refid="7"/>
+						<NodeRef refid="8"/>
 						
 					</Subnodes>
 				</Node>
@@ -54,16 +55,20 @@
 			<Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
 		</Node>
 		<Node id="5">
+			<Name>MSDynamicsDrawerShadowStyler</Name>
+			<Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+		</Node>
+		<Node id="6">
 			<Name>MSDynamicsDrawerViewController</Name>
 			<Path>Classes/MSDynamicsDrawerViewController.html</Path>
 		</Node>
 		
 		
-		<Node id="6">
+		<Node id="7">
 			<Name>MSDynamicsDrawerStyler</Name>
 			<Path>Protocols/MSDynamicsDrawerStyler.html</Path>
 		</Node>
-		<Node id="7">
+		<Node id="8">
 			<Name>MSDynamicsDrawerViewControllerDelegate</Name>
 			<Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
 		</Node>
