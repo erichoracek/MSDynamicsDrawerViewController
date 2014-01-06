@@ -48,7 +48,7 @@
     self.dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.window.rootViewController;
 #endif
     
-//    self.dynamicsDrawerViewController.delegate = self;
+    self.dynamicsDrawerViewController.delegate = self;
     
     // Add some example stylers
     [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerScaleStyler styler], [MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
