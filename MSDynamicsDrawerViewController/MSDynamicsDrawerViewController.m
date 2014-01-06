@@ -194,14 +194,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    // This prevents weird transform issues, set the transform to identity for the duration of the rotation, disables updates during rotation
     self.animatingRotation = YES;
-    self.drawerView.transform = CGAffineTransformIdentity;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    // This prevents weird transform issues, set the transform to identity for the duration of the rotation, disables updates during rotation
     self.animatingRotation = NO;
     [self updateStylers];
 }
@@ -661,7 +658,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 #pragma clang diagnostic pop
         }
     });
-    [self updateStylers];
 }
 
 - (void)removeStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction;
@@ -687,7 +683,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 #pragma clang diagnostic pop
         }
     });
-    [self updateStylers];
 }
 
 - (void)addStylersFromArray:(NSArray *)stylers forDirection:(MSDynamicsDrawerDirection)direction;
@@ -922,12 +917,21 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     NSAssert(MSDynamicsDrawerDirectionIsNonMasked(currentDrawerDirection), @"Only accepts non-masked directions as current reveal direction");
     
     if (_currentDrawerDirection == currentDrawerDirection) return;
+    
+    // Inform stylers about the transition between directions when directly transitioning
+    if (_currentDrawerDirection != MSDynamicsDrawerDirectionNone) {
+        NSMutableSet *allStylers = [NSMutableSet new];
+        for (NSSet *stylers in [self.stylers allValues]) {
+            [allStylers unionSet:stylers];
+        }
+        for (id <MSDynamicsDrawerStyler> styler in allStylers) {
+            [styler dynamicsDrawerViewController:self didUpdatePaneClosedFraction:1.0 forDirection:MSDynamicsDrawerDirectionNone];
+        }
+    }
+    
     _currentDrawerDirection = currentDrawerDirection;
     
     self.drawerViewController = self.drawerViewControllers[@(currentDrawerDirection)];
-    
-    // Reset the drawer view's transform when the reveal direction is changed
-    self.drawerView.transform = CGAffineTransformIdentity;
     
     // Disable pane view interaction when not closed
     [self setPaneViewControllerViewUserInteractionEnabled:(currentDrawerDirection == MSDynamicsDrawerDirectionNone)];
