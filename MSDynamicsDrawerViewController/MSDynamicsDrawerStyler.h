@@ -133,14 +133,36 @@
 @end
 
 /**
- Adds a shadow to the `paneView`
- 
- The default behavor is a shadowRadius of 5.0f and opacity of 0.6f with a color of blackColor
+ Adds a shadow to the `paneView` within a `MSDynamicsDrawerViewController` to create an effect of the `paneView` casting a shadow over the `drawerView`.
  */
 @interface MSDynamicsDrawerShadowStyler : NSObject <MSDynamicsDrawerStyler>
 
-@property (nonatomic, assign) UIColor *shadowColor;
+/**
+ The color of the shadow.
+ 
+ Default value of `[UIColor blackColor]`.
+ */
+@property (nonatomic, strong) UIColor *shadowColor;
+
+/**
+ The blur radius (in points) used to render the shadow.
+ 
+ Default value of `10.0`.
+ */
 @property (nonatomic, assign) CGFloat shadowRadius;
+
+/**
+ The opacity of the shadow.
+ 
+ The value in this property must be in the range `0.0` (transparent) to `1.0` (opaque). The default value of this property is `1.0`.
+ */
 @property (nonatomic, assign) CGFloat shadowOpacity;
+
+/**
+ The offset (in points) of the layer’s shadow.
+ 
+ The default value of this property is `(0.0, 0.0)`.
+ */
+@property (nonatomic, assign) CGSize shadowOffset;
 
 @end
