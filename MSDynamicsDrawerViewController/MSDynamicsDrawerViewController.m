@@ -205,7 +205,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (BOOL)shouldAutorotate
 {
-    return !self.dynamicAnimator.isRunning;
+    // Do not allow rotation between resting states (dynamic animator is running or pane pan gesture recognizer is active)
+    return (!self.dynamicAnimator.isRunning && !(self.panePanGestureRecognizer.state & (UIGestureRecognizerStateChanged | UIGestureRecognizerStateBegan)));
 }
 
 - (NSUInteger)supportedInterfaceOrientations
