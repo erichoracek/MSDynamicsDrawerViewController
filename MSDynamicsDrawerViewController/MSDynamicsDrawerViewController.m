@@ -438,6 +438,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion
 {
+    [self setPaneViewController:paneViewController animated:animated middleCompletion:nil completion:completion];
+}
+
+- (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated  middleCompletion:(void (^)(void))middleCompletion completion:(void (^)(void))completion
+{
     NSParameterAssert(paneViewController);
     if (!animated) {
         self.paneViewController = paneViewController;
@@ -448,6 +453,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         [self.paneViewController willMoveToParentViewController:nil];
         [self.paneViewController beginAppearanceTransition:NO animated:animated];
         void(^transitionToNewPaneViewController)() = ^{
+            if (middleCompletion && self.paneViewSlideOffAnimationEnabled)
+            {
+                middleCompletion();
+            }
+            
             [paneViewController willMoveToParentViewController:self];
             [self.paneViewController.view removeFromSuperview];
             [self.paneViewController removeFromParentViewController];
