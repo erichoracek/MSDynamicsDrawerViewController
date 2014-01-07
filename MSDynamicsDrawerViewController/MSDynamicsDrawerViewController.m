@@ -788,7 +788,20 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 {
     if ((paneState != MSDynamicsDrawerPaneStateClosed) && (self.currentDrawerDirection == MSDynamicsDrawerDirectionNone)) {
-        NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to set pane to an open state with multiple possible reveal directions");
+        MSDynamicsDrawerDirection possibleDrawerDirection = self.possibleDrawerDirection;
+        
+        if (!MSDynamicsDrawerDirectionIsCardinal(possibleDrawerDirection))
+        {
+            if (possibleDrawerDirection & MSDynamicsDrawerDirectionLeft)
+            {
+                possibleDrawerDirection = MSDynamicsDrawerDirectionLeft;
+            }
+            else
+            {
+                possibleDrawerDirection = MSDynamicsDrawerDirectionTop;
+            }
+        }
+
         [self setPaneState:paneState inDirection:self.possibleDrawerDirection animated:animated allowUserInterruption:allowUserInterruption completion:completion];
     } else {
         [self setPaneState:paneState inDirection:self.currentDrawerDirection animated:animated allowUserInterruption:allowUserInterruption completion:completion];
