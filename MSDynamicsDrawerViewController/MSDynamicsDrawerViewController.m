@@ -123,6 +123,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 @property (nonatomic, strong) NSMutableDictionary *drawerViewControllers;
 @property (nonatomic, strong) NSMutableDictionary *revealWidth;
 @property (nonatomic, strong) NSMutableDictionary *paneDragRevealEnabled;
+@property (nonatomic, strong) NSMutableDictionary *paneDragCloseEnabled;
 @property (nonatomic, strong) NSMutableDictionary *paneTapToCloseEnabled;
 @property (nonatomic, strong) NSMutableDictionary *stylers;
 // Gestures
@@ -244,6 +245,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.drawerViewControllers = [NSMutableDictionary new];
     self.revealWidth = [NSMutableDictionary new];
     self.paneDragRevealEnabled = [NSMutableDictionary new];
+    self.paneDragCloseEnabled = [NSMutableDictionary new];
     self.paneTapToCloseEnabled = [NSMutableDictionary new];
     self.stylers = [NSMutableDictionary new];
     
@@ -1016,6 +1018,21 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return [paneDragRevealEnabled boolValue];
 }
 
+- (void)setPaneDragCloseEnabled:(BOOL)paneDraggingEnabled forDirection:(MSDynamicsDrawerDirection)direction
+{
+    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
+        self.paneDragCloseEnabled[@(maskedValue)] = @(paneDraggingEnabled);
+    });
+}
+
+- (BOOL)paneDragCloseEnabledForDirection:(MSDynamicsDrawerDirection)direction
+{
+    NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Only accepts singular directions when querying for drag close enabled");
+    NSNumber *paneDragCloseEnabled = self.paneDragCloseEnabled[@(direction)];
+    if (!paneDragCloseEnabled) paneDragCloseEnabled = @(YES);
+    return [paneDragCloseEnabled boolValue];
+}
+
 - (void)setPaneTapToCloseEnabled:(BOOL)paneTapToCloseEnabled forDirection:(MSDynamicsDrawerDirection)direction
 {
     MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
@@ -1119,7 +1136,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 }
             }
             // If the determined pan reveal direction's pane drag reveal is disabled, return
-            else if (![self paneDragRevealEnabledForDirection:panDrawerDirection]) {
+            else if (![self paneDragRevealEnabledForDirection:panDrawerDirection] && ![self paneDragCloseEnabledForDirection:panDrawerDirection]) {
                 return;
             }
             // Panning is able to move pane, so remove all animators to prevent conflicting behavior
