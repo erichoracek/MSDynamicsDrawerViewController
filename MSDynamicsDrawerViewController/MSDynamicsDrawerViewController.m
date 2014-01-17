@@ -576,10 +576,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return [UIBezierPath bezierPathWithRect:boundary];
 }
 
-- (CGFloat)gravityAngleForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)rirection
+- (CGFloat)gravityAngleForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction
 {
-    NSAssert(MSDynamicsDrawerDirectionIsCardinal(rirection), @"Indeterminate gravity angle for non-cardinal reveal direction");
-    switch (rirection) {
+    NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Indeterminate gravity angle for non-cardinal reveal direction");
+    switch (direction) {
         case MSDynamicsDrawerDirectionTop:
             return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI_2 : (3.0 * M_PI_2));
         case MSDynamicsDrawerDirectionLeft:
