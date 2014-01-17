@@ -61,7 +61,7 @@ typedef NS_OPTIONS(NSInteger, MSDynamicsDrawerDirection) {
 typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
     MSDynamicsDrawerPaneStateClosed,   // Drawer view entirely hidden by pane view
     MSDynamicsDrawerPaneStateOpen,     // Drawer view revealed to open width
-    MSDynamicsDrawerPaneStateOpenWide, // Drawer view entirely visible
+    MSDynamicsDrawerPaneStateOpenWide, // Drawer view entirely visible with pane opened to `paneStateOpenWideEdgeOffset`
 };
 
 @class MSDynamicsDrawerViewController;

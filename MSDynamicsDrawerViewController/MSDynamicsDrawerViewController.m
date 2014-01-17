@@ -104,17 +104,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 }
 
 @interface MSDynamicsDrawerViewController () <UIGestureRecognizerDelegate, UIDynamicAnimatorDelegate>
-{
-    MSDynamicsDrawerDirection _currentDrawerDirection;
-    MSDynamicsDrawerDirection _possibleDrawerDirection;
-    UIViewController *_drawerViewController;
-    UIViewController *_paneViewController;
-    MSDynamicsDrawerPaneState _paneState;
-}
 
+// State
 @property (nonatomic, assign) BOOL animatingRotation;
 @property (nonatomic, assign) MSDynamicsDrawerDirection currentDrawerDirection;
 @property (nonatomic, assign) MSDynamicsDrawerDirection possibleDrawerDirection;
+@property (nonatomic, assign) MSDynamicsDrawerPaneState potentialPaneState;
+// View Controller Container Views
 @property (nonatomic, strong) UIView *drawerView;
 @property (nonatomic, strong) UIView *paneView;
 // Visible View Controllers
@@ -142,8 +138,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 @implementation MSDynamicsDrawerViewController
 
-@dynamic paneViewController;
-@dynamic paneState;
+@synthesize currentDrawerDirection = _currentDrawerDirection;
+@synthesize possibleDrawerDirection = _possibleDrawerDirection;
+@synthesize paneState = _paneState;
+@synthesize paneViewController = _paneViewController;
+@synthesize drawerViewController = _drawerViewController;
 
 #pragma mark - NSObject
 
@@ -368,11 +367,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 #pragma mark Drawer View Controller
 
-- (UIViewController *)drawerViewController
-{
-    return _drawerViewController;
-}
-
 - (void)setDrawerViewController:(UIViewController *)drawerViewController
 {
     [self replaceViewController:self.drawerViewController withViewController:drawerViewController inContainerView:self.drawerView completion:^{
@@ -415,11 +409,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 }
 
 #pragma mark Pane View Controller
-
-- (UIViewController *)paneViewController
-{
-    return _paneViewController;
-}
 
 - (void)setPaneViewController:(UIViewController *)paneViewController
 {
@@ -763,11 +752,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     [self updateStylers];
 }
 
-- (MSDynamicsDrawerPaneState)paneState
-{
-    return _paneState;
-}
-
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState
 {
     [self setPaneState:paneState animated:NO allowUserInterruption:NO completion:nil];
@@ -899,11 +883,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return validState;
 }
 
-#pragma mark Current Reveal Direction
-
-- (MSDynamicsDrawerDirection)currentDrawerDirection
 {
-    return _currentDrawerDirection;
 }
 
 - (void)setCurrentDrawerDirection:(MSDynamicsDrawerDirection)currentDrawerDirection
@@ -934,11 +914,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 }
 
 #pragma mark Possible Reveal Direction
-
-- (MSDynamicsDrawerDirection)possibleDrawerDirection
-{
-    return _possibleDrawerDirection;
-}
 
 - (void)setPossibleDrawerDirection:(MSDynamicsDrawerDirection)possibleDrawerDirection
 {
