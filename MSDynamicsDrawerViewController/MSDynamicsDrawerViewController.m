@@ -386,17 +386,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     for (UIViewController *currentDrawerViewController in self.drawerViewControllers) {
         NSAssert(currentDrawerViewController != drawerViewController, @"Unable to add a drawer view controller when it's previously been added");
     }
-    switch (direction) {
-        case MSDynamicsDrawerDirectionLeft:
-        case MSDynamicsDrawerDirectionRight:
-            NSAssert(!(self.drawerViewControllers[@(MSDynamicsDrawerDirectionTop)] || self.drawerViewControllers[@(MSDynamicsDrawerDirectionBottom)]), @"Unable to simultaneously have top/bottom drawer view controllers while setting left/right drawer view controllers");
-            break;
-        case MSDynamicsDrawerDirectionTop:
-        case MSDynamicsDrawerDirectionBottom:
-            NSAssert(!(self.drawerViewControllers[@(MSDynamicsDrawerDirectionLeft)] || self.drawerViewControllers[@(MSDynamicsDrawerDirectionRight)]), @"Unable to simultaneously have left/right drawer view controllers while setting top/bottom drawer view controllers");
-            break;
-        default:
-            break;
+    if (direction & MSDynamicsDrawerDirectionHorizontal) {
+        NSAssert(!(self.drawerViewControllers[@(MSDynamicsDrawerDirectionTop)] || self.drawerViewControllers[@(MSDynamicsDrawerDirectionBottom)]), @"Unable to simultaneously have top/bottom drawer view controllers while setting left/right drawer view controllers");
+    } else if (direction & MSDynamicsDrawerDirectionVertical) {
+        NSAssert(!(self.drawerViewControllers[@(MSDynamicsDrawerDirectionLeft)] || self.drawerViewControllers[@(MSDynamicsDrawerDirectionRight)]), @"Unable to simultaneously have left/right drawer view controllers while setting top/bottom drawer view controllers");
     }
     UIViewController *existingDrawerViewController = self.drawerViewControllers[@(direction)];
     // New drawer view controller
