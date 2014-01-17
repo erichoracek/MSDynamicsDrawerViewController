@@ -318,7 +318,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     __weak typeof(self) weakSelf = self;
     self.dynamicAnimatorCompletion = ^{
         if (!allowUserInterruption) [weakSelf setViewUserInteractionEnabled:YES];
-        if (completion != nil) completion();
+        if (completion) completion();
     };
 }
 
@@ -400,12 +400,12 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     }
     UIViewController *existingDrawerViewController = self.drawerViewControllers[@(direction)];
     // New drawer view controller
-    if (drawerViewController && (existingDrawerViewController == nil)) {
+    if (drawerViewController && !existingDrawerViewController) {
         self.possibleDrawerDirection |= direction;
         self.drawerViewControllers[@(direction)] = drawerViewController;
     }
     // Removing existing drawer view controller
-    else if (!drawerViewController && (existingDrawerViewController != nil)) {
+    else if (!drawerViewController && existingDrawerViewController) {
         self.possibleDrawerDirection ^= direction;
         [self.drawerViewControllers removeObjectForKey:@(direction)];
     }
@@ -1246,11 +1246,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     // If the other gesture recognizer's view is a UITableViewCell's internal UIScrollView, require failure
-    if ([[otherGestureRecognizer view] isKindOfClass:[UIScrollView class]] && [[otherGestureRecognizer.view superview] isKindOfClass:[UITableViewCell class]]) {
+    if ([[otherGestureRecognizer.view superview] isKindOfClass:[UITableViewCell class]] && [[otherGestureRecognizer view] isKindOfClass:[UIScrollView class]]) {
         return YES;
-    } else {
-        return NO;
     }
+    return NO;
 }
 
 #pragma mark - UIDynamicAnimatorDelegate
