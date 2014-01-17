@@ -173,11 +173,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.drawerView.frame = self.view.bounds;
+    self.paneView.frame = self.view.bounds;
     [self.view addSubview:self.drawerView];
     [self.view addSubview:self.paneView];
-    self.drawerView.frame = (CGRect){CGPointZero, self.view.frame.size};
-    self.paneView.frame = (CGRect){CGPointZero, self.view.frame.size};
-    self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     self.dynamicAnimator.delegate = self;
@@ -331,7 +331,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         [newViewController willMoveToParentViewController:self];
         [newViewController beginAppearanceTransition:YES animated:NO];
 		[self addChildViewController:newViewController];
-        newViewController.view.frame = (CGRect){CGPointZero, containerView.frame.size};
+        newViewController.view.frame = containerView.bounds;
 		[containerView addSubview:newViewController.view];
 		[newViewController didMoveToParentViewController:self];
         [newViewController endAppearanceTransition];
@@ -357,7 +357,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         [existingViewController didMoveToParentViewController:nil];
         [existingViewController endAppearanceTransition];
         [newViewController beginAppearanceTransition:YES animated:NO];
-        newViewController.view.frame = (CGRect){CGPointZero, containerView.frame.size};
+        newViewController.view.frame = containerView.bounds;
         [self addChildViewController:newViewController];
         [containerView addSubview:newViewController.view];
         [newViewController didMoveToParentViewController:self];
@@ -454,7 +454,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             [self.paneViewController didMoveToParentViewController:nil];
             [self.paneViewController endAppearanceTransition];
             [self addChildViewController:paneViewController];
-            paneViewController.view.frame = (CGRect){CGPointZero, self.paneView.frame.size};
+            paneViewController.view.frame = self.paneView.bounds;
             [paneViewController beginAppearanceTransition:YES animated:animated];
             [self.paneView addSubview:paneViewController.view];
             _paneViewController = paneViewController;
