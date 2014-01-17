@@ -29,7 +29,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MSDynamicsDrawerViewController.h"
 
-//#define DEBUG_DYNAMICS
 //#define DEBUG_LAYOUT
 
 const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal = 267.0;
@@ -272,10 +271,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.bounceElasticity = 0.5;
     self.bounceMagnitude = 60.0;
     self.paneStateOpenWideEdgeOffset = 20.0;
-    
-#if defined(DEBUG_DYNAMICS)
-    self.gravityMagnitude = 0.05;
-#endif
     
 #if defined(DEBUG_LAYOUT)
     self.drawerView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
