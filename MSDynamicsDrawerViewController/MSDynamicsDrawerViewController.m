@@ -1175,7 +1175,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if([keyPath isEqualToString:NSStringFromSelector(@selector(frame))] && (object == self.paneView)) {
-        if([object valueForKeyPath:keyPath] != [NSNull null]) {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(frame))] && (object == self.paneView)) {
+        if ([object valueForKeyPath:keyPath] != [NSNull null]) {
             [self paneViewDidUpdateFrame];
         }
     }
