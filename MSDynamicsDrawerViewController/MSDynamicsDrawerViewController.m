@@ -179,6 +179,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     self.dynamicAnimator.delegate = self;
+    
     self.paneBoundaryCollisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paneView]];
     self.paneGravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.paneView]];
     self.panePushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.paneView] mode:UIPushBehaviorModeInstantaneous];
@@ -251,8 +252,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     self.drawerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.paneView = [UIView new];
-    [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(frame)) options:0 context:NULL];
     self.paneView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(frame)) options:0 context:NULL];
     
     self.panePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panePanned:)];
     self.panePanGestureRecognizer.minimumNumberOfTouches = 1;
@@ -439,7 +440,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             [self.paneView setNeedsDisplay];
             [CATransaction flush];
             [self setNeedsStatusBarAppearanceUpdate];
-            // After drawing has finished, add new pane view controller view and close
+            // After drawing has finished, set new pane view controller view and close
             dispatch_async(dispatch_get_main_queue(), ^{
                 __weak typeof(self) weakSelf = self;
                 _paneViewController = paneViewController;
@@ -500,8 +501,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     if (pushMagnitude != 0.0) {
         self.panePushBehavior.angle = pushAngle;
         self.panePushBehavior.magnitude = pushMagnitude;
-        [self.dynamicAnimator addBehavior:self.panePushBehavior];
         self.panePushBehavior.active = YES;
+        [self.dynamicAnimator addBehavior:self.panePushBehavior];
     }
     
     // Only inform the delegate if the `paneState` differs from the current pane state
@@ -514,7 +515,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (UIBezierPath *)boundaryPathForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction
 {
-    NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Indeterminate boundary for non-cardinal reveal direction");
+    NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Boundary is undefined for a non-cardinal reveal direction");
     CGRect boundary = CGRectZero;
     boundary.origin = (CGPoint){-1.0, -1.0};
     if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
@@ -596,7 +597,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             fraction = (1.0 - (fabsf(self.paneView.frame.origin.x) / self.openStateRevealWidth));
             break;
         case MSDynamicsDrawerDirectionNone:
-            fraction = 1.0; // If we have no direction, we want
+            fraction = 1.0; // If we have no direction, we want 1.0 since the pane is closed when it has no direction
             break;
         default:
             break;
@@ -1043,6 +1044,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         }
         case UIGestureRecognizerStateChanged: {
             CGPoint panLocationInPane = [gestureRecognizer locationInView:self.paneView];
+
             // Pan gesture tracking
             CGRect updatedPaneFrame = self.paneView.frame;
             CGFloat panDelta;
@@ -1053,9 +1055,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 panDelta = (panLocationInPane.y - panStartLocationInPane.y);
                 updatedPaneFrame.origin.y += panDelta;
             }
-            // Direction Determination if we have no pan reveal direction or current reveal direction
+            
+            // Direction Determination if we have no pan reveal direction or current reveal direction is none
             if (panDrawerDirection == MSDynamicsDrawerDirectionNone ||
                 self.currentDrawerDirection == MSDynamicsDrawerDirectionNone) {
+                
                 MSDynamicsDrawerDirection potentialPanDrawerDirection = MSDynamicsDrawerDirectionNone;
                 if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
                     if (panDelta > 0) {
@@ -1073,7 +1077,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 if ((potentialPanDrawerDirection != MSDynamicsDrawerDirectionNone)             // Potential reveal direction is not none
                     && (self.possibleDrawerDirection & potentialPanDrawerDirection)            // Potential reveal direction is possible
                     && ([self paneDragRevealEnabledForDirection:potentialPanDrawerDirection])) // Pane drag reveal is enabled for the potential reveal direction
-                    
                 {
                     panDrawerDirection = potentialPanDrawerDirection;
                     self.currentDrawerDirection = panDrawerDirection;
@@ -1085,8 +1088,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             else if (![self paneDragRevealEnabledForDirection:panDrawerDirection]) {
                 return;
             }
-            // Panning is able to move pane, so remove all animators to prevent conflicting behavior
+            
+            // Panning is able to move the pane independently from the dynamic animator, so remove all animators to prevent conflicting behavior
             [self.dynamicAnimator removeAllBehaviors];
+            
             // Frame Bounding
             CGFloat paneBoundOpenLocation = 0.0;
             CGFloat paneBoundClosedLocation = 0.0;
@@ -1153,7 +1158,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 }
                 [self addDynamicsBehaviorsToCreatePaneState:state pushMagnitude:(fabsf(panVelocity) * MSPaneViewVelocityMultiplier) pushAngle:[self gravityAngleForState:state direction:self.currentDrawerDirection] pushElasticity:self.elasticity];
             }
-            // If we're released past half-way, snap to completion with no bounce, otherwise, snap to back to the starting position with no bounce
+            // If not released with a velocity over the threhold, update to nearest `paneState`
             else {
                 MSDynamicsDrawerPaneState state = (([self paneViewClosedFraction] > 0.5) ? MSDynamicsDrawerPaneStateClosed : MSDynamicsDrawerPaneStateOpen);
                 [self addDynamicsBehaviorsToCreatePaneState:state];
