@@ -1032,27 +1032,27 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)panePanned:(UIPanGestureRecognizer *)gestureRecognizer
 {
     static MSDynamicsDrawerDirection panDrawerDirection;
-    static CGPoint panStartLocationInPane;
+    static CGPoint panStartLocation;
     static CGFloat panVelocity;
     
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan: {
-            panStartLocationInPane = [gestureRecognizer locationInView:self.paneView];
+            panStartLocation = [gestureRecognizer locationInView:self.paneView];
             panVelocity = 0.0;
             panDrawerDirection = (MSDynamicsDrawerDirectionNone | self.currentDrawerDirection);
             break;
         }
         case UIGestureRecognizerStateChanged: {
-            CGPoint panLocationInPane = [gestureRecognizer locationInView:self.paneView];
 
             // Pan gesture tracking
+            CGPoint panCurrentLocation = [gestureRecognizer locationInView:self.paneView];
             CGRect updatedPaneFrame = self.paneView.frame;
             CGFloat panDelta;
             if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
-                panDelta = (panLocationInPane.x - panStartLocationInPane.x);
+                panDelta = (panCurrentLocation.x - panStartLocation.x);
                 updatedPaneFrame.origin.x += panDelta;
             } else if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionVertical) {
-                panDelta = (panLocationInPane.y - panStartLocationInPane.y);
+                panDelta = (panCurrentLocation.y - panStartLocation.y);
                 updatedPaneFrame.origin.y += panDelta;
             }
             
@@ -1132,9 +1132,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             // Velocity Calculation
             CGFloat updatedVelocity = 0.0;
             if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
-                updatedVelocity = -(panStartLocationInPane.x - panLocationInPane.x);
+                updatedVelocity = -(panStartLocation.x - panCurrentLocation.x);
             } else if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionVertical) {
-                updatedVelocity = -(panStartLocationInPane.y - panLocationInPane.y);
+                updatedVelocity = -(panStartLocation.y - panCurrentLocation.y);
             }
             // Velocity can be 0 due to an error, so ignore it in that case
             if ((updatedVelocity != 0.0) && !frameBounded) {
