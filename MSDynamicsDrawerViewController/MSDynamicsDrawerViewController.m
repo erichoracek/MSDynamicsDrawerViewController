@@ -1047,7 +1047,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             // Pan gesture tracking
             CGPoint panCurrentLocation = [gestureRecognizer locationInView:self.paneView];
             CGRect updatedPaneFrame = self.paneView.frame;
-            CGFloat panDelta;
+            CGFloat panDelta = 0.0;
             if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
                 panDelta = (panCurrentLocation.x - panStartLocation.x);
                 updatedPaneFrame.origin.x += panDelta;
