@@ -459,7 +459,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     }
     // If trying to set to the currently visible pane view controller, just close
     else {
-        [self setPaneState:MSDynamicsDrawerPaneStateClosed animated:animated allowUserInterruption:NO completion:^{
+        [self setPaneState:MSDynamicsDrawerPaneStateClosed animated:animated allowUserInterruption:YES completion:^{
             if (completion) completion();
         }];
     }
