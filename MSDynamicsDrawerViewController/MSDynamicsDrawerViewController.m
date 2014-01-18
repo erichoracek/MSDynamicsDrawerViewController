@@ -1062,15 +1062,15 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
                 
                 MSDynamicsDrawerDirection potentialPanDrawerDirection = MSDynamicsDrawerDirectionNone;
                 if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
-                    if (panDelta > 0) {
+                    if (panDelta > 0.0) {
                         potentialPanDrawerDirection = MSDynamicsDrawerDirectionLeft;
-                    } else if (panDelta < 0) {
+                    } else if (panDelta < 0.0) {
                         potentialPanDrawerDirection = MSDynamicsDrawerDirectionRight;
                     }
                 } else if (self.possibleDrawerDirection & MSDynamicsDrawerDirectionVertical) {
-                    if (panDelta > 0) {
+                    if (panDelta > 0.0) {
                         potentialPanDrawerDirection = MSDynamicsDrawerDirectionTop;
-                    } else if (panDelta < 0) {
+                    } else if (panDelta < 0.0) {
                         potentialPanDrawerDirection = MSDynamicsDrawerDirectionBottom;
                     }
                 }
