@@ -842,16 +842,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         case MSDynamicsDrawerPaneStateOpenWide:
             switch (self.currentDrawerDirection) {
                 case MSDynamicsDrawerDirectionLeft:
-                    paneViewOrigin.x = (CGRectGetWidth(self.view.frame) + self.paneStateOpenWideEdgeOffset);
+                    paneViewOrigin.x = (CGRectGetWidth(self.paneView.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 case MSDynamicsDrawerDirectionTop:
-                    paneViewOrigin.y = (CGRectGetHeight(self.view.frame) + self.paneStateOpenWideEdgeOffset);
+                    paneViewOrigin.y = (CGRectGetHeight(self.paneView.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 case MSDynamicsDrawerDirectionBottom:
-                    paneViewOrigin.y = (CGRectGetHeight(self.view.frame) + self.paneStateOpenWideEdgeOffset);
+                    paneViewOrigin.y = (CGRectGetHeight(self.paneView.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 case MSDynamicsDrawerDirectionRight:
-                    paneViewOrigin.x = -(CGRectGetWidth(self.view.frame) + self.paneStateOpenWideEdgeOffset);
+                    paneViewOrigin.x = -(CGRectGetWidth(self.paneView.frame) + self.paneStateOpenWideEdgeOffset);
                     break;
                 default:
                     break;
