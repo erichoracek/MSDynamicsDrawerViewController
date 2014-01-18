@@ -1039,7 +1039,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         case UIGestureRecognizerStateBegan: {
             panStartLocation = [gestureRecognizer locationInView:self.paneView];
             panVelocity = 0.0;
-            panDrawerDirection = (MSDynamicsDrawerDirectionNone | self.currentDrawerDirection);
+            panDrawerDirection = self.currentDrawerDirection;
             break;
         }
         case UIGestureRecognizerStateChanged: {
