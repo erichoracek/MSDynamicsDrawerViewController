@@ -243,8 +243,6 @@
 
 @property (nonatomic, strong) CALayer *shadowLayer;
 
-- (void) rotationChanged;
-
 @end
 
 @implementation MSDynamicsDrawerShadowStyler
@@ -259,11 +257,7 @@
         self.shadowRadius = 10.0;
 		self.shadowOpacity = 1.0;
         self.shadowOffset = CGSizeZero;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(rotationChanged)
-                                                     name:UIApplicationDidChangeStatusBarOrientationNotification
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeStatusBarOrientation:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
     return self;
 }
@@ -273,7 +267,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)rotationChanged
+- (void)applicationDidChangeStatusBarOrientation:(NSNotification *)notification
 {
     [self.shadowLayer removeFromSuperlayer];
 }
@@ -297,7 +291,7 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {    
-    if (direction != MSDynamicsDrawerDirectionNone) {
+    if (direction & MSDynamicsDrawerDirectionAll) {
         if (!self.shadowLayer.superlayer) {
             CGRect shadowRect = (CGRect){CGPointZero, dynamicsDrawerViewController.paneView.frame.size};
             if (direction & MSDynamicsDrawerDirectionHorizontal) {
