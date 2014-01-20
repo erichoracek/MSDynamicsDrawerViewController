@@ -769,8 +769,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible or multiple directions");
     
     void(^internalCompletion)() = ^ {
-        [self _setPaneState:paneState];
-        if (completion != nil) completion();
+        if (completion) completion();
     };
     
     if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
@@ -786,7 +785,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             internalCompletion();
         };
     } else {
-        self.paneView.frame = (CGRect){[self paneViewOriginForPaneState:paneState], self.paneView.frame.size};
+        [self _setPaneState:paneState];
         internalCompletion();
     }
 }
@@ -794,10 +793,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (void)_setPaneState:(MSDynamicsDrawerPaneState)paneState
 {
     MSDynamicsDrawerDirection previousDirection = self.currentDrawerDirection;
-    // Update `currentDirection` regardless of if the invocation changes the `paneState` value
-    if (paneState == MSDynamicsDrawerPaneStateClosed) {
-        self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
-    }
+    
+    // When we've actually upated to a pane state, invalidate the `potentialPaneState`
+    self.potentialPaneState = NSIntegerMax;
     
     if (_paneState != paneState) {
         [self willChangeValueForKey:NSStringFromSelector(@selector(paneState))];
@@ -810,6 +808,12 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
             }
         }
         [self didChangeValueForKey:NSStringFromSelector(@selector(paneState))];
+        self.paneView.frame = (CGRect){[self paneViewOriginForPaneState:paneState], self.paneView.frame.size};
+    }
+    
+    // Update `currentDirection` regardless of if the invocation changes the `paneState` value
+    if (paneState == MSDynamicsDrawerPaneStateClosed) {
+        self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
     }
 }
 
