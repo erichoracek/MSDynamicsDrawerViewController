@@ -70,6 +70,7 @@
 		3AAD49261830929B003FAFA8 /* MSDynamicsDrawerViewControllerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MSDynamicsDrawerViewControllerTests-Info.plist"; sourceTree = "<group>"; };
 		3AAD49281830929B003FAFA8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3AAD492A1830929B003FAFA8 /* MSDynamicsDrawerViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerViewControllerTests.m; sourceTree = "<group>"; };
+		3AB5F683188B3A860030B8DC /* MSDynamicsDrawerViewController.m; */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MSDynamicsDrawerViewController.m;"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +132,7 @@
 				3A210B6B18309E6E00A49F11 /* MSDynamicsDrawerStyler.m */,
 				3AAD49131830929B003FAFA8 /* MSDynamicsDrawerViewController.h */,
 				3AAD49151830929B003FAFA8 /* MSDynamicsDrawerViewController.m */,
+				3AB5F683188B3A860030B8DC /* MSDynamicsDrawerViewController.m; */,
 				3AAD49111830929B003FAFA8 /* Supporting Files */,
 			);
 			path = MSDynamicsDrawerViewController;
