@@ -904,8 +904,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     
     if (_currentDrawerDirection == currentDrawerDirection) return;
     
-    NSLog(@"Setting drawer direction to %@", @(currentDrawerDirection));
-    
     // Inform stylers about the transition between directions when directly transitioning
     if (_currentDrawerDirection != MSDynamicsDrawerDirectionNone) {
         NSMutableSet *allStylers = [NSMutableSet new];
