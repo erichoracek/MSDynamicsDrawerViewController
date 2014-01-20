@@ -173,7 +173,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 
 - (void)transitionToViewController:(MSPaneViewControllerType)paneViewControllerType
 {
-    // Close pane if already displaying that pane view controller
+    // Close pane if already displaying the pane view controller
     if (paneViewControllerType == self.paneViewControllerType) {
         [self.dynamicsDrawerViewController setPaneState:MSDynamicsDrawerPaneStateClosed animated:YES allowUserInterruption:YES completion:nil];
         return;
