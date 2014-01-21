@@ -834,7 +834,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/currentRevealWidth</TokenIdentifier>
-			<Abstract type="html">Returns the width that the drawer is currently opened to.</Abstract>
+			<Abstract type="html">Returns the distance (in points) that the drawer is currently opened.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
 			
 			<Declaration>- (CGFloat)currentRevealWidth</Declaration>
