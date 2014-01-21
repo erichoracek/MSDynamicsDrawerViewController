@@ -446,9 +446,9 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 - (CGFloat)revealWidthForDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Returns the width that the drawer is currently opened to.
+ Returns the distance (in points) that the drawer is currently opened.
  
- When the drawer is closed, returns 0. When the drawer is opened, returns the appropriate `revealWidthForDirection:`.
+ When the drawer is closed, returns `0`. When the drawer is fully opened, returns the appropriate `revealWidthForDirection:`.
  */
 - (CGFloat)currentRevealWidth;
 
