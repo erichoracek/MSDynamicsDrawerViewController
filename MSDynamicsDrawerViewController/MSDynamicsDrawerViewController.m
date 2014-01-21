@@ -756,37 +756,30 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 {
+    // If the drawer is getting opened and there's more than one possible direction enforce that the directional eqivalent is used
     if ((paneState != MSDynamicsDrawerPaneStateClosed) && (self.currentDrawerDirection == MSDynamicsDrawerDirectionNone)) {
-        NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to set pane to an open state with multiple possible reveal directions");
-        [self setPaneState:paneState inDirection:self.possibleDrawerDirection animated:animated allowUserInterruption:allowUserInterruption completion:completion];
-    } else {
-        [self setPaneState:paneState inDirection:self.currentDrawerDirection animated:animated allowUserInterruption:allowUserInterruption completion:completion];
+        NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to set the pane to an open state with multiple possible drawer directions, as the drawer direction to open in is indeterminate. Use `setPaneState:inDirection:animated:allowUserInterruption:completion:` instead.");
     }
+    [self setPaneState:paneState inDirection:self.currentDrawerDirection animated:animated allowUserInterruption:allowUserInterruption completion:completion];
 }
 
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible or multiple directions");
-    
-    void(^internalCompletion)() = ^ {
-        if (completion) completion();
-    };
-    
     if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
         self.currentDrawerDirection = direction;
     }
-
     if (animated) {
         [self addDynamicsBehaviorsToCreatePaneState:paneState];
         if (!allowUserInterruption) [self setViewUserInteractionEnabled:NO];
         __weak typeof(self) weakSelf = self;
         self.dynamicAnimatorCompletion = ^{
             if (!allowUserInterruption) [weakSelf setViewUserInteractionEnabled:YES];
-            internalCompletion();
+            if (completion) completion();
         };
     } else {
         [self _setPaneState:paneState];
-        internalCompletion();
+        if (completion) completion();
     }
 }
 
@@ -811,7 +804,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         self.paneView.frame = (CGRect){[self paneViewOriginForPaneState:paneState], self.paneView.frame.size};
     }
     
-    // Update `currentDirection` regardless of if the invocation changes the `paneState` value
+    // Update `currentDirection` to `MSDynamicsDrawerDirectionNone` if the `paneState` is `MSDynamicsDrawerPaneStateClosed`
     if (paneState == MSDynamicsDrawerPaneStateClosed) {
         self.currentDrawerDirection = MSDynamicsDrawerDirectionNone;
     }
