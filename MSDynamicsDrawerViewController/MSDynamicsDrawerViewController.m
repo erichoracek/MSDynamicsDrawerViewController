@@ -875,7 +875,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 - (MSDynamicsDrawerPaneState)nearestPaneState
 {
     CGFloat minDistance = CGFLOAT_MAX;
-    MSDynamicsDrawerPaneState minPaneState;
+    MSDynamicsDrawerPaneState minPaneState = NSIntegerMax;
     for (MSDynamicsDrawerPaneState currentPaneState = MSDynamicsDrawerPaneStateClosed; currentPaneState <= MSDynamicsDrawerPaneStateOpenWide; currentPaneState++) {
         CGPoint paneStatePaneViewOrigin = [self paneViewOriginForPaneState:currentPaneState];
         CGPoint currentPaneViewOrigin = (CGPoint){roundf(self.paneView.frame.origin.x), roundf(self.paneView.frame.origin.y)};
