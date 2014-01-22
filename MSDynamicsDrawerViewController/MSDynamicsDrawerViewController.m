@@ -496,7 +496,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     
     if (elasticity != 0.0) {
         self.paneElasticityBehavior.elasticity = elasticity;
-        [self.dynamicAnimator addBehavior:self.self.paneElasticityBehavior];
+        [self.dynamicAnimator addBehavior:self.paneElasticityBehavior];
     }
     
     if (pushMagnitude != 0.0) {
