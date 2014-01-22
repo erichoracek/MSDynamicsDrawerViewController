@@ -128,7 +128,6 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (nonatomic, strong) UIPushBehavior *panePushBehavior;
 @property (nonatomic, strong) UIDynamicItemBehavior *paneElasticityBehavior;
-@property (nonatomic, strong) UIDynamicItemBehavior *bounceElasticityBehavior;
 @property (nonatomic, strong) UIGravityBehavior *paneGravityBehavior;
 @property (nonatomic, strong) UICollisionBehavior *paneBoundaryCollisionBehavior;
 @property (nonatomic, copy) void (^dynamicAnimatorCompletion)(void);
