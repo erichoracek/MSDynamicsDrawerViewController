@@ -56,6 +56,9 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSStylerDirectionCellReuseIdentifier];
+    
+    self.refreshControl = [UIRefreshControl new];
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -75,6 +78,15 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 }
 
 #pragma mark - MSStylersViewController
+
+- (void)refresh:(id)sender
+{
+    double delayInSeconds = 5.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.refreshControl endRefreshing];
+    });
+}
 
 - (void)initialize
 {
