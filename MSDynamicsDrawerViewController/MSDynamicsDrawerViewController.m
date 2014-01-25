@@ -35,6 +35,7 @@ const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal = 267.0;
 const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical = 300.0;
 const CGFloat MSPaneViewVelocityThreshold = 5.0;
 const CGFloat MSPaneViewVelocityMultiplier = 5.0;
+const CGFloat MKPaneViewEdgeSwipeThreshold = 30.0;
 
 NSString * const MSDynamicsDrawerBoundaryIdentifier = @"MSDynamicsDrawerBoundaryIdentifier";
 
@@ -1247,6 +1248,37 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 }
 
 #pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	if (self.acceptsEdgePanOnly && (gestureRecognizer == self.panePanGestureRecognizer)) {
+		CGPoint location = [gestureRecognizer locationInView:self.paneView];
+		CGPoint velocity = [self.panePanGestureRecognizer velocityInView:self.paneView];
+		BOOL horizontal = fabs(velocity.x) > fabs(velocity.y);
+		UIEdgeInsets distanceToEdges = UIEdgeInsetsMake(location.y,
+														location.x,
+														self.paneView.bounds.size.height - location.y,
+														self.paneView.bounds.size.width - location.x);
+		if (horizontal) {
+			if (distanceToEdges.left < MKPaneViewEdgeSwipeThreshold && velocity.x > 0) {
+				return YES;
+			}
+			else if (distanceToEdges.right < MKPaneViewEdgeSwipeThreshold && velocity.x < 0) {
+				return YES;
+			}
+		}
+		else {
+			if (distanceToEdges.top < MKPaneViewEdgeSwipeThreshold && velocity.y > 0) {
+				return YES;
+			}
+			else if (distanceToEdges.bottom < MKPaneViewEdgeSwipeThreshold && velocity.y < 0) {
+				return YES;
+			}
+		}
+		return NO;
+	}
+	return YES;
+}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
