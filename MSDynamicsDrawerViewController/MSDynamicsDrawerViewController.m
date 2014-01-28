@@ -718,7 +718,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     CGRect paneFrame = self.paneView.frame;
     CGFloat *openWideLocation = NULL;
     CGFloat *paneLocation = NULL;
-    if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionHorizontal)) {
+    if (self.currentDrawerDirection & MSDynamicsDrawerDirectionHorizontal) {
         openWideLocation = &openWidePoint.x;
         paneLocation = &paneFrame.origin.x;
     } else if (self.currentDrawerDirection & MSDynamicsDrawerDirectionVertical) {
@@ -1334,8 +1334,8 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // If the other gesture recognizer's view is a UITableViewCell's internal UIScrollView, require failure
-    if ([[otherGestureRecognizer.view superview] isKindOfClass:[UITableViewCell class]] && [[otherGestureRecognizer view] isKindOfClass:[UIScrollView class]]) {
+    // If the other gesture recognizer's view is a `UITableViewCell` instance's internal `UIScrollView`, require failure
+    if ([otherGestureRecognizer.view.superview isKindOfClass:[UITableViewCell class]] && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
         return YES;
     }
     return NO;
