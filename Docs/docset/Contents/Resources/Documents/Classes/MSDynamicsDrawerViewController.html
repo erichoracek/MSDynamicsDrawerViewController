@@ -52,6 +52,8 @@
 	
 	<option value="//api/name/gravityMagnitude">&nbsp;&nbsp;&nbsp;&nbsp;gravityMagnitude</option>
 	
+	<option value="//api/name/paneDragRequiresScreenEdgePan">&nbsp;&nbsp;&nbsp;&nbsp;paneDragRequiresScreenEdgePan</option>
+	
 	<option value="//api/name/paneState">&nbsp;&nbsp;&nbsp;&nbsp;paneState</option>
 	
 	<option value="//api/name/paneStateOpenWideEdgeOffset">&nbsp;&nbsp;&nbsp;&nbsp;paneStateOpenWideEdgeOffset</option>
@@ -63,6 +65,8 @@
 	<option value="//api/name/paneViewSlideOffAnimationEnabled">&nbsp;&nbsp;&nbsp;&nbsp;paneViewSlideOffAnimationEnabled</option>
 	
 	<option value="//api/name/possibleDrawerDirection">&nbsp;&nbsp;&nbsp;&nbsp;possibleDrawerDirection</option>
+	
+	<option value="//api/name/screenEdgePanCancelsConflictingGestures">&nbsp;&nbsp;&nbsp;&nbsp;screenEdgePanCancelsConflictingGestures</option>
 	
 	<option value="//api/name/shouldAlignStatusBarToPaneView">&nbsp;&nbsp;&nbsp;&nbsp;shouldAlignStatusBarToPaneView</option>
 	
@@ -169,6 +173,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/gravityMagnitude">gravityMagnitude</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paneDragRequiresScreenEdgePan">paneDragRequiresScreenEdgePan</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paneState">paneState</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paneStateOpenWideEdgeOffset">paneStateOpenWideEdgeOffset</a></span></li>
@@ -180,6 +186,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paneViewSlideOffAnimationEnabled">paneViewSlideOffAnimationEnabled</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/possibleDrawerDirection">possibleDrawerDirection</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/screenEdgePanCancelsConflictingGestures">screenEdgePanCancelsConflictingGestures</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shouldAlignStatusBarToPaneView">shouldAlignStatusBarToPaneView</a></span></li>
 	
@@ -479,6 +487,20 @@
 		<span class="tooltip"><p>Returns if a user-initiated tap gesture on the <a href="#//api/name/paneView"><code>paneView</code></a> can close it while it is opened.</p></span>
 	</span>
 	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/paneDragRequiresScreenEdgePan">&nbsp;&nbsp;paneDragRequiresScreenEdgePan</a></code>
+		<span class="tooltip"><p>Whether the only pans that can open the drawer should be those that originate from the screen&rsquo;s edges.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/screenEdgePanCancelsConflictingGestures">&nbsp;&nbsp;screenEdgePanCancelsConflictingGestures</a></code>
+		<span class="tooltip"><p>Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
@@ -871,6 +893,56 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/paneDragRequiresScreenEdgePan" title="paneDragRequiresScreenEdgePan"></a>
+	<h3 class="subsubtitle method-title">paneDragRequiresScreenEdgePan</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Whether the only pans that can open the drawer should be those that originate from the screen&rsquo;s edges.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If set to <code>YES</code>, pans that originate elsewhere are ignored and have no effect on the drawer. This property is designed to mimic the behavior of the <code>UIScreenEdgePanGestureRecognizer</code> as applied to the <code>MSDynamicsDrawerViewController</code> interaction paradigm. Setting this property to <code>YES</code> yields a similar behavior to that of screen edge pans within a <code>UINavigationController</code> in iOS7+. Defaults to <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/screenEdgePanCancelsConflictingGestures">@property screenEdgePanCancelsConflictingGestures</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerViewController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/paneState" title="paneState"></a>
 	<h3 class="subsubtitle method-title">paneState</h3>
 	
@@ -1150,6 +1222,56 @@
 	
 	
 	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerViewController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/screenEdgePanCancelsConflictingGestures" title="screenEdgePanCancelsConflictingGestures"></a>
+	<h3 class="subsubtitle method-title">screenEdgePanCancelsConflictingGestures</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>  This behavior only applies to edges that have a corresponding drawer view controller set in the same direction as the edge that the gesture originated in. The primary use of this property is the case of having a <code>UIScrollView</code> within the view of the active pane view controller. When the drawers are closed and the user starts a pan-like gesture at the edge of the screen, all other conflicting gesture recognizers will be required to fail, yielding to the internal <code>UIPanGestureRecognizer</code> in the <code>MSDynamicsDrawerViewController</code> instance. Effectually, this property makes it easier for the user to open the drawers. Defaults to <code>YES</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/paneDragRequiresScreenEdgePan">@property paneDragRequiresScreenEdgePan</a></p></code></li>
+			
+		</ul>
+	</div>
 	
 	
 	
@@ -2640,7 +2762,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 monospace. All rights reserved. (Last updated: 2014-01-22)</span><br />
+						<p><span class="copyright">&copy; 2014 monospace. All rights reserved. (Last updated: 2014-01-27)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						
