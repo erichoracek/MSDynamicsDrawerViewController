@@ -671,6 +671,70 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneDragRequiresScreenEdgePan:</TokenIdentifier>
+			<Abstract type="html">Whether the only pans that can open the drawer should be those that originate from the screen&apos;s edges.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan</Declaration>
+			
+			
+			<Anchor>//api/name/paneDragRequiresScreenEdgePan</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+			<Abstract type="html">Whether the only pans that can open the drawer should be those that originate from the screen&apos;s edges.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan</Declaration>
+			
+			
+			<Anchor>//api/name/paneDragRequiresScreenEdgePan</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setScreenEdgePanCancelsConflictingGestures:</TokenIdentifier>
+			<Abstract type="html">Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures</Declaration>
+			
+			
+			<Anchor>//api/name/screenEdgePanCancelsConflictingGestures</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+			<Abstract type="html">Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures</Declaration>
+			
+			
+			<Anchor>//api/name/screenEdgePanCancelsConflictingGestures</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/registerTouchForwardingClass:</TokenIdentifier>
 			<Abstract type="html">Attempts to register a UIView subclass that the pane view should forward dragging through.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
