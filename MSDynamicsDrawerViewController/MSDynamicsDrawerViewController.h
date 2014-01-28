@@ -276,13 +276,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  */
 @property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection;
 
-/**
- Whether only pans from the edges should be accepted to slide open drawers. If set to YES, pans originating in the center of the screen will not be processed.
-
- Defaults to NO.
- */
-@property (nonatomic, assign) BOOL acceptsEdgePanOnly;
-
 ///-------------------------------------
 /// @name Configuring Dynamics Behaviors
 ///-------------------------------------
@@ -364,6 +357,24 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneTapToCloseEnabled:forDirection:
  */
 - (BOOL)paneTapToCloseEnabledForDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Whether the only pans that can open the drawer should be those that originate from the screen's edges.
+ 
+ If set to `YES`, pans that originate elsewhere are ignored and have no effect on the drawer. This property is designed to mimic the behavior of the `UIScreenEdgePanGestureRecognizer` as applied to the `MSDynamicsDrawerViewController` interaction paradigm. Setting this property to `YES` yields a similar behavior to that of screen edge pans within a `UINavigationController` in iOS7+. Defaults to `NO`.
+ 
+ @see screenEdgePanCancelsConflictingGestures
+ */
+@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan;
+
+/**
+ Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.
+ 
+  This behavior only applies to edges that have a corresponding drawer view controller set in the same direction as the edge that the gesture originated in. The primary use of this property is the case of having a `UIScrollView` within the view of the active pane view controller. When the drawers are closed and the user starts a pan-like gesture at the edge of the screen, all other conflicting gesture recognizers will be required to fail, yielding to the internal `UIPanGestureRecognizer` in the `MSDynamicsDrawerViewController` instance. Effectually, this property makes it easier for the user to open the drawers. Defaults to `YES`.
+ 
+ @see paneDragRequiresScreenEdgePan
+ */
+@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures;
 
 /**
  Attempts to register a `UIView` subclass that the pane view should forward dragging through.

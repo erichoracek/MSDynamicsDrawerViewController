@@ -35,7 +35,7 @@ const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal = 267.0;
 const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical = 300.0;
 const CGFloat MSPaneViewVelocityThreshold = 5.0;
 const CGFloat MSPaneViewVelocityMultiplier = 5.0;
-const CGFloat MKPaneViewEdgeSwipeThreshold = 30.0;
+const CGFloat MSPaneViewScreenEdgeThreshold = 25.0; // After testing Apple's `UIScreenEdgePanGestureRecognizer` this seems to be the closest value to create an equivalent effect.
 
 NSString * const MSDynamicsDrawerBoundaryIdentifier = @"MSDynamicsDrawerBoundaryIdentifier";
 
@@ -94,7 +94,7 @@ BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDir
     }
 }
 
-void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection direction, MSDynamicsDrawerActionBlock action)
+void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynamicsDrawerActionBlock action)
 {
     for (MSDynamicsDrawerDirection currentDirection = MSDynamicsDrawerDirectionTop; currentDirection <= MSDynamicsDrawerDirectionRight; currentDirection <<= 1) {
         if (currentDirection & direction) {
@@ -240,6 +240,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     
     self.paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
     self.shouldAlignStatusBarToPaneView = YES;
+    self.screenEdgePanCancelsConflictingGestures = YES;
     
     self.drawerViewControllers = [NSMutableDictionary new];
     self.revealWidth = [NSMutableDictionary new];
@@ -1114,6 +1115,28 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
     return state;
 }
 
+- (UIRectEdge)panGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer didStartAtEdgesOfView:(UIView *)view
+{
+    CGPoint translation = [panGestureRecognizer translationInView:view];
+    CGPoint currentLocation = [panGestureRecognizer locationInView:view];
+    CGPoint startLocation = CGPointMake((currentLocation.x - translation.x), (currentLocation.y - translation.y));
+    UIEdgeInsets distanceToEdges = UIEdgeInsetsMake(startLocation.y, startLocation.x, (view.bounds.size.height - startLocation.y), (view.bounds.size.width - startLocation.x));
+    UIRectEdge rectEdge = UIRectEdgeNone;
+    if (distanceToEdges.top < MSPaneViewScreenEdgeThreshold) {
+        rectEdge |= UIRectEdgeTop;
+    }
+    if (distanceToEdges.left < MSPaneViewScreenEdgeThreshold) {
+        rectEdge |= UIRectEdgeLeft;
+    }
+    if (distanceToEdges.right < MSPaneViewScreenEdgeThreshold) {
+        rectEdge |= UIRectEdgeRight;
+    }
+    if (distanceToEdges.bottom < MSPaneViewScreenEdgeThreshold) {
+        rectEdge |= UIRectEdgeBottom;
+    }
+    return rectEdge;
+}
+
 #pragma mark User Interaction
 
 - (void)setViewUserInteractionEnabled:(BOOL)enabled
@@ -1251,31 +1274,18 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-	if (self.acceptsEdgePanOnly && (gestureRecognizer == self.panePanGestureRecognizer)) {
-		CGPoint location = [gestureRecognizer locationInView:self.paneView];
-		CGPoint velocity = [self.panePanGestureRecognizer velocityInView:self.paneView];
-		BOOL horizontal = fabs(velocity.x) > fabs(velocity.y);
-		UIEdgeInsets distanceToEdges = UIEdgeInsetsMake(location.y,
-														location.x,
-														self.paneView.bounds.size.height - location.y,
-														self.paneView.bounds.size.width - location.x);
-		if (horizontal) {
-			if (distanceToEdges.left < MKPaneViewEdgeSwipeThreshold && velocity.x > 0) {
-				return YES;
-			}
-			else if (distanceToEdges.right < MKPaneViewEdgeSwipeThreshold && velocity.x < 0) {
-				return YES;
-			}
-		}
-		else {
-			if (distanceToEdges.top < MKPaneViewEdgeSwipeThreshold && velocity.y > 0) {
-				return YES;
-			}
-			else if (distanceToEdges.bottom < MKPaneViewEdgeSwipeThreshold && velocity.y < 0) {
-				return YES;
-			}
-		}
-		return NO;
+	if ((gestureRecognizer == self.panePanGestureRecognizer) && self.paneDragRequiresScreenEdgePan) {
+        MSDynamicsDrawerPaneState paneState;
+        if ([self paneViewIsPositionedInValidState:&paneState] && (paneState == MSDynamicsDrawerPaneStateClosed)) {
+            UIRectEdge edges = [self panGestureRecognizer:self.panePanGestureRecognizer didStartAtEdgesOfView:self.paneView];
+            // Mask out edges that aren't possible
+            BOOL validEdges = (edges & self.possibleDrawerDirection);
+            // If there is a valid edge and pane drag is revealed for that edge's direction
+            if (validEdges && [self paneDragRevealEnabledForDirection:validEdges]) {
+                return YES;
+            }
+            return NO;
+        }
 	}
 	return YES;
 }
@@ -1306,6 +1316,20 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
         }
     }
     return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if ((gestureRecognizer == self.panePanGestureRecognizer) && self.screenEdgePanCancelsConflictingGestures) {
+        UIRectEdge edges = [self panGestureRecognizer:self.panePanGestureRecognizer didStartAtEdgesOfView:self.paneView];
+        // Mask out edges that aren't possible
+        BOOL validEdges = (edges & self.possibleDrawerDirection);
+        // If there is a valid edge and pane drag is revealed for that edge's direction
+        if (validEdges && [self paneDragRevealEnabledForDirection:validEdges]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
