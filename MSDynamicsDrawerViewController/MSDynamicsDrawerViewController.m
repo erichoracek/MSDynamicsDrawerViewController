@@ -727,11 +727,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     }
     BOOL reachedOpenWideState = NO;
     if (self.currentDrawerDirection & (MSDynamicsDrawerDirectionLeft | MSDynamicsDrawerDirectionTop)) {
-        if (*paneLocation >= *openWideLocation) {
+        if (paneLocation && (*paneLocation >= *openWideLocation)) {
             reachedOpenWideState = YES;
         }
     } else if (self.currentDrawerDirection & (MSDynamicsDrawerDirectionRight | MSDynamicsDrawerDirectionBottom)) {
-        if (*paneLocation <= *openWideLocation) {
+        if (paneLocation && (*paneLocation <= *openWideLocation)) {
             reachedOpenWideState = YES;
         }
     }
