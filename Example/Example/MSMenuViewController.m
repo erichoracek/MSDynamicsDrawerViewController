@@ -57,7 +57,6 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 #else
 @property (nonatomic, strong) NSDictionary *paneViewControllerClasses;
 #endif
-@property (nonatomic, strong) NSDictionary *paneViewControllerAppearanceTypes;
 @property (nonatomic, strong) NSDictionary *sectionTitles;
 @property (nonatomic, strong) NSArray *tableViewSectionBreaks;
 
