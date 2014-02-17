@@ -1080,12 +1080,12 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
             break;
     }
     // Bounded open
-    if (*paneLocation <= paneBoundClosedLocation) {
+    if (paneLocation && (*paneLocation <= paneBoundClosedLocation)) {
         *paneLocation = paneBoundClosedLocation;
         *bounded = YES;
     }
     // Bounded closed
-    else if (*paneLocation >= paneBoundOpenLocation) {
+    else if (paneLocation && (*paneLocation >= paneBoundOpenLocation)) {
         *paneLocation = paneBoundOpenLocation;
         *bounded = YES;
     }
