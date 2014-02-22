@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 @class MSDynamicsDrawerViewController;
 
 /**
- `MSDynamicsDrawerViewController` is a container view controller that manages the presentation of a single "pane" view controller overlaid over one or two "drawer" view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiaed swipe in the direction that that drawer view controller is set in.
+ `MSDynamicsDrawerViewController` is a container view controller that manages the presentation of a single "pane" view controller overlaid over one or two "drawer" view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiated swipe in the direction that that drawer view controller is set in.
  */
 @interface MSDynamicsDrawerViewController : UIViewController
 
@@ -530,7 +530,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 /**
  Informs the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.
  
- It is important to note that the user is able to interrupt this change, and therefore is it not guaranteed that this update will occur. If desired, the user can be prevented from interrputing by passing `NO` for the `allowingUserInterruption` parameter in methods that udpate the `paneState`. For the aforementioned reasons, this method does not always pair with an invocation of `dynamicsDrawerViewController:didUpdateToPaneState:forDirection:`.
+ It is important to note that the user is able to interrupt this change, and therefore is it not guaranteed that this update will occur. If desired, the user can be prevented from interrupting by passing `NO` for the `allowingUserInterruption` parameter in methods that update the `paneState`. For the aforementioned reasons, this method does not always pair with an invocation of `dynamicsDrawerViewController:didUpdateToPaneState:forDirection:`.
  
  @param drawerViewController The drawer view controller that the delegate is registered with.
  @param paneState The pane state that the view controller will attempt to update to.
@@ -551,7 +551,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
  Queries the delegate for whether the dynamics drawer view controller should begin a pane pan
  
  @param drawerViewController The drawer view controller that the delegate is registered with.
- @param panGestureRecognizer The internal pan gesture recognizer that is responsible for panning the pane. The behavior resulting from modifing attributes of this gesture recognizer is undefined and not recommended.
+ @param panGestureRecognizer The internal pan gesture recognizer that is responsible for panning the pane. The behavior resulting from modifying attributes of this gesture recognizer is undefined and not recommended.
  
  @return Whether the drawer view controller should begin a pane pan
  */
