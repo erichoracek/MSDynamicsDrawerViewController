@@ -547,6 +547,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
+/**
+ Queries the delegate for whether the dynamics drawer view controller should begin a pane pan
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param panGestureRecognizer The internal pan gesture recognizer that is responsible for panning the pane. The behavior resulting from modifing attributes of this gesture recognizer is undefined and not recommended.
+ 
+ @return Whether the drawer view controller should begin a pane pan
+ */
+- (BOOL)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController shouldBeginPanePan:(UIPanGestureRecognizer *)panGestureRecognizer;
+
 @end
 
 #import "MSDynamicsDrawerStyler.h"
