@@ -4,7 +4,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerViewController</TokenIdentifier>
-			<Abstract type="html">MSDynamicsDrawerViewController is a container view controller that manages the presentation of a single &quot;pane&quot; view controller overlaid over one or two &quot;drawer&quot; view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiaed swipe in the direction that that drawer view controller is set in.</Abstract>
+			<Abstract type="html">MSDynamicsDrawerViewController is a container view controller that manages the presentation of a single &quot;pane&quot; view controller overlaid over one or two &quot;drawer&quot; view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiated swipe in the direction that that drawer view controller is set in.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<NodeRef refid="6"/>
