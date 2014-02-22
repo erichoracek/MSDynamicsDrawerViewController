@@ -375,7 +375,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 - (void)setDrawerViewController:(UIViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Only accepts cardinal reveal directions");
-    for (UIViewController *currentDrawerViewController in self.drawerViewControllers) {
+    for (UIViewController * __unused currentDrawerViewController in self.drawerViewControllers) {
         NSAssert(currentDrawerViewController != drawerViewController, @"Unable to add a drawer view controller when it's previously been added");
     }
     if (direction & MSDynamicsDrawerDirectionHorizontal) {
@@ -1080,12 +1080,12 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
             break;
     }
     // Bounded open
-    if (*paneLocation <= paneBoundClosedLocation) {
+    if (paneLocation && (*paneLocation <= paneBoundClosedLocation)) {
         *paneLocation = paneBoundClosedLocation;
         *bounded = YES;
     }
     // Bounded closed
-    else if (*paneLocation >= paneBoundOpenLocation) {
+    else if (paneLocation && (*paneLocation >= paneBoundOpenLocation)) {
         *paneLocation = paneBoundOpenLocation;
         *bounded = YES;
     }

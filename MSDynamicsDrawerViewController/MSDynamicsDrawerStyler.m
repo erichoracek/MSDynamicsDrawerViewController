@@ -61,9 +61,9 @@
     } else if (direction & MSDynamicsDrawerDirectionVertical) {
         drawerViewTransform.ty = CGAffineTransformMakeTranslation(0.0, translate).ty;
     } else {
-        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 0.0);
-        drawerViewTransform.tx = translate.tx;
-        drawerViewTransform.ty = translate.ty;
+        CGAffineTransform translateTransform = CGAffineTransformMakeTranslation(0.0, 0.0);
+        drawerViewTransform.tx = translateTransform.tx;
+        drawerViewTransform.ty = translateTransform.ty;
     }
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
