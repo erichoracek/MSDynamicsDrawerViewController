@@ -1277,11 +1277,16 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if (gestureRecognizer == self.panePanGestureRecognizer) {
-        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:shouldBeginPanePan:)]) {
-            if (![self.delegate dynamicsDrawerViewController:self shouldBeginPanePan:self.panePanGestureRecognizer]) {
-                return NO;
+        
+        BOOL (^ShouldBeginGestureRecognizer) (void) = ^BOOL{
+            if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:shouldBeginPanePan:)]) {
+                return [self.delegate dynamicsDrawerViewController:self
+                                                shouldBeginPanePan:self.panePanGestureRecognizer];
             }
-        }
+            
+            return YES;
+        };
+        
         if (self.paneDragRequiresScreenEdgePan) {
             MSDynamicsDrawerPaneState paneState;
             if ([self paneViewIsPositionedInValidState:&paneState] && (paneState == MSDynamicsDrawerPaneStateClosed)) {
@@ -1289,12 +1294,14 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
                 // Mask out edges that aren't possible
                 BOOL validEdges = (edges & self.possibleDrawerDirection);
                 // If there is a valid edge and pane drag is revealed for that edge's direction
-                if (validEdges && [self paneDragRevealEnabledForDirection:validEdges]) {
+                if (validEdges && [self paneDragRevealEnabledForDirection:validEdges] && ShouldBeginGestureRecognizer()) {
                     return YES;
                 }
                 return NO;
             }
         }
+        
+        return ShouldBeginGestureRecognizer();
     }
 	return YES;
 }
