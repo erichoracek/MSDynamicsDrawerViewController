@@ -102,7 +102,7 @@
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (direction & MSDynamicsDrawerDirectionAll) {
-        dynamicsDrawerViewController.drawerView.alpha = ((1.0 - self.closedAlpha) * (1.0  - paneClosedFraction));
+        dynamicsDrawerViewController.drawerView.alpha = ((1.0 - paneClosedFraction) + (paneClosedFraction * self.closedAlpha));
     } else {
         dynamicsDrawerViewController.drawerView.alpha = 1.0;
     }
