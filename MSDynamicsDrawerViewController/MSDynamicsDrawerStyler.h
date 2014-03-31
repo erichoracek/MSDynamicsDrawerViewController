@@ -166,3 +166,10 @@
 @property (nonatomic, assign) CGSize shadowOffset;
 
 @end
+
+/**
+ A simple slide styler that moves the drawer by the amount the pane has moved
+ */
+@interface MSDynamicsDrawerSlideStyler : NSObject <MSDynamicsDrawerStyler>
+
+@end
