@@ -167,4 +167,12 @@ typedef NS_ENUM(NSInteger, MSEditableTableSectionType) {
     }
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
+{
+    if (proposedDestinationIndexPath.section == MSEditableTableSectionTypeActions) {
+        return [NSIndexPath indexPathForItem:([tableView numberOfRowsInSection:MSEditableTableSectionTypeRepresentedObjects] - 1) inSection:MSEditableTableSectionTypeRepresentedObjects];
+    }
+    return proposedDestinationIndexPath;
+}
+
 @end
