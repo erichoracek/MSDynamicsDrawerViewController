@@ -911,7 +911,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     return minPaneState;
 }
 
-#pragma mark Current Reveal Direction
+#pragma mark Current Drawer Direction
 
 - (void)setCurrentDrawerDirection:(MSDynamicsDrawerDirection)currentDrawerDirection
 {
