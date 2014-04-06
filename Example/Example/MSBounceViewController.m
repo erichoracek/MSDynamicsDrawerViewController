@@ -42,19 +42,16 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
 
 #pragma mark - UIViewController
 
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSBounceCellReuseIdentifier];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSBounceDynamicsCellReuseIdentifier];
-}
-
-#pragma mark - UITableViewController
-
-- (instancetype)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    return self;
 }
 
 #pragma mark - MSDynamicsViewController

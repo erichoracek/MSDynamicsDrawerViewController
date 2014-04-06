@@ -42,18 +42,15 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 
 #pragma mark - UIViewController
 
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSGestureDirectionCellReuseIdentifier];
-}
-
-#pragma mark - UITableViewController
-
-- (instancetype)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    return self;
 }
 
 #pragma mark - UITableViewDataSource
