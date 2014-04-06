@@ -31,11 +31,12 @@
 
 //#define DEBUG_LAYOUT
 
-const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal = 267.0;
-const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical = 300.0;
-const CGFloat MSPaneViewVelocityThreshold = 5.0;
-const CGFloat MSPaneViewVelocityMultiplier = 5.0;
-const CGFloat MSPaneViewScreenEdgeThreshold = 24.0; // After testing Apple's `UIScreenEdgePanGestureRecognizer` this seems to be the closest value to create an equivalent effect.
+CGFloat const MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal = 267.0;
+CGFloat const MSDynamicsDrawerDefaultOpenStateRevealWidthVertical = 300.0;
+static CGFloat const MSPaneViewVelocityThreshold = 5.0;
+static CGFloat const MSPaneViewVelocityMultiplier = 5.0;
+static CGFloat const MSPaneViewScreenEdgeThreshold = 24.0; // After testing Apple's `UIScreenEdgePanGestureRecognizer` this seems to be the closest value to create an equivalent effect.
+static CGFloat const MSPaneStatePositionValidityEpsilon = 2.0;
 
 NSString * const MSDynamicsDrawerBoundaryIdentifier = @"MSDynamicsDrawerBoundaryIdentifier";
 
@@ -884,7 +885,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     for (MSDynamicsDrawerPaneState currentPaneState = MSDynamicsDrawerPaneStateClosed; currentPaneState <= MSDynamicsDrawerPaneStateOpenWide; currentPaneState++) {
         CGPoint paneStatePaneViewOrigin = [self paneViewOriginForPaneState:currentPaneState];
         CGPoint currentPaneViewOrigin = (CGPoint){roundf(self.paneView.frame.origin.x), roundf(self.paneView.frame.origin.y)};
-        CGFloat epsilon = 2.0;
+        CGFloat epsilon = MSPaneStatePositionValidityEpsilon;
         if ((fabs(paneStatePaneViewOrigin.x - currentPaneViewOrigin.x) < epsilon) && (fabs(paneStatePaneViewOrigin.y - currentPaneViewOrigin.y) < epsilon)) {
             validState = YES;
             *paneState = currentPaneState;
