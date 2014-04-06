@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4511" systemVersion="13A3017" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jvz-VO-niW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jvz-VO-niW">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3745"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Dynamics Drawer View Controller-->
@@ -128,14 +128,14 @@
             </objects>
             <point key="canvasLocation" x="958" y="1341"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Editable Table View Controller-->
         <scene sceneID="oGo-o0-Zyy">
             <objects>
-                <tableViewController id="KuU-LA-2qk" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FvC-2j-nbf">
+                <tableViewController storyboardIdentifier="Editable Table" id="KuU-LA-2qk" customClass="MSEditableTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="FvC-2j-nbf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="KuU-LA-2qk" id="FJu-dL-dQb"/>
                             <outlet property="delegate" destination="KuU-LA-2qk" id="65E-bA-85o"/>
@@ -144,7 +144,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehh-8b-OM2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1317" y="1341"/>
+            <point key="canvasLocation" x="2033" y="1341"/>
         </scene>
         <!--Controls View Controller-->
         <scene sceneID="dGR-55-Szq">
@@ -162,7 +162,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ln-Ak-BiV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1677" y="1341"/>
+            <point key="canvasLocation" x="1315" y="1341"/>
         </scene>
         <!--Monospace Web View Controller-->
         <scene sceneID="ydp-My-WwF">
@@ -199,7 +199,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACh-PI-DB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2037" y="1341"/>
+            <point key="canvasLocation" x="1675" y="1341"/>
         </scene>
         <!--Long Table View Controller-->
         <scene sceneID="id4-xL-0dG">
