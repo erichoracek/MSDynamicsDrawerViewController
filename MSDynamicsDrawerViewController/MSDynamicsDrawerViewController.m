@@ -768,9 +768,27 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState inDirection:(MSDynamicsDrawerDirection)direction animated:(BOOL)animated allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to bounce open with impossible or multiple directions");
+    
+    // If the pane is already positioned in the desired pane state and direction, don't continue
+    MSDynamicsDrawerPaneState currentPaneState;
+    if ([self paneViewIsPositionedInValidState:&currentPaneState] && (currentPaneState == paneState)) {
+        // If already closed, *in any direction*, don't continue
+        if (currentPaneState == MSDynamicsDrawerPaneStateClosed) {
+            if (completion) completion();
+            return;
+        }
+        // If opened, *in the correct direction*, don't continue
+        else if (direction == self.currentDrawerDirection) {
+            if (completion) completion();
+            return;
+        }
+    }
+    
+    // If opening in a specified direction, set the drawer to that direction
     if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
         self.currentDrawerDirection = direction;
     }
+    
     if (animated) {
         [self addDynamicsBehaviorsToCreatePaneState:paneState];
         if (!allowUserInterruption) [self setViewUserInteractionEnabled:NO];
