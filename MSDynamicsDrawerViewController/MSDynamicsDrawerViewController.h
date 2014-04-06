@@ -41,27 +41,56 @@ extern const CGFloat MSDynamicsDrawerDefaultOpenStateRevealWidthVertical;
  The values can be masked in some (but not all) cases. See the parameters of individual methods to ensure compatibility with the `MSDynamicsDrawerDirection` that is being passed.
  */
 typedef NS_OPTIONS(NSInteger, MSDynamicsDrawerDirection) {
+    /**
+     Represents the state of no direction.
+     */
     MSDynamicsDrawerDirectionNone       = UIRectEdgeNone,
+    /**
+     A drawer that is revealed from underneath the top edge of the pane.
+     */
     MSDynamicsDrawerDirectionTop        = UIRectEdgeTop,
+    /**
+     A drawer that is revealed from underneath the left edge of the pane.
+     */
     MSDynamicsDrawerDirectionLeft       = UIRectEdgeLeft,
+    /**
+     A drawer that is revealed from underneath the bottom edge of the pane.
+     */
     MSDynamicsDrawerDirectionBottom     = UIRectEdgeBottom,
+    /**
+     A drawer that is revealed from underneath the right edge of the pane.
+     */
     MSDynamicsDrawerDirectionRight      = UIRectEdgeRight,
+    /**
+     The drawers that are revealed from underneath both the left and right edges of the pane.
+     */
     MSDynamicsDrawerDirectionHorizontal = (UIRectEdgeLeft | UIRectEdgeRight),
+    /**
+     The drawers that are revealed from underneath both the top and bottom edges of the pane.
+     */
     MSDynamicsDrawerDirectionVertical   = (UIRectEdgeTop | UIRectEdgeBottom),
+    /**
+     The drawers that are revealed from underneath all edges of the pane.
+     */
     MSDynamicsDrawerDirectionAll        = UIRectEdgeAll
 };
 
 /**
  The possible drawer/pane visibility states of `MSDynamicsDrawerViewController`.
- 
- @see paneState
- @see setPaneState:animated:allowUserInterruption:completion:
- @see setPaneState:inDirection:animated:allowUserInterruption:completion:
- */
+*/
 typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
-    MSDynamicsDrawerPaneStateClosed,   // Drawer view entirely hidden by pane view
-    MSDynamicsDrawerPaneStateOpen,     // Drawer view revealed to open width
-    MSDynamicsDrawerPaneStateOpenWide, // Drawer view entirely visible with pane opened to `paneStateOpenWideEdgeOffset`
+    /**
+     The the drawer is entirely hidden by the pane.
+     */
+    MSDynamicsDrawerPaneStateClosed,
+    /**
+     The drawer is revealed underneath the pane to the specified open width.
+     */
+    MSDynamicsDrawerPaneStateOpen,
+    /**
+     The drawer view is entirely visible, with the pane opened wide enough as to no longer be visible.
+     */
+    MSDynamicsDrawerPaneStateOpenWide,
 };
 
 @class MSDynamicsDrawerViewController;
