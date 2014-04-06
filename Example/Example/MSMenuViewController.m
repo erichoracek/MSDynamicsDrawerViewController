@@ -90,6 +90,11 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     return self;
 }
 
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -230,23 +235,18 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UITableViewHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:MSDrawerHeaderReuseIdentifier];
-    headerView.textLabel.text = self.sectionTitles[@(section)];
+    headerView.textLabel.text = [self.sectionTitles[@(section)] uppercaseString];
     return headerView;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [UIView new]; // Hacky way to prevent extra dividers after the end of the table from showing
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 35.0;
+    return 30.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return CGFLOAT_MIN; // Hacky way to prevent extra dividers after the end of the table from showing
+    return FLT_EPSILON;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -270,14 +270,6 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.tableView reloadData];
     });
-}
-
-#pragma mark - MSDynamicsDrawerViewControllerDelegate
-
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)state
-{
-    // Ensure that the pane's table view can scroll to top correctly
-    self.tableView.scrollsToTop = (state == MSDynamicsDrawerPaneStateOpen);
 }
 
 @end

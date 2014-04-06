@@ -32,11 +32,11 @@
 
 #pragma mark - NSObject
 
-+ (void)initialize
++ (void)load
 {
     id labelAppearance = [UILabel appearanceWhenContainedIn:[self class], nil];
-    [labelAppearance setFont:[UIFont systemFontOfSize:17.0]];
-    [labelAppearance setTextColor:[UIColor colorWithWhite:0.8 alpha:1.0]];
+    [labelAppearance setFont:[UIFont systemFontOfSize:13.0]];
+    [labelAppearance setTextColor:[UIColor whiteColor]];
 }
 
 #pragma mark - UIView
@@ -46,7 +46,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         UIView *backgoundView = [UIView new];
-        backgoundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
+        backgoundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
         self.backgroundView = backgoundView;
     }
     return self;

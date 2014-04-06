@@ -38,7 +38,7 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.font = [UIFont boldSystemFontOfSize:18.0];
+        self.textLabel.font = [UIFont systemFontOfSize:18.0];
         UIView *selectedBackgroundView = [UIView new];
         selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.25];
         self.selectedBackgroundView = selectedBackgroundView;
