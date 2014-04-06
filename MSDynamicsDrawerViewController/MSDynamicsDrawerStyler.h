@@ -140,7 +140,7 @@
 /**
  The color of the shadow.
  
- Default value of `[UIColor blackColor]`.
+ Default value of `blackColor`.
  */
 @property (nonatomic, strong) UIColor *shadowColor;
 
