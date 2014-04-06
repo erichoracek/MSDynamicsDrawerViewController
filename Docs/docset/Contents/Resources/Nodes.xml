@@ -22,8 +22,8 @@
 				</Node>
 				
 				
-				
-				<Node type="folder">
+                
+				<Node>
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
@@ -33,45 +33,323 @@
 					</Subnodes>
 				</Node>
 				
+                
+				<Node>
+					<Name>Constants</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="9"/>
+						<NodeRef refid="10"/>
+						
+					</Subnodes>
+				</Node>
+				
 			</Subnodes>
         </Node>
     </TOC>
 	<Library>
 		
-		<Node id="1">
-			<Name>MSDynamicsDrawerFadeStyler</Name>
-			<Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
-		</Node>
-		<Node id="2">
-			<Name>MSDynamicsDrawerParallaxStyler</Name>
-			<Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
-		</Node>
-		<Node id="3">
-			<Name>MSDynamicsDrawerResizeStyler</Name>
-			<Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
-		</Node>
-		<Node id="4">
-			<Name>MSDynamicsDrawerScaleStyler</Name>
-			<Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
-		</Node>
-		<Node id="5">
-			<Name>MSDynamicsDrawerShadowStyler</Name>
-			<Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
-		</Node>
-		<Node id="6">
-			<Name>MSDynamicsDrawerViewController</Name>
-			<Path>Classes/MSDynamicsDrawerViewController.html</Path>
-		</Node>
+		<Node id="1" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerFadeStyler</Name>
+            <Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerFadeStyler.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="2" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerParallaxStyler</Name>
+            <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="3" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerResizeStyler</Name>
+            <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="4" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerScaleStyler</Name>
+            <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="5" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerShadowStyler</Name>
+            <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="6" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerViewController</Name>
+            <Path>Classes/MSDynamicsDrawerViewController.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerViewController.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerViewController.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerViewController.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerViewController.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
 		
 		
-		<Node id="7">
-			<Name>MSDynamicsDrawerStyler</Name>
-			<Path>Protocols/MSDynamicsDrawerStyler.html</Path>
-		</Node>
-		<Node id="8">
-			<Name>MSDynamicsDrawerViewControllerDelegate</Name>
-			<Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
-		</Node>
+        <Node id="7" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerStyler</Name>
+            <Path>Protocols/MSDynamicsDrawerStyler.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerStyler.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerStyler.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerStyler.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerStyler.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="8" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerViewControllerDelegate</Name>
+            <Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		
+        <Node id="9" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerDirection</Name>
+            <Path>Constants/MSDynamicsDrawerDirection.html</Path>
+            
+        </Node>
+		<Node id="10" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerPaneState</Name>
+            <Path>Constants/MSDynamicsDrawerPaneState.html</Path>
+            
+        </Node>
 		
 	</Library>
 </DocSetNodes>
