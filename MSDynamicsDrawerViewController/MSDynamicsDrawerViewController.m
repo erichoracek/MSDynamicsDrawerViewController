@@ -1296,21 +1296,21 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if (gestureRecognizer == self.panePanGestureRecognizer) {
-        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:shouldBeginPanePan:)]) {
-            if (![self.delegate dynamicsDrawerViewController:self shouldBeginPanePan:self.panePanGestureRecognizer]) {
-                return NO;
-            }
-        }
         if (self.paneDragRequiresScreenEdgePan) {
             MSDynamicsDrawerPaneState paneState;
             if ([self paneViewIsPositionedInValidState:&paneState] && (paneState == MSDynamicsDrawerPaneStateClosed)) {
-                UIRectEdge edges = [self panGestureRecognizer:self.panePanGestureRecognizer didStartAtEdgesOfView:self.paneView];
-                // Mask out edges that aren't possible
-                BOOL validEdges = (edges & self.possibleDrawerDirection);
-                // If there is a valid edge and pane drag is revealed for that edge's direction
-                if (validEdges && [self paneDragRevealEnabledForDirection:validEdges]) {
-                    return YES;
+                UIRectEdge panStartEdges = [self panGestureRecognizer:self.panePanGestureRecognizer didStartAtEdgesOfView:self.paneView];
+                // Mask to only edges that are possible (there's a drawer view controller set in that direction)
+                MSDynamicsDrawerDirection possibleDirectionsForPanStartEdges = (panStartEdges & self.possibleDrawerDirection);
+                BOOL gestureStartedAtPossibleEdge = (possibleDirectionsForPanStartEdges != UIRectEdgeNone);
+                // If the gesture didn't start at a possible edge, return no
+                if (!gestureStartedAtPossibleEdge) {
+                    return NO;
                 }
+            }
+        }
+        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:shouldBeginPanePan:)]) {
+            if (![self.delegate dynamicsDrawerViewController:self shouldBeginPanePan:self.panePanGestureRecognizer]) {
                 return NO;
             }
         }
