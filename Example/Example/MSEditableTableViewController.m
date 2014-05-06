@@ -25,7 +25,32 @@ typedef NS_ENUM(NSInteger, MSEditableTableSectionType) {
 
 @implementation MSEditableTableViewController
 
+#pragma mark - NSObject
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
 #pragma mark - UIViewController
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+}
 
 - (void)viewDidLoad
 {
@@ -36,15 +61,11 @@ typedef NS_ENUM(NSInteger, MSEditableTableSectionType) {
     [self.navigationController setToolbarHidden:NO];
 }
 
-#pragma mark - UITableViewController
+#pragma mark - MSEditableTableViewController
 
-- (instancetype)initWithStyle:(UITableViewStyle)style
+- (void)initialize
 {
-    self = [super initWithStyle:UITableViewStylePlain];
-    if (self) {
-        self.representedObjects = [@[[NSDate date]] mutableCopy];
-    }
-    return self;
+    self.representedObjects = [@[[NSDate date]] mutableCopy];
 }
 
 #pragma mark - UITableViewDataSource
@@ -165,6 +186,14 @@ typedef NS_ENUM(NSInteger, MSEditableTableSectionType) {
             break;
         }
     }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
+{
+    if (proposedDestinationIndexPath.section == MSEditableTableSectionTypeActions) {
+        return [NSIndexPath indexPathForItem:([tableView numberOfRowsInSection:MSEditableTableSectionTypeRepresentedObjects] - 1) inSection:MSEditableTableSectionTypeRepresentedObjects];
+    }
+    return proposedDestinationIndexPath;
 }
 
 @end

@@ -41,7 +41,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 
 @implementation MSStylersViewController
 
-#pragma mark - UIViewController
+#pragma mark - NSObject
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -50,6 +50,22 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
         [self initialize];
     }
     return self;
+}
+
+#pragma mark - UIViewController
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
 }
 
 - (void)viewDidLoad
@@ -64,15 +80,6 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 }
 
 #pragma mark - UITableViewController
-
-- (instancetype)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
 
 #pragma mark - MSStylersViewController
 

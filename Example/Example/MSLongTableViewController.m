@@ -34,18 +34,15 @@ NSString * const MSLongCellReuseIdentifier = @"Long Cell";
 
 #pragma mark - UIViewController
 
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSLongCellReuseIdentifier];
-}
-
-#pragma mark - UITableViewController
-
-- (instancetype)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    return self;
 }
 
 #pragma mark - UITableViewDataSource

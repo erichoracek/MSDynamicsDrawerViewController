@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/MSDynamicsDrawerPaneState.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/MSDynamicsDrawerPaneState</TokenIdentifier>
+			<Abstract type="html">The possible drawer/pane visibility states of MSDynamicsDrawerViewController.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="10"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerPaneStateClosed</TokenIdentifier>
+            <Abstract type="html">     The the drawer is entirely hidden by the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerPaneStateClosed</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="10"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerPaneStateOpen</TokenIdentifier>
+            <Abstract type="html">     The drawer is revealed underneath the pane to the specified open width.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerPaneStateOpen</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="10"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerPaneStateOpenWide</TokenIdentifier>
+            <Abstract type="html">     The drawer view is entirely visible, with the pane opened wide enough as to no longer be visible.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerPaneStateOpenWide</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="10"/>
+        </Token>
+        
+	</File>
+</Tokens>

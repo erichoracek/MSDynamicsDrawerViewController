@@ -31,6 +31,8 @@
 NSString * const MSGestureDirectionCellReuseIdentifier = @"Gesture Direction Cell";
 
 typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
+    MSGesturesSectionTypePaneDragRequiresScreenEdgePan,
+    MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures,
     MSGesturesSectionTypeDragToReveal,
     MSGesturesSectionTypeTapToClose,
     MSGesturesSectionTypeCount,
@@ -40,18 +42,15 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 
 #pragma mark - UIViewController
 
+- (void)loadView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSGestureDirectionCellReuseIdentifier];
-}
-
-#pragma mark - UITableViewController
-
-- (instancetype)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    return self;
 }
 
 #pragma mark - UITableViewDataSource
@@ -64,6 +63,9 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
+        case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
+        case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
+            return 1;
         case MSGesturesSectionTypeDragToReveal:
         case MSGesturesSectionTypeTapToClose: {
             MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
@@ -83,46 +85,64 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSGestureDirectionCellReuseIdentifier forIndexPath:indexPath];
     MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
-    __block NSInteger possibleDrawerDirectionRow = 0;
-    MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
-        if (indexPath.row == possibleDrawerDirectionRow) {
-            NSString *title;
-            switch (drawerDirection) {
-                case MSDynamicsDrawerDirectionLeft:
-                    title = @"Left";
-                    break;
-                case MSDynamicsDrawerDirectionRight:
-                    title = @"Right";
-                    break;
-                case MSDynamicsDrawerDirectionTop:
-                    title = @"Top";
-                    break;
-                case MSDynamicsDrawerDirectionBottom:
-                    title = @"Bottom";
-                    break;
-                default:
-                    break;
-            }
-            BOOL gestureEnabled = NO;
-            switch (indexPath.section) {
-                case MSGesturesSectionTypeDragToReveal:
-                    gestureEnabled = [dynamicsDrawerViewController paneDragRevealEnabledForDirection:drawerDirection];
-                    break;
-                case MSGesturesSectionTypeTapToClose:
-                    gestureEnabled = [dynamicsDrawerViewController paneTapToCloseEnabledForDirection:drawerDirection];
-                    break;
-            }
-            cell.textLabel.text = [NSString stringWithFormat:(gestureEnabled ? @"✔︎ %@" : @"✘ %@"), title];
+    switch (indexPath.section) {
+        case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
+            cell.textLabel.text = (dynamicsDrawerViewController.paneDragRequiresScreenEdgePan ? @"✔︎" : @"✘");
+            break;
+        case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
+            cell.textLabel.text = (dynamicsDrawerViewController.screenEdgePanCancelsConflictingGestures ? @"✔︎" : @"✘");
+            break;
+        case MSGesturesSectionTypeDragToReveal:
+        case MSGesturesSectionTypeTapToClose: {
+            NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
+            __block NSInteger possibleDrawerDirectionRow = 0;
+            MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
+                if (indexPath.row == possibleDrawerDirectionRow) {
+                    NSString *title;
+                    switch (drawerDirection) {
+                        case MSDynamicsDrawerDirectionLeft:
+                            title = @"Left";
+                            break;
+                        case MSDynamicsDrawerDirectionRight:
+                            title = @"Right";
+                            break;
+                        case MSDynamicsDrawerDirectionTop:
+                            title = @"Top";
+                            break;
+                        case MSDynamicsDrawerDirectionBottom:
+                            title = @"Bottom";
+                            break;
+                        default:
+                            break;
+                    }
+                    BOOL gestureEnabled = NO;
+                    switch (indexPath.section) {
+                        case MSGesturesSectionTypeDragToReveal:
+                            gestureEnabled = [dynamicsDrawerViewController paneDragRevealEnabledForDirection:drawerDirection];
+                            break;
+                        case MSGesturesSectionTypeTapToClose:
+                            gestureEnabled = [dynamicsDrawerViewController paneTapToCloseEnabledForDirection:drawerDirection];
+                            break;
+                    }
+                    cell.textLabel.text = [NSString stringWithFormat:(gestureEnabled ? @"✔︎ %@" : @"✘ %@"), title];
+                }
+                possibleDrawerDirectionRow++;
+            });
+            break;
         }
-        possibleDrawerDirectionRow++;
-    });
+        default:
+            break;
+    }
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch (section) {
+        case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
+            return @"Pane Drag Requires Screen Edge Pan";
+        case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
+            return @"Screen Edge Pan Cancels Conflicting Gestures";
         case MSGesturesSectionTypeDragToReveal:
             return @"Pane Drag to Reveal";
         case MSGesturesSectionTypeTapToClose:
@@ -135,6 +155,10 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     switch (section) {
+        case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
+            return @"Whether the only pans that can open the drawer should be those that originate from the screen's edges. Pans that originate elsewhere are ignored by the drawer view controller.";
+        case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
+            return @"Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath. This behavior only applies to edges that have a corresponding drawer view controller set in the same direction as the edge that the gesture originated in.";
         case MSGesturesSectionTypeDragToReveal:
             return @"Setting the 'paneDragRevealEnabled' property to 'NO' prevents the user from dragging the pane to reveal a drawer view controller (in the specified reveal direction).";
         case MSGesturesSectionTypeTapToClose:
@@ -149,24 +173,40 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    __block NSInteger possibleDrawerDirectionRow = 0;
-    MSDynamicsDrawerDirectionActionForMaskedValues(dynamicsDrawerViewController.possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
-        if (indexPath.row == possibleDrawerDirectionRow) {
-            BOOL gestureEnabled = NO;
-            switch (indexPath.section) {
-                case MSGesturesSectionTypeDragToReveal:
-                    gestureEnabled = [dynamicsDrawerViewController paneDragRevealEnabledForDirection:drawerDirection];
-                    [dynamicsDrawerViewController setPaneDragRevealEnabled:!gestureEnabled forDirection:drawerDirection];
-                    break;
-                case MSGesturesSectionTypeTapToClose:
-                    gestureEnabled = [dynamicsDrawerViewController paneTapToCloseEnabledForDirection:drawerDirection];
-                    [dynamicsDrawerViewController setPaneTapToCloseEnabled:!gestureEnabled forDirection:drawerDirection];
-                    break;
-            }
+    switch (indexPath.section) {
+        case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
+            dynamicsDrawerViewController.paneDragRequiresScreenEdgePan = !dynamicsDrawerViewController.paneDragRequiresScreenEdgePan;
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
+            dynamicsDrawerViewController.screenEdgePanCancelsConflictingGestures = !dynamicsDrawerViewController.screenEdgePanCancelsConflictingGestures;
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case MSGesturesSectionTypeDragToReveal:
+        case MSGesturesSectionTypeTapToClose: {
+            __block NSInteger possibleDrawerDirectionRow = 0;
+            MSDynamicsDrawerDirectionActionForMaskedValues(dynamicsDrawerViewController.possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
+                if (indexPath.row == possibleDrawerDirectionRow) {
+                    BOOL gestureEnabled = NO;
+                    switch (indexPath.section) {
+                        case MSGesturesSectionTypeDragToReveal:
+                            gestureEnabled = [dynamicsDrawerViewController paneDragRevealEnabledForDirection:drawerDirection];
+                            [dynamicsDrawerViewController setPaneDragRevealEnabled:!gestureEnabled forDirection:drawerDirection];
+                            break;
+                        case MSGesturesSectionTypeTapToClose:
+                            gestureEnabled = [dynamicsDrawerViewController paneTapToCloseEnabledForDirection:drawerDirection];
+                            [dynamicsDrawerViewController setPaneTapToCloseEnabled:!gestureEnabled forDirection:drawerDirection];
+                            break;
+                    }
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+                }
+                possibleDrawerDirectionRow++;
+            });
+            break;
         }
-        possibleDrawerDirectionRow++;
-    });
+        default:
+            break;
+    }
 }
 
 @end

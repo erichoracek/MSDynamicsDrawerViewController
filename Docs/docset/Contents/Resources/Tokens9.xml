@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/MSDynamicsDrawerDirection.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/MSDynamicsDrawerDirection</TokenIdentifier>
+			<Abstract type="html">The drawer direction defines the direction that a MSDynamicsDrawerViewController instance&apos;s paneView can be opened in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="9"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionNone</TokenIdentifier>
+            <Abstract type="html">     Represents the state of no direction.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionNone</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionTop</TokenIdentifier>
+            <Abstract type="html">     A drawer that is revealed from underneath the top edge of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionTop</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionLeft</TokenIdentifier>
+            <Abstract type="html">     A drawer that is revealed from underneath the left edge of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionLeft</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionBottom</TokenIdentifier>
+            <Abstract type="html">     A drawer that is revealed from underneath the bottom edge of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionBottom</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionRight</TokenIdentifier>
+            <Abstract type="html">     A drawer that is revealed from underneath the right edge of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionRight</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionHorizontal</TokenIdentifier>
+            <Abstract type="html">     The drawers that are revealed from underneath both the left and right edges of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionHorizontal</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionVertical</TokenIdentifier>
+            <Abstract type="html">     The drawers that are revealed from underneath both the top and bottom edges of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionVertical</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionAll</TokenIdentifier>
+            <Abstract type="html">     The drawers that are revealed from underneath all edges of the pane.
+     </Abstract>
+            <Declaration>MSDynamicsDrawerDirectionAll</Declaration>
+            
+            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+            <NodeRef refid="9"/>
+        </Token>
+        
+	</File>
+</Tokens>

@@ -61,9 +61,9 @@
     } else if (direction & MSDynamicsDrawerDirectionVertical) {
         drawerViewTransform.ty = CGAffineTransformMakeTranslation(0.0, translate).ty;
     } else {
-        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 0.0);
-        drawerViewTransform.tx = translate.tx;
-        drawerViewTransform.ty = translate.ty;
+        CGAffineTransform translateTransform = CGAffineTransformMakeTranslation(0.0, 0.0);
+        drawerViewTransform.tx = translateTransform.tx;
+        drawerViewTransform.ty = translateTransform.ty;
     }
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
@@ -257,8 +257,19 @@
         self.shadowRadius = 10.0;
 		self.shadowOpacity = 1.0;
         self.shadowOffset = CGSizeZero;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeStatusBarOrientation:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)applicationDidChangeStatusBarOrientation:(NSNotification *)notification
+{
+    [self.shadowLayer removeFromSuperlayer];
 }
 
 #pragma mark - MSDynamicsDrawerStyler
@@ -279,7 +290,7 @@
 }
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
-{
+{    
     if (direction & MSDynamicsDrawerDirectionAll) {
         if (!self.shadowLayer.superlayer) {
             CGRect shadowRect = (CGRect){CGPointZero, dynamicsDrawerViewController.paneView.frame.size};

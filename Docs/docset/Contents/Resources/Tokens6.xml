@@ -4,8 +4,9 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerViewController</TokenIdentifier>
-			<Abstract type="html">MSDynamicsDrawerViewController is a container view controller that manages the presentation of a single &quot;pane&quot; view controller overlaid over one or two &quot;drawer&quot; view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiaed swipe in the direction that that drawer view controller is set in.</Abstract>
+			<Abstract type="html">MSDynamicsDrawerViewController is a container view controller that manages the presentation of a single &quot;pane&quot; view controller overlaid over one or two &quot;drawer&quot; view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiated swipe in the direction that that drawer view controller is set in.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
 			
 			<NodeRef refid="6"/>
 		</Token>
@@ -14,7 +15,7 @@
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:</TokenIdentifier>
 			<Abstract type="html">The pane view controller is the primary view controller, displayed centered and covering the drawer view controllers.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
@@ -26,12 +27,31 @@
 			
 			
 			<Anchor>//api/name/paneViewController</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneViewController</TokenIdentifier>
+			<Abstract type="html">The pane view controller is the primary view controller, displayed centered and covering the drawer view controllers.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, strong) UIViewController *paneViewController</Declaration>
+			
+			
+			<Anchor>//api/name/paneViewController</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewController</TokenIdentifier>
 			<Abstract type="html">The pane view controller is the primary view controller, displayed centered and covering the drawer view controllers.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
@@ -43,12 +63,13 @@
 			
 			
 			<Anchor>//api/name/paneViewController</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
 			<Abstract type="html">Sets the paneViewController with an animated transition.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewController</TokenIdentifier>
@@ -71,12 +92,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setPaneViewController:animated:completion:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setDrawerViewController:forDirection:</TokenIdentifier>
 			<Abstract type="html">Sets the view controller to be revealed as a drawer in the specified direction underneath the pane view controller.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/drawerViewControllerForDirection:</TokenIdentifier>
@@ -95,12 +117,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setDrawerViewController:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/drawerViewControllerForDirection:</TokenIdentifier>
 			<Abstract type="html">Returns the drawer view controller that has been set for the specified direction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setDrawerViewController:forDirection:</TokenIdentifier>
@@ -116,12 +139,13 @@
 			</Parameters>
 			<ReturnValue><Abstract type="html">The drawer view controller that has been set for the specified direction. If not yet set, nil.</Abstract></ReturnValue>
 			<Anchor>//api/name/drawerViewControllerForDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewSlideOffAnimationEnabled:</TokenIdentifier>
 			<Abstract type="html">If setting a new paneViewController should have an animation that slides off the old view controller before animating the new one into its place.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewController</TokenIdentifier>
@@ -134,12 +158,32 @@
 			
 			
 			<Anchor>//api/name/paneViewSlideOffAnimationEnabled</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneViewSlideOffAnimationEnabled</TokenIdentifier>
+			<Abstract type="html">If setting a new paneViewController should have an animation that slides off the old view controller before animating the new one into its place.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewController</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneStateOpenWideEdgeOffset</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/paneViewSlideOffAnimationEnabled</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewSlideOffAnimationEnabled</TokenIdentifier>
 			<Abstract type="html">If setting a new paneViewController should have an animation that slides off the old view controller before animating the new one into its place.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewController</TokenIdentifier>
@@ -152,34 +196,49 @@
 			
 			
 			<Anchor>//api/name/paneViewSlideOffAnimationEnabled</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setShouldAlignStatusBarToPaneView:</TokenIdentifier>
 			<Abstract type="html">If the status bar should align with the pane view as the pane view frame is adjusted by both the user gestures and the internal dynamic animator.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView</Declaration>
 			
 			
 			<Anchor>//api/name/shouldAlignStatusBarToPaneView</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/shouldAlignStatusBarToPaneView</TokenIdentifier>
+			<Abstract type="html">If the status bar should align with the pane view as the pane view frame is adjusted by both the user gestures and the internal dynamic animator.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView</Declaration>
+			
+			
+			<Anchor>//api/name/shouldAlignStatusBarToPaneView</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/shouldAlignStatusBarToPaneView</TokenIdentifier>
 			<Abstract type="html">If the status bar should align with the pane view as the pane view frame is adjusted by both the user gestures and the internal dynamic animator.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) BOOL shouldAlignStatusBarToPaneView</Declaration>
 			
 			
 			<Anchor>//api/name/shouldAlignStatusBarToPaneView</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:</TokenIdentifier>
 			<Abstract type="html">The state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:inDirection:</TokenIdentifier>
@@ -192,12 +251,32 @@
 			
 			
 			<Anchor>//api/name/paneState</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
+			<Abstract type="html">The state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:inDirection:</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:animated:allowUserInterruption:completion:</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:inDirection:animated:allowUserInterruption:completion:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) MSDynamicsDrawerPaneState paneState</Declaration>
+			
+			
+			<Anchor>//api/name/paneState</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
 			<Abstract type="html">The state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:inDirection:</TokenIdentifier>
@@ -210,12 +289,13 @@
 			
 			
 			<Anchor>//api/name/paneState</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:inDirection:</TokenIdentifier>
 			<Abstract type="html">The state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
@@ -236,12 +316,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setPaneState:inDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:animated:allowUserInterruption:completion:</TokenIdentifier>
 			<Abstract type="html">Sets the state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
@@ -268,12 +349,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setPaneState:animated:allowUserInterruption:completion:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneState:inDirection:animated:allowUserInterruption:completion:</TokenIdentifier>
 			<Abstract type="html">Sets the state of the pane view as defined in a MSDynamicsDrawerPaneState.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
@@ -303,12 +385,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setPaneState:inDirection:animated:allowUserInterruption:completion:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneStateOpenWideEdgeOffset:</TokenIdentifier>
 			<Abstract type="html">The amount that the paneView should be offset from the edge of the screen when set to the MSDynamicsDrawerPaneStateOpenWide.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
@@ -321,12 +404,32 @@
 			
 			
 			<Anchor>//api/name/paneStateOpenWideEdgeOffset</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneStateOpenWideEdgeOffset</TokenIdentifier>
+			<Abstract type="html">The amount that the paneView should be offset from the edge of the screen when set to the MSDynamicsDrawerPaneStateOpenWide.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneViewSlideOffAnimationEnabled</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneViewController:animated:completion:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) CGFloat paneStateOpenWideEdgeOffset</Declaration>
+			
+			
+			<Anchor>//api/name/paneStateOpenWideEdgeOffset</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneStateOpenWideEdgeOffset</TokenIdentifier>
 			<Abstract type="html">The amount that the paneView should be offset from the edge of the screen when set to the MSDynamicsDrawerPaneStateOpenWide.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneState</TokenIdentifier>
@@ -339,12 +442,13 @@
 			
 			
 			<Anchor>//api/name/paneStateOpenWideEdgeOffset</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
 			<Abstract type="html">Bounces the paneView open to reveal the drawerView underneath.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
@@ -359,12 +463,13 @@
 			
 			
 			<Anchor>//api/name/bouncePaneOpen</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenAllowingUserInterruption:completion:</TokenIdentifier>
 			<Abstract type="html">Bounces the paneView open to reveal the drawerView underneath. Executes completion when the dynamic animation finishes.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -387,12 +492,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/bouncePaneOpenAllowingUserInterruption:completion:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
 			<Abstract type="html">Bounces the paneView open in the specified direction, revealing the drawerView underneath.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -413,12 +519,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/bouncePaneOpenInDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:allowUserInterruption:completion:</TokenIdentifier>
 			<Abstract type="html">Bounces the paneView open in the specified direction, revealing the drawerView underneath. Executes completion when the dynamic animation finishes.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -444,78 +551,121 @@
 			</Parameters>
 			
 			<Anchor>//api/name/bouncePaneOpenInDirection:allowUserInterruption:completion:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPossibleDrawerDirection:</TokenIdentifier>
 			<Abstract type="html">The directions that the paneView can be opened in.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection</Declaration>
 			
 			
 			<Anchor>//api/name/possibleDrawerDirection</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/possibleDrawerDirection</TokenIdentifier>
+			<Abstract type="html">The directions that the paneView can be opened in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection</Declaration>
+			
+			
+			<Anchor>//api/name/possibleDrawerDirection</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/possibleDrawerDirection</TokenIdentifier>
 			<Abstract type="html">The directions that the paneView can be opened in.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection</Declaration>
 			
 			
 			<Anchor>//api/name/possibleDrawerDirection</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setGravityMagnitude:</TokenIdentifier>
 			<Abstract type="html">The magnitude of the gravity vector that affects the pane view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat gravityMagnitude</Declaration>
 			
 			
 			<Anchor>//api/name/gravityMagnitude</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/gravityMagnitude</TokenIdentifier>
+			<Abstract type="html">The magnitude of the gravity vector that affects the pane view.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) CGFloat gravityMagnitude</Declaration>
+			
+			
+			<Anchor>//api/name/gravityMagnitude</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/gravityMagnitude</TokenIdentifier>
 			<Abstract type="html">The magnitude of the gravity vector that affects the pane view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat gravityMagnitude</Declaration>
 			
 			
 			<Anchor>//api/name/gravityMagnitude</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setElasticity:</TokenIdentifier>
 			<Abstract type="html">The elasticity applied to the pane view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat elasticity</Declaration>
 			
 			
 			<Anchor>//api/name/elasticity</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/elasticity</TokenIdentifier>
+			<Abstract type="html">The elasticity applied to the pane view.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) CGFloat elasticity</Declaration>
+			
+			
+			<Anchor>//api/name/elasticity</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/elasticity</TokenIdentifier>
 			<Abstract type="html">The elasticity applied to the pane view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat elasticity</Declaration>
 			
 			
 			<Anchor>//api/name/elasticity</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setBounceElasticity:</TokenIdentifier>
 			<Abstract type="html">The amount of elasticity applied to the pane view when it is bounced open.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -527,12 +677,31 @@
 			
 			
 			<Anchor>//api/name/bounceElasticity</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
+			<Abstract type="html">The amount of elasticity applied to the pane view when it is bounced open.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) CGFloat bounceElasticity</Declaration>
+			
+			
+			<Anchor>//api/name/bounceElasticity</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceElasticity</TokenIdentifier>
 			<Abstract type="html">The amount of elasticity applied to the pane view when it is bounced open.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -544,12 +713,13 @@
 			
 			
 			<Anchor>//api/name/bounceElasticity</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setBounceMagnitude:</TokenIdentifier>
 			<Abstract type="html">The magnitude of the push vector that is applied to the pane view when bouncePaneOpen is called.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -561,12 +731,31 @@
 			
 			
 			<Anchor>//api/name/bounceMagnitude</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
+			<Abstract type="html">The magnitude of the push vector that is applied to the pane view when bouncePaneOpen is called.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpenInDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) CGFloat bounceMagnitude</Declaration>
+			
+			
+			<Anchor>//api/name/bounceMagnitude</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/bounceMagnitude</TokenIdentifier>
 			<Abstract type="html">The magnitude of the push vector that is applied to the pane view when bouncePaneOpen is called.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/bouncePaneOpen</TokenIdentifier>
@@ -578,12 +767,13 @@
 			
 			
 			<Anchor>//api/name/bounceMagnitude</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneDragRevealEnabled:forDirection:</TokenIdentifier>
 			<Abstract type="html">Sets if a user-initiated pan gesture on the paneView can move the pane in the specified direction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneDragRevealEnabledForDirection:</TokenIdentifier>
@@ -602,12 +792,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setPaneDragRevealEnabled:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneDragRevealEnabledForDirection:</TokenIdentifier>
 			<Abstract type="html">Returns if a user-initiated pan gesture on the paneView can move the pane in the specified direction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneDragRevealEnabled:forDirection:</TokenIdentifier>
@@ -623,12 +814,13 @@
 			</Parameters>
 			<ReturnValue><Abstract type="html">If dragging is enabled in the specified direction.</Abstract></ReturnValue>
 			<Anchor>//api/name/paneDragRevealEnabledForDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneTapToCloseEnabled:forDirection:</TokenIdentifier>
 			<Abstract type="html">Sets if a user-initiated tap gesture on the paneView can close it while it is opened.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneTapToCloseEnabledForDirection:</TokenIdentifier>
@@ -647,12 +839,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setPaneTapToCloseEnabled:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneTapToCloseEnabledForDirection:</TokenIdentifier>
 			<Abstract type="html">Returns if a user-initiated tap gesture on the paneView can close it while it is opened.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneTapToCloseEnabled:forDirection:</TokenIdentifier>
@@ -668,12 +861,115 @@
 			</Parameters>
 			<ReturnValue><Abstract type="html">If tap-to-close is enabled for the specified direction.</Abstract></ReturnValue>
 			<Anchor>//api/name/paneTapToCloseEnabledForDirection:</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneDragRequiresScreenEdgePan:</TokenIdentifier>
+			<Abstract type="html">Whether the only pans that can open the drawer should be those that originate from the screen&apos;s edges.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan</Declaration>
+			
+			
+			<Anchor>//api/name/paneDragRequiresScreenEdgePan</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+			<Abstract type="html">Whether the only pans that can open the drawer should be those that originate from the screen&apos;s edges.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan</Declaration>
+			
+			
+			<Anchor>//api/name/paneDragRequiresScreenEdgePan</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+			<Abstract type="html">Whether the only pans that can open the drawer should be those that originate from the screen&apos;s edges.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan</Declaration>
+			
+			
+			<Anchor>//api/name/paneDragRequiresScreenEdgePan</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setScreenEdgePanCancelsConflictingGestures:</TokenIdentifier>
+			<Abstract type="html">Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures</Declaration>
+			
+			
+			<Anchor>//api/name/screenEdgePanCancelsConflictingGestures</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+			<Abstract type="html">Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures</Declaration>
+			
+			
+			<Anchor>//api/name/screenEdgePanCancelsConflictingGestures</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/screenEdgePanCancelsConflictingGestures</TokenIdentifier>
+			<Abstract type="html">Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneDragRequiresScreenEdgePan</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures</Declaration>
+			
+			
+			<Anchor>//api/name/screenEdgePanCancelsConflictingGestures</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/registerTouchForwardingClass:</TokenIdentifier>
 			<Abstract type="html">Attempts to register a UIView subclass that the pane view should forward dragging through.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>- (void)registerTouchForwardingClass:(Class)touchForwardingClass</Declaration>
 			<Parameters>
@@ -684,12 +980,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/registerTouchForwardingClass:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/addStyler:forDirection:</TokenIdentifier>
 			<Abstract type="html">Adds a styler (a class that conforms to the MSDynamicsDrawerStyler protocol).</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/addStylersFromArray:forDirection:</TokenIdentifier>
@@ -710,12 +1007,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/addStyler:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/removeStyler:forDirection:</TokenIdentifier>
 			<Abstract type="html">Removes a styler (a class that conforms to the MSDynamicsDrawerStyler protocol).</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/addStyler:forDirection:</TokenIdentifier>
@@ -736,12 +1034,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/removeStyler:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/addStylersFromArray:forDirection:</TokenIdentifier>
 			<Abstract type="html">Adds an array of stylers (classes that conform to the MSDynamicsDrawerStyler protocol).</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/addStyler:forDirection:</TokenIdentifier>
@@ -762,12 +1061,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/addStylersFromArray:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/stylersForDirection:</TokenIdentifier>
 			<Abstract type="html">Returns an array of the stylers that are set in a specified direction</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/addStyler:forDirection:</TokenIdentifier>
@@ -785,12 +1085,13 @@
 			</Parameters>
 			<ReturnValue><Abstract type="html">An array of stylers that are</Abstract></ReturnValue>
 			<Anchor>//api/name/stylersForDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setRevealWidth:forDirection:</TokenIdentifier>
 			<Abstract type="html">Sets the width that the paneView opens when revealing the drawerView underneath for the specified direction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/revealWidthForDirection:</TokenIdentifier>
@@ -809,12 +1110,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/setRevealWidth:forDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/revealWidthForDirection:</TokenIdentifier>
 			<Abstract type="html">Returns the reveal width that the paneView opens when revealing the drawerView for the specified direction</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 	<RelatedTokens>
 		<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setRevealWidth:forDirection:</TokenIdentifier>
@@ -830,84 +1132,129 @@
 			</Parameters>
 			<ReturnValue><Abstract type="html">The reveal width for the specified direction.</Abstract></ReturnValue>
 			<Anchor>//api/name/revealWidthForDirection:</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/currentRevealWidth</TokenIdentifier>
-			<Abstract type="html">Returns the width that the drawer is currently opened to.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<Abstract type="html">Returns the distance (in points) that the drawer is currently opened.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>- (CGFloat)currentRevealWidth</Declaration>
 			
 			
 			<Anchor>//api/name/currentRevealWidth</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setDrawerView:</TokenIdentifier>
 			<Abstract type="html">The drawer view contains the currently visible drawer view controller&apos;s view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, readonly) UIView *drawerView</Declaration>
 			
 			
 			<Anchor>//api/name/drawerView</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/drawerView</TokenIdentifier>
+			<Abstract type="html">The drawer view contains the currently visible drawer view controller&apos;s view.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) UIView *drawerView</Declaration>
+			
+			
+			<Anchor>//api/name/drawerView</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/drawerView</TokenIdentifier>
 			<Abstract type="html">The drawer view contains the currently visible drawer view controller&apos;s view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, readonly) UIView *drawerView</Declaration>
 			
 			
 			<Anchor>//api/name/drawerView</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setPaneView:</TokenIdentifier>
 			<Abstract type="html">The pane view contains the pane view controller&apos;s view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, readonly) UIView *paneView</Declaration>
 			
 			
 			<Anchor>//api/name/paneView</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/paneView</TokenIdentifier>
+			<Abstract type="html">The pane view contains the pane view controller&apos;s view.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) UIView *paneView</Declaration>
+			
+			
+			<Anchor>//api/name/paneView</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/paneView</TokenIdentifier>
 			<Abstract type="html">The pane view contains the pane view controller&apos;s view.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, readonly) UIView *paneView</Declaration>
 			
 			
 			<Anchor>//api/name/paneView</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/setDelegate:</TokenIdentifier>
 			<Abstract type="html">The delegate you want to receive dynamics drawer view controller messages.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, weak) id&lt;MSDynamicsDrawerViewControllerDelegate&gt; delegate</Declaration>
 			
 			
 			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerViewController/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate you want to receive dynamics drawer view controller messages.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;MSDynamicsDrawerViewControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerViewController/delegate</TokenIdentifier>
 			<Abstract type="html">The delegate you want to receive dynamics drawer view controller messages.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, weak) id&lt;MSDynamicsDrawerViewControllerDelegate&gt; delegate</Declaration>
 			
 			
 			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="6"/>
 		</Token>
 		
+        
 	</File>
 </Tokens>

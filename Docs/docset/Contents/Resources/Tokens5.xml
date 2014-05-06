@@ -6,6 +6,7 @@
 			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerShadowStyler</TokenIdentifier>
 			<Abstract type="html">Adds a shadow to the paneView within a MSDynamicsDrawerViewController to create an effect of the paneView casting a shadow over the drawerView.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+            
 			
 			<NodeRef refid="5"/>
 		</Token>
@@ -14,106 +15,163 @@
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/setShadowColor:</TokenIdentifier>
 			<Abstract type="html">The color of the shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, strong) UIColor *shadowColor</Declaration>
 			
 			
 			<Anchor>//api/name/shadowColor</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/shadowColor</TokenIdentifier>
+			<Abstract type="html">The color of the shadow.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) UIColor *shadowColor</Declaration>
+			
+			
+			<Anchor>//api/name/shadowColor</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerShadowStyler/shadowColor</TokenIdentifier>
 			<Abstract type="html">The color of the shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, strong) UIColor *shadowColor</Declaration>
 			
 			
 			<Anchor>//api/name/shadowColor</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/setShadowRadius:</TokenIdentifier>
 			<Abstract type="html">The blur radius (in points) used to render the shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat shadowRadius</Declaration>
 			
 			
 			<Anchor>//api/name/shadowRadius</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/shadowRadius</TokenIdentifier>
+			<Abstract type="html">The blur radius (in points) used to render the shadow.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) CGFloat shadowRadius</Declaration>
+			
+			
+			<Anchor>//api/name/shadowRadius</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerShadowStyler/shadowRadius</TokenIdentifier>
 			<Abstract type="html">The blur radius (in points) used to render the shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat shadowRadius</Declaration>
 			
 			
 			<Anchor>//api/name/shadowRadius</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/setShadowOpacity:</TokenIdentifier>
 			<Abstract type="html">The opacity of the shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat shadowOpacity</Declaration>
 			
 			
 			<Anchor>//api/name/shadowOpacity</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/shadowOpacity</TokenIdentifier>
+			<Abstract type="html">The opacity of the shadow.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) CGFloat shadowOpacity</Declaration>
+			
+			
+			<Anchor>//api/name/shadowOpacity</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerShadowStyler/shadowOpacity</TokenIdentifier>
 			<Abstract type="html">The opacity of the shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGFloat shadowOpacity</Declaration>
 			
 			
 			<Anchor>//api/name/shadowOpacity</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/setShadowOffset:</TokenIdentifier>
 			<Abstract type="html">The offset (in points) of the layer’s shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGSize shadowOffset</Declaration>
 			
 			
 			<Anchor>//api/name/shadowOffset</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/shadowOffset</TokenIdentifier>
+			<Abstract type="html">The offset (in points) of the layer’s shadow.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) CGSize shadowOffset</Declaration>
+			
+			
+			<Anchor>//api/name/shadowOffset</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerShadowStyler/shadowOffset</TokenIdentifier>
 			<Abstract type="html">The offset (in points) of the layer’s shadow.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, assign) CGSize shadowOffset</Declaration>
 			
 			
 			<Anchor>//api/name/shadowOffset</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerShadowStyler/styler</TokenIdentifier>
 			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			
 			<Declaration>+ (instancetype)styler</Declaration>
 			
 			
 			<Anchor>//api/name/styler</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/stylerWasAddedToDynamicsDrawerViewController:forDirection:</TokenIdentifier>
 			<Abstract type="html">Used to set up the appearance of the styler when it is added to a MSDynamicsDrawerViewController instance.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			
 			<Declaration>- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
@@ -127,12 +185,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/stylerWasAddedToDynamicsDrawerViewController:forDirection:</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
 			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			
 			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
@@ -149,12 +208,13 @@
 			</Parameters>
 			
 			<Anchor>//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerShadowStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
 			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>			
+			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			
 			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
 			<Parameters>
@@ -168,7 +228,9 @@
 			</Parameters>
 			
 			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</Anchor>
+            <NodeRef refid="5"/>
 		</Token>
 		
+        
 	</File>
 </Tokens>

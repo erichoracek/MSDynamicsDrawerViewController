@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:MSDynamicsDrawerViewController.xcodeproj">
+      location = "group:Docs/Docs.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Example/Example.xcodeproj">

@@ -4,10 +4,9 @@
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
 		<title>MSDynamicsDrawerViewControllerDelegate Protocol Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
-		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
 		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
-		<meta name="generator" content="appledoc 2.1 (build 840)" />
+		<meta name="generator" content="appledoc 2.2 (build 961)" />
 	</head>
 	<body>
 		<header id="top_header">
@@ -48,6 +47,8 @@
 	
 	<option value="//api/name/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:">&nbsp;&nbsp;&nbsp;&nbsp;- dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</option>
 	
+	<option value="//api/name/dynamicsDrawerViewController:shouldBeginPanePan:">&nbsp;&nbsp;&nbsp;&nbsp;- dynamicsDrawerViewController:shouldBeginPanePan:</option>
+	
 	
 	
 </select>
@@ -80,6 +81,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:">dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/dynamicsDrawerViewController:shouldBeginPanePan:">dynamicsDrawerViewController:shouldBeginPanePan:</a></span></li>
+	
 </ul></li>
 
 
@@ -111,8 +114,8 @@
 </tr>
 						</tbody></table></div>
 					
-					
-					
+                    
+                    
 					
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
@@ -136,14 +139,18 @@
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:">&ndash;&nbsp;dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:">&ndash;&nbsp;dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the drawer view controller did update to a pane state in the specified direction.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/dynamicsDrawerViewController:shouldBeginPanePan:">&ndash;&nbsp;dynamicsDrawerViewController:shouldBeginPanePan:</a></code>
 	</span>
 	
 	
@@ -264,8 +271,64 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>It is important to note that the user is able to interrupt this change, and therefore is it not guaranteed that this update will occur. If desired, the user can be prevented from interrputing by passing <code>NO</code> for the <code>allowingUserInterruption</code> parameter in methods that udpate the <code>paneState</code>. For the aforementioned reasons, this method does not always pair with an invocation of <a href="#//api/name/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:"><code>dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</code></a>.</p>
+		<p>It is important to note that the user is able to interrupt this change, and therefore is it not guaranteed that this update will occur. If desired, the user can be prevented from interrupting by passing <code>NO</code> for the <code>allowingUserInterruption</code> parameter in methods that update the <code>paneState</code>. For the aforementioned reasons, this method does not always pair with an invocation of <a href="#//api/name/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:"><code>dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</code></a>.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MSDynamicsDrawerViewController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/dynamicsDrawerViewController:shouldBeginPanePan:" title="dynamicsDrawerViewController:shouldBeginPanePan:"></a>
+	<h3 class="subsubtitle method-title">dynamicsDrawerViewController:shouldBeginPanePan:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Queries the delegate for whether the dynamics drawer view controller should begin a pane pan</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)<em>drawerViewController</em> shouldBeginPanePan:(UIPanGestureRecognizer *)<em>panGestureRecognizer</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>drawerViewController</em></dt>
+			<dd><p>The drawer view controller that the delegate is registered with.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>panGestureRecognizer</em></dt>
+			<dd><p>The internal pan gesture recognizer that is responsible for panning the pane. The behavior resulting from modifying attributes of this gesture recognizer is undefined and not recommended.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>Whether the drawer view controller should begin a pane pan</p>
+	</div>
+	
+	
+	
+	
 	
 	
 	
@@ -284,6 +347,8 @@
 					</div>
 					
 					
+                    
+                    
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
@@ -294,9 +359,9 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 monospace. All rights reserved. (Last updated: 2014-01-05)</span><br />
+						<p><span class="copyright">&copy; 2014 monospace. All rights reserved. (Last updated: 2014-04-06)</span><br />
 						
-						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 961)</a>.</span></p>
 						
 					</div>
 				</div>
