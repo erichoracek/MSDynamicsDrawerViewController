@@ -1411,10 +1411,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if device rotation has occured during state transition)
     [UIViewController attemptRotationToDeviceOrientation];
     
-    if (self.dynamicAnimatorCompletion) {
-        self.dynamicAnimatorCompletion();
-        self.dynamicAnimatorCompletion = nil;
+    void (^completion)() = self.dynamicAnimatorCompletion;
+    
+    self.dynamicAnimatorCompletion = nil;
+    
+    if (completion)
+    {
+        completion();
     }
 }
-
 @end
