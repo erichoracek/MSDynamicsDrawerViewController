@@ -419,6 +419,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion
 {
+    [self setPaneViewController:paneViewController animated:animated middleCompletion:nil completion:completion];
+}
+
+- (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated  middleCompletion:(void (^)(void))middleCompletion completion:(void (^)(void))completion
+{
     NSParameterAssert(paneViewController);
     if (!animated) {
         self.paneViewController = paneViewController;
@@ -429,6 +434,11 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
         [self.paneViewController willMoveToParentViewController:nil];
         [self.paneViewController beginAppearanceTransition:NO animated:animated];
         void(^transitionToNewPaneViewController)() = ^{
+            if (middleCompletion && self.paneViewSlideOffAnimationEnabled)
+            {
+                middleCompletion();
+            }
+            
             [paneViewController willMoveToParentViewController:self];
             [self.paneViewController.view removeFromSuperview];
             [self.paneViewController removeFromParentViewController];
@@ -758,8 +768,21 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     // If the drawer is getting opened and there's more than one possible direction enforce that the directional eqivalent is used
     MSDynamicsDrawerDirection direction;
     if ((paneState != MSDynamicsDrawerPaneStateClosed) && (self.currentDrawerDirection == MSDynamicsDrawerDirectionNone)) {
-        NSAssert(MSDynamicsDrawerDirectionIsCardinal(self.possibleDrawerDirection), @"Unable to set the pane to an open state with multiple possible drawer directions, as the drawer direction to open in is indeterminate. Use `setPaneState:inDirection:animated:allowUserInterruption:completion:` instead.");
-        direction = self.possibleDrawerDirection;
+        MSDynamicsDrawerDirection possibleDrawerDirection = self.possibleDrawerDirection;
+        
+        if (!MSDynamicsDrawerDirectionIsCardinal(possibleDrawerDirection))
+        {
+            if (possibleDrawerDirection & MSDynamicsDrawerDirectionLeft)
+            {
+                possibleDrawerDirection = MSDynamicsDrawerDirectionLeft;
+            }
+            else
+            {
+                possibleDrawerDirection = MSDynamicsDrawerDirectionTop;
+            }
+        }
+
+        [self setPaneState:paneState inDirection:self.possibleDrawerDirection animated:animated allowUserInterruption:allowUserInterruption completion:completion];
     } else {
         direction = self.currentDrawerDirection;
     }
@@ -1388,10 +1411,13 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if device rotation has occured during state transition)
     [UIViewController attemptRotationToDeviceOrientation];
     
-    if (self.dynamicAnimatorCompletion) {
-        self.dynamicAnimatorCompletion();
-        self.dynamicAnimatorCompletion = nil;
+    void (^completion)() = self.dynamicAnimatorCompletion;
+    
+    self.dynamicAnimatorCompletion = nil;
+    
+    if (completion)
+    {
+        completion();
     }
 }
-
 @end

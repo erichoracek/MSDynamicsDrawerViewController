@@ -348,3 +348,55 @@
 }
 
 @end
+
+@implementation MSDynamicsDrawerSlideStyler
+
+#pragma mark - MSDynamicsDrawerSlideStyler
+
++ (instancetype)styler
+{
+    return [self new];
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
+{
+    CGFloat paneRevealWidth = [dynamicsDrawerViewController revealWidthForDirection:direction];
+    CGFloat translate = (paneRevealWidth * paneClosedFraction);
+    
+    CGAffineTransform drawerViewTransform = dynamicsDrawerViewController.drawerView.transform;
+    
+    if (direction & MSDynamicsDrawerDirectionHorizontal)
+    {
+        translate += (dynamicsDrawerViewController.view.bounds.size.width - paneRevealWidth);
+        
+        if (direction & (MSDynamicsDrawerDirectionTop | MSDynamicsDrawerDirectionLeft)) {
+            translate = -translate;
+        }
+        
+        drawerViewTransform.tx = CGAffineTransformMakeTranslation(translate, 0.0).tx;
+    }
+    else if (direction & MSDynamicsDrawerDirectionVertical)
+    {
+        translate += (dynamicsDrawerViewController.view.bounds.size.height - paneRevealWidth);
+        
+        if (direction & (MSDynamicsDrawerDirectionTop | MSDynamicsDrawerDirectionLeft))
+        {
+            translate = -translate;
+        }
+        
+        drawerViewTransform.ty = CGAffineTransformMakeTranslation(0.0, translate).ty;
+    }
+    
+    dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
+}
+
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+{
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 0.0);
+    CGAffineTransform drawerViewTransform = dynamicsDrawerViewController.drawerView.transform;
+    drawerViewTransform.tx = translate.tx;
+    drawerViewTransform.ty = translate.ty;
+    dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
+}
+
+@end

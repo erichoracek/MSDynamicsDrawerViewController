@@ -127,6 +127,21 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 - (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated completion:(void (^)(void))completion;
 
 /**
+ Sets the `paneViewController` with an animated transition.
+ 
+ If the value for the `animated` parameter is `NO`, then this method is functionally equivalent to using the `paneViewController` setter.
+ 
+ @param paneViewController The `paneViewController` to be added.
+ @param animated Whether adding the pane should be animated.
+ @param middleCompletion An optional middle completion block called before pane slides back when pane is animated.
+ @param completion An optional completion block called upon the completion of the `paneViewController` being set.
+ 
+ @see paneViewController
+ @see paneViewSlideOffAnimationEnabled
+ */
+- (void)setPaneViewController:(UIViewController *)paneViewController animated:(BOOL)animated  middleCompletion:(void (^)(void))middleCompletion completion:(void (^)(void))completion;
+
+/**
  Sets the view controller to be revealed as a drawer in the specified direction underneath the pane view controller.
  
  There is a maximum of two drawer view controllers that can be set simultaneously. When a second view controllers is set, it must be in the opposite direction of the first view controller. When a single drawer view controller is set, it can be set in any of the cardinal directions.
