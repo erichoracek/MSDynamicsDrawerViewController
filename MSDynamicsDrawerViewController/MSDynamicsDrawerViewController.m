@@ -1374,20 +1374,23 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator
 {
     // If the dynaimc animator has paused while the `panePanGestureRecognizer` is active, ignore it as it's a side effect of removing behaviors, not a resting state
-    if (self.panePanGestureRecognizer.state != UIGestureRecognizerStatePossible) return;
+    if (self.panePanGestureRecognizer.state == UIGestureRecognizerStatePossible) {
+        
+        // Since a resting pane state has been reached, we can remove all behaviors
+        [self.dynamicAnimator removeAllBehaviors];
+        
+        // Update the pane state to the nearest pane state
+        [self _setPaneState:[self nearestPaneState]];
+        
+        // Update pane user interaction appropriately
+        [self setPaneViewControllerViewUserInteractionEnabled:(self.paneState == MSDynamicsDrawerPaneStateClosed)];
+        
+        // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if device rotation has occured during state transition)
+        [UIViewController attemptRotationToDeviceOrientation];
+        
+    }
     
-    // Since a resting pane state has been reached, we can remove all behaviors
-    [self.dynamicAnimator removeAllBehaviors];
-    
-    // Update the pane state to the nearest pane state
-    [self _setPaneState:[self nearestPaneState]];
-    
-    // Update pane user interaction appropriately
-    [self setPaneViewControllerViewUserInteractionEnabled:(self.paneState == MSDynamicsDrawerPaneStateClosed)];
-    
-    // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if device rotation has occured during state transition)
-    [UIViewController attemptRotationToDeviceOrientation];
-    
+    // Always call the completion block
     if (self.dynamicAnimatorCompletion) {
         self.dynamicAnimatorCompletion();
         self.dynamicAnimatorCompletion = nil;
