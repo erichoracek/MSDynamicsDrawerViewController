@@ -63,22 +63,21 @@ typedef NS_ENUM(NSInteger, MSGesturesSectionType) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
-        case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
-            return 1;
-        case MSGesturesSectionTypeDragToReveal:
-        case MSGesturesSectionTypeTapToClose: {
-            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-            NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
-            __block NSInteger possibleDirectionCount = 0;
-            MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
-                possibleDirectionCount++;
-            });
-            return possibleDirectionCount;
-        }
-        default:
-            return 0;
+    case MSGesturesSectionTypePaneDragRequiresScreenEdgePan:
+    case MSGesturesSectionTypeScreenEdgePanCancelsConflictingGestures:
+        return 1;
+    case MSGesturesSectionTypeDragToReveal:
+    case MSGesturesSectionTypeTapToClose: {
+        MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+        NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
+        __block NSInteger possibleDirectionCount = 0;
+        MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
+            possibleDirectionCount++;
+        });
+        return possibleDirectionCount;
     }
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

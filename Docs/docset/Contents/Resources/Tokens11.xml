@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/MSDynamicsDrawerViewControllerDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/MSDynamicsDrawerViewControllerDelegate</TokenIdentifier>
+			<Abstract type="html">To respond to the updates to paneState for an instance of MSDynamicsDrawerViewController, configure a custom class to adopt the MSDynamicsDrawerViewControllerDelegate protocol and set it as the delegate object.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="11"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerViewControllerDelegate/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</TokenIdentifier>
+			<Abstract type="html">Informs the delegate that the drawer view controller will attempt to update to a pane state in the specified direction.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>drawerViewController</Name>
+					<Abstract type="html">The drawer view controller that the delegate is registered with.</Abstract>
+				</Parameter><Parameter>
+					<Name>paneState</Name>
+					<Abstract type="html">The pane state that the view controller will attempt to update to.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">When the pane state is updating to MSDynamicsDrawerPaneStateClosed: the direction that the drawer view controller is transitioning from. When the pane state is updating to MSDynamicsDrawerPaneStateOpen or MSDynamicsDrawerPaneStateOpenWide: the direction that the drawer view controller is transitioning to.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerViewControllerDelegate/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</TokenIdentifier>
+			<Abstract type="html">Informs the delegate that the drawer view controller did update to a pane state in the specified direction.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>drawerViewController</Name>
+					<Abstract type="html">The drawer view controller that the delegate is registered with.</Abstract>
+				</Parameter><Parameter>
+					<Name>paneState</Name>
+					<Abstract type="html">The pane state that the view controller did update to.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">When the pane state is updating to MSDynamicsDrawerPaneStateClosed: the direction that the drawer view controller is transitioning from. When the pane state is updating to MSDynamicsDrawerPaneStateOpen or MSDynamicsDrawerPaneStateOpenWide: the direction that the drawer view controller is transitioning to.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/dynamicsDrawerViewController:didUpdateToPaneState:forDirection:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerViewControllerDelegate/dynamicsDrawerViewController:shouldBeginPanePan:</TokenIdentifier>
+			<Abstract type="html">Queries the delegate for whether the dynamics drawer view controller should begin a pane pan</Abstract>
+			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController shouldBeginPanePan:(UIPanGestureRecognizer *)panGestureRecognizer</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>drawerViewController</Name>
+					<Abstract type="html">The drawer view controller that the delegate is registered with.</Abstract>
+				</Parameter><Parameter>
+					<Name>panGestureRecognizer</Name>
+					<Abstract type="html">The internal pan gesture recognizer that is responsible for panning the pane. The behavior resulting from modifying attributes of this gesture recognizer is undefined and not recommended.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Whether the drawer view controller should begin a pane pan</Abstract></ReturnValue>
+			<Anchor>//api/name/dynamicsDrawerViewController:shouldBeginPanePan:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

@@ -63,21 +63,20 @@ typedef NS_ENUM(NSInteger, MSControlCellType) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
-        case MSControlCellTypeSlider: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSSliderControlCellReuseIdentifier forIndexPath:indexPath];
-            cell.accessoryView = [UISlider new];
-            cell.textLabel.text = @"Slider";
-            return cell;
-        }
-        case MSControlCellTypeSwitch: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSSwitchControlCellReuseIdentifier forIndexPath:indexPath];
-            cell.accessoryView = [UISwitch new];
-            cell.textLabel.text = @"Switch";
-            return cell;
-        }
-        default:
-            return nil;
+    case MSControlCellTypeSlider: {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSSliderControlCellReuseIdentifier forIndexPath:indexPath];
+        cell.accessoryView = [UISlider new];
+        cell.textLabel.text = @"Slider";
+        return cell;
     }
+    case MSControlCellTypeSwitch: {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSSwitchControlCellReuseIdentifier forIndexPath:indexPath];
+        cell.accessoryView = [UISwitch new];
+        cell.textLabel.text = @"Switch";
+        return cell;
+    }
+    }
+    return nil;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -87,7 +86,7 @@ typedef NS_ENUM(NSInteger, MSControlCellType) {
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    return @"Swiping on UISwitch and UISlider will not cause the pane view to be dragged because their classes have been added to the 'touchForwardingClasses' set on 'MSDynamicsDrawerViewController'.";
+    return @"Swiping on a UISwitch or a UISlider will not cause the pane view to be dragged. This is because their classes have been registered as 'touchForwardingClasses' on 'MSDynamicsDrawerViewController'. Add additional classes if you don't want a drawer to open when they're swiped on.";
 }
 
 #pragma mark - UITableViewDelegate

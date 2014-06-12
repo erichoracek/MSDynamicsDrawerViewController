@@ -26,6 +26,7 @@
 //  THE SOFTWARE.
 //
 
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 #import "MSLogoViewController.h"
 
 @implementation MSLogoViewController
@@ -36,42 +37,45 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.logoView];
-    [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeRight
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeRight
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeTop
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeTop
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeBottom
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeBottom
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeHeight
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeHeight
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeHeight
-                                                            multiplier:1.0
-                                                              constant:MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal],
-                                ]];
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    // Eww!
+    [self.view addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:self.logoView
+                                     attribute:NSLayoutAttributeRight
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.view
+                                     attribute:NSLayoutAttributeRight
+                                    multiplier:1.0
+                                      constant:0.0],
+        [NSLayoutConstraint constraintWithItem:self.logoView
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.view
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1.0
+                                      constant:0.0],
+        [NSLayoutConstraint constraintWithItem:self.logoView
+                                     attribute:NSLayoutAttributeBottom
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.view
+                                     attribute:NSLayoutAttributeBottom
+                                    multiplier:1.0
+                                      constant:0.0],
+        [NSLayoutConstraint constraintWithItem:self.logoView
+                                     attribute:NSLayoutAttributeHeight
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self.view
+                                     attribute:NSLayoutAttributeHeight
+                                    multiplier:1.0
+                                      constant:0.0],
+        [NSLayoutConstraint constraintWithItem:self.logoView
+                                     attribute:NSLayoutAttributeWidth
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeHeight
+                                    multiplier:1.0
+                                      constant:MSDynamicsDrawerDefaultMaxRevealWidthHorizontal],
+    ]];
 }
 
 #pragma mark - MSLogoViewController
@@ -79,9 +83,12 @@
 - (UIImageView *)logoView
 {
     if (!_logoView) {
-        _logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
-        _logoView.translatesAutoresizingMaskIntoConstraints = NO;
-        _logoView.contentMode = UIViewContentModeCenter;
+        self.logoView = ({
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
+            imageView.translatesAutoresizingMaskIntoConstraints = NO;
+            imageView.contentMode = UIViewContentModeCenter;
+            imageView;
+        });
     }
     return _logoView;
 }

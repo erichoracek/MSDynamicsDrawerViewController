@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/MSDynamicsDrawerResizeStyler.html">
+	<File path="Classes/MSDynamicsDrawerParallaxStyler.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerResizeStyler</TokenIdentifier>
-			<Abstract type="html">Resizes the drawer view controller&apos;s view to fit within the visible space that a drawer is opened to as derived from the currentRevealWidth property.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerParallaxStyler</TokenIdentifier>
+			<Abstract type="html">Creates a parallax effect on the drawerView while sliding the paneView within a MSDynamicsDrawerViewController.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
             
 			
@@ -13,43 +13,43 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/setMinimumResizeRevealWidth:</TokenIdentifier>
-			<Abstract type="html">The minimum reveal width that the drawer view controller&apos;s view should be resized to equal the currentRevealWidth at.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/setParallaxOffsetFraction:</TokenIdentifier>
+			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) CGFloat minimumResizeRevealWidth</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
 			
 			
-			<Anchor>//api/name/minimumResizeRevealWidth</Anchor>
+			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
             <NodeRef refid="3"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/minimumResizeRevealWidth</TokenIdentifier>
-			<Abstract type="html">The minimum reveal width that the drawer view controller&apos;s view should be resized to equal the currentRevealWidth at.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/parallaxOffsetFraction</TokenIdentifier>
+			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) CGFloat minimumResizeRevealWidth</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
 			
 			
-			<Anchor>//api/name/minimumResizeRevealWidth</Anchor>
+			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
             <NodeRef refid="3"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerResizeStyler/minimumResizeRevealWidth</TokenIdentifier>
-			<Abstract type="html">The minimum reveal width that the drawer view controller&apos;s view should be resized to equal the currentRevealWidth at.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerParallaxStyler/parallaxOffsetFraction</TokenIdentifier>
+			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) CGFloat minimumResizeRevealWidth</Declaration>
+			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
 			
 			
-			<Anchor>//api/name/minimumResizeRevealWidth</Anchor>
+			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
             <NodeRef refid="3"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerResizeStyler/styler</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerParallaxStyler/styler</TokenIdentifier>
 			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			
@@ -61,7 +61,7 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
 			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			
@@ -84,7 +84,7 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerResizeStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
 			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
 			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
 			

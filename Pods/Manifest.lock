@@ -1,0 +1,33 @@
+PODS:
+  - DynamicXray (0.2.0)
+  - Fingertips (0.3.0)
+  - KIF (3.0.4):
+    - KIF/XCTest
+  - KIF/XCTest (3.0.4)
+  - libextobjc/EXTScope (0.4):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.4)
+  - MSDynamicsDrawerViewController (1.5.2)
+  - Stubbilino (0.1.1)
+
+DEPENDENCIES:
+  - DynamicXray
+  - Fingertips (~> 0.3)
+  - KIF (~> 3.0)
+  - libextobjc/EXTScope (~> 0.4)
+  - MSDynamicsDrawerViewController (from `.`)
+  - Stubbilino (~> 0.1)
+
+EXTERNAL SOURCES:
+  MSDynamicsDrawerViewController:
+    :path: .
+
+SPEC CHECKSUMS:
+  DynamicXray: 75d650998e8c7b944283a7e716ea74926bc757c0
+  Fingertips: 09d223a390349b317a51d4c941d778bdb661c4e1
+  KIF: 443c517d14fc2a99d27d3df170bc274cdf288241
+  libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
+  MSDynamicsDrawerViewController: 8675c473c7c2e6743838c59c9a238d7aef85c104
+  Stubbilino: 21b405b85fcc4f6dc3b4f7c82f34322acdedd862
+
+COCOAPODS: 0.33.1

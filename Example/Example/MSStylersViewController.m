@@ -41,27 +41,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 
 @implementation MSStylersViewController
 
-#pragma mark - NSObject
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
 #pragma mark - UIViewController
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
 
 - (void)loadView
 {
@@ -79,39 +59,61 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
-#pragma mark - UITableViewController
-
 #pragma mark - MSStylersViewController
 
-- (void)initialize
+- (NSArray *)stylerClasses
 {
-    self.stylerClasses = @[
-        [MSDynamicsDrawerScaleStyler class],
-        [MSDynamicsDrawerFadeStyler class],
-        [MSDynamicsDrawerParallaxStyler class],
-        [MSDynamicsDrawerShadowStyler class],
-        [MSDynamicsDrawerResizeStyler class]
-    ];
-    self.stylerNames = @[
-        @"Scale",
-        @"Fade",
-        @"Parallax",
-        @"Shadow",
-        @"Drawer Resize"
-    ];
-    self.stylerDescriptions = @[
-        @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
-        @"The 'Fade' styler fades the drawer view as the pane view is opened",
-        @"The 'Parallax' styler translates the drawer view inwards as the pane view is opened",
-        @"The 'Shadow' styler causes the pane view to cast a shadow on the drawer view",
-        @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal width"
-    ];
-    self.directionNames = @{
-        @(MSDynamicsDrawerDirectionLeft) : @"Left",
-        @(MSDynamicsDrawerDirectionRight) : @"Right",
-        @(MSDynamicsDrawerDirectionTop) : @"Top",
-        @(MSDynamicsDrawerDirectionBottom) : @"Bottom"
-    };
+    if (!_stylerClasses) {
+        self.stylerClasses = @[
+            [MSDynamicsDrawerScaleStyler class],
+            [MSDynamicsDrawerFadeStyler class],
+            [MSDynamicsDrawerParallaxStyler class],
+            [MSDynamicsDrawerShadowStyler class],
+            [MSDynamicsDrawerResizeStyler class]
+        ];
+    }
+    return _stylerClasses;
+}
+
+- (NSArray *)stylerNames
+{
+    if (!_stylerNames) {
+        self.stylerNames = @[
+            @"Scale",
+            @"Fade",
+            @"Parallax",
+            @"Shadow",
+            @"Drawer Resize"
+        ];
+    }
+    return _stylerNames;
+}
+
+- (NSArray *)stylerDescriptions
+{
+    if (!_stylerDescriptions) {
+        self.stylerDescriptions = @[
+            @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
+            @"The 'Fade' styler fades the drawer view as the pane view is opened",
+            @"The 'Parallax' styler translates the drawer view inwards as the pane view is opened",
+            @"The 'Shadow' styler causes the pane view to cast a shadow on the drawer view",
+            @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal width"
+        ];
+    }
+    return _stylerDescriptions;
+}
+
+- (NSDictionary *)directionNames
+{
+    if (!_directionNames) {
+        self.directionNames = @{
+            @(MSDynamicsDrawerDirectionLeft) : @"Left",
+            @(MSDynamicsDrawerDirectionRight) : @"Right",
+            @(MSDynamicsDrawerDirectionTop) : @"Top",
+            @(MSDynamicsDrawerDirectionBottom) : @"Bottom"
+        };
+    }
+    return _directionNames;
 }
 
 #pragma mark - UITableViewDataSource
@@ -185,7 +187,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
             if (existingStyler) {
                 [dynamicsDrawerViewController removeStyler:existingStyler forDirection:drawerDirection];
             } else {
-                [dynamicsDrawerViewController addStyler:[stylerClass styler] forDirection:drawerDirection];
+                [dynamicsDrawerViewController addStyler:[stylerClass new] forDirection:drawerDirection];
             }
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         }

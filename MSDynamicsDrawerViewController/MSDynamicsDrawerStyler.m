@@ -50,7 +50,7 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
-    CGFloat paneRevealWidth = [dynamicsDrawerViewController revealWidthForDirection:direction];
+    CGFloat paneRevealWidth = [dynamicsDrawerViewController.paneLayout maxRevealWidthForDirection:direction];
     CGFloat translate = ((paneRevealWidth * paneClosedFraction) * self.parallaxOffsetFraction);
     if (direction & (MSDynamicsDrawerDirectionTop | MSDynamicsDrawerDirectionLeft)) {
         translate = -translate;
@@ -195,24 +195,25 @@
     
     CGRect drawerViewFrame = [[dynamicsDrawerViewController drawerViewControllerForDirection:direction] view].frame;
     
-    CGFloat minimumResizeRevealWidth = (self.useRevealWidthAsMinimumResizeRevealWidth ? [dynamicsDrawerViewController revealWidthForDirection:direction] : self.minimumResizeRevealWidth);
-    if (dynamicsDrawerViewController.currentRevealWidth < minimumResizeRevealWidth) {
-        drawerViewFrame.size.width = [dynamicsDrawerViewController revealWidthForDirection:direction];
+    CGFloat currentRevealWidth = [dynamicsDrawerViewController.paneLayout currentRevealWidthForPaneWithCenter:dynamicsDrawerViewController.paneView.center forDirection:direction];
+    CGFloat minimumResizeRevealWidth = (self.useRevealWidthAsMinimumResizeRevealWidth ? [dynamicsDrawerViewController.paneLayout maxRevealWidthForDirection:direction] : self.minimumResizeRevealWidth);
+    if (currentRevealWidth < minimumResizeRevealWidth) {
+        drawerViewFrame.size.width = [dynamicsDrawerViewController.paneLayout maxRevealWidthForDirection:direction];
     } else {
         if (direction & MSDynamicsDrawerDirectionHorizontal) {
-            drawerViewFrame.size.width = dynamicsDrawerViewController.currentRevealWidth;
+            drawerViewFrame.size.width = currentRevealWidth;
         } else if (direction & MSDynamicsDrawerDirectionVertical) {
-            drawerViewFrame.size.height = dynamicsDrawerViewController.currentRevealWidth;
+            drawerViewFrame.size.height = currentRevealWidth;
         }
     }
     
-    CGRect paneViewFrame = dynamicsDrawerViewController.paneView.frame;
+    CGRect containerBounds = dynamicsDrawerViewController.view.bounds;
     switch (direction) {
         case MSDynamicsDrawerDirectionRight:
-            drawerViewFrame.origin.x = CGRectGetMaxX(paneViewFrame);
+            drawerViewFrame.origin.x = roundf(CGRectGetWidth(containerBounds) - CGRectGetWidth(drawerViewFrame));
             break;
         case MSDynamicsDrawerDirectionBottom:
-            drawerViewFrame.origin.x = CGRectGetMaxY(paneViewFrame);
+            drawerViewFrame.origin.y = roundf(CGRectGetWidth(containerBounds) - CGRectGetWidth(drawerViewFrame));
             break;
         default:
             break;
@@ -348,3 +349,198 @@
 }
 
 @end
+
+@interface MSDynamicsDrawerStatusBarOffsetStyler ()
+
+@property (nonatomic, strong) UIView *statusBarContainerView;
+@property (nonatomic, strong) UIView *statusBarSnapshotView;
+@property (nonatomic, assign) UIWindowLevel dynamicsDrawerWindowLevel;
+@property (nonatomic, assign) UIWindowLevel dynamicsDrawerOriginalWindowLevel;
+@property (nonatomic, assign) BOOL dynamicsDrawerWindowLifted;
+
+
+@property (nonatomic, weak) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
+
+@end
+
+static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
+static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);
+
+@implementation MSDynamicsDrawerStatusBarOffsetStyler
+
+#pragma mark - NSObject
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarWillChangeFrame:) name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarDidChangeFrame:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+    }
+    return self;
+}
+
+#pragma mark - MSDynamicsDrawerStyler
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (paneState == MSDynamicsDrawerPaneStateClosed) {
+        [self.statusBarContainerView removeFromSuperview];
+        self.dynamicsDrawerWindowLifted = NO;
+    }
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    
+    if (!self.statusBarContainerView.superview) {
+        [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:NO withStatusBarFrame:statusBarFrame paneClosedFraction:paneClosedFraction];
+        [self.dynamicsDrawerViewController.paneView addSubview:self.statusBarContainerView];
+    }
+    
+    self.dynamicsDrawerWindowLifted = !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame);
+}
+
+- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+    self.dynamicsDrawerViewController = dynamicsDrawerViewController;
+    
+    CGFloat paneClosedFraction = [dynamicsDrawerViewController.paneLayout paneClosedFractionForPaneWithCenter:dynamicsDrawerViewController.paneView.center forDirection:direction];
+    [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
+}
+
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+    self.dynamicsDrawerViewController = nil;
+}
+
+#pragma mark - MSDynamicsDrawerStatusBarOffsetStyler
+
+- (void)updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:(BOOL)afterScreenUpdates withStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
+{
+    if ([self canCreateStatusBarSnapshotWithStatusBarFrame:statusBarFrame paneClosedFraction:paneClosedFraction]) {
+        self.statusBarSnapshotView = [self.dynamicsDrawerViewController.view.window.screen snapshotViewAfterScreenUpdates:afterScreenUpdates];
+    }
+    if (self.statusBarContainerView && self.statusBarSnapshotView) {
+        self.statusBarContainerView.frame = (CGRect){CGPointZero, {CGRectGetWidth(statusBarFrame), MSStatusBarMaximumAdjustmentHeight}};
+        [self.statusBarContainerView addSubview:self.statusBarSnapshotView];
+    }
+}
+
+- (CGFloat)paneClosedFraction
+{
+    return [self.dynamicsDrawerViewController.paneLayout paneClosedFractionForPaneWithCenter:self.dynamicsDrawerViewController.paneView.center forDirection:self.dynamicsDrawerViewController.currentDrawerDirection];
+}
+
+- (UIWindowLevel)dynamicsDrawerWindowLevel
+{
+    return self.dynamicsDrawerViewController.view.window.windowLevel;
+}
+
+- (void)setDynamicsDrawerWindowLevel:(UIWindowLevel)dynamicsDrawerWindowLevel
+{
+    self.dynamicsDrawerViewController.view.window.windowLevel = dynamicsDrawerWindowLevel;
+}
+
+- (BOOL)dynamicsDrawerIsWithinHigestWindow
+{
+#warning figure this out
+    CGFloat maximumWindowLevel = -100.0;
+    for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+        if (window.hidden) {
+            continue;
+        }
+        maximumWindowLevel = ((window.windowLevel > maximumWindowLevel) ? window.windowLevel : maximumWindowLevel);
+    }
+    return (maximumWindowLevel <= self.dynamicsDrawerWindowLevel);
+}
+
+- (BOOL)dynamicsDrawerWindowIsAboveStatusBar
+{
+    return (self.dynamicsDrawerWindowLevel > UIWindowLevelStatusBar);
+}
+
+- (BOOL)canCreateStatusBarSnapshotWithStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
+{
+    return ([self dynamicsDrawerIsWithinHigestWindow] &&
+            ![self dynamicsDrawerWindowIsAboveStatusBar] &&
+            (paneClosedFraction == 1.0) &&
+            !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame) &&
+            ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive));
+}
+
+- (void)setDynamicsDrawerWindowLifted:(BOOL)dynamicsDrawerWindowLifted
+{
+    if (!_dynamicsDrawerWindowLifted && dynamicsDrawerWindowLifted) {
+        self.dynamicsDrawerOriginalWindowLevel = self.dynamicsDrawerWindowLevel;
+        self.dynamicsDrawerWindowLevel = (UIWindowLevelStatusBar + 1.0);
+    } else if (_dynamicsDrawerWindowLifted && !dynamicsDrawerWindowLifted) {
+        self.dynamicsDrawerWindowLevel = self.dynamicsDrawerOriginalWindowLevel;
+    }
+    _dynamicsDrawerWindowLifted = dynamicsDrawerWindowLifted;
+}
+
+//#define STATUS_BAR_DEBUG
+
+- (UIView *)statusBarContainerView
+{
+    if (!_statusBarContainerView) {
+        self.statusBarContainerView = ({
+            UIView *view = [UIView new];
+            view.userInteractionEnabled = NO;
+            view.clipsToBounds = YES;
+#ifdef STATUS_BAR_DEBUG
+            view.backgroundColor = [UIColor redColor];
+            view.layer.borderColor = [UIColor redColor].CGColor;
+            view.layer.borderWidth = 1.0;
+#endif
+            view;
+        });
+    }
+    return _statusBarContainerView;
+}
+
+#pragma mark Observer Callbacks
+
+- (void)statusBarWillChangeFrame:(NSNotification *)notification
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:NO withStatusBarFrame:statusBarFrame paneClosedFraction:[self paneClosedFraction]];
+    if (MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame)) {
+        self.dynamicsDrawerWindowLifted = NO;
+    }
+}
+
+- (void)statusBarDidChangeFrame:(NSNotification *)notification
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:statusBarFrame paneClosedFraction:[self paneClosedFraction]];
+    if (!MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame)) {
+        if (!self.statusBarContainerView.superview) {
+            self.dynamicsDrawerWindowLifted = NO;
+        } else {
+            self.dynamicsDrawerWindowLifted = YES;
+        }
+    }
+}
+
+@end
+
+static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame)
+{
+    UIInterfaceOrientation statusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if ((statusBarOrientation == UIInterfaceOrientationPortrait) || (statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
+        return (CGRectGetHeight(statusBarFrame) > MSStatusBarMaximumAdjustmentHeight);
+    }
+    if ((statusBarOrientation == UIInterfaceOrientationLandscapeLeft) || (statusBarOrientation == UIInterfaceOrientationLandscapeRight)) {
+        return (CGRectGetWidth(statusBarFrame) > MSStatusBarMaximumAdjustmentHeight);
+    }
+    return NO;
+}
+

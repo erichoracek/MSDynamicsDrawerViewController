@@ -28,13 +28,31 @@
 
 #import "MSDynamicsViewController.h"
 
-NSString * const MSDynamicsCellReuseIdentifier = @"Dynamics Cell";
+static NSString * const MSCellTitleReuseIdentifier = @"MSCellTitleReuseIdentifier";
+static NSString * const MSCellSliderReuseIdentifier = @"MSCellSliderReuseIdentifier";
 
-typedef NS_ENUM(NSInteger, MSDynamicsSectionType) {
-    MSDynamicsSectionTypeGravityMagnitude,
-    MSDynamicsSectionTypeElasticity,
-    MSDynamicsSectionTypeCount,
+typedef NS_ENUM(NSInteger, MSSectionSnap) {
+    MSSectionSnapSelect,
+    MSSectionSnapDamping,
+    MSSectionSnapFrequency,
 };
+
+typedef NS_ENUM(NSInteger, MSSectionGravity) {
+    MSSectionGravitySelect,
+    MSSectionGravityMagnitude,
+    MSSectionGravityPaneElasticity,
+};
+
+@interface MSDynamicsViewController ()
+
+@property (nonatomic, strong) NSArray *panePositioningBehaviorClasses;
+@property (nonatomic, strong) NSArray *panePositioningBehaviorNames;
+@property (nonatomic, strong) NSDictionary *sectionValuesSnap;
+@property (nonatomic, strong) NSDictionary *sectionValuesGravity;
+@property (nonatomic, strong, readonly) NSDictionary *sectionValues;
+@property (nonatomic, strong, readonly) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
+
+@end
 
 @implementation MSDynamicsViewController
 
@@ -48,83 +66,195 @@ typedef NS_ENUM(NSInteger, MSDynamicsSectionType) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSDynamicsCellReuseIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSCellTitleReuseIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSCellSliderReuseIdentifier];
 }
 
 #pragma mark - MSDynamicsViewController
 
+- (NSArray *)panePositioningBehaviorClasses
+{
+    if (!_panePositioningBehaviorClasses) {
+        self.panePositioningBehaviorClasses = @[
+            [MSPaneSnapBehavior class],
+            [MSPaneGravityBehavior class]
+        ];
+    }
+    return _panePositioningBehaviorClasses;
+}
+
+- (NSArray *)panePositioningBehaviorNames
+{
+    if (!_panePositioningBehaviorNames) {
+        self.panePositioningBehaviorNames = @[
+            @"Snap",
+            @"Gravity"
+        ];
+    }
+    return _panePositioningBehaviorNames;
+}
+
+static NSString * const MSSectionValueKeyKeyPath = @"MSSectionValueKeyKeyPath";
+static NSString * const MSSectionValueKeyHeaderText = @"MSSectionValueKeyHeaderText";
+static NSString * const MSSectionValueKeyFooterText = @"MSSectionValueKeyFooterText";
+static NSString * const MSSectionValueKeyMinimum = @"MSSectionValueKeyMinimum";
+static NSString * const MSSectionValueKeyMaximum = @"MSSectionValueKeyMaximum";
+
+- (NSDictionary *)sectionValuesSnap
+{
+    if (!_sectionValuesSnap) {
+        self.sectionValuesSnap = @{
+            @(MSSectionSnapDamping): @{
+                MSSectionValueKeyHeaderText: @"Snap Damping",
+                MSSectionValueKeyFooterText: @"The snap damping is the amount of oscillation the pane has at the conclusion of the snap.",
+                MSSectionValueKeyKeyPath: @"snap.damping",
+                MSSectionValueKeyMinimum: @0.0,
+                MSSectionValueKeyMaximum: @1.0
+            },
+            @(MSSectionSnapFrequency): @{
+                MSSectionValueKeyHeaderText: @"Snap Frequency",
+                MSSectionValueKeyFooterText: @"The snap frequency is the speed that the snap should occur at.",
+                MSSectionValueKeyKeyPath: @"snap.frequency",
+                MSSectionValueKeyMinimum: @0.0,
+                MSSectionValueKeyMaximum: @10.0
+            }
+        };
+    }
+    return _sectionValuesSnap;
+}
+
+- (NSDictionary *)sectionValuesGravity
+{
+    if (!_sectionValuesGravity) {
+        self.sectionValuesGravity = @{
+            @(MSSectionGravityMagnitude): @{
+                MSSectionValueKeyHeaderText: @"Gravity Magnitude",
+                MSSectionValueKeyFooterText: @"The magnitude of the gravity that affects the pane when it's being positioned.",
+                MSSectionValueKeyKeyPath: @"gravity.magnitude",
+                MSSectionValueKeyMinimum: @0.0,
+                MSSectionValueKeyMaximum: @10.0
+            },
+            @(MSSectionGravityPaneElasticity): @{
+                MSSectionValueKeyHeaderText: @"Pane Elasticity",
+                MSSectionValueKeyFooterText: @"The elasticity of the pane when it collides with an edge.",
+                MSSectionValueKeyKeyPath: @"paneBehavior.elasticity",
+                MSSectionValueKeyMinimum: @0.0,
+                MSSectionValueKeyMaximum: @1.0
+            }
+        };
+    }
+    return _sectionValuesGravity;
+}
+
+- (NSDictionary *)sectionValues
+{
+    if ([self.dynamicsDrawerViewController.panePositioningBehavior isKindOfClass:[MSPaneSnapBehavior class]]) {
+        return self.sectionValuesSnap;
+    } else if ([self.dynamicsDrawerViewController.panePositioningBehavior isKindOfClass:[MSPaneGravityBehavior class]]) {
+        return self.sectionValuesGravity;
+    }
+    return nil;
+}
+
+- (MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+{
+    return (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+}
+
 - (void)sliderDidUpdateValue:(UISlider *)slider
 {
-    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    switch (slider.tag) {
-        case MSDynamicsSectionTypeGravityMagnitude:
-            dynamicsDrawerViewController.gravityMagnitude = slider.value;
-            break;
-        case MSDynamicsSectionTypeElasticity:
-            dynamicsDrawerViewController.elasticity = slider.value;
-            break;
-    }
+    NSString *keyPath = self.sectionValues[@(slider.tag)][MSSectionValueKeyKeyPath];
+    [(id)self.dynamicsDrawerViewController.panePositioningBehavior setValue:@(slider.value) forKeyPath:keyPath];
     [self.tableView reloadData];
+}
+
+- (void)configureSlider:(UISlider *)slider forIndexPath:(NSIndexPath *)indexPath
+{
+    slider.frame = (CGRect){slider.frame.origin, {225.0, CGRectGetHeight(slider.frame)}};
+    slider.tag = indexPath.section;
+    slider.minimumValue = [self.sectionValues[@(indexPath.section)][MSSectionValueKeyMinimum] floatValue];
+    slider.maximumValue = [self.sectionValues[@(indexPath.section)][MSSectionValueKeyMaximum] floatValue];
+    NSString *keyPath = self.sectionValues[@(indexPath.section)][MSSectionValueKeyKeyPath];
+    slider.value = [[(id)self.dynamicsDrawerViewController.panePositioningBehavior valueForKeyPath:keyPath] floatValue];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return MSDynamicsSectionTypeCount;
+    return ([self.sectionValues count] + 1);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return [self.panePositioningBehaviorClasses count];
+    }
     return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSDynamicsCellReuseIdentifier forIndexPath:indexPath];
+    // Selection
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSCellTitleReuseIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = self.panePositioningBehaviorNames[indexPath.row];
+        if ([self.dynamicsDrawerViewController.panePositioningBehavior isKindOfClass:self.panePositioningBehaviorClasses[indexPath.row]]) {
+            cell.textLabel.text = [NSString stringWithFormat:@"✔︎ %@", cell.textLabel.text];
+        }
+        return cell;
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSCellSliderReuseIdentifier forIndexPath:indexPath];
     UISlider *slider = (UISlider *)cell.accessoryView;
     if (!slider || ![slider isKindOfClass:[UISlider class]]) {
         slider = [UISlider new];
         [slider addTarget:self action:@selector(sliderDidUpdateValue:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = slider;
     }
-    slider.frame = (CGRect){slider.frame.origin, {200.0, slider.frame.size.height}};
-    slider.tag = indexPath.section;
-    switch (indexPath.section) {
-        case MSDynamicsSectionTypeGravityMagnitude: {
-            slider.minimumValue = 0.0;
-            slider.maximumValue = 10.0;
-            slider.value = dynamicsDrawerViewController.gravityMagnitude;
-            break;
-        }
-        case MSDynamicsSectionTypeElasticity: {
-            slider.minimumValue = 0.0;
-            slider.maximumValue = 1.0;
-            slider.value = dynamicsDrawerViewController.elasticity;
-            break;
-        }
+    [self configureSlider:slider forIndexPath:indexPath];
+    static NSNumberFormatter *numberFormatter;
+    if (!numberFormatter) {
+        numberFormatter = [NSNumberFormatter new];
+        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", @(slider.value)];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(slider.value)]];
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case MSDynamicsSectionTypeGravityMagnitude:
-            return @"Gravity Magnitude";
-        case MSDynamicsSectionTypeElasticity:
-            return @"Elasticity";
+    if (section == 0) {
+        return @"Pane Positioning Behavior";
     }
-    return nil;
+    return self.sectionValues[@(section)][MSSectionValueKeyHeaderText];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"Pane Positioning Behaviors are used to create different effects when moving the pane. A gravity and a snap effect are included by default. You can also create your own.";
+    }
+    return self.sectionValues[@(section)][MSSectionValueKeyFooterText];
 }
 
 #pragma mark - UITableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        if (![self.dynamicsDrawerViewController.panePositioningBehavior isKindOfClass:self.panePositioningBehaviorClasses[indexPath.row]]) {
+            self.dynamicsDrawerViewController.panePositioningBehavior = [[self.panePositioningBehaviorClasses[indexPath.row] alloc] initWithDrawerViewController:self.dynamicsDrawerViewController];
+            [tableView reloadData];
+        } else {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }
+    }
+}
+
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NO;
+    return (indexPath.section == 0);
 }
 
 @end

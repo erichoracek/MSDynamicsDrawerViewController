@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/MSDynamicsDrawerParallaxStyler.html">
+	<File path="Classes/MSDynamicsDrawerGravityBehavior.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerParallaxStyler</TokenIdentifier>
-			<Abstract type="html">Creates a parallax effect on the drawerView while sliding the paneView within a MSDynamicsDrawerViewController.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/MSDynamicsDrawerGravityBehavior</TokenIdentifier>
+			<Abstract type="html">Uses gravity to move the pane between states. When the pane arrives at its new state, it bounces against a boundary until it reaches a resting position.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
             
 			
 			<NodeRef refid="2"/>
@@ -13,93 +13,81 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/setParallaxOffsetFraction:</TokenIdentifier>
-			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerGravityBehavior/setGravity:</TokenIdentifier>
+			<Abstract type="html">The child behavior that is used to create the gravity effect on the pane.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly) UIGravityBehavior *gravity</Declaration>
 			
 			
-			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
+			<Anchor>//api/name/gravity</Anchor>
             <NodeRef refid="2"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/parallaxOffsetFraction</TokenIdentifier>
-			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerGravityBehavior/gravity</TokenIdentifier>
+			<Abstract type="html">The child behavior that is used to create the gravity effect on the pane.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly) UIGravityBehavior *gravity</Declaration>
 			
 			
-			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
+			<Anchor>//api/name/gravity</Anchor>
             <NodeRef refid="2"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerParallaxStyler/parallaxOffsetFraction</TokenIdentifier>
-			<Abstract type="html">The amount that the parallax should offset the drawerView when the paneView is closed, as a fraction of the visible reveal width.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/MSDynamicsDrawerGravityBehavior/gravity</TokenIdentifier>
+			<Abstract type="html">The child behavior that is used to create the gravity effect on the pane.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) CGFloat parallaxOffsetFraction</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly) UIGravityBehavior *gravity</Declaration>
 			
 			
-			<Anchor>//api/name/parallaxOffsetFraction</Anchor>
+			<Anchor>//api/name/gravity</Anchor>
             <NodeRef refid="2"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/MSDynamicsDrawerParallaxStyler/styler</TokenIdentifier>
-			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerGravityBehavior/initWithDrawerViewController:</TokenIdentifier>
+			<Abstract type="html">Initializes a pane positioning behavior with a drawer view controller.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.m</DeclaredIn>
 			
-			<Declaration>+ (instancetype)styler</Declaration>
-			
-			
-			<Anchor>//api/name/styler</Anchor>
-            <NodeRef refid="2"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
-			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
-			
-			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Declaration>- (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>dynamicsDrawerViewController</Name>
-					<Abstract type="html">The MSDynamicsDrawerViewController that is being styled by the MSDynamicsDrawerStyler instance.</Abstract>
-				</Parameter><Parameter>
-					<Name>paneClosedFraction</Name>
-					<Abstract type="html">The fraction that MSDynamicsDrawerViewController instance&apos;s pane is closed. 1.0 when closed, 0.0 when opened.</Abstract>
+					<Name>drawerViewController</Name>
+					<Abstract type="html">The drawer view controller whose pane you want to be subject to the positioning behavior.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The initialized pane positioning behavior, or nil if there was a problem initializing the object.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDrawerViewController:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerGravityBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+			<Abstract type="html">Positions the pane dynamic item in the desired direction with the specified state. This method is only invoked internally by the associated MSDynamicsDrawerViewController. It should not be invoked otherwise. When subclassing MSPanePositioningBehavior, this method should be overridden to adjust child behaviors to create the desired effect.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.m</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/targetPaneState</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/targetDirection</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)positionPaneInState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>paneState</Name>
+					<Abstract type="html">The state that the pane should be positioned in. Represented as targetPaneState after this method is invoked and until this behavior is removed from its dynamic animator.</Abstract>
 				</Parameter><Parameter>
 					<Name>direction</Name>
-					<Abstract type="html">The direction that the MSDynamicsDrawerViewController instance is opening in. Will not be masked.</Abstract>
+					<Abstract type="html">The direction that the pane should be positioned in. Represented as targetDirection after this method is invoked and until this behavior is removed from its dynamic animator.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</Anchor>
-            <NodeRef refid="2"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/MSDynamicsDrawerParallaxStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
-			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerStyler.m</DeclaredIn>
-			
-			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>dynamicsDrawerViewController</Name>
-					<Abstract type="html">The MSDynamicsDrawerViewController that was being styled by the MSDynamicsDrawerStyler instance.</Abstract>
-				</Parameter><Parameter>
-					<Name>direction</Name>
-					<Abstract type="html">The direction that the styler is being removed for. Can be a masked value.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</Anchor>
+			<Anchor>//api/name/positionPaneInState:forDirection:</Anchor>
             <NodeRef refid="2"/>
 		</Token>
 		

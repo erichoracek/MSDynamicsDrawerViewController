@@ -183,7 +183,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         return;
     }
     
-    BOOL animateTransition = self.dynamicsDrawerViewController.paneViewController != nil;
+    BOOL animateTransition = (self.dynamicsDrawerViewController.paneViewController != nil);
     
 #if defined(STORYBOARD)
     UIViewController *paneViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.paneViewControllerIdentifiers[@(paneViewControllerType)]];
