@@ -414,8 +414,10 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     
     // Async so if it's called as a part of application:didFinishLaunching: the applicationState is valid to take a screenshot
     dispatch_async(dispatch_get_main_queue(), ^{
-        CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
-        [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
+        if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
+            CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
+            [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
+        }
     });
 }
 
@@ -428,16 +430,6 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
         self.dynamicsDrawerWindowLifted = NO;
         [self.statusBarSnapshotView removeFromSuperview];
         [self.statusBarContainerView removeFromSuperview];
-    }
-    
-    if (self.direction == MSDynamicsDrawerDirectionNone) {
-        self.dynamicsDrawerWindowLifted = NO;
-        self.dynamicsDrawerViewController = nil;
-        [self.statusBarSnapshotView removeFromSuperview];
-        self.statusBarSnapshotView = nil;
-        self.statusBarSnapshotStyle = MSStatusBarStyleNone;
-        [self.statusBarContainerView removeFromSuperview];
-        self.statusBarContainerView = nil;
     }
 }
 
