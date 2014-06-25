@@ -56,8 +56,8 @@
     self.dynamicsDrawerViewController.delegate = self;
     
     // Add some example stylers
-    [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerFadeStyler new], [MSDynamicsDrawerStatusBarOffsetStyler new]] forDirection:MSDynamicsDrawerDirectionLeft];
-    [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerParallaxStyler new]] forDirection:MSDynamicsDrawerDirectionRight];
+    [self.dynamicsDrawerViewController addStylers:@[[MSDynamicsDrawerStatusBarOffsetStyler new]] forDirection:MSDynamicsDrawerDirectionAll];
+    [self.dynamicsDrawerViewController addStylers:@[[MSDynamicsDrawerFadeStyler new]] forDirection:MSDynamicsDrawerDirectionLeft];
     
 #if !defined(STORYBOARD)
     MSMenuViewController *menuViewController = [MSMenuViewController new];
@@ -75,11 +75,8 @@
     MSLogoViewController *logoViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Logo"];
 #endif
     [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight];
-
-    // Preload the drawer view to make for quick first transitions
-    // Preload the drawer view to make for quick first transitions
-    [logoViewController view];
-    [menuViewController view];
+    
+    [self.dynamicsDrawerViewController addStyler:[MSDynamicsDrawerResizeStyler new] forDirection:(MSDynamicsDrawerDirectionTop | MSDynamicsDrawerDirectionRight | MSDynamicsDrawerDirectionBottom)];
     
     // Transition to the first view controller
     [menuViewController transitionToViewController:0];
@@ -87,7 +84,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.dynamicsDrawerViewController;
     [self.window makeKeyAndVisible];
+    
+    // Add window background image
     [self.window addSubview:self.windowBackground];
+    self.windowBackground.frame = self.window.bounds;
     [self.window sendSubviewToBack:self.windowBackground];
     
     return YES;
@@ -99,6 +99,7 @@
 {
     if (!_windowBackground) {
         _windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Window Background"]];
+        _windowBackground.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
     }
     return _windowBackground;
 }
@@ -136,7 +137,7 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-//    NSLog(@"Drawer view controller may update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    NSLog(@"Drawer view controller may update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
     
 #ifdef DEBUG_DYNAMICS
     UIDynamicAnimator *dynamicAnimator = [drawerViewController performSelector:@selector(_dynamicAnimator)];
@@ -148,7 +149,7 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-//    NSLog(@"Drawer view controller did update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    NSLog(@"Drawer view controller did update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
 }
 
 @end

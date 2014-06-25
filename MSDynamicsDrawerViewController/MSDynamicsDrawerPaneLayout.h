@@ -9,27 +9,43 @@
 #import <Foundation/Foundation.h>
 #import "MSDynamicsDrawerViewController.h"
 
-extern CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthHorizontal;
-extern CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical;
+/**
+ The style that the pane should be bounded with when it is draged against an edge.
+ */
+typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
+    /**
+     As the pane is dragged against an edge, it should continue to track the gesture.
+     */
+    MSDynamicsDrawerPaneDragEdgeBoundingStyleNone,
+    /**
+     As the pane is dragged against an edge, it should provide a small amount of give as it as is dragged past the bounding edge.
+     */
+    MSDynamicsDrawerPaneDragEdgeBoundingStyleElastic,
+    /**
+     As the pane is dragged against an edge, it should stop when it collides with the edge and allow no further dragging.
+     */
+    MSDynamicsDrawerPaneDragEdgeBoundingStyleHard
+};
 
 @interface MSDynamicsDrawerPaneLayout : NSObject
 
 /**
  Initializes a pane position with a drawer view controller.
  
- @param drawerViewController The drawer view controller whose pane you want to be subject to the positioning behavior.
- 
  @return The initialized pane positioning behavior, or nil if there was a problem initializing the object.
  */
-- (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController;
+- (instancetype)initWithPaneContainerView:(UIView *)paneContainerView;
 
 /**
  The drawer view controller whose pane position is described by this behavior.
  */
-@property (nonatomic, weak, readonly) MSDynamicsDrawerViewController *drawerViewController;
+@property (nonatomic, weak, readonly) UIView *paneContainerView;
 
 #warning document
 - (CGPoint)paneCenterForPaneState:(MSDynamicsDrawerPaneState)paneState direction:(MSDynamicsDrawerDirection)direction;
+
+#warning document
+- (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Sets the maximum width that the `paneView` opens when revealing the `drawerView` underneath for the specified direction.
@@ -78,5 +94,10 @@ extern CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical;
 
 #warning document
 - (BOOL)paneWithCenter:(CGPoint)paneCenter isInValidState:(inout MSDynamicsDrawerPaneState *)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+/**
+ Specifies the behavior of the pane when it is dragged against an edge.
+ */
+@property (nonatomic, assign) MSDynamicsDrawerPaneDragEdgeBoundingStyle paneDragEdgeBoundingStyle;
 
 @end

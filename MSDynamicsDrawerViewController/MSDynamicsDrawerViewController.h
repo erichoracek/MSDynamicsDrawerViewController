@@ -94,24 +94,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
     MSDynamicsDrawerPaneStateOpenWide,
 };
 
-/**
- The style that the pane should be bounded with when it is draged against an edge.
- */
-typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
-    /**
-     As the pane is dragged against an edge, it should continue to track the gesture.
-     */
-    MSDynamicsDrawerPaneDragEdgeBoundingStyleNone,
-    /**
-     As the pane is dragged against an edge, it should provide a small amount of give as it as is dragged past the bounding edge.
-     */
-    MSDynamicsDrawerPaneDragEdgeBoundingStyleElastic,
-    /**
-     As the pane is dragged against an edge, it should stop when it collides with the edge and allow no further dragging.
-     */
-    MSDynamicsDrawerPaneDragEdgeBoundingStyleHard
-};
-
 @class MSDynamicsDrawerViewController;
 
 /**
@@ -156,6 +138,9 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
  @see drawerViewControllerForDirection:
  */
 - (void)setDrawerViewController:(UIViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
+
+#warning document
+- (void)setDrawerViewController:(UIViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction preloadView:(BOOL)preloadView;
 
 /**
  Returns the drawer view controller that has been set for the specified direction.
@@ -331,7 +316,9 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 /// @name Configuring Layout
 ///-------------------------
 
-#warning document
+/**
+ The pane layout that is responsible for providing the position of the pane to the MSDynamicsDrawerViewController.
+ */
 @property (nonatomic, strong) MSDynamicsDrawerPaneLayout *paneLayout;
 
 ///--------------------------
@@ -379,11 +366,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 - (BOOL)paneTapToCloseEnabledForDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Specifies the behavior of the pane when it is dragged against an edge.
- */
-@property (nonatomic, assign) MSDynamicsDrawerPaneDragEdgeBoundingStyle paneDragEdgeBoundingStyle;
-
-/**
  Whether the only pans that can open the drawer should be those that originate from the screen's edges.
  
  If set to `YES`, pans that originate elsewhere are ignored and have no effect on the drawer. This property is designed to mimic the behavior of the `UIScreenEdgePanGestureRecognizer` as applied to the `MSDynamicsDrawerViewController` interaction paradigm. Setting this property to `YES` yields a similar behavior to that of screen edge pans within a `UINavigationController` in iOS7+. Defaults to `NO`.
@@ -420,7 +402,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
  @param styler The styler that should be added.
  @param direction The direction that the styler apply to. Accepts masked direction values.
  
- @see addStylersFromArray:forDirection:
+ @see addStylers:forDirection:
  @see removeStyler:forDirection:
  @see stylersForDirection:
  */
@@ -433,7 +415,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
  @param direction The direction that they styler should be removed for. Accepts masked direction values.
  
  @see addStyler:forDirection:
- @see addStylersFromArray:forDirection:
+ @see addStylers:forDirection:
  @see stylersForDirection:
  */
 - (void)removeStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction;
@@ -448,7 +430,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
  @see removeStyler:forDirection:
  @see stylersForDirection:
  */
-- (void)addStylersFromArray:(NSArray *)stylers forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)addStylers:(NSArray *)stylers forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Returns an array of the stylers that are set in a specified direction
@@ -457,7 +439,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
  @return An array of stylers that are
  
  @see addStyler:forDirection:
- @see addStylersFromArray:forDirection:
+ @see addStylers:forDirection:
  @see stylersForDirection:
  */
 - (NSArray *)stylersForDirection:(MSDynamicsDrawerDirection)direction;
@@ -522,18 +504,41 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection di
 BOOL MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection);
 
 /**
- Returns YES if the specified direciton is not a masked direction value.
+ Returns YES if the specified direciton is a masked direction value.
  
  @param drawerDirection The direction that should be evaluated.
  
  @return Whether the direction is a masked value.
  */
-BOOL MSDynamicsDrawerDirectionIsNonMasked(MSDynamicsDrawerDirection drawerDirection);
+BOOL MSDynamicsDrawerDirectionIsMasked(MSDynamicsDrawerDirection drawerDirection);
 
-#warning document
-CGFloat * const MSPointComponentForDrawerDirection(CGPoint *point, MSDynamicsDrawerDirection drawerDirection);
+/**
+ Returns a reference to the relevant point component (x or y) for a specified drawer direction.
+ 
+ @param point           The point whose component should be returned
+ @param drawerDirection The direction that the component should be returned for.
+ 
+ @return A reference to the component of the point parameter that is relevant to the specified direction.
+ */
+CGFloat * const MSPointComponentForDrawerDirection(CGPoint * const point, MSDynamicsDrawerDirection drawerDirection);
 
-#warning document
+/**
+ Returns a reference to the relevant size component (width or height) for a specified drawer direction.
+ 
+ @param size            The size whose component should be returned
+ @param drawerDirection The direction that the component should be returned for.
+ 
+ @return A reference to the component of the size parameter that is relevant to the specified direction.
+ */
+CGFloat * const MSSizeComponentForDrawerDirection(CGSize * const size, MSDynamicsDrawerDirection drawerDirection);
+
+/**
+ Returns YES if a drawer direction has a valid value.
+ 
+ @param drawerDirection The drawer direction to check value validity on.
+ 
+ @return Whether the drawer direction parameter is valid.
+ */
 BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection);
 
 /**
@@ -553,6 +558,9 @@ BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
  @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+#warning document
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController willUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Informs the delegate that the drawer view controller did update to a pane state in the specified direction.

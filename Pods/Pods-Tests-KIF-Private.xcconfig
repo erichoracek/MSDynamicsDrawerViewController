@@ -1,7 +1,7 @@
 #include "Pods-Tests-KIF.xcconfig"
 FRAMEWORK_SEARCH_PATHS = ${PODS_TESTS_KIF_FRAMEWORK_SEARCH_PATHS}
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/KIF" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/DynamicXray" "${PODS_ROOT}/Headers/Fingertips" "${PODS_ROOT}/Headers/KIF" "${PODS_ROOT}/Headers/MSDynamicsDrawerViewController" "${PODS_ROOT}/Headers/Stubbilino" "${PODS_ROOT}/Headers/libextobjc"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/KIF" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/DynamicXray" "${PODS_ROOT}/Headers/Fingertips" "${PODS_ROOT}/Headers/KIF" "${PODS_ROOT}/Headers/MSDynamicsDrawerViewController" "${PODS_ROOT}/Headers/Reveal-iOS-SDK" "${PODS_ROOT}/Headers/Stubbilino" "${PODS_ROOT}/Headers/libextobjc"
 OTHER_CFLAGS = ${PODS_TESTS_KIF_OTHER_CFLAGS}
 OTHER_LDFLAGS = -ObjC ${PODS_TESTS_KIF_OTHER_LDFLAGS}
 PODS_ROOT = ${SRCROOT}

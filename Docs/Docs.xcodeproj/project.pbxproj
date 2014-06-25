@@ -161,6 +161,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = Docs;
+				SDKROOT = iphoneos7.1;
 			};
 			name = Release;
 		};

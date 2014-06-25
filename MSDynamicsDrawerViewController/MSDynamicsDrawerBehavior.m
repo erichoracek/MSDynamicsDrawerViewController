@@ -288,7 +288,7 @@ static NSString * const MSDynamicsDrawerBoundaryIdentifier = @"MSDynamicsDrawerB
 {
     return [self.drawerViewController.paneLayout paneCenterForPaneState:state direction:direction];
 //    
-//    NSAssert(MSDynamicsDrawerDirectionIsNonMasked(direction), @"Target is undefined for a masked direction");
+//    NSAssert(!MSDynamicsDrawerDirectionIsMasked(direction), @"Target is undefined for a masked direction");
 //    CGPoint targetPoint = (CGPoint){CGRectGetMidX(self.drawerViewController.view.bounds), CGRectGetMidY(self.drawerViewController.view.bounds)};
 //    CGPoint targetOffset = CGPointZero;
 //    CGFloat targetOffsetMultiplier = ((direction & (MSDynamicsDrawerDirectionLeft | MSDynamicsDrawerDirectionTop)) ? 1.0 : -1.0);

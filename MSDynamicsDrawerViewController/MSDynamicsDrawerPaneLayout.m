@@ -10,7 +10,7 @@
 
 @interface MSDynamicsDrawerPaneLayout ()
 
-@property (nonatomic, weak) MSDynamicsDrawerViewController *drawerViewController;
+@property (nonatomic, weak) UIView *paneContainerView;
 @property (nonatomic, strong, setter = _setMaxRevealWidths:) NSMutableDictionary *_maxRevealWidths;
 @property (nonatomic, strong, setter = _setpaneCenterCache:) NSMutableDictionary *_paneCenterCache;
 
@@ -18,18 +18,19 @@
 
 @implementation MSDynamicsDrawerPaneLayout
 
-- (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+- (instancetype)initWithPaneContainerView:(UIView *)paneContainerView
 {
     self = [super init];
     if (self) {
-        self.drawerViewController = drawerViewController;
+        self.paneContainerView = paneContainerView;
         self.paneStateOpenWideEdgeOffset = 20.0;
+        self.paneDragEdgeBoundingStyle = MSDynamicsDrawerPaneDragEdgeBoundingStyleElastic;
     }
     return self;
 }
 
-CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthHorizontal = 267.0;
-CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical = 300.0;
+static CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthHorizontal = 267.0;
+static CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical = 300.0;
 
 - (NSMutableDictionary *)_maxRevealWidths
 {
@@ -57,7 +58,6 @@ CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical = 300.0;
 
 - (void)setMaxRevealWidth:(CGFloat)maxRevealWidth forDirection:(MSDynamicsDrawerDirection)direction
 {
-    NSAssert((self.drawerViewController.paneState == MSDynamicsDrawerPaneStateClosed), @"Only able to update the reveal width while the pane view is closed");
     MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
         self._maxRevealWidths[@(maskedValue)] = @(maxRevealWidth);
     });
@@ -76,14 +76,14 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
 
 - (CGPoint)paneCenterForPaneState:(MSDynamicsDrawerPaneState)paneState direction:(MSDynamicsDrawerDirection)direction
 {
-    NSAssert(MSDynamicsDrawerDirectionIsNonMasked(direction), @"Unable to compute a pane center for a masked direction");
+    NSAssert(!MSDynamicsDrawerDirectionIsMasked(direction), @"Unable to compute a pane center for a masked direction");
     
     // Lazily create cache
     if (!self._paneCenterCache) {
         self._paneCenterCache = [NSMutableDictionary new];
     }
     
-    CGRect paneContainerBounds = self.drawerViewController.view.bounds;
+    CGRect paneContainerBounds = self.paneContainerView.bounds;
     
     // Invalidate cache if the pane container bounds have changed
     if (self._paneCenterCache[MSPaneContainerBoundsKey]) {
@@ -145,6 +145,49 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     return paneViewCenter;
 }
 
+- (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (direction == MSDynamicsDrawerDirectionNone) {
+        return paneCenter;
+    }
+    
+    CGFloat * const panTranslationComponent = MSPointComponentForDrawerDirection(&translation, direction);
+    CGFloat * const paneCenterComponent = MSPointComponentForDrawerDirection(&paneCenter, direction);
+    
+    *paneCenterComponent += *panTranslationComponent;
+    
+    // Pane Bounding
+    CGFloat closedFraction = [self paneClosedFractionForPaneWithCenter:paneCenter forDirection:direction];
+    if ((0.0 <= closedFraction) && (closedFraction <= 1.0)) {
+        return paneCenter;
+    }
+    
+    CGPoint paneClosedCenter = [self paneCenterForPaneState:MSDynamicsDrawerPaneStateClosed direction:direction];
+    CGPoint paneOpenCenter = [self paneCenterForPaneState:MSDynamicsDrawerPaneStateOpen direction:direction];
+    
+    CGFloat *relevantBoundingComponent = NULL;
+    if (closedFraction > 1.0) {
+        relevantBoundingComponent = MSPointComponentForDrawerDirection(&paneClosedCenter, direction);
+    } else if (closedFraction < 0.0) {
+        relevantBoundingComponent = MSPointComponentForDrawerDirection(&paneOpenCenter, direction);
+    }
+    
+    switch ((NSInteger)self.paneDragEdgeBoundingStyle) {
+    case MSDynamicsDrawerPaneDragEdgeBoundingStyleElastic: {
+        CGFloat elastictyCoefficient = (CGRectGetWidth(self.paneContainerView.bounds) * .025);
+        CGFloat distancePastBoundedCenter = fabsf(*paneCenterComponent - *relevantBoundingComponent);
+        CGFloat elasticOffset = elastictyCoefficient * logf( (1.0 / elastictyCoefficient) * distancePastBoundedCenter + 1.0);
+        CGFloat elasticOffsetSign = ((*panTranslationComponent > 0.0) ? 1.0 : -1.0);
+        *paneCenterComponent = roundf(*relevantBoundingComponent + (elasticOffset * elasticOffsetSign));
+        break;
+    }
+    case MSDynamicsDrawerPaneDragEdgeBoundingStyleHard:
+        *paneCenterComponent = *relevantBoundingComponent;
+        break;
+    }
+    return paneCenter;
+}
+
 - (CGFloat)currentRevealWidthForPaneWithCenter:(CGPoint)paneCenter forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (direction == MSDynamicsDrawerDirectionNone) {
@@ -157,7 +200,7 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     CGFloat * const centerClosedComponent = MSPointComponentForDrawerDirection(&paneCenterClosed, direction);
     
     if (centerComponent && centerClosedComponent) {
-        return fabsf(*centerComponent - *centerClosedComponent);
+        return roundf(fabsf(*centerComponent - *centerClosedComponent));
     }
     return 0.0;
 }

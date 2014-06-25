@@ -108,6 +108,16 @@ typedef struct __GSEvent * GSEventRef;
         }
         
         BOOL labelsMatch = element.accessibilityLabel == label || [element.accessibilityLabel isEqual:label];
+
+        // On iOS 6 the accessibility label may contain line breaks, so when trying to find the
+        // element, these line breaks are necessary. But on iOS 7 the system replaces them with
+        // spaces. So the same test breaks on either iOS 6 or iOS 7. To work around this replace
+        // the line breaks the same way and try again.
+        if (!labelsMatch) {
+            NSString *modifiedLabel = [label stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            labelsMatch = element.accessibilityLabel == modifiedLabel || [element.accessibilityLabel isEqual:modifiedLabel];
+        }
+
         BOOL traitsMatch = ((element.accessibilityTraits) & traits) == traits;
         BOOL valuesMatch = !value || [value isEqual:accessibilityValue];
 
@@ -475,7 +485,27 @@ typedef struct __GSEvent * GSEventRef;
 // Is this view currently on screen?
 - (BOOL)isTappable;
 {
-    return [self isTappableInRect:self.bounds];
+    return ([self hasTapGestureRecognizer] ||
+            [self isTappableInRect:self.bounds]);
+}
+
+- (BOOL)hasTapGestureRecognizer
+{
+    __block BOOL hasTapGestureRecognizer = NO;
+    
+    [self.gestureRecognizers enumerateObjectsUsingBlock:^(id obj,
+                                                          NSUInteger idx,
+                                                          BOOL *stop) {
+        if ([obj isKindOfClass:[UITapGestureRecognizer class]]) {
+            hasTapGestureRecognizer = YES;
+            
+            if (stop != NULL) {
+                *stop = YES;
+            }
+        }
+    }];
+    
+    return hasTapGestureRecognizer;
 }
 
 - (BOOL)isTappableInRect:(CGRect)rect;

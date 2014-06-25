@@ -39,6 +39,7 @@
  
  It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
  */
+#warning remove the dynamics drawer prefix
 @protocol MSDynamicsDrawerStyler <NSObject>
 
 @optional
@@ -50,18 +51,7 @@
  @param paneClosedFraction The fraction that `MSDynamicsDrawerViewController` instance's pane is closed. `1.0` when closed, `0.0` when opened.
  @param direction The direction that the `MSDynamicsDrawerViewController` instance is opening in. Will not be masked.
  */
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction;
-
-/**
- Informs the styler that the drawer view controller will attempt to update to a pane state in the specified direction.
- 
- It is important to note that the user can interrupt this state change, and therefore is it not guaranteed that this update will occur. If desired, the user can be prevented from interrupting by passing `NO` for the `allowingUserInterruption` parameter in methods that update the `paneState`. For the aforementioned reasons, this method does not always pair with an invocation of `dynamicsDrawerViewController:didUpdateToPaneState:forDirection:`.
- 
- @param drawerViewController The drawer view controller that the delegate is registered with.
- @param paneState The pane state that the view controller will attempt to update to.
- @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
- */
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Informs the styler that the drawer view controller did update to a pane state in the specified direction.
@@ -72,21 +62,28 @@
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
+
+#warning remove "styler" from name
 /**
  Used to set up the appearance of the styler when it is added to a `MSDynamicsDrawerViewController` instance.
  
  @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
  @param direction The direction that the styler is being added for. Can be a masked value.
  */
-- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
+
+#warning remove drawerViewController parameter
+#warning remove "styler" from name
 /**
  Used to tear down the appearance of the styler when it is removed from a `MSDynamicsDrawerViewController` instance.
  
  @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that was being styled by the `MSDynamicsDrawerStyler` instance.
  @param direction The direction that the styler is being removed for. Can be a masked value.
  */
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
 @end
 
@@ -142,11 +139,6 @@
  */
 @property (nonatomic, assign) CGFloat minimumResizeRevealWidth;
 
-/**
- A fixed with that the drawer view should always be resized to.
- */
-@property (nonatomic, assign) CGFloat drawerWidth;
-
 @end
 
 /**
@@ -184,6 +176,7 @@
 
 @end
 
+#warning document
 @interface MSDynamicsDrawerStatusBarOffsetStyler : NSObject <MSDynamicsDrawerStyler>
 
 @end
