@@ -7,6 +7,7 @@
 //
 
 #import "MSDynamicsDrawerPaneLayout.h"
+#import "MSDynamicsDrawerHelperFunctions.h"
 
 @interface MSDynamicsDrawerPaneLayout ()
 
@@ -29,6 +30,21 @@
     return self;
 }
 
+- (CGFloat)revealDistanceForPaneState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction
+{
+    CGPoint closedCenter = [self paneCenterForPaneState:MSDynamicsDrawerPaneStateClosed direction:direction];
+    CGFloat *closedCenterComponent = MSPointComponentForDrawerDirection(&closedCenter, direction);
+    
+    CGPoint stateCenter = [self paneCenterForPaneState:state direction:direction];
+    CGFloat *openCenterComponent = MSPointComponentForDrawerDirection(&stateCenter, direction);
+
+    CGFloat revealDistance = 0.0;
+    if (closedCenterComponent && openCenterComponent) {
+        revealDistance = fabsf(*openCenterComponent - *closedCenterComponent);
+    }
+    return revealDistance;
+}
+
 static CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthHorizontal = 267.0;
 static CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical = 300.0;
 
@@ -37,11 +53,11 @@ static CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical = 300.0;
     if (!__maxRevealWidths) {
         self._maxRevealWidths = ({
             NSMutableDictionary *maxRevealWidths = [NSMutableDictionary new];
-            MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionHorizontal, ^(MSDynamicsDrawerDirection maskedValue) {
-                maxRevealWidths[@(maskedValue)] = @(MSDynamicsDrawerDefaultMaxRevealWidthHorizontal);
+            MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionHorizontal, ^(MSDynamicsDrawerDirection maskedDirection) {
+                maxRevealWidths[@(maskedDirection)] = @(MSDynamicsDrawerDefaultMaxRevealWidthHorizontal);
             });
-            MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionVertical, ^(MSDynamicsDrawerDirection maskedValue) {
-                maxRevealWidths[@(maskedValue)] = @(MSDynamicsDrawerDefaultMaxRevealWidthVertical);
+            MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionVertical, ^(MSDynamicsDrawerDirection maskedDirection) {
+                maxRevealWidths[@(maskedDirection)] = @(MSDynamicsDrawerDefaultMaxRevealWidthVertical);
             });
             maxRevealWidths;
         });
@@ -58,8 +74,8 @@ static CGFloat const MSDynamicsDrawerDefaultMaxRevealWidthVertical = 300.0;
 
 - (void)setMaxRevealWidth:(CGFloat)maxRevealWidth forDirection:(MSDynamicsDrawerDirection)direction
 {
-    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
-        self._maxRevealWidths[@(maskedValue)] = @(maxRevealWidth);
+    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
+        self._maxRevealWidths[@(maskedDirection)] = @(maxRevealWidth);
     });
     [self._paneCenterCache removeAllObjects];
 }
@@ -105,38 +121,38 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     };
     
     switch ((NSInteger)paneState) {
-        case MSDynamicsDrawerPaneStateOpen:
-            switch ((NSInteger)direction) {
-                case MSDynamicsDrawerDirectionTop:
-                    paneViewCenter.y += [self maxRevealWidthForDirection:direction];
-                    break;
-                case MSDynamicsDrawerDirectionLeft:
-                    paneViewCenter.x += [self maxRevealWidthForDirection:direction];
-                    break;
-                case MSDynamicsDrawerDirectionBottom:
-                    paneViewCenter.y -= [self maxRevealWidthForDirection:direction];
-                    break;
-                case MSDynamicsDrawerDirectionRight:
-                    paneViewCenter.x -= [self maxRevealWidthForDirection:direction];
-                    break;
-            }
+    case MSDynamicsDrawerPaneStateOpen:
+        switch ((NSInteger)direction) {
+        case MSDynamicsDrawerDirectionTop:
+            paneViewCenter.y += [self maxRevealWidthForDirection:direction];
             break;
-        case MSDynamicsDrawerPaneStateOpenWide:
-            switch ((NSInteger)direction) {
-                case MSDynamicsDrawerDirectionTop:
-                    paneViewCenter.y += (CGRectGetHeight(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
-                    break;
-                case MSDynamicsDrawerDirectionLeft:
-                    paneViewCenter.x += (CGRectGetWidth(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
-                    break;
-                case MSDynamicsDrawerDirectionBottom:
-                    paneViewCenter.y -= (CGRectGetHeight(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
-                    break;
-                case MSDynamicsDrawerDirectionRight:
-                    paneViewCenter.x -= (CGRectGetWidth(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
-                    break;
-            }
+        case MSDynamicsDrawerDirectionLeft:
+            paneViewCenter.x += [self maxRevealWidthForDirection:direction];
             break;
+        case MSDynamicsDrawerDirectionBottom:
+            paneViewCenter.y -= [self maxRevealWidthForDirection:direction];
+            break;
+        case MSDynamicsDrawerDirectionRight:
+            paneViewCenter.x -= [self maxRevealWidthForDirection:direction];
+            break;
+        }
+        break;
+    case MSDynamicsDrawerPaneStateOpenWide:
+        switch ((NSInteger)direction) {
+        case MSDynamicsDrawerDirectionTop:
+            paneViewCenter.y += (CGRectGetHeight(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
+            break;
+        case MSDynamicsDrawerDirectionLeft:
+            paneViewCenter.x += (CGRectGetWidth(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
+            break;
+        case MSDynamicsDrawerDirectionBottom:
+            paneViewCenter.y -= (CGRectGetHeight(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
+            break;
+        case MSDynamicsDrawerDirectionRight:
+            paneViewCenter.x -= (CGRectGetWidth(paneContainerBounds) + self.paneStateOpenWideEdgeOffset);
+            break;
+        }
+        break;
     }
     if (!self._paneCenterCache[@(paneState)]) {
         self._paneCenterCache[@(paneState)] = [NSMutableDictionary new];
@@ -200,7 +216,7 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     CGFloat * const centerClosedComponent = MSPointComponentForDrawerDirection(&paneCenterClosed, direction);
     
     if (centerComponent && centerClosedComponent) {
-        return roundf(fabsf(*centerComponent - *centerClosedComponent));
+        return fabsf(*centerComponent - *centerClosedComponent);
     }
     return 0.0;
 }
@@ -256,7 +272,7 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     return NO;
 }
 
-static CGFloat const MSPaneStatePositionValidityEpsilon = 2.0;
+static CGFloat const MSPaneStatePositionValidityEpsilon = 1.0;
 
 - (BOOL)paneWithCenter:(CGPoint)paneCenter isInValidState:(inout MSDynamicsDrawerPaneState *)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {

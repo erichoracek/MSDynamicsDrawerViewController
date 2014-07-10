@@ -10,6 +10,7 @@
 #import <KIF/CGGeometry-KIFAdditions.h>
 #import <libextobjc/EXTScope.h>
 #import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 #import <Stubbilino/Stubbilino.h>
 
 @interface Tests : KIFTestCase
@@ -151,23 +152,23 @@ static UIEdgeInsets const MSSwipeEdgeInsets = (UIEdgeInsets){
 {
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue) {
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection) {
  
         MSDynamicsDrawerPaneState paneState;
         
         // Set closed
         self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
         [tester waitForTimeInterval:0.1];
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateClosed);
         XCTAssertTrue(self.drawerViewController.currentDrawerDirection == MSDynamicsDrawerDirectionNone);
         
         // Set opened left
-        [self.drawerViewController setPaneState:MSDynamicsDrawerPaneStateOpen inDirection:maskedValue];
+        [self.drawerViewController setPaneState:MSDynamicsDrawerPaneStateOpen inDirection:maskedDirection];
         [tester waitForTimeInterval:0.1];
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateOpen);
-        XCTAssertTrue(self.drawerViewController.currentDrawerDirection == maskedValue);
+        XCTAssertTrue(self.drawerViewController.currentDrawerDirection == maskedDirection);
     });
 }
 
@@ -175,24 +176,24 @@ static UIEdgeInsets const MSSwipeEdgeInsets = (UIEdgeInsets){
 {
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue) {
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection) {
     
         @weakify(self);
         __block MSDynamicsDrawerPaneState paneState;
         
         // Set opened
-        [self.drawerViewController setPaneState:MSDynamicsDrawerPaneStateOpen inDirection:maskedValue animated:YES allowUserInterruption:YES completion:^{
+        [self.drawerViewController setPaneState:MSDynamicsDrawerPaneStateOpen inDirection:maskedDirection animated:YES allowUserInterruption:YES completion:^{
             @strongify(self);
-            XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+            XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
             XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateOpen);
-            XCTAssertTrue(self.drawerViewController.currentDrawerDirection == maskedValue);
+            XCTAssertTrue(self.drawerViewController.currentDrawerDirection == maskedDirection);
         }];
         [tester waitForTimeInterval:2.0];
         
         // Set closed
         [self.drawerViewController setPaneState:MSDynamicsDrawerPaneStateClosed animated:YES allowUserInterruption:YES completion:^{
             @strongify(self);
-            XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+            XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
             XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateClosed);
             XCTAssertTrue(self.drawerViewController.currentDrawerDirection == MSDynamicsDrawerDirectionNone);
         }];
@@ -204,13 +205,13 @@ static UIEdgeInsets const MSSwipeEdgeInsets = (UIEdgeInsets){
 {
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue) {
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection) {
         self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
         [tester waitForTimeInterval:0.1];
-        [self swipePaneInDirection:[self openSwipeDirectionForDrawerDirection:maskedValue]];
+        [self swipePaneInDirection:[self openSwipeDirectionForDrawerDirection:maskedDirection]];
         [tester waitForTimeInterval:2.0];
         MSDynamicsDrawerPaneState paneState;
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateOpen);
     });
 }
@@ -219,17 +220,17 @@ static UIEdgeInsets const MSSwipeEdgeInsets = (UIEdgeInsets){
 {
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue) {
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection) {
         self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
         [tester waitForTimeInterval:0.1];
-        [self swipePaneInDirection:[self openSwipeDirectionForDrawerDirection:maskedValue]];
+        [self swipePaneInDirection:[self openSwipeDirectionForDrawerDirection:maskedDirection]];
         [tester waitForTimeInterval:1.0];
         MSDynamicsDrawerPaneState paneState;
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateOpen);
         [self tapPane];
         [tester waitForTimeInterval:2.0];
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateClosed);
     });
 }
@@ -238,15 +239,15 @@ static UIEdgeInsets const MSSwipeEdgeInsets = (UIEdgeInsets){
 {
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue) {
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection) {
         self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
         [tester waitForTimeInterval:0.1];
-        [self swipePaneInDirection:[self openSwipeDirectionForDrawerDirection:maskedValue]];
+        [self swipePaneInDirection:[self openSwipeDirectionForDrawerDirection:maskedDirection]];
         [tester waitForTimeInterval:0.7];
-        [self swipePaneInDirection:[self closeSwipeDirectionForDrawerDirection:maskedValue]];
+        [self swipePaneInDirection:[self closeSwipeDirectionForDrawerDirection:maskedDirection]];
         [tester waitForTimeInterval:2.0];
         MSDynamicsDrawerPaneState paneState;
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateClosed);
     });
 }
@@ -255,11 +256,11 @@ static UIEdgeInsets const MSSwipeEdgeInsets = (UIEdgeInsets){
 {
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
  
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue) {
-        [self.drawerViewController bouncePaneOpenInDirection:maskedValue];
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection) {
+        [self.drawerViewController bouncePaneOpenInDirection:maskedDirection];
         [tester waitForTimeInterval:1.0];
         MSDynamicsDrawerPaneState paneState;
-        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedValue]);
+        XCTAssertTrue([self.drawerViewController.paneLayout paneWithCenter:self.drawerViewController.paneView.center isInValidState:&paneState forDirection:maskedDirection]);
         XCTAssertTrue(paneState == MSDynamicsDrawerPaneStateClosed);
     });
 }

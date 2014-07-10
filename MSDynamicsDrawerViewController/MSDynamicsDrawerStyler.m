@@ -27,6 +27,7 @@
 //
 
 #import "MSDynamicsDrawerStyler.h"
+#import "MSDynamicsDrawerHelperFunctions.h"
 
 @implementation MSDynamicsDrawerParallaxStyler
 
@@ -61,7 +62,7 @@
     }
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     [[self class] setDrawerTranslation:0.0 forDirection:direction inDrawerViewController:drawerViewController];
 }
@@ -108,7 +109,7 @@
     }
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     [[self class] setDrawerAlpha:1.0 forDirection:direction inDrawerViewController:drawerViewController];
 }
@@ -152,7 +153,7 @@
     drawerViewController.drawerView.transform = drawerViewTransform;
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.0, 1.0);
     CGAffineTransform drawerViewTransform = drawerViewController.drawerView.transform;
@@ -165,7 +166,9 @@
 
 @interface MSDynamicsDrawerResizeStyler ()
 
-@property (nonatomic, assign) BOOL useRevealWidthAsMinimumResizeRevealWidth;
+@property (nonatomic, weak) MSDynamicsDrawerViewController *drawerViewController;
+@property (nonatomic, assign) BOOL useOpenWidthAsMinResizeRevealWidth;
+@property (nonatomic, assign) BOOL useOpenWideWidthAsMaxResizeRevealWidth;
 
 @end
 
@@ -177,7 +180,8 @@
 {
     self = [super init];
     if (self) {
-        self.useRevealWidthAsMinimumResizeRevealWidth = YES;
+        self.useOpenWidthAsMinResizeRevealWidth = YES;
+        self.useOpenWideWidthAsMaxResizeRevealWidth = YES;
     }
     return self;
 }
@@ -190,25 +194,26 @@
         return;
     }
     
-    UIView *drawerViewControllerView = [[drawerViewController drawerViewControllerForDirection:direction] view];
-
-    CGFloat currentRevealWidth = [drawerViewController.paneLayout currentRevealWidthForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
-    CGFloat minimumResizeRevealWidth = (self.useRevealWidthAsMinimumResizeRevealWidth ? [drawerViewController.paneLayout maxRevealWidthForDirection:direction] : self.minimumResizeRevealWidth);
+    CGFloat minResizeRevealWidth = (!self.useOpenWidthAsMinResizeRevealWidth ? self.minimumResizeRevealWidth : [drawerViewController.paneLayout revealDistanceForPaneState:MSDynamicsDrawerPaneStateOpen direction:direction]);
+    CGFloat maxResizeRevealWidth = (!self.useOpenWideWidthAsMaxResizeRevealWidth ? self.maximumResizeRevealWidth : [drawerViewController.paneLayout revealDistanceForPaneState:MSDynamicsDrawerPaneStateOpenWide direction:direction]);
     
+    // Don't expand beyond the bounds of the drawer view controller
+    maxResizeRevealWidth = fminf(maxResizeRevealWidth, CGRectGetWidth(drawerViewController.view.bounds));
+    
+    CGFloat currentRevealWidth = [drawerViewController.paneLayout currentRevealWidthForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
+    
+    UIView *drawerViewControllerView = [[drawerViewController drawerViewControllerForDirection:direction] view];
     CGRect drawerViewFrame = drawerViewControllerView.frame;
     CGFloat *drawerViewSizeComponent = MSSizeComponentForDrawerDirection(&drawerViewFrame.size, direction);
+    // Bound to (min <= current <= max)
     if (drawerViewSizeComponent) {
-        if ((currentRevealWidth < minimumResizeRevealWidth)) {
-            *drawerViewSizeComponent = [drawerViewController.paneLayout maxRevealWidthForDirection:direction];
-        } else {
-            *drawerViewSizeComponent = currentRevealWidth;
-        }
+        *drawerViewSizeComponent = fmaxf(minResizeRevealWidth, fminf(currentRevealWidth, maxResizeRevealWidth));
     }
     
     CGRect drawerViewContainerBounds = drawerViewControllerView.superview.bounds;
     CGFloat *drawerViewContainerSizeComponent = MSSizeComponentForDrawerDirection(&drawerViewContainerBounds.size, direction);
-    
     CGFloat *drawerViewOriginComponent = MSPointComponentForDrawerDirection(&drawerViewFrame.origin, direction);
+    // If open in right or bottom direction, adjust origin to fit within reveal distance
     if ((direction & (MSDynamicsDrawerDirectionBottom | MSDynamicsDrawerDirectionRight)) && drawerViewOriginComponent && drawerViewContainerSizeComponent && drawerViewSizeComponent) {
         *drawerViewOriginComponent = ceilf(*drawerViewContainerSizeComponent - *drawerViewSizeComponent);
     }
@@ -216,20 +221,34 @@
     drawerViewControllerView.frame = drawerViewFrame;
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    // Reset the drawer view controller's view to be the size of the drawerView (before the styler was added)
-    CGRect drawerViewFrame = [[drawerViewController drawerViewControllerForDirection:direction] view].frame;
-    drawerViewFrame.size = drawerViewController.drawerView.frame.size;
-    [[drawerViewController drawerViewControllerForDirection:direction] view].frame = drawerViewFrame;
+    if (!drawerViewController) {
+        UIView *drawerViewControllerView = [[self.drawerViewController drawerViewControllerForDirection:direction] view];
+        // Reset the drawer view controller's view to be the size of the drawerView (before the styler was added)
+        drawerViewControllerView.frame = drawerViewControllerView.superview.bounds;
+    }
+}
+
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (drawerViewController) {
+        self.drawerViewController = drawerViewController;
+    }
 }
 
 #pragma mark - MSDynamicsDrawerResizeStyler
 
 - (void)setMinimumResizeRevealWidth:(CGFloat)minimumResizeRevealWidth
 {
-    self.useRevealWidthAsMinimumResizeRevealWidth = NO;
+    self.useOpenWidthAsMinResizeRevealWidth = NO;
     _minimumResizeRevealWidth = minimumResizeRevealWidth;
+}
+
+- (void)setMaximumResizeRevealWidth:(CGFloat)maximumResizeRevealWidth
+{
+    self.useOpenWideWidthAsMaxResizeRevealWidth = NO;
+    _maximumResizeRevealWidth = maximumResizeRevealWidth;
 }
 
 @end
@@ -270,14 +289,24 @@
 #pragma mark - MSDynamicsDrawerStyler
 
 
-- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-	self.shadowLayer = [CALayer layer];
-	self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:drawerViewController.paneView.frame] CGPath];
-    self.shadowLayer.shadowColor = self.shadowColor.CGColor;
-    self.shadowLayer.shadowOpacity = self.shadowOpacity;
-    self.shadowLayer.shadowRadius = self.shadowRadius;
-    self.shadowLayer.shadowOffset = self.shadowOffset;
+    if (drawerViewController) {
+        self.shadowLayer = [CALayer layer];
+        self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:drawerViewController.paneView.frame] CGPath];
+        self.shadowLayer.shadowColor = self.shadowColor.CGColor;
+        self.shadowLayer.shadowOpacity = self.shadowOpacity;
+        self.shadowLayer.shadowRadius = self.shadowRadius;
+        self.shadowLayer.shadowOffset = self.shadowOffset;
+    }
+}
+
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (!drawerViewController) {
+        [self.shadowLayer removeFromSuperlayer];
+        self.shadowLayer = nil;
+    }
 }
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
@@ -296,12 +325,6 @@
     } else {
         [self.shadowLayer removeFromSuperlayer];
     }
-}
-
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
-{
-	[self.shadowLayer removeFromSuperlayer];
-    self.shadowLayer = nil;
 }
 
 #pragma mark - MSDynamicsDrawerShadowStyler
@@ -383,11 +406,12 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (paneState == MSDynamicsDrawerPaneStateClosed) {
-        [self.statusBarContainerView removeFromSuperview];
         self.dynamicsDrawerWindowLifted = NO;
-        
-        CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
-        [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.statusBarContainerView removeFromSuperview];
+            CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
+            [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
+        });
     }
 }
 
@@ -407,29 +431,33 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     self.dynamicsDrawerWindowLifted = !MSStatusBarFrameExceedsMaximumAdjustmentHeight([[UIApplication sharedApplication] statusBarFrame]);
 }
 
-- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    self.dynamicsDrawerViewController = drawerViewController;
-    self.direction |= direction;
-    
-    // Async so if it's called as a part of application:didFinishLaunching: the applicationState is valid to take a screenshot
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
-            CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
-            [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
-        }
-    });
+    if (drawerViewController) {
+        self.dynamicsDrawerViewController = drawerViewController;
+        self.direction |= direction;
+        // Async so if it's called as a part of application:didFinishLaunching: the applicationState is valid to take a screenshot
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
+                CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
+                [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
+            }
+        });
+        
+    }
 }
 
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    self.direction ^= direction;
-    
-    // If removed while opened in a specific direction, unstyle
-    if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
-        self.dynamicsDrawerWindowLifted = NO;
-        [self.statusBarSnapshotView removeFromSuperview];
-        [self.statusBarContainerView removeFromSuperview];
+    if (!drawerViewController) {
+        self.direction ^= direction;
+        // If removed while opened in a specific direction, unstyle
+        if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
+            self.dynamicsDrawerWindowLifted = NO;
+            [self.statusBarSnapshotView removeFromSuperview];
+            [self.statusBarContainerView removeFromSuperview];
+        }
+
     }
 }
 
@@ -584,4 +612,3 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     }
     return NO;
 }
-

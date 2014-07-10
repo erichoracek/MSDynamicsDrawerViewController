@@ -30,7 +30,8 @@
 #import "MSDynamicsDrawerViewController.h"
 #import "UIViewController+ContainmentHelpers.h"
 #import "UIView+ViewHierarchyAction.h"
-#import "UIPanGestureRecognizer+StartEdge.h"
+#import "UIPanGestureRecognizer+BeginEdges.h"
+#import "MSDynamicsDrawerHelperFunctions.h"
 
 BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection);
 
@@ -64,6 +65,7 @@ BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDir
 @synthesize screenEdgePanCancelsConflictingGestures = _screenEdgePanCancelsConflictingGestures;
 @synthesize paneViewSlideOffAnimationEnabled = _paneViewSlideOffAnimationEnabled;
 @synthesize panePositioningBehavior = _panePositioningBehavior;
+@synthesize paneThrowBehavior = _paneThrowBehavior;
 @synthesize paneBounceBehavior = _paneBounceBehavior;
 
 #pragma mark - UIViewController
@@ -122,41 +124,25 @@ BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDir
 {
     [super viewWillAppear:animated];
     [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:0 context:NULL];
+    [self _stylersWillMoveToDrawerViewController:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if ([self isViewLoaded]) {
-        MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue){
-            NSMutableSet *stylers = self._stylers[@(maskedValue)];
-            for (id <MSDynamicsDrawerStyler> styler in stylers) {
-                if ([styler respondsToSelector:@selector(stylerWasAddedToDynamicsDrawerViewController:forDirection:)]) {
-                    [styler stylerWasAddedToDynamicsDrawerViewController:self forDirection:maskedValue];
-                }
-            }
-        });
-    }
+    [self _stylersDidMoveToDrawerViewController:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if ([self isViewLoaded]) {
-        MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedValue){
-            NSMutableSet *stylers = self._stylers[@(maskedValue)];
-            for (id <MSDynamicsDrawerStyler> styler in stylers) {
-                if ([styler respondsToSelector:@selector(stylerWasRemovedFromDynamicsDrawerViewController:forDirection:)]) {
-                    [styler stylerWasRemovedFromDynamicsDrawerViewController:self forDirection:maskedValue];
-                }
-            }
-        });
-    }
+    [self _stylersWillMoveToDrawerViewController:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self _stylersDidMoveToDrawerViewController:nil];
     [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
 }
 
@@ -349,19 +335,30 @@ BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDir
     [self _paneViewDidUpdatePosition];
 }
 
-- (void)_addDynamicsBehaviorsToCreatePaneState:(MSDynamicsDrawerPaneState)paneState;
+- (void)_addPanePositioningBehavior:(MSPaneBehavior <MSPanePositioningBehavior> *)behavior toPositionPaneInState:(MSDynamicsDrawerPaneState)paneState
 {
-    [self _addDynamicsBehaviorsToCreatePaneState:paneState withThrowVelocity:CGPointZero];
+    [self _addPanePositioningBehavior:behavior toPositionPaneInState:paneState withThrowVelocity:CGPointZero];
 }
 
-- (void)_addDynamicsBehaviorsToCreatePaneState:(MSDynamicsDrawerPaneState)paneState withThrowVelocity:(CGPoint)throwVelocity
+- (void)_addPanePositioningBehavior:(MSPaneBehavior <MSPanePositioningBehavior> *)behavior toPositionPaneInState:(MSDynamicsDrawerPaneState)paneState withThrowVelocity:(CGPoint)throwVelocity
 {
     if (self.currentDrawerDirection == MSDynamicsDrawerDirectionNone) {
         return;
     }
+    
+    // Cancel pane pan gesture if active
+    self._panePanGestureRecognizer.enabled = NO;
+    self._panePanGestureRecognizer.enabled = YES;
+    
+    // Remove all other positioning behaviors
+    for (UIDynamicBehavior *currentBehavior in self._dynamicAnimator.behaviors) {
+        if ([currentBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)]) {
+            [self._dynamicAnimator removeBehavior:currentBehavior];
+        }
+    }
 
-    [self._dynamicAnimator addBehavior:self.panePositioningBehavior];
-    [self.panePositioningBehavior positionPaneInState:paneState forDirection:self.currentDrawerDirection];
+    [self._dynamicAnimator addBehavior:behavior];
+    [behavior positionPaneInState:paneState forDirection:self.currentDrawerDirection];
     
     CGFloat * const throwVelocityComponent = MSPointComponentForDrawerDirection(&throwVelocity, self.currentDrawerDirection);
     CGPoint pushVelocityDirection = CGPointZero;
@@ -390,6 +387,31 @@ BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDir
     NSAssert([panePositioningBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)], @"Pane positioning behavior must conform to MSPanePositioningBehavior");
     if (![self._dynamicAnimator isRunning]) {
         _panePositioningBehavior = panePositioningBehavior;
+    }
+}
+
+static CGFloat const MSPaneThrowBehaviorDefaultSnapDamping = 0.55;
+static CGFloat const MSPaneThrowBehaviorDefaultSnapFrequency = 2.5;
+
+- (MSPaneBehavior <MSPanePositioningBehavior> *)paneThrowBehavior
+{
+    if (!_paneThrowBehavior) {
+        self.paneThrowBehavior = ({
+            MSPaneSnapBehavior *paneThrowBehavior = [[MSPaneSnapBehavior alloc] initWithDrawerViewController:self];
+            paneThrowBehavior.snap.damping = MSPaneThrowBehaviorDefaultSnapDamping;
+            paneThrowBehavior.snap.frequency = MSPaneThrowBehaviorDefaultSnapFrequency;
+            paneThrowBehavior;
+        });
+    }
+    return _paneThrowBehavior;
+}
+
+- (void)setPaneThrowBehavior:(MSPaneBehavior <MSPanePositioningBehavior> *)paneThrowBehavior
+{
+    NSAssert([paneThrowBehavior isKindOfClass:[MSPaneBehavior class]], @"Pane throw behavior must be a MSPaneBehavior");
+    NSAssert([paneThrowBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)], @"Pane throw behavior must conform to MSPaneThrowBehavior");
+    if (![self._dynamicAnimator isRunning]) {
+        _paneThrowBehavior = paneThrowBehavior;
     }
 }
 
@@ -474,36 +496,38 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
 
 - (void)addStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction
 {
-    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
+    if (!styler) {
+        return;
+    }
+    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
         // Lazy creation of stylers sets
-        if (!self._stylers[@(maskedValue)]) {
-            self._stylers[@(maskedValue)] = [NSMutableSet new];
+        if (!self._stylers[@(maskedDirection)]) {
+            self._stylers[@(maskedDirection)] = [NSMutableSet new];
         }
-        NSMutableSet *stylersSet = self._stylers[@(maskedValue)];
+        if ([self isViewLoaded] && [styler respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [styler willMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
+        }
+        NSMutableSet *stylersSet = self._stylers[@(maskedDirection)];
         [stylersSet addObject:styler];
-        BOOL existsInCurrentStylers = NO;
-        for (NSSet *currentStylersSet in [self._stylers allValues]) {
-            if ([currentStylersSet containsObject:styler]) {
-                existsInCurrentStylers = YES;
-            }
-        }
-        if (existsInCurrentStylers && [self isViewLoaded]) {
-            if ([styler respondsToSelector:@selector(stylerWasAddedToDynamicsDrawerViewController:forDirection:)]) {
-                [styler stylerWasAddedToDynamicsDrawerViewController:self forDirection:maskedValue];
-            }
+        if ([self isViewLoaded] && [styler respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [styler didMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
         }
     });
 }
 
 - (void)removeStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction
 {
-    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
-        NSMutableSet *stylersSet = self._stylers[@(maskedValue)];
+    if (!styler) {
+        return;
+    }
+    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
+        if ([self isViewLoaded] && [styler respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [styler willMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
+        }
+        NSMutableSet *stylersSet = self._stylers[@(maskedDirection)];
         [stylersSet removeObject:styler];
-        if ([self isViewLoaded]) {
-            if ([styler respondsToSelector:@selector(stylerWasRemovedFromDynamicsDrawerViewController:forDirection:)]) {
-                [styler stylerWasRemovedFromDynamicsDrawerViewController:self forDirection:maskedValue];
-            }
+        if ([self isViewLoaded] && [styler respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [styler didMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
         }
     });
 }
@@ -529,6 +553,31 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     }
 }
 
+- (void)_stylersWillMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+{
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection){
+        NSMutableSet *stylers = self._stylers[@(maskedDirection)];
+        for (id <MSDynamicsDrawerStyler> styler in stylers) {
+            if ([styler respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
+                [styler willMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
+            }
+        }
+    });
+
+}
+
+- (void)_stylersDidMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+{
+    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection){
+        NSMutableSet *stylers = self._stylers[@(maskedDirection)];
+        for (id <MSDynamicsDrawerStyler> styler in stylers) {
+            if ([styler respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
+                [styler didMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
+            }
+        }
+    });
+}
+
 - (NSSet *)_stylersForDirection:(MSDynamicsDrawerDirection)direction
 {
     NSMutableSet *stylers;
@@ -536,8 +585,8 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         stylers = self._stylers[@(direction)];
     } else {
         stylers = [NSMutableSet new];
-        MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
-            [stylers unionSet:self._stylers[@(maskedValue)]];
+        MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
+            [stylers unionSet:self._stylers[@(maskedDirection)]];
         });
     }
     return stylers;
@@ -550,24 +599,11 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
 
 #pragma mark Pane State
 
-static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
-
 - (void)_paneViewDidUpdatePosition
 {
     // If the potential state is open wide and the pane has reached it, remove the dynamic animator's behaviors to speed up state transitions
     if ((self.panePositioningBehavior.targetPaneState == MSDynamicsDrawerPaneStateOpenWide) && [self.paneLayout paneWithCenter:self.paneView.center hasReachedOpenWideStateForDirection:self.currentDrawerDirection]) {
         [self._dynamicAnimator removeAllBehaviors];
-    }
-    
-    // If the pane view has a velocity below the threshold and is positioned in valid state, remove the dynamic animator's behaviors to speed up dynamic animator pausing
-    MSDynamicsDrawerPaneState currentPaneState;
-    if ([self.paneLayout paneWithCenter:self.paneView.center isInValidState:&currentPaneState forDirection:self.currentDrawerDirection]) {
-        CGPoint paneVelocity = [self._paneBehavior linearVelocityForItem:self.paneView];
-        BOOL isBelowBehaviorRemvoalVelocityThreshold = (fmaxf(fabsf(paneVelocity.x), fabsf(paneVelocity.y)) < MSBehaviorRemovalPaneVelocityThreshold);
-        BOOL isInPotentialPaneState = (self.panePositioningBehavior.targetPaneState == currentPaneState);
-        if (isInPotentialPaneState && isBelowBehaviorRemvoalVelocityThreshold) {
-            [self._dynamicAnimator removeAllBehaviors];
-        }
     }
     
     [self _updateStylers];
@@ -641,7 +677,7 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
     }
     
     if (animated) {
-        [self _addDynamicsBehaviorsToCreatePaneState:paneState];
+        [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:paneState];
         if (!allowUserInterruption) [self _setViewUserInteractionEnabled:NO];
         __weak typeof(self) weakSelf = self;
         self._dynamicAnimatorCompletion = ^{
@@ -668,10 +704,6 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
     
-    if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:willUpdateToPaneState:forDirection:)]) {
-        [self.delegate dynamicsDrawerViewController:self willUpdateToPaneState:paneState forDirection:forDirection];
-    }
-    
     if (_paneState != paneState) {
         [self willChangeValueForKey:NSStringFromSelector(@selector(paneState))];
         _paneState = paneState;
@@ -680,7 +712,6 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
     
     [self _updateStylers];
     
-#warning reenable
 //    [self setNeedsStatusBarAppearanceUpdate];
     
     if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
@@ -702,7 +733,7 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
 - (BOOL)paneViewSlideOffAnimationEnabled
 {
     dispatch_once(&_initPaneViewSlideOffAnimationEnabled, ^{
-        self.paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+        _paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
     });
     return _paneViewSlideOffAnimationEnabled;
 }
@@ -776,8 +807,8 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
 
 - (void)setPaneDragRevealEnabled:(BOOL)paneDraggingEnabled forDirection:(MSDynamicsDrawerDirection)direction
 {
-    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
-        self._paneDragRevealEnabledValues[@(maskedValue)] = @(paneDraggingEnabled);
+    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
+        self._paneDragRevealEnabledValues[@(maskedDirection)] = @(paneDraggingEnabled);
     });
 }
 
@@ -801,8 +832,8 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
 
 - (void)setPaneTapToCloseEnabled:(BOOL)paneTapToCloseEnabled forDirection:(MSDynamicsDrawerDirection)direction
 {
-    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedValue){
-        self._paneTapToCloseEnabledValues[@(maskedValue)] = @(paneTapToCloseEnabled);
+    MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
+        self._paneTapToCloseEnabledValues[@(maskedDirection)] = @(paneTapToCloseEnabled);
     });
 }
 
@@ -817,7 +848,7 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 8.0;
 - (BOOL)screenEdgePanCancelsConflictingGestures
 {
     dispatch_once(&_initScreenEdgePanCancelsConflictingGestures, ^{
-        self.screenEdgePanCancelsConflictingGestures = YES;
+        _screenEdgePanCancelsConflictingGestures = YES;
     });
     return _screenEdgePanCancelsConflictingGestures;
 }
@@ -931,7 +962,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
                 [styler dynamicsDrawerViewController:self mayUpdateToPaneState:MSDynamicsDrawerPaneStateClosed forDirection:self.currentDrawerDirection];
             }
         }
-        [self _addDynamicsBehaviorsToCreatePaneState:MSDynamicsDrawerPaneStateClosed];
+        [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:MSDynamicsDrawerPaneStateClosed];
     }
 }
 
@@ -1019,11 +1050,12 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         MSDynamicsDrawerPaneState throwState;
         CGPoint throwVelocity = [gestureRecognizer velocityInView:self.view];
         if ([self _paneShouldThrowToState:&throwState forVelocity:throwVelocity inDirection:self.currentDrawerDirection]) {
-            [self _addDynamicsBehaviorsToCreatePaneState:throwState withThrowVelocity:throwVelocity];
+            [self _addPanePositioningBehavior:self.paneThrowBehavior toPositionPaneInState:throwState withThrowVelocity:throwVelocity];
         }
         // If not thrown, just update to nearest `paneState`
         else {
-            [self _addDynamicsBehaviorsToCreatePaneState:[self.paneLayout nearestStateForPaneWithCenter:self.paneView.center forDirection:self.currentDrawerDirection]];
+            MSDynamicsDrawerPaneState nearestPaneState = [self.paneLayout nearestStateForPaneWithCenter:self.paneView.center forDirection:self.currentDrawerDirection];
+            [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:nearestPaneState];
         }
         break;
     }
@@ -1051,12 +1083,12 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         if (self.paneDragRequiresScreenEdgePan) {
             MSDynamicsDrawerPaneState currentPaneState;
             if ([self.paneLayout paneWithCenter:self.paneView.center isInValidState:&currentPaneState forDirection:self.currentDrawerDirection] && (currentPaneState == MSDynamicsDrawerPaneStateClosed)) {
-                UIRectEdge panStartEdges = [self._panePanGestureRecognizer startedAtEdgesOfView:self.paneView];
+                UIRectEdge panBeginEdges = [self._panePanGestureRecognizer didBeginAtEdgesOfView:self.paneView];
                 // Mask to only edges that are possible (there's a drawer view controller set in that direction)
-                MSDynamicsDrawerDirection possibleDirectionsForPanStartEdges = (panStartEdges & self.possibleDrawerDirection);
-                BOOL gestureStartedAtPossibleEdge = (possibleDirectionsForPanStartEdges != UIRectEdgeNone);
+                MSDynamicsDrawerDirection possibleDirectionsForPanBeginEdges = (panBeginEdges & self.possibleDrawerDirection);
+                BOOL gestureBeganAtPossibleEdge = (possibleDirectionsForPanBeginEdges != UIRectEdgeNone);
                 // If the gesture didn't start at a possible edge, return no
-                if (!gestureStartedAtPossibleEdge) {
+                if (!gestureBeganAtPossibleEdge) {
                     return NO;
                 }
             }
@@ -1101,13 +1133,13 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     if ((gestureRecognizer == self._panePanGestureRecognizer) && self.screenEdgePanCancelsConflictingGestures) {
-        UIRectEdge edges = [self._panePanGestureRecognizer startedAtEdgesOfView:self.paneView];
+        UIRectEdge edges = [self._panePanGestureRecognizer didBeginAtEdgesOfView:self.paneView];
         // Mask out edges that aren't possible
         BOOL validEdges = (edges & self.possibleDrawerDirection);
         // If there is a valid edge and pane drag is revealed for that edge's direction
         __block BOOL shouldBeRequiredToFail = NO;
-        MSDynamicsDrawerDirectionActionForMaskedValues(validEdges, ^(MSDynamicsDrawerDirection maskedValue) {
-            shouldBeRequiredToFail = (shouldBeRequiredToFail ? YES : [self paneDragRevealEnabledForDirection:maskedValue]);
+        MSDynamicsDrawerDirectionActionForMaskedValues(validEdges, ^(MSDynamicsDrawerDirection maskedDirection) {
+            shouldBeRequiredToFail = (shouldBeRequiredToFail ? YES : [self paneDragRevealEnabledForDirection:maskedDirection]);
         });
         return shouldBeRequiredToFail;
     }
@@ -1151,52 +1183,3 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 }
 
 @end
-
-#pragma mark - Functions
-
-BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsMasked(MSDynamicsDrawerDirection drawerDirection)
-{
-    // Check if a single bit is set or if there's no bits set via http://aggregate.org/MAGIC/#Is%20Power%20of%202
-    return (drawerDirection & (drawerDirection-1));
-}
-
-BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection)
-{
-    return (!MSDynamicsDrawerDirectionIsMasked(drawerDirection) && (drawerDirection != MSDynamicsDrawerDirectionNone));
-}
-
-BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
-{
-    return (drawerDirection <= MSDynamicsDrawerDirectionAll);
-}
-
-CGFloat * const MSPointComponentForDrawerDirection(CGPoint * const point, MSDynamicsDrawerDirection drawerDirection)
-{
-    if (drawerDirection & MSDynamicsDrawerDirectionHorizontal) {
-        return &point->x;
-    }
-    if (drawerDirection & MSDynamicsDrawerDirectionVertical) {
-       return &point->y;
-    }
-    return NULL;
-}
-
-CGFloat * const MSSizeComponentForDrawerDirection(CGSize * const size, MSDynamicsDrawerDirection drawerDirection)
-{
-    if (drawerDirection & MSDynamicsDrawerDirectionHorizontal) {
-        return &size->width;
-    }
-    if (drawerDirection & MSDynamicsDrawerDirectionVertical) {
-        return &size->height;
-    }
-    return NULL;
-}
-
-void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynamicsDrawerActionBlock action)
-{
-    for (MSDynamicsDrawerDirection currentDirection = MSDynamicsDrawerDirectionTop; currentDirection <= MSDynamicsDrawerDirectionRight; currentDirection <<= 1) {
-        if (currentDirection & direction) {
-            action(currentDirection);
-        }
-    }
-}

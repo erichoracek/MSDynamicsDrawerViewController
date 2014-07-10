@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#warning remove...? feels hacky
 @interface MSStatusBarOffsetDrawerNavigationController : UINavigationController
 
 @end

@@ -300,7 +300,12 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneState:animated:allowUserInterruption:completion:
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
  */
+
+#warning rename
 @property (nonatomic, strong) MSPaneBehavior <MSPanePositioningBehavior> *panePositioningBehavior;
+
+#warning document
+@property (nonatomic, strong) MSPaneBehavior <MSPanePositioningBehavior> *paneThrowBehavior;
 
 /**
  The bounce behavior that is responsible for bouncing the pane view controller open.
@@ -475,72 +480,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 
 @end
 
-///----------------
-/// @name Functions
-///----------------
-
-/**
- The action block used in @see MSDynamicsDrawerDirectionActionForMaskedValues.
- */
-typedef void (^MSDynamicsDrawerActionBlock)(MSDynamicsDrawerDirection maskedValue);
-
-/**
- Performs an action on all values within a `MSDynamicsDrawerDirection` direction bitmask.
- 
- @param drawerDirection The direction bitmask.
- @param action The action block that should be performed on each of the directions contained within the direction bitmask.
- 
- @see MSDynamicsDrawerActionBlock
- */
-void MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirection direction, MSDynamicsDrawerActionBlock action);
-
-/**
- Returns YES if the specified direction is one of the cardinal directions (top, left, bottom, right).
- 
- @param drawerDirection The direction that should be evaluated.
- 
- @return Whether the direction is one of the cardinal directions.
- */
-BOOL MSDynamicsDrawerDirectionIsCardinal(MSDynamicsDrawerDirection drawerDirection);
-
-/**
- Returns YES if the specified direciton is a masked direction value.
- 
- @param drawerDirection The direction that should be evaluated.
- 
- @return Whether the direction is a masked value.
- */
-BOOL MSDynamicsDrawerDirectionIsMasked(MSDynamicsDrawerDirection drawerDirection);
-
-/**
- Returns a reference to the relevant point component (x or y) for a specified drawer direction.
- 
- @param point           The point whose component should be returned
- @param drawerDirection The direction that the component should be returned for.
- 
- @return A reference to the component of the point parameter that is relevant to the specified direction.
- */
-CGFloat * const MSPointComponentForDrawerDirection(CGPoint * const point, MSDynamicsDrawerDirection drawerDirection);
-
-/**
- Returns a reference to the relevant size component (width or height) for a specified drawer direction.
- 
- @param size            The size whose component should be returned
- @param drawerDirection The direction that the component should be returned for.
- 
- @return A reference to the component of the size parameter that is relevant to the specified direction.
- */
-CGFloat * const MSSizeComponentForDrawerDirection(CGSize * const size, MSDynamicsDrawerDirection drawerDirection);
-
-/**
- Returns YES if a drawer direction has a valid value.
- 
- @param drawerDirection The drawer direction to check value validity on.
- 
- @return Whether the drawer direction parameter is valid.
- */
-BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection);
-
 /**
  To respond to the updates to `paneState` for an instance of `MSDynamicsDrawerViewController`, configure a custom class to adopt the `MSDynamicsDrawerViewControllerDelegate` protocol and set it as the `delegate` object.
  */
@@ -558,9 +497,6 @@ BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
  @param direction When the pane state is updating to `MSDynamicsDrawerPaneStateClosed`: the direction that the drawer view controller is transitioning from. When the pane state is updating to `MSDynamicsDrawerPaneStateOpen` or `MSDynamicsDrawerPaneStateOpenWide`: the direction that the drawer view controller is transitioning to.
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
-
-#warning document
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController willUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  Informs the delegate that the drawer view controller did update to a pane state in the specified direction.
@@ -589,4 +525,3 @@ BOOL MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection)
 #import "MSDynamicsDrawerBehavior.h"
 #import "MSStatusBarOffsetDrawerNavigationController.h"
 #import "MSDynamicsDrawerPaneLayout.h"
-

@@ -27,6 +27,7 @@
 //
 
 #import "MSGesturesViewController.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 
 NSString * const MSGestureDirectionCellReuseIdentifier = @"Gesture Direction Cell";
 

@@ -75,8 +75,7 @@
     MSLogoViewController *logoViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Logo"];
 #endif
     [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight];
-    
-    [self.dynamicsDrawerViewController addStyler:[MSDynamicsDrawerResizeStyler new] forDirection:(MSDynamicsDrawerDirectionTop | MSDynamicsDrawerDirectionRight | MSDynamicsDrawerDirectionBottom)];
+    [self.dynamicsDrawerViewController addStyler:[MSDynamicsDrawerResizeStyler new] forDirection:MSDynamicsDrawerDirectionAll];
     
     // Transition to the first view controller
     [menuViewController transitionToViewController:0];

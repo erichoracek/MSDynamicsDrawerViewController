@@ -27,6 +27,7 @@
 //
 
 #import "MSBounceViewController.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 
 NSString * const MSBounceCellReuseIdentifier = @"Bounce Cell";
 NSString * const MSBounceDynamicsCellReuseIdentifier = @"Bounce Dynamics Cell";
@@ -78,7 +79,7 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
 {
     NSInteger possibleDrawerDirection = [self dynamicsDrawerViewController].possibleDrawerDirection;
     __block NSInteger possibleDirectionCount = 0;
-    MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
+    MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedDirection) {
         possibleDirectionCount++;
     });
     return possibleDirectionCount;

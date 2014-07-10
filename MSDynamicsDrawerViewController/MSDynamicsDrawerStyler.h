@@ -39,7 +39,6 @@
  
  It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
  */
-#warning remove the dynamics drawer prefix
 @protocol MSDynamicsDrawerStyler <NSObject>
 
 @optional
@@ -62,28 +61,26 @@
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
-
+#warning document
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
-#warning remove "styler" from name
 /**
- Used to set up the appearance of the styler when it is added to a `MSDynamicsDrawerViewController` instance.
+ Called just before the styler is added or removed from a drawer view controller.
  
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.  Can be nil.
  @param direction The direction that the styler is being added for. Can be a masked value.
  */
-- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
-
-#warning remove drawerViewController parameter
-#warning remove "styler" from name
 /**
+ Called after the styler is added or removed from a drawer view controller.
+ 
  Used to tear down the appearance of the styler when it is removed from a `MSDynamicsDrawerViewController` instance.
  
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that was being styled by the `MSDynamicsDrawerStyler` instance.
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that was being styled by the `MSDynamicsDrawerStyler` instance. Can be nil.
  @param direction The direction that the styler is being removed for. Can be a masked value.
  */
-- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
 @end
 
@@ -139,11 +136,15 @@
  */
 @property (nonatomic, assign) CGFloat minimumResizeRevealWidth;
 
+#warning document
+@property (nonatomic, assign) CGFloat maximumResizeRevealWidth;
+
 @end
 
 /**
  Adds a shadow to the `paneView` within a `MSDynamicsDrawerViewController` to create an effect of the `paneView` casting a shadow over the `drawerView`.
  */
+#warning sometimes places shadow above pane view
 @interface MSDynamicsDrawerShadowStyler : NSObject <MSDynamicsDrawerStyler>
 
 /**
@@ -177,6 +178,8 @@
 @end
 
 #warning document
+#warning fix for dark/light status bars
+#warning cache for other rotations
 @interface MSDynamicsDrawerStatusBarOffsetStyler : NSObject <MSDynamicsDrawerStyler>
 
 @end

@@ -2,9 +2,9 @@ PODS:
   - Aspects (1.4.1)
   - DynamicXray (0.2.0)
   - Fingertips (0.3.0)
-  - KIF (3.0.5):
+  - KIF (3.0.7):
     - KIF/XCTest
-  - KIF/XCTest (3.0.5)
+  - KIF/XCTest (3.0.7)
   - libextobjc/EXTScope (0.4):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
@@ -36,7 +36,7 @@ SPEC CHECKSUMS:
   Aspects: a6368eba05295b24ffe0e9acfb9080cc3b0f4b5f
   DynamicXray: 75d650998e8c7b944283a7e716ea74926bc757c0
   Fingertips: 09d223a390349b317a51d4c941d778bdb661c4e1
-  KIF: ad5ddd4e8cb213e6b3e2e166fba9308e3b542e6e
+  KIF: 685ab7b49c1092732b7cb3106cc957366b01e225
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
   MSDynamicsDrawerViewController: 1dc554207c1aa14b24ff9fedc3b8f096ac88ae57
   OCHamcrest: b464725bbb48d0f1cd9c6f4ec3cb35fe0c4f2b94

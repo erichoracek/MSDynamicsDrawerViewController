@@ -30,14 +30,16 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 @interface MSDynamicsDrawerPaneLayout : NSObject
 
 /**
- Initializes a pane position with a drawer view controller.
+ Initializes a pane layout with a pane container view.
  
- @return The initialized pane positioning behavior, or nil if there was a problem initializing the object.
+ @param paneContainerView The view that the pane is contained within. Typically the view property on a MSDynamicsDrawerViewController.
+ 
+ @return The initialized pane layout, or nil if there was a problem initializing the object.
  */
 - (instancetype)initWithPaneContainerView:(UIView *)paneContainerView;
 
 /**
- The drawer view controller whose pane position is described by this behavior.
+ The view containing the pane view whose layout is defined by this object.
  */
 @property (nonatomic, weak, readonly) UIView *paneContainerView;
 
@@ -46,6 +48,13 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 
 #warning document
 - (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction;
+
+#warning rename reveal distance maybe? width implies horiztal width
+///--------------------
+/// @name Reveal Widths
+///--------------------
+
+- (CGFloat)revealDistanceForPaneState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction;
 
 /**
  Sets the maximum width that the `paneView` opens when revealing the `drawerView` underneath for the specified direction.
@@ -70,7 +79,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 - (CGFloat)maxRevealWidthForDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- The amount that the paneView should be offset from the edge of the screen when set to the `MSDynamicsDrawerPaneStateOpenWide`.
+ The amount that the paneView should be offset beyond the edge of the screen when set to the `MSDynamicsDrawerPaneStateOpenWide` pane state.
  
  This property controls the amount that the pane view is offset from the edge of the `MSDynamicsDrawerViewController` instance's view when the pane view is in the `MSDynamicsDrawerPaneStateOpenWide` `paneState`. When `paneViewSlideOffAnimationEnabled` is set to `YES`, this property controls the amount that the `paneView` slides beyond the edge of the screen before being replaced, and thus controls the duration of the `setPaneViewController:animated:` animation. If the `paneView` has a shadow, this property can be used to slide the `paneView` far enough beyond the edge of the screen so that its shadow isn't visible during the transition. Default value of to `20.0`.
  
@@ -80,7 +89,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
  */
 @property (nonatomic, assign) CGFloat paneStateOpenWideEdgeOffset;
 
-#warning document
+/**
+ The current reveal width for a pane with the specified center for the passed direction.
+ 
+ @param paneCenter <#paneCenter description#>
+ @param direction  <#direction description#>
+ 
+ @return <#return value description#>
+ */
 - (CGFloat)currentRevealWidthForPaneWithCenter:(CGPoint)paneCenter forDirection:(MSDynamicsDrawerDirection)direction;
 
 #warning document

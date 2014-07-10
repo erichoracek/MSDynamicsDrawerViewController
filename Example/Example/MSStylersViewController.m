@@ -27,14 +27,15 @@
 //
 
 #import "MSStylersViewController.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 
 NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell";
 
 @interface MSStylersViewController ()
 
 @property (nonatomic, strong) NSArray *stylerClasses;
-@property (nonatomic, strong) NSArray *stylerNames;
-@property (nonatomic, strong) NSArray *stylerDescriptions;
+@property (nonatomic, strong) NSDictionary *stylerNames;
+@property (nonatomic, strong) NSDictionary *stylerDescriptions;
 @property (nonatomic, strong) NSDictionary *directionNames;
 
 @end
@@ -65,40 +66,45 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 {
     if (!_stylerClasses) {
         self.stylerClasses = @[
-            [MSDynamicsDrawerScaleStyler class],
-            [MSDynamicsDrawerFadeStyler class],
             [MSDynamicsDrawerParallaxStyler class],
+            [MSDynamicsDrawerFadeStyler class],
             [MSDynamicsDrawerShadowStyler class],
-            [MSDynamicsDrawerResizeStyler class]
+            [MSDynamicsDrawerResizeStyler class],
+            [MSDynamicsDrawerScaleStyler class]
         ];
     }
     return _stylerClasses;
 }
 
-- (NSArray *)stylerNames
+- (NSDictionary *)stylerNames
 {
     if (!_stylerNames) {
-        self.stylerNames = @[
-            @"Scale",
-            @"Fade",
-            @"Parallax",
-            @"Shadow",
-            @"Drawer Resize"
-        ];
+        self.stylerNames = @{
+            NSStringFromClass([MSDynamicsDrawerScaleStyler class]) : @"Scale",
+            NSStringFromClass([MSDynamicsDrawerFadeStyler class]) : @"Fade",
+            NSStringFromClass([MSDynamicsDrawerParallaxStyler class]) : @"Parallax",
+            NSStringFromClass([MSDynamicsDrawerShadowStyler class]) : @"Shadow",
+            NSStringFromClass([MSDynamicsDrawerResizeStyler class]) : @"Drawer Resize"
+        };
     }
     return _stylerNames;
 }
 
-- (NSArray *)stylerDescriptions
+- (NSDictionary *)stylerDescriptions
 {
     if (!_stylerDescriptions) {
-        self.stylerDescriptions = @[
-            @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
-            @"The 'Fade' styler fades the drawer view as the pane view is opened",
-            @"The 'Parallax' styler translates the drawer view inwards as the pane view is opened",
-            @"The 'Shadow' styler causes the pane view to cast a shadow on the drawer view",
-            @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal width"
-        ];
+        self.stylerDescriptions = @{
+            NSStringFromClass([MSDynamicsDrawerScaleStyler class]) :
+                @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
+            NSStringFromClass([MSDynamicsDrawerFadeStyler class]) :
+                @"The 'Fade' styler fades the drawer view as the pane view is opened",
+            NSStringFromClass([MSDynamicsDrawerParallaxStyler class]) :
+                @"The 'Parallax' styler translates the drawer view inwards from an initial offset as the pane view is opened",
+            NSStringFromClass([MSDynamicsDrawerShadowStyler class]) :
+                @"The 'Shadow' styler causes the pane view to cast a shadow on the drawer view",
+            NSStringFromClass([MSDynamicsDrawerResizeStyler class]) :
+                @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal width"
+        };
     }
     return _stylerDescriptions;
 }
@@ -160,12 +166,12 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%@ Styler", self.stylerNames[section]];
+    return [NSString stringWithFormat:@"%@ Styler", self.stylerNames[NSStringFromClass(self.stylerClasses[section])]];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    return self.stylerDescriptions[section];
+    return self.stylerDescriptions[NSStringFromClass(self.stylerClasses[section])];
 }
 
 #pragma mark - UITableViewDelegate
