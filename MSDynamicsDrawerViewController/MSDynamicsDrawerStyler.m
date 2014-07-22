@@ -194,6 +194,32 @@
         return;
     }
     
+    UIView *drawerViewControllerView = [[drawerViewController drawerViewControllerForDirection:direction] view];
+    drawerViewControllerView.frame = [self drawerFrameForDrawerViewController:drawerViewController closedFraction:paneClosedFraction forDirection:direction];
+}
+
+- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (!drawerViewController) {
+        UIView *drawerViewControllerView = [[self.drawerViewController drawerViewControllerForDirection:direction] view];
+        drawerViewControllerView.frame = drawerViewControllerView.superview.bounds;
+    }
+}
+
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (drawerViewController) {
+        self.drawerViewController = drawerViewController;
+        UIView *drawerViewControllerView = [[drawerViewController drawerViewControllerForDirection:direction] view];
+        CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
+        drawerViewControllerView.frame = [self drawerFrameForDrawerViewController:drawerViewController closedFraction:paneClosedFraction forDirection:direction];
+    }
+}
+
+#pragma mark - MSDynamicsDrawerResizeStyler
+
+- (CGRect)drawerFrameForDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController closedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
+{
     CGFloat minResizeRevealWidth = (!self.useOpenWidthAsMinResizeRevealWidth ? self.minimumResizeRevealWidth : [drawerViewController.paneLayout revealDistanceForPaneState:MSDynamicsDrawerPaneStateOpen direction:direction]);
     CGFloat maxResizeRevealWidth = (!self.useOpenWideWidthAsMaxResizeRevealWidth ? self.maximumResizeRevealWidth : [drawerViewController.paneLayout revealDistanceForPaneState:MSDynamicsDrawerPaneStateOpenWide direction:direction]);
     
@@ -218,26 +244,8 @@
         *drawerViewOriginComponent = ceilf(*drawerViewContainerSizeComponent - *drawerViewSizeComponent);
     }
     
-    drawerViewControllerView.frame = drawerViewFrame;
+    return drawerViewFrame;
 }
-
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
-{
-    if (!drawerViewController) {
-        UIView *drawerViewControllerView = [[self.drawerViewController drawerViewControllerForDirection:direction] view];
-        // Reset the drawer view controller's view to be the size of the drawerView (before the styler was added)
-        drawerViewControllerView.frame = drawerViewControllerView.superview.bounds;
-    }
-}
-
-- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
-{
-    if (drawerViewController) {
-        self.drawerViewController = drawerViewController;
-    }
-}
-
-#pragma mark - MSDynamicsDrawerResizeStyler
 
 - (void)setMinimumResizeRevealWidth:(CGFloat)minimumResizeRevealWidth
 {
