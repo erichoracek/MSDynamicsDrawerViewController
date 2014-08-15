@@ -3,7 +3,7 @@
 //  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 9/4/12.
-//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2014 Monospace Ltd. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 /**
  The state of the pane view as defined in a `MSDynamicsDrawerPaneState`.
  
- The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal width for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is more than one drawer view controller set, use `setPaneState:inDirection:` instead and specify a direction.
+ The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal distance for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is more than one drawer view controller set, use `setPaneState:inDirection:` instead and specify a direction.
  
  @see setPaneState:inDirection:
  @see setPaneState:animated:allowUserInterruption:completion:
@@ -181,7 +181,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 /**
  The state of the pane view as defined in a `MSDynamicsDrawerPaneState`.
  
-  The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal width for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is only one drawer view controller set, use `paneState` property instead.
+  The possible states are `MSDynamicsDrawerPaneStateClosed`, where the `drawerView` is entirely hidden by the `paneView`, `MSDynamicsDrawerPaneStateOpen`, wherein the `drawerView` is revealed to the reveal distance for the specified direction, and `MSDynamicsDrawerPaneStateOpenWide` where the `drawerView` in revealed by the `paneView` in its entirety such that the `paneView` is opened past the edge of the screen. If there is only one drawer view controller set, use `paneState` property instead.
  
  @param paneState The state that the pane view controller should be updated to be in.
  @param direction The direction that the `paneState` update should be applied in.

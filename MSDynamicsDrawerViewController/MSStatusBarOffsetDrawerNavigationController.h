@@ -1,6 +1,6 @@
 //
 //  MSStatusBarOffsetDrawerNavigationController.h
-//  Pods
+//  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 6/11/14.
 //

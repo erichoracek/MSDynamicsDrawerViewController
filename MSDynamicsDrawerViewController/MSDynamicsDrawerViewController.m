@@ -3,7 +3,7 @@
 //  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 9/4/12.
-//  Copyright (c) 2012-2013 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2012-2014 Monospace Ltd. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //
@@ -32,8 +32,6 @@
 #import "UIView+ViewHierarchyAction.h"
 #import "UIPanGestureRecognizer+BeginEdges.h"
 #import "MSDynamicsDrawerHelperFunctions.h"
-
-BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDirection drawerDirection);
 
 @interface MSDynamicsDrawerViewController () <UIGestureRecognizerDelegate, UIDynamicAnimatorDelegate>
 
@@ -230,7 +228,7 @@ BOOL __attribute__((const)) MSDynamicsDrawerDirectionIsValid(MSDynamicsDrawerDir
     else if (drawerViewController && existingDrawerViewController) {
         self._drawerViewControllers[@(direction)] = drawerViewController;
     }
-    
+    // If preloading the view, just open in the specified direction (without actually opening the pane to reveal the drawer) and then immediately close.
     if (preloadView) {
         self.currentDrawerDirection = direction;
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -1,6 +1,6 @@
 //
 //  UIPanGestureRecognizer+BeginEdges.m
-//  Pods
+//  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 6/21/14.
 //

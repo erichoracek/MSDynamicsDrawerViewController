@@ -1,6 +1,6 @@
 //
 //  UIViewController+ContainmentHelpers.h
-//  Pods
+//  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 6/21/14.
 //

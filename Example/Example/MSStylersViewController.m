@@ -103,7 +103,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
             NSStringFromClass([MSDynamicsDrawerShadowStyler class]) :
                 @"The 'Shadow' styler causes the pane view to cast a shadow on the drawer view",
             NSStringFromClass([MSDynamicsDrawerResizeStyler class]) :
-                @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal width"
+                @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal distance"
         };
     }
     return _stylerDescriptions;
