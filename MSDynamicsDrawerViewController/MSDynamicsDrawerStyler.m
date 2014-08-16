@@ -531,11 +531,13 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     self.dynamicsDrawerViewController.view.window.windowLevel = dynamicsDrawerWindowLevel;
 }
 
-- (BOOL)dynamicsDrawerIsWithinHigestWindow
+- (BOOL)dynamicsDrawerIsVisibleBelowStatusBar
 {
     CGFloat maximumWindowLevel = -CGFLOAT_MAX;
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
-        if (window.hidden || [NSStringFromClass([window class]) isEqualToString:@"UITextEffectsWindow"]) {
+        // If window wouldn't obscure status bar (hidden or not overlapping), continue
+        if (window.hidden || !CGRectIntersectsRect(window.frame, statusBarFrame)) {
             continue;
         }
         maximumWindowLevel = ((window.windowLevel > maximumWindowLevel) ? window.windowLevel : maximumWindowLevel);
@@ -550,21 +552,22 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
 
 - (BOOL)canCreateStatusBarSnapshotWithStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
 {
-    return ([self dynamicsDrawerIsWithinHigestWindow] &&
-            ![self dynamicsDrawerWindowIsAboveStatusBar] &&
-            (paneClosedFraction == 1.0) &&
-            !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame) &&
-            ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) &&
-            ((self.statusBarSnapshotStyle == MSStatusBarStyleNone) || ([[UIApplication sharedApplication] statusBarStyle] == self.statusBarSnapshotStyle)));
+    return (
+        [self dynamicsDrawerIsVisibleBelowStatusBar] &&
+        ![self dynamicsDrawerWindowIsAboveStatusBar] &&
+        (paneClosedFraction == 1.0) &&
+        !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame) &&
+        ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) &&
+        ((self.statusBarSnapshotStyle == MSStatusBarStyleNone) || ([[UIApplication sharedApplication] statusBarStyle] == self.statusBarSnapshotStyle))
+    );
 }
 
 - (void)setDynamicsDrawerWindowLifted:(BOOL)dynamicsDrawerWindowLifted
 {
-    BOOL shouldLift = (self.dynamicsDrawerViewController.currentDrawerDirection & self.direction);
-    if (!shouldLift && dynamicsDrawerWindowLifted) {
+    BOOL shouldLiftWindow = (self.dynamicsDrawerViewController.currentDrawerDirection & self.direction);
+    if (!shouldLiftWindow && dynamicsDrawerWindowLifted) {
         return;
     }
-    
     if (!_dynamicsDrawerWindowLifted && dynamicsDrawerWindowLifted) {
         self.dynamicsDrawerOriginalWindowLevel = self.dynamicsDrawerWindowLevel;
         self.dynamicsDrawerWindowLevel = (UIWindowLevelStatusBar + 1.0);
@@ -608,7 +611,6 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
 - (void)statusBarDidChangeFrame:(NSNotification *)notification
 {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    
     [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:statusBarFrame paneClosedFraction:[self paneClosedFraction]];
     if (!MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame)) {
         if (!self.statusBarContainerView.superview) {
