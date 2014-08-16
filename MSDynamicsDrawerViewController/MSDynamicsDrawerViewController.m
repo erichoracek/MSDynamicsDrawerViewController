@@ -689,6 +689,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     
     [self _updateStylers];
     
+#warning re-enable
 //    [self setNeedsStatusBarAppearanceUpdate];
     
     if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
@@ -986,7 +987,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
             if ((self.possibleDrawerDirection & newDrawerDirection) && // Possible
                 ([self paneDragRevealEnabledForDirection:newDrawerDirection])) // Has drag to reveal enabled
             {
-                // The user is now panning the pane, which means that they're probably trying to update it to the opposite state from where it's at (unless they're playing with it)
+                // The user is now panning the pane, which means that they're probably trying to update it to the opposite state from where it's at
                 MSDynamicsDrawerPaneState mayPaneState = ((self.paneState != MSDynamicsDrawerPaneStateClosed) ? MSDynamicsDrawerPaneStateClosed : MSDynamicsDrawerPaneStateOpen);
                 [self _informRelevantObjectsOfPotentialUpdateToPaneState:mayPaneState forDirection:newDrawerDirection];
                 
