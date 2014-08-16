@@ -1052,7 +1052,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
     }
 }
 
-#pragma mark - UIGestureRecognizerDelegate
+#pragma mark - MSDynamicsDrawerViewController <UIGestureRecognizerDelegate>
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -1132,7 +1132,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
     return NO;
 }
 
-#pragma mark - UIDynamicAnimatorDelegate
+#pragma mark - MSDynamicsDrawerViewController <UIDynamicAnimatorDelegate>
 
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator
 {
