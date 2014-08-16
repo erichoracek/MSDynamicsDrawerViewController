@@ -20,13 +20,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
     /**
      As the pane is dragged against an edge, it should provide a small amount of give as it as is dragged past the bounding edge.
      */
-    MSDynamicsDrawerPaneDragEdgeBoundingStyleElastic,
+    MSDynamicsDrawerPaneDragEdgeBoundingStyleRubberBand,
     /**
      As the pane is dragged against an edge, it should stop when it collides with the edge and allow no further dragging.
      */
-    MSDynamicsDrawerPaneDragEdgeBoundingStyleHard
+    MSDynamicsDrawerPaneDragEdgeBoundingStyleCollision
 };
 
+#warning document
 @interface MSDynamicsDrawerPaneLayout : NSObject
 
 /**

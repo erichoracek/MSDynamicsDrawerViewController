@@ -161,20 +161,22 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     return paneViewCenter;
 }
 
+static CGFloat const MSRubberBandingCoefficient = .055;
+
 - (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction
 {
     if (direction == MSDynamicsDrawerDirectionNone) {
         return paneCenter;
     }
     
-    CGFloat * const panTranslationComponent = MSPointComponentForDrawerDirection(&translation, direction);
-    CGFloat * const paneCenterComponent = MSPointComponentForDrawerDirection(&paneCenter, direction);
+    CGFloat const panTranslationComponent = *MSPointComponentForDrawerDirection(&translation, direction);
+    CGFloat *paneCenterComponent = MSPointComponentForDrawerDirection(&paneCenter, direction);
     
-    *paneCenterComponent += *panTranslationComponent;
+    *paneCenterComponent += panTranslationComponent;
     
     // Pane Bounding
     CGFloat closedFraction = [self paneClosedFractionForPaneWithCenter:paneCenter forDirection:direction];
-    if ((0.0 <= closedFraction) && (closedFraction <= 1.0)) {
+    if ((closedFraction >= 0.0) && (closedFraction <= 1.0)) {
         return paneCenter;
     }
     
@@ -189,15 +191,24 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
     }
     
     switch ((NSInteger)self.paneDragEdgeBoundingStyle) {
-    case MSDynamicsDrawerPaneDragEdgeBoundingStyleElastic: {
-        CGFloat elastictyCoefficient = (CGRectGetWidth(self.paneContainerView.bounds) * .025);
+    case MSDynamicsDrawerPaneDragEdgeBoundingStyleRubberBand: {
+        
+        // Offset = (d * c) * log( x / (d * c) + 1)
+        // d = dimension (width or height, depending on direction)
+        // c = rubber banding constant
+        // x = offset
+        
+        CGSize size = self.paneContainerView.bounds.size;
+        CGFloat sizeComponent = *MSSizeComponentForDrawerDirection(&size, direction);
         CGFloat distancePastBoundedCenter = fabsf(*paneCenterComponent - *relevantBoundingComponent);
-        CGFloat elasticOffset = elastictyCoefficient * logf( (1.0 / elastictyCoefficient) * distancePastBoundedCenter + 1.0);
-        CGFloat elasticOffsetSign = ((*panTranslationComponent > 0.0) ? 1.0 : -1.0);
+        CGFloat sizeNormalizedElasticityCoefficient = (sizeComponent * MSRubberBandingCoefficient);
+        CGFloat elasticOffset = (sizeNormalizedElasticityCoefficient * logf( (distancePastBoundedCenter / sizeNormalizedElasticityCoefficient) + 1.0));
+        CGFloat elasticOffsetSign = ((panTranslationComponent > 0.0) ? 1.0 : -1.0);
         *paneCenterComponent = roundf(*relevantBoundingComponent + (elasticOffset * elasticOffsetSign));
+        
         break;
     }
-    case MSDynamicsDrawerPaneDragEdgeBoundingStyleHard:
+    case MSDynamicsDrawerPaneDragEdgeBoundingStyleCollision:
         *paneCenterComponent = *relevantBoundingComponent;
         break;
     }
