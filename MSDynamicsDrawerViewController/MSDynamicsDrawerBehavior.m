@@ -198,7 +198,7 @@ static CGFloat const MSDefaultGravityMagnitude = 3.5;
         *boundaryPaneSlideDimension = ((containerPaneBoundingSize * 2.0) + self.drawerViewController.paneLayout.paneStateOpenWideEdgeOffset + 1.0);
         break;
     case MSDynamicsDrawerPaneStateOpen:
-        *boundaryPaneSlideDimension = ((containerPaneBoundingSize + [self.drawerViewController.paneLayout maxRevealWidthForDirection:direction]) + 1.0);
+        *boundaryPaneSlideDimension = ((containerPaneBoundingSize + [self.drawerViewController.paneLayout openRevealDistanceForDirection:direction]) + 1.0);
         break;
     case MSDynamicsDrawerPaneStateOpenWide:
         *boundaryPaneSlideDimension = ((containerPaneBoundingSize * 2.0) + self.drawerViewController.paneLayout.paneStateOpenWideEdgeOffset + 1.0);
@@ -244,11 +244,27 @@ static NSString * const MSDynamicsDrawerBoundaryIdentifier = @"MSDynamicsDrawerB
 
 @end
 
+static CGFloat const MSTargetPointAttachmentOffset = 0.5;
+
+CGPoint MSAttachmentAnchorPoint(MSDynamicsDrawerPaneLayout *layout, CGPoint paneCenter, MSDynamicsDrawerPaneState state, MSDynamicsDrawerDirection direction)
+{
+    CGPoint targetCenter = [layout paneCenterForPaneState:state direction:direction];
+    CGFloat *targetCenterComponent = MSPointComponentForDrawerDirection(&targetCenter, direction);
+    CGFloat *currentCenterComponent = MSPointComponentForDrawerDirection(&paneCenter, direction);
+    // Add offset to ensure smooth animation
+    if (targetCenterComponent && currentCenterComponent) {
+        CGFloat sign = ((*targetCenterComponent > *currentCenterComponent) ? -1.0 : 1.0);
+        *targetCenterComponent += (sign * MSTargetPointAttachmentOffset);
+    }
+    return targetCenter;
+}
+
 @interface MSPaneSnapBehavior ()
 
 @property (nonatomic, assign, readwrite) MSDynamicsDrawerPaneState targetPaneState;
 @property (nonatomic, assign, readwrite) MSDynamicsDrawerDirection targetDirection;
-@property (nonatomic, strong, readwrite) UIAttachmentBehavior *snap;
+@property (nonatomic, strong) UIAttachmentBehavior *_snap;
+@property (nonatomic, assign) BOOL _thrown;
 
 @end
 
@@ -265,84 +281,107 @@ static NSString * const MSDynamicsDrawerBoundaryIdentifier = @"MSDynamicsDrawerB
     self.targetDirection = MSDynamicsDrawerDirectionUndefined;
 }
 
+- (void (^)(void))action
+{
+    if (![super action]) {
+        __weak typeof(self) __weak_self = self;
+        self.action = ^{
+            __strong typeof(self) __strong_self = __weak_self;
+            [__strong_self _adjustSnapCoefficientsIfNecessary];
+            [__strong_self _removeBehaviorsIfNecessary];
+        };
+    }
+    return [super action];
+}
+
 #pragma mark - MSDynamicsDrawerBehavior
+
+static CGFloat const MSSnapBehaviorThrowDampingDefault = 0.55;
+static CGFloat const MSSnapBehaviorFrequencyDefault = 3.0;
+static CGFloat const MSSnapBehaviorThrowVelocityThresholdDefault = 500.0;
 
 - (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
 {
     self = [super initWithDrawerViewController:drawerViewController];
     if (self) {
-        [self addChildBehavior:self.snap];
+        [self addChildBehavior:self._snap];
+        self.throwDamping = MSSnapBehaviorThrowDampingDefault;
+        self.frequency = MSSnapBehaviorFrequencyDefault;
+        self.throwVelocityThreshold = MSSnapBehaviorThrowVelocityThresholdDefault;
     }
     return self;
 }
 
-static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 5.0;
-
-- (void (^)(void))action
-{
-    void(^action)() = [super action];
-    if (!action) {
-        __weak typeof(self) __weak_self = self;
-        self.action = ^{
-            __strong typeof(self) __strong_self = __weak_self;
-            // If the pane view has a velocity below the threshold and is positioned in valid state, remove the dynamic animator's behaviors to speed up dynamic animator pausing
-            MSDynamicsDrawerPaneState currentPaneState;
-            CGPoint paneCenter = __strong_self.drawerViewController.paneView.center;
-            BOOL isInTargetState = ([__strong_self.drawerViewController.paneLayout paneWithCenter:paneCenter isInValidState:&currentPaneState forDirection:__strong_self.drawerViewController.currentDrawerDirection] && (currentPaneState == __strong_self.targetPaneState));
-            CGPoint paneVelocity = [__strong_self.paneBehavior linearVelocityForItem:__strong_self.drawerViewController.paneView];
-            BOOL isBelowBehaviorRemvoalVelocityThreshold = (fmaxf(fabsf(paneVelocity.x), fabsf(paneVelocity.y)) < MSBehaviorRemovalPaneVelocityThreshold);
-            if (isInTargetState && isBelowBehaviorRemvoalVelocityThreshold) {
-                [__strong_self.dynamicAnimator removeAllBehaviors];
-            }
-        };
-        action = [super action];
-    }
-    return action;
-}
+static CGFloat const MSSnapBehaviorDefaultDamping = 1.0;
 
 - (void)positionPaneInState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 {
-    self.targetPaneState = paneState;
+    self.targetPaneState  = paneState;
     self.targetDirection = direction;
-    self.snap.anchorPoint = [self targetPointForState:paneState direction:direction];
+    
+    CGPoint paneVelocity = [self.paneBehavior linearVelocityForItem:self.paneItem];
+    CGFloat *paneVelocityComponent = MSPointComponentForDrawerDirection(&paneVelocity, direction);
+    self._thrown = (paneVelocityComponent && (fabsf(*paneVelocityComponent) > MSSnapBehaviorThrowVelocityThresholdDefault));
+    
+    self._snap.damping = (self._thrown ? self.throwDamping : MSSnapBehaviorDefaultDamping);
+    self._snap.anchorPoint = MSAttachmentAnchorPoint(self.drawerViewController.paneLayout, self.drawerViewController.paneView.center, paneState, direction);
+    self._snap.frequency = self.frequency;
 }
 
 #pragma mark - MSDynamicsDrawerSnapBehavior
 
-static CGFloat const MSTargetPointAttachmentOffset = 0.5;
+static CGFloat const MSSnapBehaviorThrowRubberBandingDamping = 1.0;
 
-- (CGPoint)targetPointForState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction
+- (void)_adjustSnapCoefficientsIfNecessary
 {
-    CGPoint targetCenter = [self.drawerViewController.paneLayout paneCenterForPaneState:state direction:direction];
-    CGPoint currentCenter = self.drawerViewController.paneView.center;
-    
-    CGFloat *targetCenterComponent = MSPointComponentForDrawerDirection(&targetCenter, direction);
-    CGFloat *currentCenterComponent = MSPointComponentForDrawerDirection(&currentCenter, direction);
-    
-    if (targetCenterComponent && currentCenterComponent) {
-        CGFloat sign = ((*targetCenterComponent > *currentCenterComponent) ? -1.0 : 1.0);
-        *targetCenterComponent += (sign * MSTargetPointAttachmentOffset);
+    if (!self._thrown) {
+        return;
     }
-    
-    return targetCenter;
+    CGPoint paneCenter = self.drawerViewController.paneView.center;
+    CGFloat paneClosedFraction = [self.drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:paneCenter forDirection:self.targetDirection];
+    // If the pane has moved beyond the bounds of its "track", it should rubber-band back in place without "messy" bouncing (damping of 1)
+    BOOL shouldRubberBand = ((paneClosedFraction > 1.0) || (paneClosedFraction < 0.0));
+    if (shouldRubberBand) {
+        self._snap.damping = MSSnapBehaviorThrowRubberBandingDamping;
+        self._snap.anchorPoint = MSAttachmentAnchorPoint(self.drawerViewController.paneLayout, self.drawerViewController.paneView.center, self.targetPaneState, self.targetDirection);
+    }
 }
 
-static CGFloat const MSDefaultSnapLength = 0.0;
-static CGFloat const MSDefaultSnapDamping = 1.0;
-static CGFloat const MSDefaultSnapFrequency = 3.25;
+static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 5.0;
 
-- (UIAttachmentBehavior *)snap
+/**
+ If the pane view has a velocity below the threshold and is positioned in valid state, remove the dynamic animator's behaviors to speed up dynamic animator pausing
+ */
+- (void)_removeBehaviorsIfNecessary
 {
-    if (!_snap) {
-        self.snap = ({
+    // Determine if the pane is positioned in the target state
+    MSDynamicsDrawerPaneState currentPaneState;
+    CGPoint paneCenter = self.drawerViewController.paneView.center;
+    MSDynamicsDrawerDirection direction = self.drawerViewController.currentDrawerDirection;
+    BOOL isPositionedInValidState = [self.drawerViewController.paneLayout paneWithCenter:paneCenter isInValidState:&currentPaneState forDirection:direction];
+    BOOL isPositionedInTargetState = (isPositionedInValidState && (currentPaneState == self.targetPaneState));
+    // Determine if the velocity is above the removal threshold
+    CGPoint paneVelocity = [self.paneBehavior linearVelocityForItem:self.drawerViewController.paneView];
+    CGFloat largestVelocityComponent = fmaxf(fabsf(paneVelocity.x), fabsf(paneVelocity.y));
+    BOOL isBelowBehaviorRemovalVelocityThreshold = (largestVelocityComponent < MSBehaviorRemovalPaneVelocityThreshold);
+    // If both conditiosn are met, remove all behaviors
+    if (isPositionedInTargetState && isBelowBehaviorRemovalVelocityThreshold) {
+        [self.dynamicAnimator removeAllBehaviors];
+    }
+}
+
+static CGFloat const MSSnapBehaviorLength = 0.0;
+
+- (UIAttachmentBehavior *)_snap
+{
+    if (!__snap) {
+        self._snap = ({
             UIAttachmentBehavior *attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.paneItem attachedToAnchor:self.paneItem.center];
-            attachmentBehavior.length = MSDefaultSnapLength;
-            attachmentBehavior.damping = MSDefaultSnapDamping;
-            attachmentBehavior.frequency = MSDefaultSnapFrequency;
+            attachmentBehavior.length = MSSnapBehaviorLength;
             attachmentBehavior;
         });
     }
-    return _snap;
+    return __snap;
 }
 
 @end

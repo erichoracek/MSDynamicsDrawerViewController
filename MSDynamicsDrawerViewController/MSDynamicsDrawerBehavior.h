@@ -140,16 +140,28 @@
 
 /**
  Uses a snap effect to move the pane.
- 
- Internally, MSDynamicsDrawerSnapBehavior uses a UIAttachmentBehavior child behavior to position the pane. However, this behavior is named as such because the internal attachment behavior is used equivalently to create a similar effect to a UISnapBehavior but without the additional damping animations that are non-configurable in UISnapBehavior.
  */
 @interface MSPaneSnapBehavior : MSPaneBehavior <MSPanePositioningBehavior>
 
 /**
- The child behavior that is used to position the pane.
+ The frequency of the snap animation.
  
- Frequency and damping are be the only properties that should be modified on this behavior to change the positioning effect when using this behavior. This behavior's behavior is undefined if other properties are modified.
+ Default value of 3.0.
  */
-@property (nonatomic, strong, readonly) UIAttachmentBehavior *snap;
+@property (nonatomic, assign) CGFloat frequency;
+
+/**
+ The damping of the snap animation when the pane is thrown.
+ 
+ Default value of 0.55. This is a best approximation for the spring damping that Apple uses for scroll views (0.55). See https://twitter.com/chpwn/status/291794740553338880
+ */
+@property (nonatomic, assign) CGFloat throwDamping;
+
+/**
+ The velocity threshold at which the snap behavior uses the throw damping when positioning the pane is a target position.
+ 
+ Expressed in points per second. Default value of 500.0.
+ */
+@property (nonatomic, assign) CGFloat throwVelocityThreshold;
 
 @end
