@@ -33,8 +33,9 @@ static NSString * const MSCellSliderReuseIdentifier = @"MSCellSliderReuseIdentif
 
 typedef NS_ENUM(NSInteger, MSSectionSnap) {
     MSSectionSnapSelect,
-    MSSectionSnapDamping,
+    MSSectionThrowDamping,
     MSSectionSnapFrequency,
+    MSSectionSnapThrowVelocityThreshold
 };
 
 typedef NS_ENUM(NSInteger, MSSectionGravity) {
@@ -104,19 +105,26 @@ static NSString * const MSSectionValueKeyMaximum = @"MSSectionValueKeyMaximum";
 {
     if (!_sectionValuesSnap) {
         self.sectionValuesSnap = @{
-            @(MSSectionSnapDamping): @{
-                MSSectionValueKeyHeaderText: @"Snap Damping",
-                MSSectionValueKeyFooterText: @"The snap damping is the amount of oscillation the pane has at the conclusion of the snap.",
-                MSSectionValueKeyKeyPath: @"snap.damping",
+            @(MSSectionThrowDamping): @{
+                MSSectionValueKeyHeaderText: @"Throw Damping",
+                MSSectionValueKeyFooterText: @"The throw damping is the amount of oscillation the pane has when it's thrown to a position.",
+                MSSectionValueKeyKeyPath: NSStringFromSelector(@selector(throwDamping)),
                 MSSectionValueKeyMinimum: @0.0,
                 MSSectionValueKeyMaximum: @1.0
             },
             @(MSSectionSnapFrequency): @{
-                MSSectionValueKeyHeaderText: @"Snap Frequency",
-                MSSectionValueKeyFooterText: @"The snap frequency is the speed that the snap should occur at.",
-                MSSectionValueKeyKeyPath: @"snap.frequency",
+                MSSectionValueKeyHeaderText: @"Frequency",
+                MSSectionValueKeyFooterText: @"The frequency is the speed that the snap animation has.",
+                MSSectionValueKeyKeyPath: NSStringFromSelector(@selector(frequency)),
                 MSSectionValueKeyMinimum: @0.0,
                 MSSectionValueKeyMaximum: @10.0
+            },
+            @(MSSectionSnapThrowVelocityThreshold): @{
+                MSSectionValueKeyHeaderText: @"Throw Velocity Threshold",
+                MSSectionValueKeyFooterText: @"The velocity at which the pane is considered to have been thrown, and uses the throw damping when animating to the state that it was thrown to.",
+                MSSectionValueKeyKeyPath: NSStringFromSelector(@selector(throwVelocityThreshold)),
+                MSSectionValueKeyMinimum: @0.0,
+                MSSectionValueKeyMaximum: @1000.0
             }
         };
     }
