@@ -824,6 +824,9 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
 
 - (BOOL)paneTapToCloseEnabledForDirection:(MSDynamicsDrawerDirection)direction
 {
+    if (direction == MSDynamicsDrawerDirectionNone) {
+        return NO;
+    }
     NSAssert(MSDynamicsDrawerDirectionIsCardinal(direction), @"Only accepts singular directions when querying for drag reveal enabled");
     NSNumber *paneTapToCloseEnabled = self._paneTapToCloseEnabledValues[@(direction)];
     if (!paneTapToCloseEnabled) paneTapToCloseEnabled = @(YES);
