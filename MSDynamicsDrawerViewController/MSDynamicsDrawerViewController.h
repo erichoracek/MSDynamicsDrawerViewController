@@ -456,14 +456,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  The `drawerView` is always presented underneath the `paneView`. The frame of the `drawerView` never moves, and it is not affected by dynamics.
  */
-@property (nonatomic, readonly) UIView *drawerView;
+@property (nonatomic, strong, readonly) UIView *drawerView;
 
 /**
  The pane view contains the pane view controller's view.
  
  The user can slide the `paneView` in any of the directions defined in `possibleDrawerDirection` to reveal the drawer view controller underneath. The frame of the `paneView` is frequently updated by internal dynamics and user gestures.
  */
-@property (nonatomic, readonly) UIView *paneView;
+@property (nonatomic, strong, readonly) UIView *paneView;
 
 ///------------------------------------
 /// @name Accessing the Delegate Object
