@@ -63,7 +63,6 @@
 @synthesize screenEdgePanCancelsConflictingGestures = _screenEdgePanCancelsConflictingGestures;
 @synthesize paneViewSlideOffAnimationEnabled = _paneViewSlideOffAnimationEnabled;
 @synthesize panePositioningBehavior = _panePositioningBehavior;
-@synthesize paneThrowBehavior = _paneThrowBehavior;
 @synthesize paneBounceBehavior = _paneBounceBehavior;
 
 #pragma mark - UIViewController
@@ -385,31 +384,6 @@
     NSAssert([panePositioningBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)], @"Pane positioning behavior must conform to MSPanePositioningBehavior");
     if (![self._dynamicAnimator isRunning]) {
         _panePositioningBehavior = panePositioningBehavior;
-    }
-}
-
-static CGFloat const MSPaneThrowBehaviorDefaultSnapDamping = 0.55;
-static CGFloat const MSPaneThrowBehaviorDefaultSnapFrequency = 2.5;
-
-- (MSPaneBehavior <MSPanePositioningBehavior> *)paneThrowBehavior
-{
-    if (!_paneThrowBehavior) {
-        self.paneThrowBehavior = ({
-            MSPaneSnapBehavior *paneThrowBehavior = [[MSPaneSnapBehavior alloc] initWithDrawerViewController:self];
-            paneThrowBehavior.snap.damping = MSPaneThrowBehaviorDefaultSnapDamping;
-            paneThrowBehavior.snap.frequency = MSPaneThrowBehaviorDefaultSnapFrequency;
-            paneThrowBehavior;
-        });
-    }
-    return _paneThrowBehavior;
-}
-
-- (void)setPaneThrowBehavior:(MSPaneBehavior <MSPanePositioningBehavior> *)paneThrowBehavior
-{
-    NSAssert([paneThrowBehavior isKindOfClass:[MSPaneBehavior class]], @"Pane throw behavior must be a MSPaneBehavior");
-    NSAssert([paneThrowBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)], @"Pane throw behavior must conform to MSPaneThrowBehavior");
-    if (![self._dynamicAnimator isRunning]) {
-        _paneThrowBehavior = paneThrowBehavior;
     }
 }
 
@@ -1048,7 +1022,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         MSDynamicsDrawerPaneState throwState;
         CGPoint throwVelocity = [gestureRecognizer velocityInView:self.view];
         if ([self _paneShouldThrowToState:&throwState forVelocity:throwVelocity inDirection:self.currentDrawerDirection]) {
-            [self _addPanePositioningBehavior:self.paneThrowBehavior toPositionPaneInState:throwState withThrowVelocity:throwVelocity];
+            [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:throwState withThrowVelocity:throwVelocity];
         }
         // If not thrown, just update to nearest `paneState`
         else {

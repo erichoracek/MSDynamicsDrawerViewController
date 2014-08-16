@@ -304,8 +304,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 #warning rename
 @property (nonatomic, strong) MSPaneBehavior <MSPanePositioningBehavior> *panePositioningBehavior;
 
-#warning document
-@property (nonatomic, strong) MSPaneBehavior <MSPanePositioningBehavior> *paneThrowBehavior;
 
 /**
  The bounce behavior that is responsible for bouncing the pane view controller open.
