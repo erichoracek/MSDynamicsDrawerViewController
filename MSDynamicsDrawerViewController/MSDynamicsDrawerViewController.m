@@ -360,23 +360,30 @@
     self._panePanGestureRecognizer.enabled = NO;
     self._panePanGestureRecognizer.enabled = YES;
     
-    // Remove all other positioning behaviors
+    // Remove all other pane positioning behaviors
     for (UIDynamicBehavior *currentBehavior in self._dynamicAnimator.behaviors) {
         if ([currentBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)]) {
             [self._dynamicAnimator removeBehavior:currentBehavior];
         }
     }
-
-    [self._dynamicAnimator addBehavior:behavior];
-    [behavior positionPaneInState:paneState forDirection:self.currentDrawerDirection];
     
+    // Build a velocity vector with a component normalized to the current direction
     CGFloat * const throwVelocityComponent = MSPointComponentForDrawerDirection(&throwVelocity, self.currentDrawerDirection);
     CGPoint pushVelocityDirection = CGPointZero;
     CGFloat * const pushVelocityComponent = MSPointComponentForDrawerDirection(&pushVelocityDirection, self.currentDrawerDirection);
     *pushVelocityComponent = *throwVelocityComponent;
     
+    // Add the velocity vector to the pane
+    if (self._paneBehavior.dynamicAnimator != self._dynamicAnimator) {
+        [self._dynamicAnimator addBehavior:self._paneBehavior];
+    }
     [self._paneBehavior addLinearVelocity:pushVelocityDirection forItem:self.paneView];
-    [self._dynamicAnimator addBehavior:self._paneBehavior];
+    
+    // Must be after the pane receives its linear velocty
+    if (behavior.dynamicAnimator != self._dynamicAnimator) {
+        [self._dynamicAnimator addBehavior:behavior];
+    }
+    [behavior positionPaneInState:paneState forDirection:self.currentDrawerDirection];
     
     [self _setPaneViewControllerViewUserInteractionEnabled:(paneState == MSDynamicsDrawerPaneStateClosed)];
     
