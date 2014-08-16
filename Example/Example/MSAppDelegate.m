@@ -67,15 +67,15 @@
     menuViewController.dynamicsDrawerViewController = self.dynamicsDrawerViewController;
     UINavigationController *menuNavigationController = [[MSStatusBarOffsetDrawerNavigationController alloc] initWithRootViewController:menuViewController];
     menuNavigationController.navigationBarHidden = YES;
-    [self.dynamicsDrawerViewController setDrawerViewController:menuNavigationController forDirection:MSDynamicsDrawerDirectionLeft];
+    [self.dynamicsDrawerViewController setDrawerViewController:menuNavigationController forDirection:MSDynamicsDrawerDirectionLeft preloadView:YES];
     
 #if !defined(STORYBOARD)
     MSLogoViewController *logoViewController = [MSLogoViewController new];
 #else
     MSLogoViewController *logoViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Logo"];
 #endif
-    [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight];
-    [self.dynamicsDrawerViewController addStyler:[MSDynamicsDrawerResizeStyler new] forDirection:MSDynamicsDrawerDirectionAll];
+    [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight preloadView:YES];
+    [self.dynamicsDrawerViewController addStyler:[MSDynamicsDrawerResizeStyler new] forDirection:MSDynamicsDrawerDirectionRight];
     
     // Transition to the first view controller
     [menuViewController transitionToViewController:0];
