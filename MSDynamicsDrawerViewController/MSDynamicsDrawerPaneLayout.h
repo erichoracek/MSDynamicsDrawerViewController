@@ -49,34 +49,33 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 #warning document
 - (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction;
 
-#warning rename reveal distance maybe? width implies horiztal width
-///--------------------
-/// @name Reveal Widths
-///--------------------
+///-----------------------
+/// @name Reveal Distances
+///-----------------------
 
 - (CGFloat)revealDistanceForPaneState:(MSDynamicsDrawerPaneState)state direction:(MSDynamicsDrawerDirection)direction;
 
 /**
- Sets the maximum width that the `paneView` opens when revealing the `drawerView` underneath for the specified direction.
+ Sets the maximum distance that the `paneView` opens when revealing the `drawerView` underneath for the specified direction.
  
- Defaults to `MSDynamicsDrawerDefaultMaxRevealWidthHorizontal` when drawer view controllers are set in a horizontal direction. Defaults to `MSDynamicsDrawerDefaultMaxRevealWidthVertical` when drawer view controllers are set in a vertical direction.
+ Defaults to `MSDynamicsDrawerDefaultOpenRevealDistanceHorizontal` when drawer view controllers are set in a horizontal direction. Defaults to `MSDynamicsDrawerDefaultOpenRevealDistanceVertical` when drawer view controllers are set in a vertical direction.
  
- @param maxRevealWidth The width that the `paneView` opens when revealing the `drawerView`.
- @param direction The direction that the `maxRevealWidth` should be applied in. Accepts masked direction values.
+ @param openRevealDistance The distance that the `paneView` opens when revealing the `drawerView`.
+ @param direction The direction that the `openRevealDistance` should be applied in. Accepts masked direction values.
  
- @see maxRevealWidthForDirection:
+ @see openRevealDistanceForDirection:
  */
-- (void)setMaxRevealWidth:(CGFloat)maxRevealWidth forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)setOpenRevealDistance:(CGFloat)openRevealDistance forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Returns the reveal width that the `paneView` opens when revealing the `drawerView` for the specified direction
+ Returns the reveal distance that the `paneView` opens when revealing the `drawerView` for the specified direction
  
- @param direction The direction that the reveal width should be returned for. Does not accept masked direction values.
- @return The reveal width for the specified direction.
+ @param direction The direction that the reveal distance should be returned for. Does not accept masked direction values.
+ @return The reveal distance for the specified direction.
  
- @see setMaxRevealWidth:forDirection:
+ @see setOpenRevealDistance:forDirection:
  */
-- (CGFloat)maxRevealWidthForDirection:(MSDynamicsDrawerDirection)direction;
+- (CGFloat)openRevealDistanceForDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
  The amount that the paneView should be offset beyond the edge of the screen when set to the `MSDynamicsDrawerPaneStateOpenWide` pane state.
@@ -90,14 +89,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneDragEdgeBoundingStyle) {
 @property (nonatomic, assign) CGFloat paneStateOpenWideEdgeOffset;
 
 /**
- The current reveal width for a pane with the specified center for the passed direction.
+ The current reveal distance for a pane with the specified center for the passed direction.
  
  @param paneCenter <#paneCenter description#>
  @param direction  <#direction description#>
  
  @return <#return value description#>
  */
-- (CGFloat)currentRevealWidthForPaneWithCenter:(CGPoint)paneCenter forDirection:(MSDynamicsDrawerDirection)direction;
+- (CGFloat)revealDistanceForPaneWithCenter:(CGPoint)paneCenter forDirection:(MSDynamicsDrawerDirection)direction;
 
 #warning document
 - (CGFloat)paneClosedFractionForPaneWithCenter:(CGPoint)paneCenter forDirection:(MSDynamicsDrawerDirection)direction;

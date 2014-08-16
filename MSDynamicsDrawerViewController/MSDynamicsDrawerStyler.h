@@ -90,7 +90,7 @@
 @interface MSDynamicsDrawerParallaxStyler : NSObject <MSDynamicsDrawerStyler>
 
 /**
- The amount that the parallax should offset the `drawerView` when the `paneView` is closed, as a fraction of the visible reveal width.
+ The amount that the parallax should offset the `drawerView` when the `paneView` is closed, as a fraction of the visible reveal distance.
  
  `0.35` by default.
  */
@@ -125,19 +125,23 @@
 @end
 
 /**
- Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealWidth` property.
+ Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealDistance` property.
  */
 @interface MSDynamicsDrawerResizeStyler : NSObject <MSDynamicsDrawerStyler>
 
 /**
- The minimum reveal width that the drawer view controller's view should be resized to equal the `currentRevealWidth` at.
+ The minimum reveal distance that the drawer view controller's view should be resized to equal the `currentRevealDistance` at.
  
- The default behavior is to use the `MSDynamicsDrawerViewController` instance's `revealWidthForDirection:` in the direction that the drawer is opened in as the value for the minimum resize reveal width. When set to a specific value, the drawer view controller's view is resized to fit the `currentRevealWidth` once the drawer is opened to the `minimumResizeRevealWidth`. If this value is set to `0`, then the drawer view controller's view will always be resized to fit within the visible area of the drawer.
+ The default behavior is to use the `MSDynamicsDrawerViewController` instance's reveal distance for the open state in the direction that the drawer is opened in as the value for the minimum resize reveal distance. When set to a specific value, the drawer view controller's view is resized to fit the `currentRevealDistance` once the drawer is opened to the `minimumResizeRevealDistance`. If this value is set to `0`, then the drawer view controller's view will always be resized to fit within the visible area of the drawer.
  */
-@property (nonatomic, assign) CGFloat minimumResizeRevealWidth;
+@property (nonatomic, assign) CGFloat minimumResizeRevealDistance;
 
-#warning document
-@property (nonatomic, assign) CGFloat maximumResizeRevealWidth;
+/**
+ The maxium reveal distance that the drawer view controller's view should be resized to equal the `currentRevealDistance` at.
+ 
+ The default behavior is to use the `MSDynamicsDrawerViewController` instance's reveal distance for the open wide state in the direction that the drawer is opened in as the value for the minimum resize reveal distance. When set to a specific value, the drawer view controller's view is resized to fit the `currentRevealDistance` until the drawer is opened to the `maximumResizeRevealDistance`.
+ */
+@property (nonatomic, assign) CGFloat maximumResizeRevealDistance;
 
 @end
 
