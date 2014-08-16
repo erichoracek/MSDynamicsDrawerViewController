@@ -1031,7 +1031,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         // If not thrown, just update to nearest `paneState`
         else {
             MSDynamicsDrawerPaneState nearestPaneState = [self.paneLayout nearestStateForPaneWithCenter:self.paneView.center forDirection:self.currentDrawerDirection];
-            [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:nearestPaneState];
+            [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:nearestPaneState withThrowVelocity:throwVelocity];
         }
         break;
     }
