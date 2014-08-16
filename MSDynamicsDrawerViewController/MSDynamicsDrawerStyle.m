@@ -537,7 +537,7 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
         // If window wouldn't obscure status bar (hidden or not overlapping), continue
-        if (window.hidden || !CGRectIntersectsRect(window.frame, statusBarFrame)) {
+        if (window.hidden || !CGRectIntersectsRect(window.frame, statusBarFrame) || [window isKindOfClass:NSClassFromString(@"UITextEffectsWindow")]) {
             continue;
         }
         maximumWindowLevel = ((window.windowLevel > maximumWindowLevel) ? window.windowLevel : maximumWindowLevel);
