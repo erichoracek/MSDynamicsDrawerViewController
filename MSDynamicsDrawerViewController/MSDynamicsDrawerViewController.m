@@ -1011,12 +1011,6 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
                 break;
             }
         }
-        // If the current drawer direction's pane drag reveal is disabled, cancel the gesture
-        else if (![self paneDragRevealEnabledForDirection:self.currentDrawerDirection]) {
-            gestureRecognizer.enabled = NO;
-            gestureRecognizer.enabled = YES;
-            break;
-        }
         // At this point, panning is able to move the pane independently from the dynamic animator, so remove all behaviors to prevent conflicting behavior
         [self._dynamicAnimator removeAllBehaviors];
         
