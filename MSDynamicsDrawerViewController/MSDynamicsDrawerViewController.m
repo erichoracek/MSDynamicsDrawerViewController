@@ -65,6 +65,19 @@
 @synthesize panePositioningBehavior = _panePositioningBehavior;
 @synthesize paneBounceBehavior = _paneBounceBehavior;
 
+#pragma mark - NSObject (NSKeyValueObserving)
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ((object == self.paneView) && [keyPath isEqualToString:NSStringFromSelector(@selector(center))]) {
+        if ([object valueForKeyPath:keyPath] != [NSNull null]) {
+            [self _paneViewDidUpdatePosition];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad
@@ -633,15 +646,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         }
     }
     
-    if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-        [self.delegate dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
-    }
-    
-    for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:direction]) {
-        if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-            [styler dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
-        }
-    }
+    [self _informRelevantObjectsOfPotentialUpdateToPaneState:paneState forDirection:direction];
     
     // If opening in a specified direction, set the drawer to that direction
     if ((paneState != MSDynamicsDrawerPaneStateClosed)) {
@@ -926,14 +931,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 - (void)_paneTapped:(UIPanGestureRecognizer *)gestureRecognizer
 {
     if ([self paneTapToCloseEnabledForDirection:self.currentDrawerDirection]) {
-        if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-            [self.delegate dynamicsDrawerViewController:self mayUpdateToPaneState:MSDynamicsDrawerPaneStateClosed forDirection:self.currentDrawerDirection];
-        }
-        for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:self.currentDrawerDirection]) {
-            if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-                [styler dynamicsDrawerViewController:self mayUpdateToPaneState:MSDynamicsDrawerPaneStateClosed forDirection:self.currentDrawerDirection];
-            }
-        }
+        [self _informRelevantObjectsOfPotentialUpdateToPaneState:MSDynamicsDrawerPaneStateClosed forDirection:self.currentDrawerDirection];
         [self _addPanePositioningBehavior:self.panePositioningBehavior toPositionPaneInState:MSDynamicsDrawerPaneStateClosed];
     }
 }
@@ -945,12 +943,26 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
     static MSDynamicsDrawerDirection panDirection;
     
     switch ((NSInteger)gestureRecognizer.state) {
-    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStateBegan: {
         // Initialize static variables
         panStartLocation = [gestureRecognizer locationInView:self.paneView];
         paneStartCenter = self.paneView.center;
         panDirection = self.currentDrawerDirection;
+        
+        // If the drawer is already opened...
+        if (self.currentDrawerDirection != MSDynamicsDrawerDirectionNone) {
+            // If the current drawer direction's pane drag reveal is disabled, cancel the gesture outright
+            if (![self paneDragRevealEnabledForDirection:self.currentDrawerDirection]) {
+                gestureRecognizer.enabled = NO;
+                gestureRecognizer.enabled = YES;
+                break;
+            }
+            // The user is now panning the pane, which means that they're probably trying to close it
+            [self _informRelevantObjectsOfPotentialUpdateToPaneState:MSDynamicsDrawerPaneStateClosed forDirection:self.currentDrawerDirection];
+        }
+        
         break;
+    }
     case UIGestureRecognizerStateChanged: {
         CGPoint currentPanLocation = [gestureRecognizer locationInView:self.paneView];
         MSDynamicsDrawerDirection currentPanDirection = [self _directionForPanWithStartLocation:panStartLocation currentLocation:currentPanLocation];
@@ -976,15 +988,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
             {
                 // The user is now panning the pane, which means that they're probably trying to update it to the opposite state from where it's at (unless they're playing with it)
                 MSDynamicsDrawerPaneState mayPaneState = ((self.paneState != MSDynamicsDrawerPaneStateClosed) ? MSDynamicsDrawerPaneStateClosed : MSDynamicsDrawerPaneStateOpen);
-                if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-                    [self.delegate dynamicsDrawerViewController:self mayUpdateToPaneState:mayPaneState forDirection:newDrawerDirection];
-                }
-                
-                for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:newDrawerDirection]) {
-                    if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-                        [styler dynamicsDrawerViewController:self mayUpdateToPaneState:mayPaneState forDirection:newDrawerDirection];
-                    }
-                }
+                [self _informRelevantObjectsOfPotentialUpdateToPaneState:mayPaneState forDirection:newDrawerDirection];
                 
                 self.currentDrawerDirection = newDrawerDirection;
                 // Establish the initial drawer direction if there was none
@@ -1034,16 +1038,17 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
     }
 }
 
-#pragma mark - NSKeyValueObserving
+#pragma mark Informing Interested Objects
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)_informRelevantObjectsOfPotentialUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-    if ((object == self.paneView) && [keyPath isEqualToString:NSStringFromSelector(@selector(center))]) {
-        if ([object valueForKeyPath:keyPath] != [NSNull null]) {
-            [self _paneViewDidUpdatePosition];
+    if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
+        [self.delegate dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
+    }
+    for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:direction]) {
+        if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
+            [styler dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
         }
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
