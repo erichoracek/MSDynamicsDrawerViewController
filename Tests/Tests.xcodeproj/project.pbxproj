@@ -16,7 +16,7 @@
 		3A23D497195759370063DB63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2B2CB019155A790008C453 /* Foundation.framework */; };
 		3A23D498195759370063DB63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2B2CAE19155A700008C453 /* UIKit.framework */; };
 		3A23D49E195759370063DB63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A23D49C195759370063DB63 /* InfoPlist.strings */; };
-		3A23D4A8195759940063DB63 /* MSStylerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A23D4A7195759940063DB63 /* MSStylerTests.m */; };
+		3A23D4A8195759940063DB63 /* MSStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A23D4A7195759940063DB63 /* MSStyleTests.m */; };
 		3A23D4AA195759DD0063DB63 /* MSDynamicsDrawerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A23D4A9195759DD0063DB63 /* MSDynamicsDrawerViewControllerTests.m */; };
 		3A2B2CAF19155A700008C453 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2B2CAE19155A700008C453 /* UIKit.framework */; };
 		3A2B2CB119155A790008C453 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2B2CB019155A790008C453 /* Foundation.framework */; };
@@ -59,7 +59,7 @@
 		3A23D49B195759370063DB63 /* Functional Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Functional Tests-Info.plist"; sourceTree = "<group>"; };
 		3A23D49D195759370063DB63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A23D4A1195759370063DB63 /* Functional Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Functional Tests-Prefix.pch"; sourceTree = "<group>"; };
-		3A23D4A7195759940063DB63 /* MSStylerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStylerTests.m; sourceTree = "<group>"; };
+		3A23D4A7195759940063DB63 /* MSStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStyleTests.m; sourceTree = "<group>"; };
 		3A23D4A9195759DD0063DB63 /* MSDynamicsDrawerViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerViewControllerTests.m; sourceTree = "<group>"; };
 		3A2B2CAE19155A700008C453 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		3A2B2CB019155A790008C453 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -119,7 +119,7 @@
 		3A23D481195756670063DB63 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				3A23D4A7195759940063DB63 /* MSStylerTests.m */,
+				3A23D4A7195759940063DB63 /* MSStyleTests.m */,
 				3A2013E21959446D00031B72 /* MSPaneViewControllerTests.m */,
 				3A23D482195756670063DB63 /* Supporting Files */,
 			);
@@ -437,7 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A2013E31959446D00031B72 /* MSPaneViewControllerTests.m in Sources */,
-				3A23D4A8195759940063DB63 /* MSStylerTests.m in Sources */,
+				3A23D4A8195759940063DB63 /* MSStyleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

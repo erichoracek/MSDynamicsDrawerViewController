@@ -1,5 +1,5 @@
 //
-//  MSStylersViewController.m
+//  MSStylesViewController.m
 //  Example
 //
 //  Created by Eric Horacek on 10/19/13.
@@ -26,21 +26,21 @@
 //  THE SOFTWARE.
 //
 
-#import "MSStylersViewController.h"
+#import "MSStylesViewController.h"
 #import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 
-NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell";
+NSString * const MSStyleDirectionCellReuseIdentifier = @"Style Direction Cell";
 
-@interface MSStylersViewController ()
+@interface MSStylesViewController ()
 
-@property (nonatomic, strong) NSArray *stylerClasses;
-@property (nonatomic, strong) NSDictionary *stylerNames;
-@property (nonatomic, strong) NSDictionary *stylerDescriptions;
+@property (nonatomic, strong) NSArray *styleClasses;
+@property (nonatomic, strong) NSDictionary *styleNames;
+@property (nonatomic, strong) NSDictionary *styleDescriptions;
 @property (nonatomic, strong) NSDictionary *directionNames;
 
 @end
 
-@implementation MSStylersViewController
+@implementation MSStylesViewController
 
 #pragma mark - UIViewController
 
@@ -52,7 +52,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSStylerDirectionCellReuseIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSStyleDirectionCellReuseIdentifier];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -60,53 +60,53 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
-#pragma mark - MSStylersViewController
+#pragma mark - MSStylesViewController
 
-- (NSArray *)stylerClasses
+- (NSArray *)styleClasses
 {
-    if (!_stylerClasses) {
-        self.stylerClasses = @[
-            [MSDynamicsDrawerParallaxStyler class],
-            [MSDynamicsDrawerFadeStyler class],
-            [MSDynamicsDrawerShadowStyler class],
-            [MSDynamicsDrawerResizeStyler class],
-            [MSDynamicsDrawerScaleStyler class]
+    if (!_styleClasses) {
+        self.styleClasses = @[
+            [MSDynamicsDrawerParallaxStyle class],
+            [MSDynamicsDrawerFadeStyle class],
+            [MSDynamicsDrawerShadowStyle class],
+            [MSDynamicsDrawerResizeStyle class],
+            [MSDynamicsDrawerScaleStyle class]
         ];
     }
-    return _stylerClasses;
+    return _styleClasses;
 }
 
-- (NSDictionary *)stylerNames
+- (NSDictionary *)styleNames
 {
-    if (!_stylerNames) {
-        self.stylerNames = @{
-            NSStringFromClass([MSDynamicsDrawerScaleStyler class]) : @"Scale",
-            NSStringFromClass([MSDynamicsDrawerFadeStyler class]) : @"Fade",
-            NSStringFromClass([MSDynamicsDrawerParallaxStyler class]) : @"Parallax",
-            NSStringFromClass([MSDynamicsDrawerShadowStyler class]) : @"Shadow",
-            NSStringFromClass([MSDynamicsDrawerResizeStyler class]) : @"Drawer Resize"
+    if (!_styleNames) {
+        self.styleNames = @{
+            NSStringFromClass([MSDynamicsDrawerScaleStyle class]) : @"Scale",
+            NSStringFromClass([MSDynamicsDrawerFadeStyle class]) : @"Fade",
+            NSStringFromClass([MSDynamicsDrawerParallaxStyle class]) : @"Parallax",
+            NSStringFromClass([MSDynamicsDrawerShadowStyle class]) : @"Shadow",
+            NSStringFromClass([MSDynamicsDrawerResizeStyle class]) : @"Drawer Resize"
         };
     }
-    return _stylerNames;
+    return _styleNames;
 }
 
-- (NSDictionary *)stylerDescriptions
+- (NSDictionary *)styleDescriptions
 {
-    if (!_stylerDescriptions) {
-        self.stylerDescriptions = @{
-            NSStringFromClass([MSDynamicsDrawerScaleStyler class]) :
-                @"The 'Scale' styler scales the drawer view to create a zoom-in effect as the pane view is opened",
-            NSStringFromClass([MSDynamicsDrawerFadeStyler class]) :
-                @"The 'Fade' styler fades the drawer view as the pane view is opened",
-            NSStringFromClass([MSDynamicsDrawerParallaxStyler class]) :
-                @"The 'Parallax' styler translates the drawer view inwards from an initial offset as the pane view is opened",
-            NSStringFromClass([MSDynamicsDrawerShadowStyler class]) :
-                @"The 'Shadow' styler causes the pane view to cast a shadow on the drawer view",
-            NSStringFromClass([MSDynamicsDrawerResizeStyler class]) :
-                @"The 'Drawer Resize' styler resizes the drawer view controller's view to fit within drawer's reveal distance"
+    if (!_styleDescriptions) {
+        self.styleDescriptions = @{
+            NSStringFromClass([MSDynamicsDrawerScaleStyle class]) :
+                @"The 'Scale' style scales the drawer view to create a zoom-in effect as the pane view is opened",
+            NSStringFromClass([MSDynamicsDrawerFadeStyle class]) :
+                @"The 'Fade' style fades the drawer view as the pane view is opened",
+            NSStringFromClass([MSDynamicsDrawerParallaxStyle class]) :
+                @"The 'Parallax' style translates the drawer view inwards from an initial offset as the pane view is opened",
+            NSStringFromClass([MSDynamicsDrawerShadowStyle class]) :
+                @"The 'Shadow' style causes the pane view to cast a shadow on the drawer view",
+            NSStringFromClass([MSDynamicsDrawerResizeStyle class]) :
+                @"The 'Drawer Resize' style resizes the drawer view controller's view to fit within drawer's reveal distance"
         };
     }
-    return _stylerDescriptions;
+    return _styleDescriptions;
 }
 
 - (NSDictionary *)directionNames
@@ -126,7 +126,7 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.stylerClasses.count;
+    return self.styleClasses.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -142,22 +142,22 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSStylerDirectionCellReuseIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSStyleDirectionCellReuseIdentifier forIndexPath:indexPath];
     MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
     NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
     __block NSInteger possibleDrawerDirectionRow = 0;
     MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
         if (indexPath.row == possibleDrawerDirectionRow) {
             NSString *title = self.directionNames[@(drawerDirection)];
-            BOOL stylerEnabled = NO;
-            Class stylerClass = self.stylerClasses[indexPath.section];
-            for (id <MSDynamicsDrawerStyler> styler in [dynamicsDrawerViewController stylersForDirection:drawerDirection]) {
-                if ([styler isKindOfClass:stylerClass]) {
-                    stylerEnabled = YES;
+            BOOL styleEnabled = NO;
+            Class styleClass = self.styleClasses[indexPath.section];
+            for (id <MSDynamicsDrawerStyle> style in [dynamicsDrawerViewController stylesForDirection:drawerDirection]) {
+                if ([style isKindOfClass:styleClass]) {
+                    styleEnabled = YES;
                     break;
                 }
             }
-            cell.textLabel.text = [NSString stringWithFormat:(stylerEnabled ? @"✔︎ %@" : @"✘ %@"), title];
+            cell.textLabel.text = [NSString stringWithFormat:(styleEnabled ? @"✔︎ %@" : @"✘ %@"), title];
         }
         possibleDrawerDirectionRow++;
     });
@@ -166,12 +166,12 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%@ Styler", self.stylerNames[NSStringFromClass(self.stylerClasses[section])]];
+    return [NSString stringWithFormat:@"%@ Style", self.styleNames[NSStringFromClass(self.styleClasses[section])]];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    return self.stylerDescriptions[NSStringFromClass(self.stylerClasses[section])];
+    return self.styleDescriptions[NSStringFromClass(self.styleClasses[section])];
 }
 
 #pragma mark - UITableViewDelegate
@@ -182,18 +182,18 @@ NSString * const MSStylerDirectionCellReuseIdentifier = @"Styler Direction Cell"
     __block NSInteger possibleDrawerDirectionRow = 0;
     MSDynamicsDrawerDirectionActionForMaskedValues(dynamicsDrawerViewController.possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
         if (indexPath.row == possibleDrawerDirectionRow) {
-            id <MSDynamicsDrawerStyler> existingStyler;
-            Class stylerClass = self.stylerClasses[indexPath.section];
-            for (id <MSDynamicsDrawerStyler> styler in [dynamicsDrawerViewController stylersForDirection:drawerDirection]) {
-                if ([styler isKindOfClass:stylerClass]) {
-                    existingStyler = styler;
+            id <MSDynamicsDrawerStyle> existingStyle;
+            Class styleClass = self.styleClasses[indexPath.section];
+            for (id <MSDynamicsDrawerStyle> style in [dynamicsDrawerViewController stylesForDirection:drawerDirection]) {
+                if ([style isKindOfClass:styleClass]) {
+                    existingStyle = style;
                     break;
                 }
             }
-            if (existingStyler) {
-                [dynamicsDrawerViewController removeStyler:existingStyler forDirection:drawerDirection];
+            if (existingStyle) {
+                [dynamicsDrawerViewController removeStyle:existingStyle forDirection:drawerDirection];
             } else {
-                [dynamicsDrawerViewController addStyler:[stylerClass new] forDirection:drawerDirection];
+                [dynamicsDrawerViewController addStyle:[styleClass new] forDirection:drawerDirection];
             }
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         }

@@ -25,8 +25,8 @@
 		3A1416DB191553E600806033 /* MSDynamicsDrawerBehavior.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerBehavior.m; sourceTree = "<group>"; };
 		3A55097F196D1916003CE013 /* MSDynamicsDrawerHelperFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerHelperFunctions.m; sourceTree = "<group>"; };
 		3A8E9846196943CD00A522E9 /* MSDynamicsDrawerHelperFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerHelperFunctions.h; sourceTree = "<group>"; };
-		3A935DE618F1F719004F464D /* MSDynamicsDrawerStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerStyler.h; sourceTree = "<group>"; };
-		3A935DE718F1F719004F464D /* MSDynamicsDrawerStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerStyler.m; sourceTree = "<group>"; };
+		3A935DE618F1F719004F464D /* MSDynamicsDrawerStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerStyle.h; sourceTree = "<group>"; };
+		3A935DE718F1F719004F464D /* MSDynamicsDrawerStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerStyle.m; sourceTree = "<group>"; };
 		3A935DE818F1F719004F464D /* MSDynamicsDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerViewController.h; sourceTree = "<group>"; };
 		3A935DE918F1F719004F464D /* MSDynamicsDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerViewController.m; sourceTree = "<group>"; };
 		3AAA627019483548001BFF49 /* MSStatusBarOffsetDrawerNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStatusBarOffsetDrawerNavigationController.h; sourceTree = "<group>"; };
@@ -72,8 +72,8 @@
 				3A935DE918F1F719004F464D /* MSDynamicsDrawerViewController.m */,
 				3A1416DA19154FAA00806033 /* MSDynamicsDrawerBehavior.h */,
 				3A1416DB191553E600806033 /* MSDynamicsDrawerBehavior.m */,
-				3A935DE618F1F719004F464D /* MSDynamicsDrawerStyler.h */,
-				3A935DE718F1F719004F464D /* MSDynamicsDrawerStyler.m */,
+				3A935DE618F1F719004F464D /* MSDynamicsDrawerStyle.h */,
+				3A935DE718F1F719004F464D /* MSDynamicsDrawerStyle.m */,
 				3AAA627019483548001BFF49 /* MSStatusBarOffsetDrawerNavigationController.h */,
 				3AAA627119483548001BFF49 /* MSStatusBarOffsetDrawerNavigationController.m */,
 				3AB5EF171948B60A0087D61A /* MSDynamicsDrawerPaneLayout.h */,

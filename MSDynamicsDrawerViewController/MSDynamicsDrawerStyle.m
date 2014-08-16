@@ -1,5 +1,5 @@
 //
-//  MSDynamicsDrawerStyler.m
+//  MSDynamicsDrawerStyle.m
 //  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 10/19/13.
@@ -26,10 +26,10 @@
 //  THE SOFTWARE.
 //
 
-#import "MSDynamicsDrawerStyler.h"
+#import "MSDynamicsDrawerStyle.h"
 #import "MSDynamicsDrawerHelperFunctions.h"
 
-@implementation MSDynamicsDrawerParallaxStyler
+@implementation MSDynamicsDrawerParallaxStyle
 
 #pragma mark - NSObject
 
@@ -42,7 +42,7 @@
     return self;
 }
 
-#pragma mark - MSDynamicsDrawerStyler
+#pragma mark - MSDynamicsDrawerStyle
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -81,7 +81,7 @@
 
 @end
 
-@implementation MSDynamicsDrawerFadeStyler
+@implementation MSDynamicsDrawerFadeStyle
 
 #pragma mark - NSObject
 
@@ -94,7 +94,7 @@
     return self;
 }
 
-#pragma mark - MSDynamicsDrawerStyler
+#pragma mark - MSDynamicsDrawerStyle
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -114,7 +114,7 @@
     [[self class] setDrawerAlpha:1.0 forDirection:direction inDrawerViewController:drawerViewController];
 }
 
-#pragma mark - MSDynamicsDrawerFadeStyler
+#pragma mark - MSDynamicsDrawerFadeStyle
 
 + (void)setDrawerAlpha:(CGFloat)alpha forDirection:(MSDynamicsDrawerDirection)direction inDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
 {
@@ -123,7 +123,7 @@
 
 @end
 
-@implementation MSDynamicsDrawerScaleStyler
+@implementation MSDynamicsDrawerScaleStyle
 
 #pragma mark - NSObject
 
@@ -136,7 +136,7 @@
     return self;
 }
 
-#pragma mark - MSDynamicsDrawerStyler
+#pragma mark - MSDynamicsDrawerStyle
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -164,7 +164,7 @@
 
 @end
 
-@interface MSDynamicsDrawerResizeStyler ()
+@interface MSDynamicsDrawerResizeStyle ()
 
 @property (nonatomic, weak) MSDynamicsDrawerViewController *drawerViewController;
 @property (nonatomic, strong) NSNumber *_maximumResizeRevealDistanceValue;
@@ -172,14 +172,14 @@
 
 @end
 
-@implementation MSDynamicsDrawerResizeStyler
+@implementation MSDynamicsDrawerResizeStyle
 
 #pragma mark - NSObject
 
 @dynamic minimumResizeRevealDistance;
 @dynamic maximumResizeRevealDistance;
 
-#pragma mark - MSDynamicsDrawerStyler
+#pragma mark - MSDynamicsDrawerStyle
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -209,7 +209,7 @@
     }
 }
 
-#pragma mark - MSDynamicsDrawerResizeStyler
+#pragma mark - MSDynamicsDrawerResizeStyle
 
 - (CGRect)_drawerFrameForDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController closedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -251,7 +251,7 @@
     return drawerViewFrame;
 }
 
-#pragma mark - MSDynamicsDrawerResizeStyler
+#pragma mark - MSDynamicsDrawerResizeStyle
 
 - (void)setMinimumResizeRevealDistance:(CGFloat)minimumResizeRevealDistance
 {
@@ -275,13 +275,13 @@
 
 @end
 
-@interface MSDynamicsDrawerShadowStyler ()
+@interface MSDynamicsDrawerShadowStyle ()
 
 @property (nonatomic, strong) CALayer *shadowLayer;
 
 @end
 
-@implementation MSDynamicsDrawerShadowStyler
+@implementation MSDynamicsDrawerShadowStyle
 
 #pragma mark - NSObject
 
@@ -308,7 +308,7 @@
     [self.shadowLayer removeFromSuperlayer];
 }
 
-#pragma mark - MSDynamicsDrawerStyler
+#pragma mark - MSDynamicsDrawerStyle
 
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -348,7 +348,7 @@
     }
 }
 
-#pragma mark - MSDynamicsDrawerShadowStyler
+#pragma mark - MSDynamicsDrawerShadowStyle
 
 - (void)setShadowColor:(UIColor *)shadowColor
 {
@@ -384,7 +384,7 @@
 
 @end
 
-@interface MSDynamicsDrawerStatusBarOffsetStyler ()
+@interface MSDynamicsDrawerStatusBarOffsetStyle ()
 
 @property (nonatomic, strong) UIView *statusBarContainerView;
 @property (nonatomic, strong) UIView *statusBarSnapshotView;
@@ -402,7 +402,7 @@ static UIStatusBarStyle const MSStatusBarStyleNone = -1;
 static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);
 
-@implementation MSDynamicsDrawerStatusBarOffsetStyler
+@implementation MSDynamicsDrawerStatusBarOffsetStyle
 
 #pragma mark - NSObject
 
@@ -422,7 +422,7 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     return self;
 }
 
-#pragma mark - MSDynamicsDrawerStyler
+#pragma mark - MSDynamicsDrawerStyle
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
@@ -481,7 +481,7 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     }
 }
 
-#pragma mark - MSDynamicsDrawerStatusBarOffsetStyler
+#pragma mark - MSDynamicsDrawerStatusBarOffsetStyle
 
 - (void)updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:(BOOL)afterScreenUpdates withStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
 {

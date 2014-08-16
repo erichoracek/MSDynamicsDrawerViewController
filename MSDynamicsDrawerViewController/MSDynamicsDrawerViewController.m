@@ -46,7 +46,7 @@
 @property (nonatomic, strong, setter = _setDrawerViewControllers:) NSMutableDictionary *_drawerViewControllers;
 @property (nonatomic, strong, setter = _setPaneDragRevealEnabledValues:) NSMutableDictionary *_paneDragRevealEnabledValues;
 @property (nonatomic, strong, setter = _setPaneTapToCloseEnabledValues:) NSMutableDictionary *_paneTapToCloseEnabledValues;
-@property (nonatomic, strong, setter = _setStylers:) NSMutableDictionary *_stylers;
+@property (nonatomic, strong, setter = _setStyles:) NSMutableDictionary *_styles;
 @property (nonatomic, strong, setter = _setTouchForwardingClasses:) NSMutableSet *_touchForwardingClasses;
 @property (nonatomic, strong, setter = _setPanePanGestureRecognizer:) UIPanGestureRecognizer *_panePanGestureRecognizer;
 @property (nonatomic, strong, setter = _setPaneTapGestureRecognizer:) UITapGestureRecognizer *_paneTapGestureRecognizer;
@@ -99,7 +99,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     self._rotating = NO;
-    [self _updateStylers];
+    [self _updateStyles];
 }
 
 - (BOOL)shouldAutorotate
@@ -134,25 +134,25 @@
 {
     [super viewWillAppear:animated];
     [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:0 context:NULL];
-    [self _stylersWillMoveToDrawerViewController:self];
+    [self _stylesWillMoveToDrawerViewController:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self _stylersDidMoveToDrawerViewController:self];
+    [self _stylesDidMoveToDrawerViewController:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self _stylersWillMoveToDrawerViewController:nil];
+    [self _stylesWillMoveToDrawerViewController:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self _stylersDidMoveToDrawerViewController:nil];
+    [self _stylesDidMoveToDrawerViewController:nil];
     [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
 }
 
@@ -476,117 +476,117 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     };
 }
 
-#pragma mark Stylers
+#pragma mark Styles
 
-- (NSMutableDictionary *)_stylers
+- (NSMutableDictionary *)_styles
 {
-    if (!__stylers) {
-        self._stylers = [NSMutableDictionary new];
+    if (!__styles) {
+        self._styles = [NSMutableDictionary new];
     }
-    return __stylers;
+    return __styles;
 }
 
-- (void)addStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction
+- (void)addStyle:(id <MSDynamicsDrawerStyle>)style forDirection:(MSDynamicsDrawerDirection)direction
 {
-    if (!styler) {
+    if (!style) {
         return;
     }
     MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
-        // Lazy creation of stylers sets
-        if (!self._stylers[@(maskedDirection)]) {
-            self._stylers[@(maskedDirection)] = [NSMutableSet new];
+        // Lazy creation of styles sets
+        if (!self._styles[@(maskedDirection)]) {
+            self._styles[@(maskedDirection)] = [NSMutableSet new];
         }
-        if ([self isViewLoaded] && [styler respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
-            [styler willMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
+        if ([self isViewLoaded] && [style respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [style willMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
         }
-        NSMutableSet *stylersSet = self._stylers[@(maskedDirection)];
-        [stylersSet addObject:styler];
-        if ([self isViewLoaded] && [styler respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
-            [styler didMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
+        NSMutableSet *stylesSet = self._styles[@(maskedDirection)];
+        [stylesSet addObject:style];
+        if ([self isViewLoaded] && [style respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [style didMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
         }
     });
 }
 
-- (void)removeStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction
+- (void)removeStyle:(id <MSDynamicsDrawerStyle>)style forDirection:(MSDynamicsDrawerDirection)direction
 {
-    if (!styler) {
+    if (!style) {
         return;
     }
     MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
-        if ([self isViewLoaded] && [styler respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
-            [styler willMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
+        if ([self isViewLoaded] && [style respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [style willMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
         }
-        NSMutableSet *stylersSet = self._stylers[@(maskedDirection)];
-        [stylersSet removeObject:styler];
-        if ([self isViewLoaded] && [styler respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
-            [styler didMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
+        NSMutableSet *stylesSet = self._styles[@(maskedDirection)];
+        [stylesSet removeObject:style];
+        if ([self isViewLoaded] && [style respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
+            [style didMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
         }
     });
 }
 
-- (void)addStylers:(NSArray *)stylers forDirection:(MSDynamicsDrawerDirection)direction
+- (void)addStyles:(NSArray *)styles forDirection:(MSDynamicsDrawerDirection)direction
 {
-    for (id <MSDynamicsDrawerStyler> styler in stylers) {
-        [self addStyler:styler forDirection:direction];
+    for (id <MSDynamicsDrawerStyle> style in styles) {
+        [self addStyle:style forDirection:direction];
     }
 }
 
-- (void)_updateStylers
+- (void)_updateStyles
 {
     // Prevent weird animation issues on rotation
     if (self._rotating) {
         return;
     }
     CGFloat paneClosedFraction = [self.paneLayout paneClosedFractionForPaneWithCenter:self.paneView.center forDirection:self.currentDrawerDirection];
-    for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:self.currentDrawerDirection]) {
-        if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:)]) {
-            [styler dynamicsDrawerViewController:self didUpdatePaneClosedFraction:paneClosedFraction forDirection:self.currentDrawerDirection];
+    for (id <MSDynamicsDrawerStyle> style in [self _stylesForDirection:self.currentDrawerDirection]) {
+        if ([style respondsToSelector:@selector(dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:)]) {
+            [style dynamicsDrawerViewController:self didUpdatePaneClosedFraction:paneClosedFraction forDirection:self.currentDrawerDirection];
         }
     }
 }
 
-- (void)_stylersWillMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+- (void)_stylesWillMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
 {
     MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection){
-        NSMutableSet *stylers = self._stylers[@(maskedDirection)];
-        for (id <MSDynamicsDrawerStyler> styler in stylers) {
-            if ([styler respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
-                [styler willMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
+        NSMutableSet *styles = self._styles[@(maskedDirection)];
+        for (id <MSDynamicsDrawerStyle> style in styles) {
+            if ([style respondsToSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:)]) {
+                [style willMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
             }
         }
     });
 
 }
 
-- (void)_stylersDidMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+- (void)_stylesDidMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
 {
     MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection){
-        NSMutableSet *stylers = self._stylers[@(maskedDirection)];
-        for (id <MSDynamicsDrawerStyler> styler in stylers) {
-            if ([styler respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
-                [styler didMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
+        NSMutableSet *styles = self._styles[@(maskedDirection)];
+        for (id <MSDynamicsDrawerStyle> style in styles) {
+            if ([style respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
+                [style didMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
             }
         }
     });
 }
 
-- (NSSet *)_stylersForDirection:(MSDynamicsDrawerDirection)direction
+- (NSSet *)_stylesForDirection:(MSDynamicsDrawerDirection)direction
 {
-    NSMutableSet *stylers;
+    NSMutableSet *styles;
     if (!MSDynamicsDrawerDirectionIsMasked(direction)) {
-        stylers = self._stylers[@(direction)];
+        styles = self._styles[@(direction)];
     } else {
-        stylers = [NSMutableSet new];
+        styles = [NSMutableSet new];
         MSDynamicsDrawerDirectionActionForMaskedValues(direction, ^(MSDynamicsDrawerDirection maskedDirection){
-            [stylers unionSet:self._stylers[@(maskedDirection)]];
+            [styles unionSet:self._styles[@(maskedDirection)]];
         });
     }
-    return stylers;
+    return styles;
 }
 
-- (NSArray *)stylersForDirection:(MSDynamicsDrawerDirection)direction
+- (NSArray *)stylesForDirection:(MSDynamicsDrawerDirection)direction
 {
-    return [[self _stylersForDirection:direction] allObjects];
+    return [[self _stylesForDirection:direction] allObjects];
 }
 
 #pragma mark Pane State
@@ -598,7 +598,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         [self._dynamicAnimator removeAllBehaviors];
     }
     
-    [self _updateStylers];
+    [self _updateStyles];
 }
 
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState
@@ -676,7 +676,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
 
 - (void)_setPaneState:(MSDynamicsDrawerPaneState)paneState
 {
-    [self _updateStylers];
+    [self _updateStyles];
     
     MSDynamicsDrawerDirection previousDirection = self.currentDrawerDirection;
     MSDynamicsDrawerDirection forDirection = ((self.paneState != MSDynamicsDrawerPaneStateClosed) ? self.currentDrawerDirection : previousDirection);
@@ -694,7 +694,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         [self didChangeValueForKey:NSStringFromSelector(@selector(paneState))];
     }
     
-    [self _updateStylers];
+    [self _updateStyles];
     
 #warning re-enable
 //    [self setNeedsStatusBarAppearanceUpdate];
@@ -703,9 +703,9 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:forDirection];
     }
     
-    for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:self.currentDrawerDirection]) {
-        if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
-            [styler dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:forDirection];
+    for (id <MSDynamicsDrawerStyle> style in [self _stylesForDirection:self.currentDrawerDirection]) {
+        if ([style respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
+            [style dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:forDirection];
         }
     }
     
@@ -1047,9 +1047,9 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
     if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
         [self.delegate dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
     }
-    for (id <MSDynamicsDrawerStyler> styler in [self _stylersForDirection:direction]) {
-        if ([styler respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
-            [styler dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
+    for (id <MSDynamicsDrawerStyle> style in [self _stylesForDirection:direction]) {
+        if ([style respondsToSelector:@selector(dynamicsDrawerViewController:mayUpdateToPaneState:forDirection:)]) {
+            [style dynamicsDrawerViewController:self mayUpdateToPaneState:paneState forDirection:direction];
         }
     }
 }

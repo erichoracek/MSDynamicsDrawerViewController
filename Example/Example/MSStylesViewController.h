@@ -1,5 +1,5 @@
 //
-//  MSStylersViewController.h
+//  MSStylesViewController.h
 //  Example
 //
 //  Created by Eric Horacek on 10/19/13.
@@ -26,6 +26,6 @@
 //  THE SOFTWARE.
 //
 
-@interface MSStylersViewController : UITableViewController
+@interface MSStylesViewController : UITableViewController
 
 @end

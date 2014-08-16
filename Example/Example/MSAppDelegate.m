@@ -55,9 +55,9 @@
     
     self.dynamicsDrawerViewController.delegate = self;
     
-    // Add some example stylers
-    [self.dynamicsDrawerViewController addStylers:@[[MSDynamicsDrawerStatusBarOffsetStyler new]] forDirection:MSDynamicsDrawerDirectionAll];
-    [self.dynamicsDrawerViewController addStylers:@[[MSDynamicsDrawerFadeStyler new]] forDirection:MSDynamicsDrawerDirectionLeft];
+    // Add some example styles
+    [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerStatusBarOffsetStyle new]] forDirection:MSDynamicsDrawerDirectionAll];
+    [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerFadeStyle new]] forDirection:MSDynamicsDrawerDirectionLeft];
     
 #if !defined(STORYBOARD)
     MSMenuViewController *menuViewController = [MSMenuViewController new];
@@ -75,7 +75,7 @@
     MSLogoViewController *logoViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Logo"];
 #endif
     [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight preloadView:YES];
-    [self.dynamicsDrawerViewController addStyler:[MSDynamicsDrawerResizeStyler new] forDirection:MSDynamicsDrawerDirectionRight];
+    [self.dynamicsDrawerViewController addStyle:[MSDynamicsDrawerResizeStyle new] forDirection:MSDynamicsDrawerDirectionRight];
     
     // Transition to the first view controller
     [menuViewController transitionToViewController:0];

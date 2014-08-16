@@ -26,7 +26,7 @@
 		3A3CB24C183AE98B0089BED5 /* MSMonospaceWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB7182B136300319DA5 /* MSMonospaceWebViewController.m */; };
 		3A3CB24D183AE98B0089BED5 /* MSLongTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB3182B136300319DA5 /* MSLongTableViewController.m */; };
 		3A3CB24E183AE98B0089BED5 /* MSDynamicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */; };
-		3A3CB24F183AE98B0089BED5 /* MSStylersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylersViewController.m */; };
+		3A3CB24F183AE98B0089BED5 /* MSStylesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylesViewController.m */; };
 		3A3CB251183AE98B0089BED5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4AA44D18133EB4006EC889 /* MapKit.framework */; };
 		3A3CB252183AE98B0089BED5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11672B167E8F1900DBD12B /* QuartzCore.framework */; };
 		3A3CB253183AE98B0089BED5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11669A167E8C3E00DBD12B /* UIKit.framework */; };
@@ -45,7 +45,7 @@
 		3A558AC4182B136300319DA5 /* MSLongTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB3182B136300319DA5 /* MSLongTableViewController.m */; };
 		3A558AC5182B136300319DA5 /* MSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB5182B136300319DA5 /* MSMapViewController.m */; };
 		3A558AC6182B136300319DA5 /* MSMonospaceWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB7182B136300319DA5 /* MSMonospaceWebViewController.m */; };
-		3A558AC7182B136300319DA5 /* MSStylersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylersViewController.m */; };
+		3A558AC7182B136300319DA5 /* MSStylesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylesViewController.m */; };
 		3A558AC9182B13C400319DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A558AC8182B13C400319DA5 /* Assets.xcassets */; };
 		3A64F175182EDDFB00F00449 /* MSDynamicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */; };
 		3A7F664A18F2082E00E78146 /* MSEditableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF15311184FE70200CBDA25 /* MSEditableTableViewController.m */; };
@@ -91,8 +91,8 @@
 		3A558AB5182B136300319DA5 /* MSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMapViewController.m; sourceTree = "<group>"; };
 		3A558AB6182B136300319DA5 /* MSMonospaceWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMonospaceWebViewController.h; sourceTree = "<group>"; };
 		3A558AB7182B136300319DA5 /* MSMonospaceWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMonospaceWebViewController.m; sourceTree = "<group>"; };
-		3A558AB8182B136300319DA5 /* MSStylersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStylersViewController.h; sourceTree = "<group>"; };
-		3A558AB9182B136300319DA5 /* MSStylersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStylersViewController.m; sourceTree = "<group>"; };
+		3A558AB8182B136300319DA5 /* MSStylesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStylesViewController.h; sourceTree = "<group>"; };
+		3A558AB9182B136300319DA5 /* MSStylesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStylesViewController.m; sourceTree = "<group>"; };
 		3A558AC8182B13C400319DA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A64F173182EDDFB00F00449 /* MSDynamicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsViewController.h; sourceTree = "<group>"; };
 		3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsViewController.m; sourceTree = "<group>"; };
@@ -220,8 +220,8 @@
 			children = (
 				3A64F173182EDDFB00F00449 /* MSDynamicsViewController.h */,
 				3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */,
-				3A558AB8182B136300319DA5 /* MSStylersViewController.h */,
-				3A558AB9182B136300319DA5 /* MSStylersViewController.m */,
+				3A558AB8182B136300319DA5 /* MSStylesViewController.h */,
+				3A558AB9182B136300319DA5 /* MSStylesViewController.m */,
 				3A558AA6182B136300319DA5 /* MSBounceViewController.h */,
 				3A558AA7182B136300319DA5 /* MSBounceViewController.m */,
 				3A558AB0182B136300319DA5 /* MSGesturesViewController.h */,
@@ -446,7 +446,7 @@
 				3A558AC6182B136300319DA5 /* MSMonospaceWebViewController.m in Sources */,
 				3A558AC4182B136300319DA5 /* MSLongTableViewController.m in Sources */,
 				3A64F175182EDDFB00F00449 /* MSDynamicsViewController.m in Sources */,
-				3A558AC7182B136300319DA5 /* MSStylersViewController.m in Sources */,
+				3A558AC7182B136300319DA5 /* MSStylesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,7 +468,7 @@
 				3A3CB24C183AE98B0089BED5 /* MSMonospaceWebViewController.m in Sources */,
 				3A3CB24D183AE98B0089BED5 /* MSLongTableViewController.m in Sources */,
 				3A3CB24E183AE98B0089BED5 /* MSDynamicsViewController.m in Sources */,
-				3A3CB24F183AE98B0089BED5 /* MSStylersViewController.m in Sources */,
+				3A3CB24F183AE98B0089BED5 /* MSStylesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,7 +31,7 @@
 
 @class MSPaneBehavior;
 @class MSDynamicsDrawerPaneLayout;
-@protocol MSDynamicsDrawerStyler;
+@protocol MSDynamicsDrawerStyle;
 @protocol MSDynamicsDrawerViewControllerDelegate;
 @protocol MSPanePositioningBehavior;
 @protocol MSPaneBounceBehavior;
@@ -396,56 +396,56 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 - (void)registerTouchForwardingClass:(Class)touchForwardingClass;
 
 ///--------------------------
-/// @name Configuring Stylers
+/// @name Configuring Styles
 ///--------------------------
 
 /**
- Adds a styler (a class that conforms to the `MSDynamicsDrawerStyler` protocol).
+ Adds a style (a class that conforms to the `MSDynamicsDrawerStyle` protocol).
  
- @param styler The styler that should be added.
- @param direction The direction that the styler apply to. Accepts masked direction values.
+ @param style The style that should be added.
+ @param direction The direction that the style apply to. Accepts masked direction values.
  
- @see addStylers:forDirection:
- @see removeStyler:forDirection:
- @see stylersForDirection:
+ @see addStyles:forDirection:
+ @see removeStyle:forDirection:
+ @see stylesForDirection:
  */
-- (void)addStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)addStyle:(id <MSDynamicsDrawerStyle>)style forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Removes a styler (a class that conforms to the `MSDynamicsDrawerStyler` protocol).
+ Removes a style (a class that conforms to the `MSDynamicsDrawerStyle` protocol).
  
- @param styler The styler that should be removed.
- @param direction The direction that they styler should be removed for. Accepts masked direction values.
+ @param style The style that should be removed.
+ @param direction The direction that they style should be removed for. Accepts masked direction values.
  
- @see addStyler:forDirection:
- @see addStylers:forDirection:
- @see stylersForDirection:
+ @see addStyle:forDirection:
+ @see addStyles:forDirection:
+ @see stylesForDirection:
  */
-- (void)removeStyler:(id <MSDynamicsDrawerStyler>)styler forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)removeStyle:(id <MSDynamicsDrawerStyle>)style forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Adds an array of stylers (classes that conform to the `MSDynamicsDrawerStyler` protocol).
+ Adds an array of styles (classes that conform to the `MSDynamicsDrawerStyle` protocol).
  
- @param stylers The array of stylers that should be added.
- @param direction The direction that the stylers apply to. Accepts masked direction values.
+ @param styles The array of styles that should be added.
+ @param direction The direction that the styles apply to. Accepts masked direction values.
  
- @see addStyler:forDirection:
- @see removeStyler:forDirection:
- @see stylersForDirection:
+ @see addStyle:forDirection:
+ @see removeStyle:forDirection:
+ @see stylesForDirection:
  */
-- (void)addStylers:(NSArray *)stylers forDirection:(MSDynamicsDrawerDirection)direction;
+- (void)addStyles:(NSArray *)styles forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Returns an array of the stylers that are set in a specified direction
+ Returns an array of the styles that are set in a specified direction
  
- @param direction The direction that the stylers should be returned for. Accepts masked direction values.
- @return An array of stylers that are
+ @param direction The direction that the styles should be returned for. Accepts masked direction values.
+ @return An array of styles that are
  
- @see addStyler:forDirection:
- @see addStylers:forDirection:
- @see stylersForDirection:
+ @see addStyle:forDirection:
+ @see addStyles:forDirection:
+ @see stylesForDirection:
  */
-- (NSArray *)stylersForDirection:(MSDynamicsDrawerDirection)direction;
+- (NSArray *)stylesForDirection:(MSDynamicsDrawerDirection)direction;
 
 ///----------------------
 /// @name Container Views
@@ -519,7 +519,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 
 // These headers are imported at the bottom of this header file to allow for the only necessary import to be:
 // `#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>`
-#import "MSDynamicsDrawerStyler.h"
+#import "MSDynamicsDrawerStyle.h"
 #import "MSDynamicsDrawerBehavior.h"
 #import "MSStatusBarOffsetDrawerNavigationController.h"
 #import "MSDynamicsDrawerPaneLayout.h"

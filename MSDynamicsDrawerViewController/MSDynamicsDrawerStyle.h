@@ -1,5 +1,5 @@
 //
-//  MSDynamicsDrawerStyler.h
+//  MSDynamicsDrawerStyle.h
 //  MSDynamicsDrawerViewController
 //
 //  Created by Eric Horacek on 10/19/13.
@@ -31,29 +31,30 @@
 #import "MSDynamicsDrawerViewController.h"
 
 /**
- `MSDynamicsDrawerStyler` is a protocol that defines the interface for an object that can style a `MSDynamicsDrawerViewController`. Instances of `MSDynamicsDrawerStyler` are added to `MSDynamicsDrawerViewController` via the `addStyler:forDirection:` method.
+ `MSDynamicsDrawerStyle` is a protocol that defines the interface for an object that can style a `MSDynamicsDrawerViewController`. Instances of `MSDynamicsDrawerStyle` are added to `MSDynamicsDrawerViewController` via the `addStyle:forDirection:` method.
  
- ## Creating a Custom Styler
+ ## Creating a Custom Style
  
- As user interacts with the instance of `MSDynamicsDrawerViewController`, the styler class is messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:`, which allows the styler to changes attributes of the `drawerView` or `paneView` relative to the `paneClosedFraction`.
+ As user interacts with the instance of `MSDynamicsDrawerViewController`, the style class is messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:`, which allows the style to changes attributes of the `drawerView` or `paneView` relative to the `paneClosedFraction`.
  
- It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
+ It's recommended that custom styles don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
  */
-@protocol MSDynamicsDrawerStyler <NSObject>
+#warning rename as "style"
+@protocol MSDynamicsDrawerStyle <NSObject>
 
 @optional
 
 /**
  Invoked when the `MSDynamicsDrawerViewController` has an update to its pane closed fraction.
  
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is being styled by the `MSDynamicsDrawerStyler` instance.
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is being styled by the `MSDynamicsDrawerStyle` instance.
  @param paneClosedFraction The fraction that `MSDynamicsDrawerViewController` instance's pane is closed. `1.0` when closed, `0.0` when opened.
  @param direction The direction that the `MSDynamicsDrawerViewController` instance is opening in. Will not be masked.
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Informs the styler that the drawer view controller did update to a pane state in the specified direction.
+ Informs the style that the drawer view controller did update to a pane state in the specified direction.
  
  @param drawerViewController The drawer view controller that the delegate is registered with.
  @param paneState The pane state that the view controller did update to.
@@ -65,20 +66,20 @@
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Called just before the styler is added or removed from a drawer view controller.
+ Called just before the style is added or removed from a drawer view controller.
  
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyler` instance.  Can be nil.
- @param direction The direction that the styler is being added for. Can be a masked value.
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyle` instance.  Can be nil.
+ @param direction The direction that the style is being added for. Can be a masked value.
  */
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Called after the styler is added or removed from a drawer view controller.
+ Called after the style is added or removed from a drawer view controller.
  
- Used to tear down the appearance of the styler when it is removed from a `MSDynamicsDrawerViewController` instance.
+ Used to tear down the appearance of the style when it is removed from a `MSDynamicsDrawerViewController` instance.
  
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that was being styled by the `MSDynamicsDrawerStyler` instance. Can be nil.
- @param direction The direction that the styler is being removed for. Can be a masked value.
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that was being styled by the `MSDynamicsDrawerStyle` instance. Can be nil.
+ @param direction The direction that the style is being removed for. Can be a masked value.
  */
 - (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
@@ -87,7 +88,7 @@
 /**
  Creates a parallax effect on the `drawerView` while sliding the `paneView` within a `MSDynamicsDrawerViewController`.
  */
-@interface MSDynamicsDrawerParallaxStyler : NSObject <MSDynamicsDrawerStyler>
+@interface MSDynamicsDrawerParallaxStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
  The amount that the parallax should offset the `drawerView` when the `paneView` is closed, as a fraction of the visible reveal distance.
@@ -101,7 +102,7 @@
 /**
  Creates a fade effect on the `drawerView` while sliding the `paneView` within a `MSDynamicsDrawerViewController`.
  */
-@interface MSDynamicsDrawerFadeStyler : NSObject <MSDynamicsDrawerStyler>
+@interface MSDynamicsDrawerFadeStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
  The amount that the `drawerView` is faded when the `paneView` is closed.
@@ -115,7 +116,7 @@
 /**
  Creates a zoom-in scaling effect on the `drawerView` while sliding the `paneView` within a `MSDynamicsDrawerViewController`.
  */
-@interface MSDynamicsDrawerScaleStyler : NSObject <MSDynamicsDrawerStyler>
+@interface MSDynamicsDrawerScaleStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
  The amount that the `drawerView` is scaled when the `paneView` is closed. The `drawerView` is transformed from the `closedScale` when closed to 1.0 when open. `0.1` by default.
@@ -127,7 +128,7 @@
 /**
  Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealDistance` property.
  */
-@interface MSDynamicsDrawerResizeStyler : NSObject <MSDynamicsDrawerStyler>
+@interface MSDynamicsDrawerResizeStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
  The minimum reveal distance that the drawer view controller's view should be resized to equal the `currentRevealDistance` at.
@@ -149,7 +150,7 @@
  Adds a shadow to the `paneView` within a `MSDynamicsDrawerViewController` to create an effect of the `paneView` casting a shadow over the `drawerView`.
  */
 #warning sometimes places shadow above pane view
-@interface MSDynamicsDrawerShadowStyler : NSObject <MSDynamicsDrawerStyler>
+@interface MSDynamicsDrawerShadowStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
  The color of the shadow.
@@ -184,6 +185,6 @@
 #warning document
 #warning fix for dark/light status bars
 #warning cache for other rotations
-@interface MSDynamicsDrawerStatusBarOffsetStyler : NSObject <MSDynamicsDrawerStyler>
+@interface MSDynamicsDrawerStatusBarOffsetStyle : NSObject <MSDynamicsDrawerStyle>
 
 @end
