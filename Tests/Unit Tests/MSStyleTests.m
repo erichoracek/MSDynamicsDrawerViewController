@@ -19,7 +19,6 @@
 @implementation MSTestStyle
 
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction { }
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction { }
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction { }
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction { }
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction { }
@@ -34,7 +33,7 @@
 
 @implementation MSStyleTests
 
-- (void)testStyleLifecycleAddedRemoved
+- (void)testStyleLifecycleWindowRootViewController
 {
     void(^testStyleLifecycleForDirection)(MSDynamicsDrawerDirection direction) = ^(MSDynamicsDrawerDirection direction) {
         
@@ -53,7 +52,9 @@
         __block NSInteger willMoveInvocationCount = 0;
         __block MSDynamicsDrawerDirection willMoveDirection = MSDynamicsDrawerDirectionNone;
         
+        @weakify(drawerViewController);
         id <AspectToken> willMoveToken = [testStyle aspect_hookSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, MSDynamicsDrawerViewController *styleDrawerViewController, MSDynamicsDrawerDirection styleDirection) {
+            @strongify(drawerViewController);
             XCTAssertEqual(drawerViewController, styleDrawerViewController, @"Must be called with correct drawer");
             XCTAssertTrue((direction & styleDirection), @"Must be called with a correct direction");
             XCTAssertTrue([drawerViewController isViewLoaded], @"Drawer view controller view must be loaded at this point");
@@ -63,24 +64,9 @@
             willMoveDirection |= styleDirection;
         } error:NULL];
         
-        __block BOOL didMoveInvoked = NO;
-        __block NSInteger didMoveInvocationCount = 0;
-        __block MSDynamicsDrawerDirection didMoveDirection = MSDynamicsDrawerDirectionNone;
-        
-        id <AspectToken> didMoveToken = [testStyle aspect_hookSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, MSDynamicsDrawerViewController *styleDrawerViewController, MSDynamicsDrawerDirection styleDirection) {
-            XCTAssertEqual(drawerViewController, styleDrawerViewController, @"Must be called with correct drawer");
-            XCTAssertTrue((direction & styleDirection), @"Must be called with a correct direction");
-            XCTAssertTrue([drawerViewController isViewLoaded], @"Drawer view controller view must be loaded at this point");
-            XCTAssertEqual(drawerViewController.view.window, window, @"Drawer view controller view must have window at this point");
-            didMoveInvoked = YES;
-            didMoveInvocationCount++;
-            didMoveDirection |= styleDirection;
-        } error:NULL];
-        
         [drawerViewController addStyle:testStyle forDirection:direction];
 
         XCTAssertFalse(willMoveInvoked, @"Style must be not yet have will move invoked");
-        XCTAssertFalse(didMoveInvoked, @"Style must be not yet have did move invoked");
         
         // Show the window (with the drawer as root view controller)
         window.hidden = NO;
@@ -89,11 +75,6 @@
         XCTAssertEqual(willMoveInvocationCount, invocationCount, @"Style must be added individually for each direction it's added for");
         XCTAssertEqual(willMoveDirection, direction, @"Style must be added individually for each direction it's added for");
         
-        XCTAssertTrue(didMoveInvoked, @"Style must be not yet be removed");
-        XCTAssertEqual(didMoveInvocationCount, invocationCount, @"Style must be added individually for each direction it's added for");
-        XCTAssertEqual(didMoveDirection, direction, @"Style must be added individually for each direction it's added for");
-        
-        [didMoveToken remove];
         [willMoveToken remove];
         
         willMoveInvoked = NO;
@@ -101,39 +82,23 @@
         willMoveDirection = MSDynamicsDrawerDirectionNone;
         
         [testStyle aspect_hookSelector:@selector(willMoveToDynamicsDrawerViewController:forDirection:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, MSDynamicsDrawerViewController *styleDrawerViewController, MSDynamicsDrawerDirection styleDirection) {
+            @strongify(drawerViewController);
             XCTAssertNil(styleDrawerViewController, @"Must be called with nil drawer");
             XCTAssertTrue((direction & styleDirection), @"Must be called with a correct direction");
             XCTAssertTrue([drawerViewController isViewLoaded], @"Drawer view controller view must be loaded at this point");
-            XCTAssertEqual(drawerViewController.view.window, window, @"Drawer view controller view must have window at this point");
+            XCTAssertNil(drawerViewController.view.window, @"Drawer view controller view must have nil window at this point");
             willMoveInvoked = YES;
             willMoveInvocationCount++;
             willMoveDirection |= styleDirection;
         } error:NULL];
-        
-        didMoveInvoked = NO;
-        didMoveInvocationCount = 0;
-        didMoveDirection = MSDynamicsDrawerDirectionNone;
-        
-        [testStyle aspect_hookSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, MSDynamicsDrawerViewController *styleDrawerViewController, MSDynamicsDrawerDirection styleDirection) {
-            XCTAssertNil(styleDrawerViewController, @"Must be called with nil drawer");
-            XCTAssertTrue((direction & styleDirection), @"Must be called with a correct direction");
-            XCTAssertTrue([drawerViewController isViewLoaded], @"Drawer view controller view must be loaded at this point");
-            XCTAssertNil(drawerViewController.view.window, @"Drawer view controller view must not have window at this point");
-            didMoveInvoked = YES;
-            didMoveInvocationCount++;
-            didMoveDirection |= styleDirection;
-        } error:NULL];
-        
+
         // Remove the view controller
+        window.hidden = YES;
         window.rootViewController = nil;
         
-        XCTAssertTrue(willMoveInvoked, @"Style must be added when the view has been loaded");
+        XCTAssertTrue(willMoveInvoked, @"Style must be added when the view has been unloaded");
         XCTAssertEqual(willMoveInvocationCount, invocationCount, @"Style must be added individually for each direction it's added for");
         XCTAssertEqual(willMoveDirection, direction, @"Style must be added individually for each direction it's added for");
-        
-        XCTAssertTrue(didMoveInvoked, @"Style must be not yet be removed");
-        XCTAssertEqual(didMoveInvocationCount, invocationCount, @"Style must be added individually for each direction it's added for");
-        XCTAssertEqual(didMoveDirection, direction, @"Style must be added individually for each direction it's added for");
     };
     
     // Test for all values individually
@@ -148,7 +113,7 @@
     testStyleLifecycleForDirection(MSDynamicsDrawerDirectionTop | MSDynamicsDrawerDirectionLeft | MSDynamicsDrawerDirectionRight);
 }
 
-- (void)testStyleLifecycleChangeState
+- (void)testStyleLifecycleDrawerStates
 {
     if (!NSClassFromString(@"XCTestExpectation")) {
         return;

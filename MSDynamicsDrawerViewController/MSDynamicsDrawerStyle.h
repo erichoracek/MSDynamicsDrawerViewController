@@ -68,20 +68,10 @@
 /**
  Called just before the style is added or removed from a drawer view controller.
  
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyle` instance.  Can be nil.
+ @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is now being styled by the `MSDynamicsDrawerStyle` instance. Can be nil.
  @param direction The direction that the style is being added for. Can be a masked value.
  */
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
-
-/**
- Called after the style is added or removed from a drawer view controller.
- 
- Used to tear down the appearance of the style when it is removed from a `MSDynamicsDrawerViewController` instance.
- 
- @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that was being styled by the `MSDynamicsDrawerStyle` instance. Can be nil.
- @param direction The direction that the style is being removed for. Can be a masked value.
- */
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
 @end
 

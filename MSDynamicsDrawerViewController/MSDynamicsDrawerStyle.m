@@ -62,9 +62,11 @@
     }
 }
 
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    [[self class] setDrawerTranslation:0.0 forDirection:direction inDrawerViewController:drawerViewController];
+    if (drawerViewController) {
+        [[self class] setDrawerTranslation:0.0 forDirection:direction inDrawerViewController:drawerViewController];
+    }
 }
 
 + (void)setDrawerTranslation:(CGFloat)translation forDirection:(MSDynamicsDrawerDirection)direction inDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
@@ -109,9 +111,11 @@
     }
 }
 
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    [[self class] setDrawerAlpha:1.0 forDirection:direction inDrawerViewController:drawerViewController];
+    if (drawerViewController) {
+        [[self class] setDrawerAlpha:1.0 forDirection:direction inDrawerViewController:drawerViewController];
+    }
 }
 
 #pragma mark - MSDynamicsDrawerFadeStyle
@@ -153,13 +157,15 @@
     drawerViewController.drawerView.transform = drawerViewTransform;
 }
 
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
-    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.0, 1.0);
-    CGAffineTransform drawerViewTransform = drawerViewController.drawerView.transform;
-    drawerViewTransform.a = scaleTransform.a;
-    drawerViewTransform.d = scaleTransform.d;
-    drawerViewController.drawerView.transform = drawerViewTransform;
+    if (drawerViewController) {
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.0, 1.0);
+        CGAffineTransform drawerViewTransform = drawerViewController.drawerView.transform;
+        drawerViewTransform.a = scaleTransform.a;
+        drawerViewTransform.d = scaleTransform.d;
+        drawerViewController.drawerView.transform = drawerViewTransform;
+    }
 }
 
 @end
@@ -191,14 +197,6 @@
     drawerViewControllerView.frame = [self _drawerFrameForDrawerViewController:drawerViewController closedFraction:paneClosedFraction forDirection:direction];
 }
 
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
-{
-    if (!drawerViewController) {
-        UIView *drawerViewControllerView = [[self.drawerViewController drawerViewControllerForDirection:direction] view];
-        drawerViewControllerView.frame = drawerViewControllerView.superview.bounds;
-    }
-}
-
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (drawerViewController) {
@@ -206,6 +204,9 @@
         UIView *drawerViewControllerView = [[drawerViewController drawerViewControllerForDirection:direction] view];
         CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
         drawerViewControllerView.frame = [self _drawerFrameForDrawerViewController:drawerViewController closedFraction:paneClosedFraction forDirection:direction];
+    } else {
+        UIView *drawerViewControllerView = [[self.drawerViewController drawerViewControllerForDirection:direction] view];
+        drawerViewControllerView.frame = drawerViewControllerView.superview.bounds;
     }
 }
 
@@ -319,12 +320,7 @@
         self.shadowLayer.shadowOpacity = self.shadowOpacity;
         self.shadowLayer.shadowRadius = self.shadowRadius;
         self.shadowLayer.shadowOffset = self.shadowOffset;
-    }
-}
-
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
-{
-    if (!drawerViewController) {
+    } else {
         [self.shadowLayer removeFromSuperlayer];
         self.shadowLayer = nil;
     }
@@ -394,6 +390,7 @@
 @property (nonatomic, assign) UIWindowLevel dynamicsDrawerOriginalWindowLevel;
 @property (nonatomic, assign) BOOL dynamicsDrawerWindowLifted;
 @property (nonatomic, weak) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
+@property (nonatomic, weak) UIWindow *window;
 @property (nonatomic, assign) MSDynamicsDrawerDirection direction;
 
 @end
@@ -452,24 +449,21 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     self.dynamicsDrawerWindowLifted = !MSStatusBarFrameExceedsMaximumAdjustmentHeight([[UIApplication sharedApplication] statusBarFrame]);
 }
 
-- (void)didMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
+- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (drawerViewController) {
         self.dynamicsDrawerViewController = drawerViewController;
         self.direction |= direction;
         // Async so if it's called as a part of application:didFinishLaunching: the applicationState is valid to take a screenshot
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.window = drawerViewController.view.window;
+            // If the drawer is currently opened, recreate snapshot
             if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
                 CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
                 [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:[[UIApplication sharedApplication] statusBarFrame] paneClosedFraction:paneClosedFraction];
             }
         });
-    }
-}
-
-- (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
-{
-    if (!drawerViewController) {
+    } else {
         self.direction ^= direction;
         // If removed while opened in a specific direction, unstyle
         if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
@@ -477,7 +471,6 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
             [self.statusBarSnapshotView removeFromSuperview];
             [self.statusBarContainerView removeFromSuperview];
         }
-
     }
 }
 
@@ -497,7 +490,7 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
     
     if ([self canCreateStatusBarSnapshotWithStatusBarFrame:statusBarFrame paneClosedFraction:paneClosedFraction]) {
         [self.statusBarSnapshotView removeFromSuperview];
-        self.statusBarSnapshotView = [self.dynamicsDrawerViewController.view.window.screen snapshotViewAfterScreenUpdates:afterScreenUpdates];
+        self.statusBarSnapshotView = [self.window.screen snapshotViewAfterScreenUpdates:afterScreenUpdates];
         self.statusBarSnapshotStyle = [[UIApplication sharedApplication] statusBarStyle];
         self.statusBarSnapshotFrame = [NSValue valueWithCGRect:statusBarFrame];
     }
@@ -523,12 +516,12 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
 
 - (UIWindowLevel)dynamicsDrawerWindowLevel
 {
-    return self.dynamicsDrawerViewController.view.window.windowLevel;
+    return self.window.windowLevel;
 }
 
 - (void)setDynamicsDrawerWindowLevel:(UIWindowLevel)dynamicsDrawerWindowLevel
 {
-    self.dynamicsDrawerViewController.view.window.windowLevel = dynamicsDrawerWindowLevel;
+    self.window.windowLevel = dynamicsDrawerWindowLevel;
 }
 
 - (BOOL)dynamicsDrawerIsVisibleBelowStatusBar

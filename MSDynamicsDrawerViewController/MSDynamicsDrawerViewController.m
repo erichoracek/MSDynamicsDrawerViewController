@@ -133,27 +133,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:0 context:NULL];
-    [self _stylesWillMoveToDrawerViewController:self];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self _stylesDidMoveToDrawerViewController:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self _stylesWillMoveToDrawerViewController:nil];
+    if (!self.view.window) {
+        [self.paneView addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:0 context:NULL];
+        [self _stylesWillMoveToDrawerViewController:self];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self _stylesDidMoveToDrawerViewController:nil];
-    [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
+    if (!self.view.window) {
+        [self _stylesWillMoveToDrawerViewController:nil];
+        [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
+    }
 }
 
 #pragma mark - MSDynamicsDrawerViewController
@@ -501,9 +493,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         }
         NSMutableSet *stylesSet = self._styles[@(maskedDirection)];
         [stylesSet addObject:style];
-        if ([self isViewLoaded] && [style respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
-            [style didMoveToDynamicsDrawerViewController:self forDirection:maskedDirection];
-        }
     });
 }
 
@@ -518,9 +507,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         }
         NSMutableSet *stylesSet = self._styles[@(maskedDirection)];
         [stylesSet removeObject:style];
-        if ([self isViewLoaded] && [style respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
-            [style didMoveToDynamicsDrawerViewController:nil forDirection:maskedDirection];
-        }
     });
 }
 
@@ -556,18 +542,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
         }
     });
 
-}
-
-- (void)_stylesDidMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
-{
-    MSDynamicsDrawerDirectionActionForMaskedValues(MSDynamicsDrawerDirectionAll, ^(MSDynamicsDrawerDirection maskedDirection){
-        NSMutableSet *styles = self._styles[@(maskedDirection)];
-        for (id <MSDynamicsDrawerStyle> style in styles) {
-            if ([style respondsToSelector:@selector(didMoveToDynamicsDrawerViewController:forDirection:)]) {
-                [style didMoveToDynamicsDrawerViewController:drawerViewController forDirection:maskedDirection];
-            }
-        }
-    });
 }
 
 - (NSSet *)_stylesForDirection:(MSDynamicsDrawerDirection)direction
