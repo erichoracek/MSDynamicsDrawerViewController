@@ -318,14 +318,15 @@
 
 - (void)updateShadowPath
 {
-    CGRect shadowRect = self.bounds;
+    CGRect shadowPathRect = self.bounds;
+    CGFloat shadowRadius = self.shadowRadius;
     if (self.direction & MSDynamicsDrawerDirectionHorizontal) {
-        shadowRect = CGRectInset(shadowRect, 0.0, -self.shadowRadius);
+        shadowPathRect = CGRectInset(shadowPathRect, 0.0, -shadowRadius);
     }
     if (self.direction & MSDynamicsDrawerDirectionVertical) {
-        shadowRect = CGRectInset(shadowRect, -self.shadowRadius, 0.0);
+        shadowPathRect = CGRectInset(shadowPathRect, -shadowRadius, 0.0);
     }
-    self.shadowPath = [[UIBezierPath bezierPathWithRect:shadowRect] CGPath];
+    self.shadowPath = [[UIBezierPath bezierPathWithRect:shadowPathRect] CGPath];
 }
 
 @end
@@ -353,6 +354,11 @@
 
 @implementation MSDynamicsDrawerShadowStyle
 
+@dynamic shadowColor;
+@dynamic shadowRadius;
+@dynamic shadowOpacity;
+@dynamic shadowOffset;
+
 #pragma mark - NSObject
 
 - (instancetype)init
@@ -372,66 +378,94 @@
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (drawerViewController) {
-        self.shadowView = [[_MSShadowView alloc] initWithFrame:drawerViewController.paneView.bounds];
-        self.shadowView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        self.shadowView.layer.shadowColor = self.shadowColor.CGColor;
-        self.shadowView.layer.shadowOpacity = self.shadowOpacity;
-        self.shadowView.layer.shadowRadius = self.shadowRadius;
-        self.shadowView.layer.shadowOffset = self.shadowOffset;
         self.shadowView.layer.direction = direction;
-        [drawerViewController.paneView addSubview:self.shadowView];
-        [drawerViewController.paneView sendSubviewToBack:self.shadowView];
+        [self insertShadowView:self.shadowView inDrawerViewControllerIfNecessary:drawerViewController];
     } else {
         [self.shadowView removeFromSuperview];
-        self.shadowView = nil;
+    }
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (paneState != MSDynamicsDrawerPaneStateClosed) {
+        self.shadowView.layer.direction = direction;
+        [self insertShadowView:self.shadowView inDrawerViewControllerIfNecessary:drawerViewController];
+    }
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (paneState == MSDynamicsDrawerPaneStateClosed) {
+        [self.shadowView removeFromSuperview];
     }
 }
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {    
     self.shadowView.layer.direction = direction;
-    if (paneClosedFraction < 1.0) {
-        if (self.shadowView.superview != drawerViewController.paneView) {
-            [drawerViewController.paneView addSubview:self.shadowView];
-            [drawerViewController.paneView sendSubviewToBack:self.shadowView];
-        }
-    } else {
-        [self.shadowView removeFromSuperview];
-    }
+    [self insertShadowView:self.shadowView inDrawerViewControllerIfNecessary:drawerViewController];
 }
 
 #pragma mark - MSDynamicsDrawerShadowStyle
 
+- (void)insertShadowView:(UIView *)shadowView inDrawerViewControllerIfNecessary:(MSDynamicsDrawerViewController *)drawerViewController
+{
+    if (shadowView.superview != drawerViewController.paneView) {
+        shadowView.frame = drawerViewController.paneView.bounds;
+        shadowView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        [drawerViewController.paneView addSubview:shadowView];
+    }
+    if ([[shadowView.superview subviews] indexOfObject:shadowView] > 0) {
+        [drawerViewController.paneView sendSubviewToBack:shadowView];
+    }
+}
+
+- (_MSShadowView *)shadowView
+{
+    if (!_shadowView) {
+        self.shadowView = [_MSShadowView new];
+    }
+    return _shadowView;
+}
+
 - (void)setShadowColor:(UIColor *)shadowColor
 {
-    if (_shadowColor != shadowColor) {
-        _shadowColor = shadowColor;
-        self.shadowView.layer.shadowColor = [shadowColor CGColor];
-    }
+    self.shadowView.layer.shadowColor = shadowColor.CGColor;
+}
+
+- (UIColor *)shadowColor
+{
+    return [UIColor colorWithCGColor:self.shadowView.layer.shadowColor];
 }
 
 - (void)setShadowOpacity:(CGFloat)shadowOpacity
 {
-    if (_shadowOpacity != shadowOpacity) {
-        _shadowOpacity = shadowOpacity;
-        self.shadowView.layer.shadowOpacity = shadowOpacity;
-    }
+    self.shadowView.layer.shadowOpacity = shadowOpacity;
+}
+
+- (CGFloat)shadowOpacity
+{
+    return self.shadowView.layer.shadowOpacity;
 }
 
 - (void)setShadowRadius:(CGFloat)shadowRadius
 {
-    if (_shadowRadius != shadowRadius) {
-        _shadowRadius = shadowRadius;
-        self.shadowView.layer.shadowRadius = shadowRadius;
-    }
+    self.shadowView.layer.shadowRadius = shadowRadius;
+}
+
+- (CGFloat)shadowRadius
+{
+    return self.shadowView.layer.shadowRadius;
 }
 
 - (void)setShadowOffset:(CGSize)shadowOffset
 {
-    if (!CGSizeEqualToSize(_shadowOffset, shadowOffset)) {
-        _shadowOffset = shadowOffset;
-        self.shadowView.layer.shadowOffset = shadowOffset;
-    }
+    self.shadowView.layer.shadowOffset = shadowOffset;
+}
+
+- (CGSize)shadowOffset
+{
+    return self.shadowView.layer.shadowOffset;
 }
 
 @end
