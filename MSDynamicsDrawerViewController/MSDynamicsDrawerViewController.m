@@ -1081,6 +1081,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     // If the other gesture recognizer's view is a `UITableViewCell` instance's internal `UIScrollView`, require failure
+#warning test on iOS7 and 8
     if ([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableViewCell class]] && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
         return YES;
     }
