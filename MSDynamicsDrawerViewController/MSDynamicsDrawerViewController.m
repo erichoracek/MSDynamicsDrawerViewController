@@ -610,14 +610,10 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
 {
     NSAssert(((self.possibleDrawerDirection & direction) == direction), @"Unable to set pane state with no drawer set for the requested direction");
     
-    // If there requested direction is in a different axis (vertical/horizontal) than the current direction, don't continue
-    if (self.currentDrawerDirection != MSDynamicsDrawerDirectionNone) {
-        if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionHorizontal) && !(direction & MSDynamicsDrawerDirectionHorizontal)) {
-            return;
-        }
-        if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionVertical) && !(direction & MSDynamicsDrawerDirectionVertical)) {
-            return;
-        }
+    // If the drawer is currently opened and the requested direction is not valid, return
+    if ((self.currentDrawerDirection != direction) && (self.currentDrawerDirection != MSDynamicsDrawerDirectionNone) && animated) {
+        NSLog(@"Attempting to stet pane state to a different direction while currently opened.");
+        return;
     }
     
     // If the pane is already positioned in the desired pane state and direction, don't continue
