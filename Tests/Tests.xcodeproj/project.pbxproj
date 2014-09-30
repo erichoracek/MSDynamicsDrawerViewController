@@ -25,6 +25,7 @@
 		3A7F667B18F21A9800E78146 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7F667A18F21A9800E78146 /* main.m */; };
 		3A7F667F18F21A9800E78146 /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7F667E18F21A9800E78146 /* MSAppDelegate.m */; };
 		3A7F668118F21A9800E78146 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F668018F21A9800E78146 /* Images.xcassets */; };
+		3ADAADF519C6C2C100452A86 /* MSDrawerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADAADF419C6C2C100452A86 /* MSDrawerViewControllerTests.m */; };
 		A964F88A8870432A95298262 /* libPods-Functional Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2577A862104636A0488385 /* libPods-Functional Tests.a */; };
 		AF172153960A48B8819A6674 /* libPods-Test Host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B18441A6C6F14F2384CB5FA3 /* libPods-Test Host.a */; };
 		B48A9E7B46E940149EA3F1D5 /* libPods-Unit Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7F94FEBF44407B9776E061 /* libPods-Unit Tests.a */; };
@@ -72,6 +73,7 @@
 		3A7F667D18F21A9800E78146 /* MSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
 		3A7F667E18F21A9800E78146 /* MSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
 		3A7F668018F21A9800E78146 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3ADAADF419C6C2C100452A86 /* MSDrawerViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDrawerViewControllerTests.m; sourceTree = "<group>"; };
 		565EA16986E34B6999F90D93 /* Pods-Test Host.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test Host.xcconfig"; path = "../Pods/Pods-Test Host.xcconfig"; sourceTree = "<group>"; };
 		61695B26B87841B0B10D8AD7 /* Pods-Functional Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Functional Tests.xcconfig"; path = "../Pods/Pods-Functional Tests.xcconfig"; sourceTree = "<group>"; };
 		94C9EE09D11947F0AC36C125 /* Pods-Unit Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.xcconfig"; path = "../Pods/Pods-Unit Tests.xcconfig"; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				3A23D4A7195759940063DB63 /* MSStyleTests.m */,
 				3A2013E21959446D00031B72 /* MSPaneViewControllerTests.m */,
+				3ADAADF419C6C2C100452A86 /* MSDrawerViewControllerTests.m */,
 				3A23D482195756670063DB63 /* Supporting Files */,
 			);
 			path = "Unit Tests";
@@ -437,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A2013E31959446D00031B72 /* MSPaneViewControllerTests.m in Sources */,
+				3ADAADF519C6C2C100452A86 /* MSDrawerViewControllerTests.m in Sources */,
 				3A23D4A8195759940063DB63 /* MSStyleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -684,14 +688,14 @@
 		3A7F665018F2180300E78146 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SDKROOT = iphoneos7.1;
+				SDKROOT = iphoneos8.0;
 			};
 			name = Debug;
 		};
 		3A7F665118F2180300E78146 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SDKROOT = iphoneos7.1;
+				SDKROOT = iphoneos8.0;
 			};
 			name = Release;
 		};

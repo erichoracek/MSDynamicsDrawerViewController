@@ -26,6 +26,10 @@
 //  THE SOFTWARE.
 //
 
+#import <UIKit/UIKit.h>
+
+@class MSDynamicsDrawerViewController;
+
 typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
     MSPaneViewControllerTypeDynamics,
     MSPaneViewControllerTypeStyles,

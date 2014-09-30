@@ -26,6 +26,7 @@
 //  THE SOFTWARE.
 //
 
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 #import "MSDynamicsViewController.h"
 
 static NSString * const MSCellTitleReuseIdentifier = @"MSCellTitleReuseIdentifier";
@@ -114,14 +115,14 @@ static NSString * const MSSectionValueKeyMaximum = @"MSSectionValueKeyMaximum";
             },
             @(MSSectionSnapFrequency): @{
                 MSSectionValueKeyHeaderText: @"Frequency",
-                MSSectionValueKeyFooterText: @"The frequency is the speed that the snap animation has.",
+                MSSectionValueKeyFooterText: @"The frequency is the speed of the snap animation.",
                 MSSectionValueKeyKeyPath: NSStringFromSelector(@selector(frequency)),
                 MSSectionValueKeyMinimum: @0.0,
                 MSSectionValueKeyMaximum: @10.0
             },
             @(MSSectionSnapThrowVelocityThreshold): @{
                 MSSectionValueKeyHeaderText: @"Throw Velocity Threshold",
-                MSSectionValueKeyFooterText: @"The velocity at which the pane is considered to have been thrown, and uses the throw damping when animating to the state that it was thrown to.",
+                MSSectionValueKeyFooterText: @"The velocity threshold at which the pane is considered to have been 'thrown'. When thrown, the pane 'rubber bands' ",
                 MSSectionValueKeyKeyPath: NSStringFromSelector(@selector(throwVelocityThreshold)),
                 MSSectionValueKeyMinimum: @0.0,
                 MSSectionValueKeyMaximum: @1000.0

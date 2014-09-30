@@ -25,7 +25,7 @@
     if (self) {
         self.paneContainerView = paneContainerView;
         self.paneStateOpenWideEdgeOffset = 20.0;
-        self.paneDragEdgeBoundingStyle = MSDynamicsDrawerPaneDragEdgeBoundingStyleRubberBand;
+        self.boundingStyle = MSDynamicsDrawerPaneBoundingStyleRubberBand;
     }
     return self;
 }
@@ -163,7 +163,7 @@ static NSString * const MSPaneContainerBoundsKey = @"MSPaneContainerBoundsKey";
 
 static CGFloat const MSRubberBandingCoefficient = .055;
 
-- (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction
+- (CGPoint)paneCenterWithTranslation:(CGPoint)translation fromCenter:(CGPoint)paneCenter inDirection:(MSDynamicsDrawerDirection)direction forBoundingStyle:(MSDynamicsDrawerPaneBoundingStyle)boundingStyle
 {
     if (direction == MSDynamicsDrawerDirectionNone) {
         return paneCenter;
@@ -190,8 +190,8 @@ static CGFloat const MSRubberBandingCoefficient = .055;
         relevantBoundingComponent = MSPointComponentForDrawerDirection(&paneOpenCenter, direction);
     }
     
-    switch ((NSInteger)self.paneDragEdgeBoundingStyle) {
-    case MSDynamicsDrawerPaneDragEdgeBoundingStyleRubberBand: {
+    switch ((NSInteger)boundingStyle) {
+    case MSDynamicsDrawerPaneBoundingStyleRubberBand: {
         
         // Offset = (d * c) * log( x / (d * c) + 1)
         // d = dimension (width or height, depending on direction)
@@ -208,7 +208,7 @@ static CGFloat const MSRubberBandingCoefficient = .055;
         
         break;
     }
-    case MSDynamicsDrawerPaneDragEdgeBoundingStyleCollision:
+    case MSDynamicsDrawerPaneBoundingStyleCollision:
         *paneCenterComponent = *relevantBoundingComponent;
         break;
     }
@@ -257,7 +257,7 @@ static CGFloat const MSRubberBandingCoefficient = .055;
     MSDynamicsDrawerPaneState minPaneState = NSIntegerMax;
     for (MSDynamicsDrawerPaneState currentPaneState = MSDynamicsDrawerPaneStateClosed; currentPaneState <= MSDynamicsDrawerPaneStateOpenWide; currentPaneState++) {
         CGPoint paneStatePaneCenter = [self paneCenterForPaneState:currentPaneState direction:direction];
-        CGFloat distance = sqrtf(powf((paneStatePaneCenter.x - paneCenter.x), 2.0) + powf((paneStatePaneCenter.y - paneCenter.y), 2.0));
+        CGFloat distance = hypotf((paneStatePaneCenter.x - paneCenter.x), (paneStatePaneCenter.y - paneCenter.y));
         if (distance < minDistance) {
             minDistance = distance;
             minPaneState = currentPaneState;

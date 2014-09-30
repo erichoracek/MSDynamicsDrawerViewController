@@ -62,6 +62,13 @@
     }
 }
 
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (paneState != MSDynamicsDrawerPaneStateClosed) {
+        [[self class] setDrawerTranslation:0.0 forDirection:direction inDrawerViewController:drawerViewController];
+    }
+}
+
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (drawerViewController) {
@@ -146,6 +153,7 @@
 {
     CGFloat scale;
     if (direction & MSDynamicsDrawerDirectionAll) {
+        paneClosedFraction = fminf(fmaxf(0.0, paneClosedFraction), 1.0);
         scale = (1.0 - (paneClosedFraction * self.closedScale));
     } else {
         scale = 1.0;
@@ -276,9 +284,70 @@
 
 @end
 
+@interface _MSShadowLayer : CALayer
+
+@property (nonatomic, assign) MSDynamicsDrawerDirection direction;
+
+@end
+
+@implementation _MSShadowLayer
+
+#pragma mark - CALayer
+
+- (void)setBounds:(CGRect)bounds
+{
+    [super setBounds:bounds];
+    [self updateShadowPath];
+}
+
+- (void)setPosition:(CGPoint)position
+{
+    [super setPosition:position];
+    [self updateShadowPath];
+}
+
+#pragma mark - _MSShadowLayer
+
+- (void)setDirection:(MSDynamicsDrawerDirection)direction
+{
+    if (_direction != direction) {
+        _direction = direction;
+        [self updateShadowPath];
+    }
+}
+
+- (void)updateShadowPath
+{
+    CGRect shadowRect = self.bounds;
+    if (self.direction & MSDynamicsDrawerDirectionHorizontal) {
+        shadowRect = CGRectInset(shadowRect, 0.0, -self.shadowRadius);
+    }
+    if (self.direction & MSDynamicsDrawerDirectionVertical) {
+        shadowRect = CGRectInset(shadowRect, -self.shadowRadius, 0.0);
+    }
+    self.shadowPath = [[UIBezierPath bezierPathWithRect:shadowRect] CGPath];
+}
+
+@end
+
+@interface _MSShadowView : UIView
+
+@property (nonatomic, strong, readonly) _MSShadowLayer *layer;
+
+@end
+
+@implementation _MSShadowView
+
++ (Class)layerClass
+{
+    return [_MSShadowLayer class];
+}
+
+@end
+
 @interface MSDynamicsDrawerShadowStyle ()
 
-@property (nonatomic, strong) CALayer *shadowLayer;
+@property (nonatomic, strong) _MSShadowView *shadowView;
 
 @end
 
@@ -294,19 +363,8 @@
         self.shadowRadius = 10.0;
 		self.shadowOpacity = 1.0;
         self.shadowOffset = CGSizeZero;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidChangeStatusBarOrientation:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)applicationDidChangeStatusBarOrientation:(NSNotification *)notification
-{
-    [self.shadowLayer removeFromSuperlayer];
 }
 
 #pragma mark - MSDynamicsDrawerStyle
@@ -314,33 +372,31 @@
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (drawerViewController) {
-        self.shadowLayer = [CALayer layer];
-        self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:drawerViewController.paneView.frame] CGPath];
-        self.shadowLayer.shadowColor = self.shadowColor.CGColor;
-        self.shadowLayer.shadowOpacity = self.shadowOpacity;
-        self.shadowLayer.shadowRadius = self.shadowRadius;
-        self.shadowLayer.shadowOffset = self.shadowOffset;
+        self.shadowView = [[_MSShadowView alloc] initWithFrame:drawerViewController.paneView.bounds];
+        self.shadowView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.shadowView.layer.shadowColor = self.shadowColor.CGColor;
+        self.shadowView.layer.shadowOpacity = self.shadowOpacity;
+        self.shadowView.layer.shadowRadius = self.shadowRadius;
+        self.shadowView.layer.shadowOffset = self.shadowOffset;
+        self.shadowView.layer.direction = direction;
+        [drawerViewController.paneView addSubview:self.shadowView];
+        [drawerViewController.paneView sendSubviewToBack:self.shadowView];
     } else {
-        [self.shadowLayer removeFromSuperlayer];
-        self.shadowLayer = nil;
+        [self.shadowView removeFromSuperview];
+        self.shadowView = nil;
     }
 }
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {    
-    if (direction & MSDynamicsDrawerDirectionAll) {
-        if (!self.shadowLayer.superlayer) {
-            CGRect shadowRect = (CGRect){CGPointZero, drawerViewController.paneView.frame.size};
-            if (direction & MSDynamicsDrawerDirectionHorizontal) {
-                shadowRect = CGRectInset(shadowRect, 0.0, -self.shadowRadius);
-            } else if (direction & MSDynamicsDrawerDirectionVertical) {
-                shadowRect = CGRectInset(shadowRect, -self.shadowRadius, 0.0);
-            }
-            self.shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:shadowRect] CGPath];
-            [drawerViewController.paneView.layer insertSublayer:self.shadowLayer atIndex:0];
+    self.shadowView.layer.direction = direction;
+    if (paneClosedFraction < 1.0) {
+        if (self.shadowView.superview != drawerViewController.paneView) {
+            [drawerViewController.paneView addSubview:self.shadowView];
+            [drawerViewController.paneView sendSubviewToBack:self.shadowView];
         }
     } else {
-        [self.shadowLayer removeFromSuperlayer];
+        [self.shadowView removeFromSuperview];
     }
 }
 
@@ -350,7 +406,7 @@
 {
     if (_shadowColor != shadowColor) {
         _shadowColor = shadowColor;
-        self.shadowLayer.shadowColor = [shadowColor CGColor];
+        self.shadowView.layer.shadowColor = [shadowColor CGColor];
     }
 }
 
@@ -358,7 +414,7 @@
 {
     if (_shadowOpacity != shadowOpacity) {
         _shadowOpacity = shadowOpacity;
-        self.shadowLayer.shadowOpacity = shadowOpacity;
+        self.shadowView.layer.shadowOpacity = shadowOpacity;
     }
 }
 
@@ -366,7 +422,7 @@
 {
     if (_shadowRadius != shadowRadius) {
         _shadowRadius = shadowRadius;
-        self.shadowLayer.shadowRadius = shadowRadius;
+        self.shadowView.layer.shadowRadius = shadowRadius;
     }
 }
 
@@ -374,7 +430,7 @@
 {
     if (!CGSizeEqualToSize(_shadowOffset, shadowOffset)) {
         _shadowOffset = shadowOffset;
-        self.shadowLayer.shadowOffset = shadowOffset;
+        self.shadowView.layer.shadowOffset = shadowOffset;
     }
 }
 
@@ -397,7 +453,6 @@
 
 static UIStatusBarStyle const MSStatusBarStyleNone = -1;
 static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
-static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);
 
 @implementation MSDynamicsDrawerStatusBarOffsetStyle
 
@@ -467,9 +522,10 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
         self.direction ^= direction;
         // If removed while opened in a specific direction, unstyle
         if (direction == self.dynamicsDrawerViewController.currentDrawerDirection) {
-            self.dynamicsDrawerWindowLifted = NO;
             [self.statusBarSnapshotView removeFromSuperview];
             [self.statusBarContainerView removeFromSuperview];
+            // Must unlift window after removing status bar snapshot view to prevent stauts bar flickering
+            self.dynamicsDrawerWindowLifted = NO;
         }
     }
 }
@@ -616,7 +672,7 @@ static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBa
 
 @end
 
-static BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame)
+BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame)
 {
     UIInterfaceOrientation statusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if ((statusBarOrientation == UIInterfaceOrientationPortrait) || (statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown)) {

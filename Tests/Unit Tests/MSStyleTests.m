@@ -186,9 +186,7 @@
         // Show the window (with the drawer as the rootViewController)
         window.hidden = NO;
 
-#if __IPHONE_8_0
         XCTestExpectation *stateUpdateExpectation = [self expectationWithDescription:@"Update Pane State"];
-#endif
         @weakify(self);
         [self.drawerViewController setPaneState:toPaneState animated:animated allowUserInterruption:NO completion:^{
             @strongify(self);
@@ -199,23 +197,15 @@
             CGPoint toPaneStatePaneCenter = [self.drawerViewController.paneLayout paneCenterForPaneState:toPaneState direction:direction];
             CGFloat toPaneStatePaneClosedFraction = [self.drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:toPaneStatePaneCenter forDirection:direction];
             XCTAssertEqualObjects([paneClosedFractions lastObject], @(toPaneStatePaneClosedFraction), @"Pane closed fractions must end at toPaneStatePaneClosedFraction");
-#if __IPHONE_8_0
             [stateUpdateExpectation fulfill];
-#endif
         }];
         XCTAssertTrue(mayUpdateToPaneStateInvoked, @"Must invoke may update to pane state immedately after setPaneState:");
         
-#if __IPHONE_8_0
         [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *error) {
             [mayUpdateToPaneStateToken remove];
             [didUpdatePaneClosedFractionToken remove];
             [didUpdateToPaneStateToken remove];
         }];
-#else 
-        [mayUpdateToPaneStateToken remove];
-        [didUpdatePaneClosedFractionToken remove];
-        [didUpdateToPaneStateToken remove];
-#endif
     };
     
     // Test transitioning between all states in all directions both animated and non-animated

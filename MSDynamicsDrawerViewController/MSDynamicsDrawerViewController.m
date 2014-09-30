@@ -53,8 +53,6 @@
 @property (nonatomic, strong, setter = _setDynamicAnimator:) UIDynamicAnimator *_dynamicAnimator;
 @property (nonatomic, strong, setter = _setPaneBehavior:) UIDynamicItemBehavior *_paneBehavior;
 @property (nonatomic, copy, setter = _setDynamicAnimatorCompletion:) void (^_dynamicAnimatorCompletion)(void);
-@property (nonatomic, assign, readonly) dispatch_once_t initPaneViewSlideOffAnimationEnabled;
-@property (nonatomic, assign, readonly) dispatch_once_t initScreenEdgePanCancelsConflictingGestures;
 
 @end
 
@@ -76,6 +74,16 @@
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+        _screenEdgePanCancelsConflictingGestures = YES;
+    }
+    return self;
 }
 
 #pragma mark - UIViewController
@@ -201,7 +209,7 @@
 
 - (void)_setVisibleDrawerViewController:(UIViewController *)drawerViewController
 {
-    [self replaceViewController:self._visibleDrawerViewController withViewController:drawerViewController inContainerView:self.drawerView completion:^{
+    [self ms_replaceViewController:self._visibleDrawerViewController withViewController:drawerViewController inContainerView:self.drawerView completion:^{
         __visibleDrawerViewController = drawerViewController;
     }];
 }
@@ -250,7 +258,7 @@
 
 - (void)setPaneViewController:(UIViewController *)paneViewController
 {
-    [self replaceViewController:self.paneViewController withViewController:paneViewController inContainerView:self.paneView completion:^{
+    [self ms_replaceViewController:self.paneViewController withViewController:paneViewController inContainerView:self.paneView completion:^{
         _paneViewController = paneViewController;
         [self setNeedsStatusBarAppearanceUpdate];
     }];
@@ -366,13 +374,13 @@
     *pushVelocityComponent = *throwVelocityComponent;
     
     // Add the velocity vector to the pane
-    if (self._paneBehavior.dynamicAnimator != self._dynamicAnimator) {
+    if (![self._dynamicAnimator.behaviors containsObject:self._paneBehavior]) {
         [self._dynamicAnimator addBehavior:self._paneBehavior];
     }
     [self._paneBehavior addLinearVelocity:pushVelocityDirection forItem:self.paneView];
     
     // Must be after the pane receives its linear velocty
-    if (behavior.dynamicAnimator != self._dynamicAnimator) {
+    if (![self._dynamicAnimator.behaviors containsObject:behavior]) {
         [self._dynamicAnimator addBehavior:behavior];
     }
     [behavior positionPaneInState:paneState forDirection:self.currentDrawerDirection];
@@ -689,20 +697,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     }
 }
 
-- (BOOL)paneViewSlideOffAnimationEnabled
-{
-    dispatch_once(&_initPaneViewSlideOffAnimationEnabled, ^{
-        _paneViewSlideOffAnimationEnabled = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
-    });
-    return _paneViewSlideOffAnimationEnabled;
-}
-
-- (void)setPaneViewSlideOffAnimationEnabled:(BOOL)paneViewSlideOffAnimationEnabled
-{
-    dispatch_once(&_initPaneViewSlideOffAnimationEnabled, ^{ });
-    _paneViewSlideOffAnimationEnabled = paneViewSlideOffAnimationEnabled;
-}
-
 #pragma mark Current Drawer Direction
 
 - (void)_setCurrentDrawerDirection:(MSDynamicsDrawerDirection)currentDrawerDirection
@@ -805,20 +799,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     NSNumber *paneTapToCloseEnabled = self._paneTapToCloseEnabledValues[@(direction)];
     if (!paneTapToCloseEnabled) paneTapToCloseEnabled = @(YES);
     return [paneTapToCloseEnabled boolValue];
-}
-
-- (BOOL)screenEdgePanCancelsConflictingGestures
-{
-    dispatch_once(&_initScreenEdgePanCancelsConflictingGestures, ^{
-        _screenEdgePanCancelsConflictingGestures = YES;
-    });
-    return _screenEdgePanCancelsConflictingGestures;
-}
-
-- (void)setScreenEdgePanCancelsConflictingGestures:(BOOL)screenEdgePanCancelsConflictingGestures
-{
-    dispatch_once(&_initScreenEdgePanCancelsConflictingGestures, ^{ });
-    _screenEdgePanCancelsConflictingGestures = screenEdgePanCancelsConflictingGestures;
 }
 
 - (NSMutableSet *)_touchForwardingClasses
@@ -992,7 +972,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         [self._dynamicAnimator removeAllBehaviors];
         
         CGPoint panTranslation = [gestureRecognizer translationInView:self.view];
-        self.paneView.center = [self.paneLayout paneCenterWithTranslation:panTranslation fromCenter:paneStartCenter inDirection:self.currentDrawerDirection];
+        self.paneView.center = [self.paneLayout paneCenterWithTranslation:panTranslation fromCenter:paneStartCenter inDirection:self.currentDrawerDirection forBoundingStyle:self.paneLayout.boundingStyle];
         
         break;
     }
@@ -1039,7 +1019,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         if (self.paneDragRequiresScreenEdgePan) {
             MSDynamicsDrawerPaneState currentPaneState;
             if ([self.paneLayout paneWithCenter:self.paneView.center isInValidState:&currentPaneState forDirection:self.currentDrawerDirection] && (currentPaneState == MSDynamicsDrawerPaneStateClosed)) {
-                UIRectEdge panBeginEdges = [self._panePanGestureRecognizer didBeginAtEdgesOfView:self.paneView];
+                UIRectEdge panBeginEdges = [self._panePanGestureRecognizer ms_didBeginAtEdgesOfView:self.paneView];
                 // Mask to only edges that are possible (there's a drawer view controller set in that direction)
                 MSDynamicsDrawerDirection possibleDirectionsForPanBeginEdges = (panBeginEdges & self.possibleDrawerDirection);
                 BOOL gestureBeganAtPossibleEdge = (possibleDirectionsForPanBeginEdges != UIRectEdgeNone);
@@ -1063,7 +1043,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
     if (gestureRecognizer == self._panePanGestureRecognizer) {
         __block BOOL shouldReceiveTouch = YES;
         // Enumerate the view's superviews, checking for a touch-forwarding class
-        [touch.view superviewHierarchyAction:^(UIView *view) {
+        [touch.view ms_superviewHierarchyAction:^(UIView *view) {
             // Only enumerate while still receiving the touch
             if (!shouldReceiveTouch) {
                 return;
@@ -1089,7 +1069,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     if ((gestureRecognizer == self._panePanGestureRecognizer) && self.screenEdgePanCancelsConflictingGestures) {
-        UIRectEdge edges = [self._panePanGestureRecognizer didBeginAtEdgesOfView:self.paneView];
+        UIRectEdge edges = [self._panePanGestureRecognizer ms_didBeginAtEdgesOfView:self.paneView];
         // Mask out edges that aren't possible
         BOOL validEdges = (edges & self.possibleDrawerDirection);
         // If there is a valid edge and pane drag is revealed for that edge's direction

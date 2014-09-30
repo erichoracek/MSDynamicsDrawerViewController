@@ -10,7 +10,7 @@
 
 @implementation UIViewController (Containment)
 
-- (void)replaceViewController:(UIViewController *)existingViewController withViewController:(UIViewController *)newViewController inContainerView:(UIView *)containerView completion:(void (^)(void))completion
+- (void)ms_replaceViewController:(UIViewController *)existingViewController withViewController:(UIViewController *)newViewController inContainerView:(UIView *)containerView completion:(void (^)(void))completion
 {
     // Add initial view controller
 	if (!existingViewController && newViewController) {

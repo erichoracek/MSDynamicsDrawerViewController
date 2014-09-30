@@ -36,6 +36,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
         self.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor whiteColor];
         self.textLabel.font = [UIFont systemFontOfSize:18.0];

@@ -58,6 +58,8 @@
     // Add some example styles
     [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerStatusBarOffsetStyle new]] forDirection:MSDynamicsDrawerDirectionAll];
     [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerFadeStyle new]] forDirection:MSDynamicsDrawerDirectionLeft];
+    [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerParallaxStyle new]] forDirection:MSDynamicsDrawerDirectionLeft];
+    self.dynamicsDrawerViewController.paneLayout.boundingStyle = MSDynamicsDrawerPaneBoundingStyleRubberBand;
     
 #if !defined(STORYBOARD)
     MSMenuViewController *menuViewController = [MSMenuViewController new];
@@ -65,7 +67,7 @@
     MSMenuViewController *menuViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
 #endif
     menuViewController.dynamicsDrawerViewController = self.dynamicsDrawerViewController;
-    UINavigationController *menuNavigationController = [[MSStatusBarOffsetDrawerNavigationController alloc] initWithRootViewController:menuViewController];
+    UINavigationController *menuNavigationController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
     menuNavigationController.navigationBarHidden = YES;
     [self.dynamicsDrawerViewController setDrawerViewController:menuNavigationController forDirection:MSDynamicsDrawerDirectionLeft preloadView:YES];
     

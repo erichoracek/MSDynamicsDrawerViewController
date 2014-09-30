@@ -10,10 +10,10 @@
 
 @implementation UIView (ViewHierarchyAction)
 
-- (void)superviewHierarchyAction:(MSViewActionBlock)viewAction
+- (void)ms_superviewHierarchyAction:(MSViewActionBlock)viewAction
 {
     viewAction(self);
-    [self.superview superviewHierarchyAction:viewAction];
+    [self.superview ms_superviewHierarchyAction:viewAction];
 }
 
 @end

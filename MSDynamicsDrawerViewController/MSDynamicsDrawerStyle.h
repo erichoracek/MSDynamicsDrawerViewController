@@ -31,21 +31,20 @@
 #import "MSDynamicsDrawerViewController.h"
 
 /**
- `MSDynamicsDrawerStyle` is a protocol that defines the interface for an object that can style a `MSDynamicsDrawerViewController`. Instances of `MSDynamicsDrawerStyle` are added to `MSDynamicsDrawerViewController` via the `addStyle:forDirection:` method.
+ `MSDynamicsDrawerStyle` is a protocol that defines the interface for an object that can style a `MSDynamicsDrawerViewController`. Instances of `MSDynamicsDrawerStyle` are added to `MSDynamicsDrawerViewController` via the `addStyle:forDirection:` or `addStyles:forDirection:` method.
  
  ## Creating a Custom Style
  
- As user interacts with the instance of `MSDynamicsDrawerViewController`, the style class is messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:`, which allows the style to changes attributes of the `drawerView` or `paneView` relative to the `paneClosedFraction`.
+ As user interacts with the instance of `MSDynamicsDrawerViewController`, the style class is messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:`, which allows the style to changes attributes of the `drawerView` or `paneView` relative to the paneClosedFraction.
  
- It's recommended that custom styles don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
+ It's recommended that custom styles don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are constantly modified both by the user's gestures and the internal dynamic animator within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
  */
-#warning rename as "style"
 @protocol MSDynamicsDrawerStyle <NSObject>
 
 @optional
 
 /**
- Invoked when the `MSDynamicsDrawerViewController` has an update to its pane closed fraction.
+ Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.
  
  @param dynamicsDrawerViewController The `MSDynamicsDrawerViewController` that is being styled by the `MSDynamicsDrawerStyle` instance.
  @param paneClosedFraction The fraction that `MSDynamicsDrawerViewController` instance's pane is closed. `1.0` when closed, `0.0` when opened.
@@ -62,7 +61,15 @@
  */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
-#warning document
+/**
+ Informs the style that the drawer view controller may update to a pane state in a specified direction.
+ 
+ It is important to note that the user can interrupt this state change, and therefore is it not guaranteed that this update will occur..
+ 
+ @param drawerViewController The drawer view controller that the delegate is registered with.
+ @param paneState The pane state that the view controller may update to.
+ @param direction The direction that the view controller may update in.
+ */
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
@@ -139,7 +146,6 @@
 /**
  Adds a shadow to the `paneView` within a `MSDynamicsDrawerViewController` to create an effect of the `paneView` casting a shadow over the `drawerView`.
  */
-#warning sometimes places shadow above pane view
 @interface MSDynamicsDrawerShadowStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
@@ -178,3 +184,5 @@
 @interface MSDynamicsDrawerStatusBarOffsetStyle : NSObject <MSDynamicsDrawerStyle>
 
 @end
+
+BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);

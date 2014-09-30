@@ -15,7 +15,7 @@ static CGFloat const MSPaneViewScreenEdgeThreshold = 24.0;
 
 @implementation UIPanGestureRecognizer (BeginEdges)
 
-- (UIRectEdge)didBeginAtEdgesOfView:(UIView *)view;
+- (UIRectEdge)ms_didBeginAtEdgesOfView:(UIView *)view;
 {
     CGPoint translation = [self translationInView:view];
     CGPoint currentLocation = [self locationInView:view];

@@ -17,6 +17,6 @@
  
  @return The edges that the pan gesture recognizer started at for the passed view.
  */
-- (UIRectEdge)didBeginAtEdgesOfView:(UIView *)view;
+- (UIRectEdge)ms_didBeginAtEdgesOfView:(UIView *)view;
 
 @end

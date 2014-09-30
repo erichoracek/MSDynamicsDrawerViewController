@@ -12,6 +12,6 @@ typedef void (^MSViewActionBlock)(UIView *view);
 
 @interface UIView (ViewHierarchyAction)
 
-- (void)superviewHierarchyAction:(MSViewActionBlock)viewAction;
+- (void)ms_superviewHierarchyAction:(MSViewActionBlock)viewAction;
 
 @end

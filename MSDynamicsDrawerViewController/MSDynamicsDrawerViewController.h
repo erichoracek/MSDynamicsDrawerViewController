@@ -136,10 +136,22 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @param direction The direction that the drawer view controller should be revealed in. Does not accept masked direction values.
  
  @see drawerViewControllerForDirection:
+ @see setDrawerViewController:forDirection:preloadView:
  */
 - (void)setDrawerViewController:(UIViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction;
 
-#warning document
+/**
+ Sets the view controller to be revealed as a drawer in the specified direction underneath the pane view controller.
+ 
+ There is a maximum of two drawer view controllers that can be set simultaneously. When a second view controllers is set, it must be in the opposite direction of the first view controller. When a single drawer view controller is set, it can be set in any of the cardinal directions.
+ 
+ @param drawerViewController The view controller to revealed as a drawer
+ @param direction The direction that the drawer view controller should be revealed in. Does not accept masked direction values.
+ @param preloadView Whether the view of passed the view controller should be loaded when this method is invoked. If so, the passed view controller will have its view appear and then subsequently disappear. This can be used to speed up the initial display of a drawer view controller by frontloading the view load.
+ 
+ @see drawerViewControllerForDirection:
+ @see setDrawerViewController:forDirection:
+ */
 - (void)setDrawerViewController:(UIViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction preloadView:(BOOL)preloadView;
 
 /**
@@ -301,7 +313,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
  */
 
-#warning rename
 @property (nonatomic, strong) MSPaneBehavior <MSPanePositioningBehavior> *panePositioningBehavior;
 
 
@@ -521,5 +532,4 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 // `#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>`
 #import "MSDynamicsDrawerStyle.h"
 #import "MSDynamicsDrawerBehavior.h"
-#import "MSStatusBarOffsetDrawerNavigationController.h"
 #import "MSDynamicsDrawerPaneLayout.h"

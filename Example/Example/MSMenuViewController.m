@@ -37,6 +37,7 @@
 #import "MSLongTableViewController.h"
 #import "MSMonospaceWebViewController.h"
 #import "MSMenuTableViewHeader.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerStyle.h>
 #import "MSMenuCell.h"
 
 NSString * const MSMenuCellReuseIdentifier = @"Drawer Cell";
@@ -70,6 +71,11 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 
 #pragma mark - NSObject
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -102,6 +108,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     [self.tableView registerClass:[MSMenuTableViewHeader class] forHeaderFooterViewReuseIdentifier:MSDrawerHeaderReuseIdentifier];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorColor = [UIColor colorWithWhite:1.0 alpha:0.25];
+    [self updateEdgesForExtendedLayout];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -113,6 +120,8 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 
 - (void)initialize
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarDidChangeFrame:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+    
     self.paneViewControllerType = NSUIntegerMax;
     self.paneViewControllerTitles = @{
         @(MSPaneViewControllerTypeStyles) : @"Styles",
@@ -161,6 +170,20 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         @(MSPaneViewControllerTypeMonospace),
         @(MSPaneViewControllerTypeCount)
     ];
+}
+
+- (void)statusBarDidChangeFrame:(NSNotification *)notification
+{
+    [self updateEdgesForExtendedLayout];
+}
+
+- (void)updateEdgesForExtendedLayout
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    self.edgesForExtendedLayout = MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame) ? UIRectEdgeTop : UIRectEdgeNone;
+    // Hacky way to get the edges for extended layout to update in the simulator when you're toggling the visiblity of the in-call status bar. Probably not necessary in production, since this rarely happens.
+    [self.parentViewController beginAppearanceTransition:YES animated:YES];
+    [self.parentViewController endAppearanceTransition];
 }
 
 - (MSPaneViewControllerType)paneViewControllerTypeForIndexPath:(NSIndexPath *)indexPath
@@ -253,7 +276,6 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSMenuCellReuseIdentifier forIndexPath:indexPath];
     cell.textLabel.text = self.paneViewControllerTitles[@([self paneViewControllerTypeForIndexPath:indexPath])];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 

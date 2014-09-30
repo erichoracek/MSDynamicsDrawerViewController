@@ -27,6 +27,7 @@
 //
 
 #import "MSStylesViewController.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 #import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 
 NSString * const MSStyleDirectionCellReuseIdentifier = @"Style Direction Cell";
@@ -70,7 +71,8 @@ NSString * const MSStyleDirectionCellReuseIdentifier = @"Style Direction Cell";
             [MSDynamicsDrawerFadeStyle class],
             [MSDynamicsDrawerShadowStyle class],
             [MSDynamicsDrawerResizeStyle class],
-            [MSDynamicsDrawerScaleStyle class]
+            [MSDynamicsDrawerScaleStyle class],
+            [MSDynamicsDrawerStatusBarOffsetStyle class]
         ];
     }
     return _styleClasses;
@@ -84,7 +86,8 @@ NSString * const MSStyleDirectionCellReuseIdentifier = @"Style Direction Cell";
             NSStringFromClass([MSDynamicsDrawerFadeStyle class]) : @"Fade",
             NSStringFromClass([MSDynamicsDrawerParallaxStyle class]) : @"Parallax",
             NSStringFromClass([MSDynamicsDrawerShadowStyle class]) : @"Shadow",
-            NSStringFromClass([MSDynamicsDrawerResizeStyle class]) : @"Drawer Resize"
+            NSStringFromClass([MSDynamicsDrawerResizeStyle class]) : @"Drawer Resize",
+            NSStringFromClass([MSDynamicsDrawerStatusBarOffsetStyle class]) : @"Status Bar Offset"
         };
     }
     return _styleNames;
@@ -103,7 +106,9 @@ NSString * const MSStyleDirectionCellReuseIdentifier = @"Style Direction Cell";
             NSStringFromClass([MSDynamicsDrawerShadowStyle class]) :
                 @"The 'Shadow' style causes the pane view to cast a shadow on the drawer view",
             NSStringFromClass([MSDynamicsDrawerResizeStyle class]) :
-                @"The 'Drawer Resize' style resizes the drawer view controller's view to fit within drawer's reveal distance"
+                @"The 'Drawer Resize' style resizes the drawer view controller's view to fit within drawer's reveal distance",
+            NSStringFromClass([MSDynamicsDrawerStatusBarOffsetStyle class]) :
+                @"The 'Status Bar Offset' style adjusts the status bar as the pane is adjusted."
         };
     }
     return _styleDescriptions;
