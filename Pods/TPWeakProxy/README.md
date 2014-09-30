@@ -1,5 +1,9 @@
 # TPWeakProxy
 
+*Note: This has been replaced by
+ [TPDWeakProxy](https://github.com/tetherpad/TPDWeakProxy). This
+ repository will be deleted at some point after September 2015.*
+
 An NSProxy object for turning strong references into weak references.
 
 ## Usage
