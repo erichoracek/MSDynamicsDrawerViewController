@@ -672,8 +672,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     
     [self _updateStyles];
     
-#warning re-enable
-//    [self setNeedsStatusBarAppearanceUpdate];
+    [self setNeedsStatusBarAppearanceUpdate];
     
     if ([self.delegate respondsToSelector:@selector(dynamicsDrawerViewController:didUpdateToPaneState:forDirection:)]) {
         [self.delegate dynamicsDrawerViewController:self didUpdateToPaneState:paneState forDirection:forDirection];
