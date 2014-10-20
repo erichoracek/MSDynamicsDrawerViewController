@@ -63,7 +63,7 @@
  
  @see paneItem
  */
-@property (nonatomic, strong, readonly) UIDynamicItemBehavior *paneBehavior;
+@property (nonatomic, readonly) UIDynamicItemBehavior *paneBehavior;
 
 @end
 
@@ -77,14 +77,14 @@
  
  @see positionPaneInState:forDirection:
  */
-@property (nonatomic, assign, readonly) MSDynamicsDrawerPaneState targetPaneState;
+@property (nonatomic, readonly) MSDynamicsDrawerPaneState targetPaneState;
 
 /**
  The direction that the behavior is attempting to position the pane in.
  
  @see positionPaneInState:forDirection:
  */
-@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection targetDirection;
+@property (nonatomic, readonly) MSDynamicsDrawerDirection targetDirection;
 
 /**
  Positions the pane dynamic item in the desired direction with the specified state. This method is only invoked internally by the associated MSDynamicsDrawerViewController. It should not be invoked otherwise. When subclassing MSPanePositioningBehavior, this method should be overridden to adjust child behaviors to create the desired effect.
@@ -127,14 +127,14 @@
  
  Magnitude is the only property that should be modified on this behavior to change the positioning effect when using this behavior. This behavior's behavior is undefined if other properties are modified.
  */
-@property (nonatomic, strong, readonly) UIGravityBehavior *gravity;
+@property (nonatomic, readonly) UIGravityBehavior *gravity;
 
 /**
  The child behavior that is used to bounce the pane when it is used as a MSPaneBounceBehavior.
  
  Magnitude is the only property that should be modified on this behavior to change the bounce effect when using this behavior. This behavior's behavior is undefined if other properties are modified.
  */
-@property (nonatomic, strong, readonly) UIPushBehavior *bouncePush;
+@property (nonatomic, readonly) UIPushBehavior *bouncePush;
 
 @end
 
@@ -148,20 +148,20 @@
  
  Default value of 3.0.
  */
-@property (nonatomic, assign) CGFloat frequency;
+@property (nonatomic) CGFloat frequency;
 
 /**
  The damping of the snap animation when the pane is thrown.
  
  Default value of 0.55. This is a best approximation for the spring damping that Apple uses for scroll views (0.55). See https://twitter.com/chpwn/status/291794740553338880
  */
-@property (nonatomic, assign) CGFloat throwDamping;
+@property (nonatomic) CGFloat throwDamping;
 
 /**
  The velocity threshold at which the snap behavior uses the throw damping when positioning the pane is a target position.
  
  Expressed in points per second. Default value of 500.0.
  */
-@property (nonatomic, assign) CGFloat throwVelocityThreshold;
+@property (nonatomic) CGFloat throwVelocityThreshold;
 
 @end

@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneBoundingStyle) {
  @see paneViewSlideOffAnimationEnabled
  @see setPaneViewController:animated:completion:
  */
-@property (nonatomic, assign) CGFloat paneStateOpenWideEdgeOffset;
+@property (nonatomic) CGFloat paneStateOpenWideEdgeOffset;
 
 /**
  The current reveal distance for a pane with the specified center for the passed direction.
@@ -162,6 +162,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneBoundingStyle) {
 /**
  Specifies the behavior of the pane when it is dragged against an edge.
  */
-@property (nonatomic, assign) MSDynamicsDrawerPaneBoundingStyle boundingStyle;
+@property (nonatomic) MSDynamicsDrawerPaneBoundingStyle boundingStyle;
 
 @end

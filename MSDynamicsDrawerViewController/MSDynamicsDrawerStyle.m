@@ -181,8 +181,8 @@
 @interface MSDynamicsDrawerResizeStyle ()
 
 @property (nonatomic, weak) MSDynamicsDrawerViewController *drawerViewController;
-@property (nonatomic, strong) NSNumber *_maximumResizeRevealDistanceValue;
-@property (nonatomic, strong) NSNumber *_minimumResizeRevealDistanceValue;
+@property (nonatomic) NSNumber *_maximumResizeRevealDistanceValue;
+@property (nonatomic) NSNumber *_minimumResizeRevealDistanceValue;
 
 @end
 
@@ -286,7 +286,7 @@
 
 @interface _MSShadowLayer : CALayer
 
-@property (nonatomic, assign) MSDynamicsDrawerDirection direction;
+@property (nonatomic) MSDynamicsDrawerDirection direction;
 
 @end
 
@@ -333,7 +333,7 @@
 
 @interface _MSShadowView : UIView
 
-@property (nonatomic, strong, readonly) _MSShadowLayer *layer;
+@property (nonatomic, readonly) _MSShadowLayer *layer;
 
 @end
 
@@ -348,7 +348,7 @@
 
 @interface MSDynamicsDrawerShadowStyle ()
 
-@property (nonatomic, strong) _MSShadowView *shadowView;
+@property (nonatomic) _MSShadowView *shadowView;
 
 @end
 
@@ -472,16 +472,16 @@
 
 @interface MSDynamicsDrawerStatusBarOffsetStyle ()
 
-@property (nonatomic, strong) UIView *statusBarContainerView;
-@property (nonatomic, strong) UIView *statusBarSnapshotView;
-@property (nonatomic, assign) UIStatusBarStyle statusBarSnapshotStyle;
-@property (nonatomic, strong) NSValue *statusBarSnapshotFrame;
-@property (nonatomic, assign) UIWindowLevel dynamicsDrawerWindowLevel;
-@property (nonatomic, assign) UIWindowLevel dynamicsDrawerOriginalWindowLevel;
-@property (nonatomic, assign) BOOL dynamicsDrawerWindowLifted;
+@property (nonatomic) UIView *statusBarContainerView;
+@property (nonatomic) UIView *statusBarSnapshotView;
+@property (nonatomic) UIStatusBarStyle statusBarSnapshotStyle;
+@property (nonatomic) NSValue *statusBarSnapshotFrame;
+@property (nonatomic) UIWindowLevel dynamicsDrawerWindowLevel;
+@property (nonatomic) UIWindowLevel dynamicsDrawerOriginalWindowLevel;
+@property (nonatomic) BOOL dynamicsDrawerWindowLifted;
 @property (nonatomic, weak) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
 @property (nonatomic, weak) UIWindow *window;
-@property (nonatomic, assign) MSDynamicsDrawerDirection direction;
+@property (nonatomic) MSDynamicsDrawerDirection direction;
 
 @end
 

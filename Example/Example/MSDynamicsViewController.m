@@ -47,12 +47,12 @@ typedef NS_ENUM(NSInteger, MSSectionGravity) {
 
 @interface MSDynamicsViewController ()
 
-@property (nonatomic, strong) NSArray *panePositioningBehaviorClasses;
-@property (nonatomic, strong) NSArray *panePositioningBehaviorNames;
-@property (nonatomic, strong) NSDictionary *sectionValuesSnap;
-@property (nonatomic, strong) NSDictionary *sectionValuesGravity;
-@property (nonatomic, strong, readonly) NSDictionary *sectionValues;
-@property (nonatomic, strong, readonly) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
+@property (nonatomic) NSArray *panePositioningBehaviorClasses;
+@property (nonatomic) NSArray *panePositioningBehaviorNames;
+@property (nonatomic) NSDictionary *sectionValuesSnap;
+@property (nonatomic) NSDictionary *sectionValuesGravity;
+@property (nonatomic, readonly) NSDictionary *sectionValues;
+@property (nonatomic, readonly) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
 
 @end
 

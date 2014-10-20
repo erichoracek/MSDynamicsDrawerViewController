@@ -36,22 +36,22 @@
 @interface MSDynamicsDrawerViewController () <UIGestureRecognizerDelegate, UIDynamicAnimatorDelegate>
 
 // External properties redefined as `readwrite` instead of `readonly`
-@property (nonatomic, strong, readwrite, setter = _setDrawerView:) UIView *drawerView;
-@property (nonatomic, strong, readwrite, setter = _setPaneView:) UIView *paneView;
-@property (nonatomic, assign, readwrite, setter = _setPossibleDrawerDirection:) MSDynamicsDrawerDirection possibleDrawerDirection;
-@property (nonatomic, assign, readwrite, setter = _setCurrentDrawerDirection:) MSDynamicsDrawerDirection currentDrawerDirection;
+@property (nonatomic, readwrite, setter = _setDrawerView:) UIView *drawerView;
+@property (nonatomic, readwrite, setter = _setPaneView:) UIView *paneView;
+@property (nonatomic, readwrite, setter = _setPossibleDrawerDirection:) MSDynamicsDrawerDirection possibleDrawerDirection;
+@property (nonatomic, readwrite, setter = _setCurrentDrawerDirection:) MSDynamicsDrawerDirection currentDrawerDirection;
 // Internal properties
-@property (nonatomic, assign, setter = _setIsRotating:) BOOL _rotating;
-@property (nonatomic, strong, setter = _setVisibleDrawerViewController:) UIViewController *_visibleDrawerViewController;
-@property (nonatomic, strong, setter = _setDrawerViewControllers:) NSMutableDictionary *_drawerViewControllers;
-@property (nonatomic, strong, setter = _setPaneDragRevealEnabledValues:) NSMutableDictionary *_paneDragRevealEnabledValues;
-@property (nonatomic, strong, setter = _setPaneTapToCloseEnabledValues:) NSMutableDictionary *_paneTapToCloseEnabledValues;
-@property (nonatomic, strong, setter = _setStyles:) NSMutableDictionary *_styles;
-@property (nonatomic, strong, setter = _setTouchForwardingClasses:) NSMutableSet *_touchForwardingClasses;
-@property (nonatomic, strong, setter = _setPanePanGestureRecognizer:) UIPanGestureRecognizer *_panePanGestureRecognizer;
-@property (nonatomic, strong, setter = _setPaneTapGestureRecognizer:) UITapGestureRecognizer *_paneTapGestureRecognizer;
-@property (nonatomic, strong, setter = _setDynamicAnimator:) UIDynamicAnimator *_dynamicAnimator;
-@property (nonatomic, strong, setter = _setPaneBehavior:) UIDynamicItemBehavior *_paneBehavior;
+@property (nonatomic, setter = _setIsRotating:) BOOL _rotating;
+@property (nonatomic, setter = _setVisibleDrawerViewController:) UIViewController *_visibleDrawerViewController;
+@property (nonatomic, setter = _setDrawerViewControllers:) NSMutableDictionary *_drawerViewControllers;
+@property (nonatomic, setter = _setPaneDragRevealEnabledValues:) NSMutableDictionary *_paneDragRevealEnabledValues;
+@property (nonatomic, setter = _setPaneTapToCloseEnabledValues:) NSMutableDictionary *_paneTapToCloseEnabledValues;
+@property (nonatomic, setter = _setStyles:) NSMutableDictionary *_styles;
+@property (nonatomic, setter = _setTouchForwardingClasses:) NSMutableSet *_touchForwardingClasses;
+@property (nonatomic, setter = _setPanePanGestureRecognizer:) UIPanGestureRecognizer *_panePanGestureRecognizer;
+@property (nonatomic, setter = _setPaneTapGestureRecognizer:) UITapGestureRecognizer *_paneTapGestureRecognizer;
+@property (nonatomic, setter = _setDynamicAnimator:) UIDynamicAnimator *_dynamicAnimator;
+@property (nonatomic, setter = _setPaneBehavior:) UIDynamicItemBehavior *_paneBehavior;
 @property (nonatomic, copy, setter = _setDynamicAnimatorCompletion:) void (^_dynamicAnimatorCompletion)(void);
 
 @end

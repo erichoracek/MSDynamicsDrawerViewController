@@ -36,7 +36,7 @@ static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
 
 @property (nonatomic, weak, readwrite) MSDynamicsDrawerViewController *drawerViewController;
 @property (nonatomic, weak, readwrite) id <UIDynamicItem> paneItem;
-@property (nonatomic, strong, readwrite) UIDynamicItemBehavior *paneBehavior;
+@property (nonatomic, readwrite) UIDynamicItemBehavior *paneBehavior;
 
 @end
 
@@ -73,11 +73,11 @@ static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
 
 @interface MSPaneGravityBehavior ()
 
-@property (nonatomic, assign, readwrite) MSDynamicsDrawerPaneState targetPaneState;
-@property (nonatomic, assign, readwrite) MSDynamicsDrawerDirection targetDirection;
-@property (nonatomic, strong, readwrite) UIGravityBehavior *gravity;
-@property (nonatomic, strong, readwrite) UIPushBehavior *bouncePush;
-@property (nonatomic, strong) UICollisionBehavior *boundary;
+@property (nonatomic, readwrite) MSDynamicsDrawerPaneState targetPaneState;
+@property (nonatomic, readwrite) MSDynamicsDrawerDirection targetDirection;
+@property (nonatomic, readwrite) UIGravityBehavior *gravity;
+@property (nonatomic, readwrite) UIPushBehavior *bouncePush;
+@property (nonatomic) UICollisionBehavior *boundary;
 
 @end
 
@@ -251,10 +251,10 @@ CGPoint MSAttachmentAnchorPoint(MSDynamicsDrawerPaneLayout *layout, CGPoint pane
 
 @interface MSPaneSnapBehavior ()
 
-@property (nonatomic, assign, readwrite) MSDynamicsDrawerPaneState targetPaneState;
-@property (nonatomic, assign, readwrite) MSDynamicsDrawerDirection targetDirection;
-@property (nonatomic, strong) UIAttachmentBehavior *_snap;
-@property (nonatomic, assign) BOOL _thrown;
+@property (nonatomic, readwrite) MSDynamicsDrawerPaneState targetPaneState;
+@property (nonatomic, readwrite) MSDynamicsDrawerDirection targetDirection;
+@property (nonatomic) UIAttachmentBehavior *_snap;
+@property (nonatomic) BOOL _thrown;
 
 @end
 

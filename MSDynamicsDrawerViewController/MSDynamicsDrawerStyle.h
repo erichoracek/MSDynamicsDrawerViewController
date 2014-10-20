@@ -92,7 +92,7 @@
  
  `0.35` by default.
  */
-@property (nonatomic, assign) CGFloat parallaxOffsetFraction;
+@property (nonatomic) CGFloat parallaxOffsetFraction;
 
 @end
 
@@ -106,7 +106,7 @@
  
  The `drawerView` is faded from the `closedAlpha` when closed to 1.0 when open. `0.0` by default.
  */
-@property (nonatomic, assign) CGFloat closedAlpha;
+@property (nonatomic) CGFloat closedAlpha;
 
 @end
 
@@ -118,7 +118,7 @@
 /**
  The amount that the `drawerView` is scaled when the `paneView` is closed. The `drawerView` is transformed from the `closedScale` when closed to 1.0 when open. `0.1` by default.
  */
-@property (nonatomic, assign) CGFloat closedScale;
+@property (nonatomic) CGFloat closedScale;
 
 @end
 
@@ -132,14 +132,14 @@
  
  The default behavior is to use the `MSDynamicsDrawerViewController` instance's reveal distance for the open state in the direction that the drawer is opened in as the value for the minimum resize reveal distance. When set to a specific value, the drawer view controller's view is resized to fit the `currentRevealDistance` once the drawer is opened to the `minimumResizeRevealDistance`. If this value is set to `0`, then the drawer view controller's view will always be resized to fit within the visible area of the drawer.
  */
-@property (nonatomic, assign) CGFloat minimumResizeRevealDistance;
+@property (nonatomic) CGFloat minimumResizeRevealDistance;
 
 /**
  The maxium reveal distance that the drawer view controller's view should be resized to equal the `currentRevealDistance` at.
  
  The default behavior is to use the `MSDynamicsDrawerViewController` instance's reveal distance for the open wide state in the direction that the drawer is opened in as the value for the minimum resize reveal distance. When set to a specific value, the drawer view controller's view is resized to fit the `currentRevealDistance` until the drawer is opened to the `maximumResizeRevealDistance`.
  */
-@property (nonatomic, assign) CGFloat maximumResizeRevealDistance;
+@property (nonatomic) CGFloat maximumResizeRevealDistance;
 
 @end
 
@@ -153,28 +153,28 @@
  
  Default value of `blackColor`.
  */
-@property (nonatomic, strong) UIColor *shadowColor;
+@property (nonatomic) UIColor *shadowColor;
 
 /**
  The blur radius (in points) used to render the shadow.
  
  Default value of `10.0`.
  */
-@property (nonatomic, assign) CGFloat shadowRadius;
+@property (nonatomic) CGFloat shadowRadius;
 
 /**
  The opacity of the shadow.
  
  The value in this property must be in the range `0.0` (transparent) to `1.0` (opaque). The default value of this property is `1.0`.
  */
-@property (nonatomic, assign) CGFloat shadowOpacity;
+@property (nonatomic) CGFloat shadowOpacity;
 
 /**
  The offset (in points) of the layer’s shadow.
  
  The default value of this property is `(0.0, 0.0)`.
  */
-@property (nonatomic, assign) CGSize shadowOffset;
+@property (nonatomic) CGSize shadowOffset;
 
 @end
 

@@ -12,8 +12,8 @@
 @interface MSDynamicsDrawerPaneLayout ()
 
 @property (nonatomic, weak) UIView *paneContainerView;
-@property (nonatomic, strong, setter = _setOpenRevealDistances:) NSMutableDictionary *_openRevealDistances;
-@property (nonatomic, strong, setter = _setpaneCenterCache:) NSMutableDictionary *_paneCenterCache;
+@property (nonatomic, setter = _setOpenRevealDistances:) NSMutableDictionary *_openRevealDistances;
+@property (nonatomic, setter = _setpaneCenterCache:) NSMutableDictionary *_paneCenterCache;
 
 @end
 

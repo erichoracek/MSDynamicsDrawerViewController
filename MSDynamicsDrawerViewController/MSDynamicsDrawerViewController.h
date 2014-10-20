@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneViewController:animated:completion:
  @see paneState
  */
-@property (nonatomic, strong) UIViewController *paneViewController;
+@property (nonatomic) UIViewController *paneViewController;
 
 /**
  Sets the `paneViewController` with an animated transition.
@@ -173,7 +173,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneViewController:animated:completion:
  @see paneStateOpenWideEdgeOffset
  */
-@property (nonatomic, assign) BOOL paneViewSlideOffAnimationEnabled;
+@property (nonatomic) BOOL paneViewSlideOffAnimationEnabled;
 
 ///----------------------------------
 /// @name Accessing & Modifying State
@@ -188,7 +188,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneState:animated:allowUserInterruption:completion:
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
  */
-@property (nonatomic, assign) MSDynamicsDrawerPaneState paneState;
+@property (nonatomic) MSDynamicsDrawerPaneState paneState;
 
 /**
  The state of the pane view as defined in a `MSDynamicsDrawerPaneState`.
@@ -291,14 +291,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 - (void)bouncePaneOpenInDirection:(MSDynamicsDrawerDirection)direction allowUserInterruption:(BOOL)allowUserInterruption completion:(void (^)(void))completion;
 
 
-@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection currentDrawerDirection;
+@property (nonatomic, readonly) MSDynamicsDrawerDirection currentDrawerDirection;
 
 /**
  The directions that the `paneView` can be opened in.
  
  Corresponds to the directions that there are drawer view controllers set for. If more than one drawer view controller is set, this will be a bitmask of the directions that the drawer view controllers are set in.
  */
-@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection possibleDrawerDirection;
+@property (nonatomic, readonly) MSDynamicsDrawerDirection possibleDrawerDirection;
 
 ///---------------------------
 /// @name Configuring Dynamics
@@ -313,7 +313,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see setPaneState:inDirection:animated:allowUserInterruption:completion:
  */
 
-@property (nonatomic, strong) MSPaneBehavior <MSPanePositioningBehavior> *panePositioningBehavior;
+@property (nonatomic) MSPaneBehavior <MSPanePositioningBehavior> *panePositioningBehavior;
 
 
 /**
@@ -324,7 +324,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  @see bouncePaneOpenAllowingUserInterruption:completion:
  @see bouncePaneOpenInDirection:allowUserInterruption:completion:
  */
-@property (nonatomic, strong) MSPaneBehavior <MSPaneBounceBehavior> *paneBounceBehavior;
+@property (nonatomic) MSPaneBehavior <MSPaneBounceBehavior> *paneBounceBehavior;
 
 ///-------------------------
 /// @name Configuring Layout
@@ -333,7 +333,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 /**
  The pane layout that is responsible for providing the position of the pane to the MSDynamicsDrawerViewController.
  */
-@property (nonatomic, strong) MSDynamicsDrawerPaneLayout *paneLayout;
+@property (nonatomic) MSDynamicsDrawerPaneLayout *paneLayout;
 
 ///--------------------------
 ///@name Configuring Gestures
@@ -386,7 +386,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  @see screenEdgePanCancelsConflictingGestures
  */
-@property (nonatomic, assign) BOOL paneDragRequiresScreenEdgePan;
+@property (nonatomic) BOOL paneDragRequiresScreenEdgePan;
 
 /**
  Whether gestures that start at the edge of the screen should be cancelled under the assumption that the user is dragging the pane view to reveal a drawer underneath.
@@ -395,7 +395,7 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  @see paneDragRequiresScreenEdgePan
  */
-@property (nonatomic, assign) BOOL screenEdgePanCancelsConflictingGestures;
+@property (nonatomic) BOOL screenEdgePanCancelsConflictingGestures;
 
 /**
  Attempts to register a `UIView` subclass that the pane view should forward dragging through.
@@ -467,14 +467,14 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
  
  The `drawerView` is always presented underneath the `paneView`. The frame of the `drawerView` never moves, and it is not affected by dynamics.
  */
-@property (nonatomic, strong, readonly) UIView *drawerView;
+@property (nonatomic, readonly) UIView *drawerView;
 
 /**
  The pane view contains the pane view controller's view.
  
  The user can slide the `paneView` in any of the directions defined in `possibleDrawerDirection` to reveal the drawer view controller underneath. The frame of the `paneView` is frequently updated by internal dynamics and user gestures.
  */
-@property (nonatomic, strong, readonly) UIView *paneView;
+@property (nonatomic, readonly) UIView *paneView;
 
 ///------------------------------------
 /// @name Accessing the Delegate Object
