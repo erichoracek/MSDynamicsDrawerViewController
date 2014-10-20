@@ -549,7 +549,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
             }
         }
     });
-
 }
 
 - (NSSet *)_stylesForDirection:(MSDynamicsDrawerDirection)direction
