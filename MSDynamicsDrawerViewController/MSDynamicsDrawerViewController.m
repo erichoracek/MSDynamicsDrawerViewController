@@ -611,7 +611,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
     
     // If the drawer is currently opened and the requested direction is not valid, return
     if ((self.currentDrawerDirection != direction) && (self.currentDrawerDirection != MSDynamicsDrawerDirectionNone) && animated) {
-        NSLog(@"Attempting to stet pane state to a different direction while currently opened.");
         return;
     }
     
