@@ -1064,6 +1064,7 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
+    // If the pane drag reveal boolean isn't enabled for the direction that the pane is being dragged in, fail
     if ((gestureRecognizer == self._panePanGestureRecognizer) && self.screenEdgePanCancelsConflictingGestures) {
         UIRectEdge edges = [self._panePanGestureRecognizer ms_didBeginAtEdgesOfView:self.paneView];
         // Mask out edges that aren't possible
