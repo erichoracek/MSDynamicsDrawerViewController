@@ -78,7 +78,6 @@ static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
 @property (nonatomic, strong, readwrite) UIGravityBehavior *gravity;
 @property (nonatomic, strong, readwrite) UIPushBehavior *bouncePush;
 @property (nonatomic, strong) UICollisionBehavior *boundary;
-@property (nonatomic, assign) dispatch_once_t paneBehaviorDefaultConfigurationToken;
 
 @end
 
@@ -97,27 +96,18 @@ static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
 
 #pragma mark - MSPaneBehavior
 
+static CGFloat const MSDefaultGravityPaneElasticity = 0.25;
+
 - (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
 {
     self = [super initWithDrawerViewController:drawerViewController];
     if (self) {
+        self.paneBehavior.elasticity = MSDefaultGravityPaneElasticity;
         [self addChildBehavior:self.gravity];
         [self addChildBehavior:self.boundary];
         [self addChildBehavior:self.bouncePush];
     }
     return self;
-}
-
-static CGFloat const MSDefaultGravityPaneElasticity = 0.25;
-
-- (UIDynamicItemBehavior *)paneBehavior
-{
-    UIDynamicItemBehavior *paneBehavior = [super paneBehavior];
-    // Lazily configure pane behavior to defaults on first access
-    dispatch_once(&_paneBehaviorDefaultConfigurationToken, ^{
-        paneBehavior.elasticity = MSDefaultGravityPaneElasticity;
-    });
-    return paneBehavior;
 }
 
 #pragma mark - MSDynamicsDrawerGravityBehavior
