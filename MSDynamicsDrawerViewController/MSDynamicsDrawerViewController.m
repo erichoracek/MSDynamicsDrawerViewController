@@ -1081,9 +1081,19 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     // If the other gesture recognizer's view is a `UITableViewCell` instance's internal `UIScrollView`, require failure
-#warning test on iOS7 and 8
-    if ([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableViewCell class]] && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
-        return YES;
+    if (gestureRecognizer == self._panePanGestureRecognizer) {
+        // iOS 8.0+ (UITableViewCells no longer have an internal scroll view for swipe-to-delete)
+        if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending) {
+            if ([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableView class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+                return YES;
+            }
+        }
+        // Below iOS 8.0 (UITableViewCells have an internal scroll view for swipe-to-delete)
+        else {
+            if ([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableViewCell class]] && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+                return YES;
+            }
+        }
     }
     return NO;
 }
