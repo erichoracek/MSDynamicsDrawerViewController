@@ -1,3 +1,0 @@
-PODS_TESTS_KIF_FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks"
-PODS_TESTS_KIF_OTHER_CFLAGS = -DKIF_XCTEST
-PODS_TESTS_KIF_OTHER_LDFLAGS = -framework CoreGraphics -framework XCTest

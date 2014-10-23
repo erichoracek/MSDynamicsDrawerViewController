@@ -173,7 +173,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = Docs;
-				SDKROOT = iphoneos8.0;
 			};
 			name = Release;
 		};

@@ -1,1 +1,0 @@
-../../../MSDynamicsDrawerViewController/UIPanGestureRecognizer+BeginEdges.h

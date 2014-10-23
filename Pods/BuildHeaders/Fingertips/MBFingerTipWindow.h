@@ -1,1 +1,0 @@
-../../Fingertips/MBFingerTipWindow.h

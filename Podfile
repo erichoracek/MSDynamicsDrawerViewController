@@ -1,16 +1,18 @@
+source 'https://github.com/CocoaPods/Specs'
+
 workspace 'MSDynamicsDrawerViewController'
 platform :ios, '7.0'
 
 xcodeproj 'Example/Example.xcodeproj'
 target 'Example' do
   xcodeproj 'Example/Example.xcodeproj'
-  pod 'MSDynamicsDrawerViewController', :path => '.'
+  pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
   pod 'DynamicXray'
   pod 'Reveal-iOS-SDK'
 end
 target 'Storyboard Example' do
   xcodeproj 'Example/Example.xcodeproj'
-  pod 'MSDynamicsDrawerViewController', :path => '.'
+  pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
   pod 'DynamicXray'
   pod 'Reveal-iOS-SDK'
 end
@@ -18,7 +20,7 @@ end
 xcodeproj 'Tests/Tests.xcodeproj'
 target 'Functional Tests' do
   xcodeproj 'Tests/Tests.xcodeproj'
-  pod 'MSDynamicsDrawerViewController', :path => '.'
+  pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
   pod 'libextobjc/EXTScope', '~> 0.4'
   pod 'KIF', '~> 3.0'
   pod 'Fingertips', '~> 0.3'
@@ -26,20 +28,12 @@ target 'Functional Tests' do
 end
 target 'Unit Tests' do
   xcodeproj 'Tests/Tests.xcodeproj'
-  pod 'MSDynamicsDrawerViewController', :path => '.'
+  pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
   pod 'OCMockito', '~> 1.3'
   pod 'Aspects', '~> 1.4'
 end
 target 'Test Host' do
   xcodeproj 'Tests/Tests.xcodeproj'
-  pod 'MSDynamicsDrawerViewController', :path => '.'
+  pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
   pod 'Fingertips', '~> 0.3'
-end
-
-post_install do |installer|
-  installer.project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['SDKROOT'] = 'iphoneos7.1'
-    end
-  end
 end

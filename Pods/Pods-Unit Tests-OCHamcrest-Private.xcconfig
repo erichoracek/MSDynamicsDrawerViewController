@@ -1,5 +1,0 @@
-#include "Pods-Unit Tests-OCHamcrest.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/OCHamcrest" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/Aspects" "${PODS_ROOT}/Headers/DynamicXray" "${PODS_ROOT}/Headers/Fingertips" "${PODS_ROOT}/Headers/KIF" "${PODS_ROOT}/Headers/MSDynamicsDrawerViewController" "${PODS_ROOT}/Headers/OCHamcrest" "${PODS_ROOT}/Headers/OCMockito" "${PODS_ROOT}/Headers/Reveal-iOS-SDK" "${PODS_ROOT}/Headers/Stubbilino" "${PODS_ROOT}/Headers/TPWeakProxy" "${PODS_ROOT}/Headers/libextobjc"
-OTHER_LDFLAGS = -ObjC
-PODS_ROOT = ${SRCROOT}
