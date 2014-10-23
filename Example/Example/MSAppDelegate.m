@@ -138,7 +138,7 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-    NSLog(@"May update to `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    NSLog(@"May update to '%@' for direction '%@'", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
     
 #ifdef DEBUG_DYNAMICS
     UIDynamicAnimator *dynamicAnimator = [drawerViewController performSelector:@selector(_dynamicAnimator)];
@@ -150,7 +150,7 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-    NSLog(@"Did update to `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    NSLog(@"Did update to '%@' for direction '%@'", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
 }
 
 @end
