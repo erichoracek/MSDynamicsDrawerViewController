@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, MSSectionGravity) {
 
 @property (nonatomic) NSArray *panePositioningBehaviorClasses;
 @property (nonatomic) NSArray *panePositioningBehaviorNames;
+@property (nonatomic) NSArray *paneLayoutBoundingStyles;
 @property (nonatomic) NSDictionary *sectionValuesSnap;
 @property (nonatomic) NSDictionary *sectionValuesGravity;
 @property (nonatomic, readonly) NSDictionary *sectionValues;
@@ -94,6 +95,17 @@ typedef NS_ENUM(NSInteger, MSSectionGravity) {
         ];
     }
     return _panePositioningBehaviorNames;
+}
+
+- (NSArray *)paneLayoutBoundingStyles
+{
+    if (!_paneLayoutBoundingStyles) {
+        self.paneLayoutBoundingStyles = @[
+            @(MSDynamicsDrawerPaneBoundingStyleRubberBand),
+            @(MSDynamicsDrawerPaneBoundingStyleCollision)
+        ];
+    }
+    return _paneLayoutBoundingStyles;
 }
 
 static NSString * const MSSectionValueKeyKeyPath = @"MSSectionValueKeyKeyPath";
@@ -254,6 +266,7 @@ static NSString * const MSSectionValueKeyMaximum = @"MSSectionValueKeyMaximum";
     if (indexPath.section == 0) {
         if (![self.dynamicsDrawerViewController.panePositioningBehavior isKindOfClass:self.panePositioningBehaviorClasses[indexPath.row]]) {
             self.dynamicsDrawerViewController.panePositioningBehavior = [[self.panePositioningBehaviorClasses[indexPath.row] alloc] initWithDrawerViewController:self.dynamicsDrawerViewController];
+            self.dynamicsDrawerViewController.paneLayout.boundingStyle = [self.paneLayoutBoundingStyles[indexPath.row] integerValue];
             [tableView reloadData];
         } else {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
