@@ -7,14 +7,10 @@ xcodeproj 'Example/Example.xcodeproj'
 target 'Example' do
   xcodeproj 'Example/Example.xcodeproj'
   pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
-  pod 'DynamicXray'
-  pod 'Reveal-iOS-SDK'
 end
 target 'Storyboard Example' do
   xcodeproj 'Example/Example.xcodeproj'
   pod 'MSDynamicsDrawerViewController', :path => './MSDynamicsDrawerViewController.podspec'
-  pod 'DynamicXray'
-  pod 'Reveal-iOS-SDK'
 end
 
 xcodeproj 'Tests/Tests.xcodeproj'
