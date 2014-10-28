@@ -180,7 +180,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 - (void)updateEdgesForExtendedLayout
 {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    self.edgesForExtendedLayout = MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame) ? UIRectEdgeTop : UIRectEdgeNone;
+    self.edgesForExtendedLayout = MSStatusBarOffsetStyleWillOffset(statusBarFrame) ? UIRectEdgeTop : UIRectEdgeNone;
     // Hacky way to get the edges for extended layout to update in the simulator when you're toggling the visiblity of the in-call status bar. Probably not necessary in production, since this rarely happens.
     [self.parentViewController beginAppearanceTransition:YES animated:YES];
     [self.parentViewController endAppearanceTransition];
