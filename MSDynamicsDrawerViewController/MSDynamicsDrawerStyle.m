@@ -472,20 +472,20 @@
 
 @interface MSDynamicsDrawerStatusBarOffsetStyle ()
 
+@property (nonatomic, readwrite, getter=isWindowLited) BOOL windowLifted;
 @property (nonatomic) UIView *statusBarContainerView;
 @property (nonatomic) UIView *statusBarSnapshotView;
 @property (nonatomic) UIStatusBarStyle statusBarSnapshotStyle;
 @property (nonatomic) NSValue *statusBarSnapshotFrame;
-@property (nonatomic) UIWindowLevel dynamicsDrawerWindowLevel;
-@property (nonatomic) UIWindowLevel dynamicsDrawerOriginalWindowLevel;
-@property (nonatomic) BOOL dynamicsDrawerWindowLifted;
+@property (nonatomic) UIWindowLevel windowLevel;
+@property (nonatomic) UIWindowLevel originalWindowLevel;
 @property (nonatomic, weak) MSDynamicsDrawerViewController *dynamicsDrawerViewController;
 @property (nonatomic, weak) UIWindow *window;
 @property (nonatomic) MSDynamicsDrawerDirection direction;
 
 @end
 
-static UIStatusBarStyle const MSStatusBarStyleNone = -1;
+static UIStatusBarStyle const MSUIStatusBarStyleNone = -1;
 static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 
 @implementation MSDynamicsDrawerStatusBarOffsetStyle
@@ -504,7 +504,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarWillChangeFrame:) name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarDidChangeFrame:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarWillChangeOrientation:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
-        self.statusBarSnapshotStyle = MSStatusBarStyleNone;
+        self.statusBarSnapshotStyle = MSUIStatusBarStyleNone;
     }
     return self;
 }
@@ -514,7 +514,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (paneState == MSDynamicsDrawerPaneStateClosed) {
-        self.dynamicsDrawerWindowLifted = NO;
+        self.windowLifted = NO;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.statusBarContainerView removeFromSuperview];
             CGFloat paneClosedFraction = [drawerViewController.paneLayout paneClosedFractionForPaneWithCenter:drawerViewController.paneView.center forDirection:direction];
@@ -536,7 +536,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     if (!self.statusBarContainerView.superview) {
         [self.dynamicsDrawerViewController.paneView addSubview:self.statusBarContainerView];
     }
-    self.dynamicsDrawerWindowLifted = !MSStatusBarFrameExceedsMaximumAdjustmentHeight([[UIApplication sharedApplication] statusBarFrame]);
+    self.windowLifted = !MSStatusBarOffsetStyleWillOffset([[UIApplication sharedApplication] statusBarFrame]);
 }
 
 - (void)willMoveToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController forDirection:(MSDynamicsDrawerDirection)direction
@@ -560,7 +560,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
             [self.statusBarSnapshotView removeFromSuperview];
             [self.statusBarContainerView removeFromSuperview];
             // Must unlift window after removing status bar snapshot view to prevent stauts bar flickering
-            self.dynamicsDrawerWindowLifted = NO;
+            self.windowLifted = NO;
         }
     }
 }
@@ -579,11 +579,11 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 
 - (void)updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:(BOOL)afterScreenUpdates withStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
 {
-    // Remove the status bar snapshot if the frame has changed (and it's not an in-call status bar)
+    // Invalidate status bar snapshot if the frame has changed (and it's not an in-call status bar)
     if (self.statusBarSnapshotView &&
         self.statusBarSnapshotFrame &&
         !CGRectEqualToRect(statusBarFrame, [self.statusBarSnapshotFrame CGRectValue]) &&
-        !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame))
+        !MSStatusBarOffsetStyleWillOffset(statusBarFrame))
     {
         [self invalidateStatusBarSnapshot];
     }
@@ -614,14 +614,14 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     return [self.dynamicsDrawerViewController.paneLayout paneClosedFractionForPaneWithCenter:self.dynamicsDrawerViewController.paneView.center forDirection:self.dynamicsDrawerViewController.currentDrawerDirection];
 }
 
-- (UIWindowLevel)dynamicsDrawerWindowLevel
+- (UIWindowLevel)windowLevel
 {
     return self.window.windowLevel;
 }
 
-- (void)setDynamicsDrawerWindowLevel:(UIWindowLevel)dynamicsDrawerWindowLevel
+- (void)setwindowLevel:(UIWindowLevel)windowLevel
 {
-    self.window.windowLevel = dynamicsDrawerWindowLevel;
+    self.window.windowLevel = windowLevel;
 }
 
 - (BOOL)dynamicsDrawerIsVisibleBelowStatusBar
@@ -635,12 +635,12 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
         }
         maximumWindowLevel = ((window.windowLevel > maximumWindowLevel) ? window.windowLevel : maximumWindowLevel);
     }
-    return ((maximumWindowLevel <= self.dynamicsDrawerWindowLevel) && (maximumWindowLevel != -CGFLOAT_MIN));
+    return ((maximumWindowLevel <= self.windowLevel) && (maximumWindowLevel != -CGFLOAT_MIN));
 }
 
 - (BOOL)dynamicsDrawerWindowIsAboveStatusBar
 {
-    return (self.dynamicsDrawerWindowLevel > UIWindowLevelStatusBar);
+    return (self.windowLevel > UIWindowLevelStatusBar);
 }
 
 - (BOOL)canCreateStatusBarSnapshotWithStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
@@ -649,25 +649,25 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
         [self dynamicsDrawerIsVisibleBelowStatusBar] &&
         ![self dynamicsDrawerWindowIsAboveStatusBar] &&
         (paneClosedFraction == 1.0) &&
-        !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame) &&
+        !MSStatusBarOffsetStyleWillOffset(statusBarFrame) &&
         ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) &&
-        ((self.statusBarSnapshotStyle == MSStatusBarStyleNone) || ([[UIApplication sharedApplication] statusBarStyle] == self.statusBarSnapshotStyle))
+        ((self.statusBarSnapshotStyle == MSUIStatusBarStyleNone) || ([[UIApplication sharedApplication] statusBarStyle] == self.statusBarSnapshotStyle))
     );
 }
 
-- (void)setDynamicsDrawerWindowLifted:(BOOL)dynamicsDrawerWindowLifted
+- (void)setWindowLifted:(BOOL)dynamicsDrawerWindowLifted
 {
     BOOL shouldLiftWindow = (self.dynamicsDrawerViewController.currentDrawerDirection & self.direction);
     if (!shouldLiftWindow && dynamicsDrawerWindowLifted) {
         return;
     }
-    if (!_dynamicsDrawerWindowLifted && dynamicsDrawerWindowLifted) {
-        self.dynamicsDrawerOriginalWindowLevel = self.dynamicsDrawerWindowLevel;
-        self.dynamicsDrawerWindowLevel = (UIWindowLevelStatusBar + 1.0);
-    } else if (_dynamicsDrawerWindowLifted && !dynamicsDrawerWindowLifted) {
-        self.dynamicsDrawerWindowLevel = self.dynamicsDrawerOriginalWindowLevel;
+    if (!_windowLifted && dynamicsDrawerWindowLifted) {
+        self.originalWindowLevel = self.windowLevel;
+        self.windowLevel = (UIWindowLevelStatusBar + 1.0);
+    } else if (_windowLifted && !dynamicsDrawerWindowLifted) {
+        self.windowLevel = self.originalWindowLevel;
     }
-    _dynamicsDrawerWindowLifted = dynamicsDrawerWindowLifted;
+    _windowLifted = dynamicsDrawerWindowLifted;
 }
 
 //#define STATUS_BAR_DEBUG
@@ -696,8 +696,8 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:NO withStatusBarFrame:statusBarFrame paneClosedFraction:[self paneClosedFraction]];
-    if (MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame)) {
-        self.dynamicsDrawerWindowLifted = NO;
+    if (MSStatusBarOffsetStyleWillOffset(statusBarFrame)) {
+        self.windowLifted = NO;
     }
 }
 
@@ -705,11 +705,11 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     [self updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:YES withStatusBarFrame:statusBarFrame paneClosedFraction:[self paneClosedFraction]];
-    if (!MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame)) {
+    if (!MSStatusBarOffsetStyleWillOffset(statusBarFrame)) {
         if (!self.statusBarContainerView.superview) {
-            self.dynamicsDrawerWindowLifted = NO;
+            self.windowLifted = NO;
         } else {
-            self.dynamicsDrawerWindowLifted = YES;
+            self.windowLifted = YES;
         }
     }
 }
