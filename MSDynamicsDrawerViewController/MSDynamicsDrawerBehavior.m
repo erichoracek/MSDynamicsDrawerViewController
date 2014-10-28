@@ -69,6 +69,33 @@ static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
     return _paneBehavior;
 }
 
+static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 5.0;
+
+/**
+ If the pane view has a velocity below the threshold and is positioned in valid state, remove the dynamic animator's behaviors to speed up dynamic animator pausing
+ */
+- (void)_removeBehaviorsIfNecessary
+{
+    // Determine if the pane is positioned in the target state
+    MSDynamicsDrawerPaneState currentPaneState;
+    CGPoint paneCenter = self.drawerViewController.paneView.center;
+    MSDynamicsDrawerDirection direction = self.drawerViewController.currentDrawerDirection;
+    BOOL isPositionedInValidState = [self.drawerViewController.paneLayout paneWithCenter:paneCenter isInValidState:&currentPaneState forDirection:direction];
+    BOOL isPositionedInTargetState = (
+        isPositionedInValidState
+        && [self conformsToProtocol:@protocol(MSPanePositioningBehavior)]
+        && (currentPaneState == [(id <MSPanePositioningBehavior>)self targetPaneState])
+    );
+    // Determine if the velocity is above the removal threshold
+    CGPoint paneVelocity = [self.paneBehavior linearVelocityForItem:self.drawerViewController.paneView];
+    CGFloat largestVelocityComponent = fmaxf(fabsf(paneVelocity.x), fabsf(paneVelocity.y));
+    BOOL isBelowBehaviorRemovalVelocityThreshold = (largestVelocityComponent < MSBehaviorRemovalPaneVelocityThreshold);
+    // If both conditions are met, remove all behaviors
+    if (isPositionedInTargetState && isBelowBehaviorRemovalVelocityThreshold) {
+        [self.dynamicAnimator removeAllBehaviors];
+    }
+}
+
 @end
 
 @interface MSPaneGravityBehavior ()
@@ -92,6 +119,18 @@ static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
 {
     self.targetPaneState = MSDynamicsDrawerPaneStateUndefined;
     self.targetDirection = MSDynamicsDrawerDirectionUndefined;
+}
+
+- (void (^)(void))action
+{
+    if (![super action]) {
+        __weak typeof(self) __weak_self = self;
+        self.action = ^{
+            __strong typeof(self) __strong_self = __weak_self;
+            [__strong_self _removeBehaviorsIfNecessary];
+        };
+    }
+    return [super action];
 }
 
 #pragma mark - MSPaneBehavior
@@ -334,29 +373,6 @@ static CGFloat const MSSnapBehaviorThrowRubberBandingDamping = 1.0;
     if (shouldRubberBand) {
         self._snap.damping = MSSnapBehaviorThrowRubberBandingDamping;
         self._snap.anchorPoint = MSAttachmentAnchorPoint(self.drawerViewController.paneLayout, self.drawerViewController.paneView.center, self.targetPaneState, self.targetDirection);
-    }
-}
-
-static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 5.0;
-
-/**
- If the pane view has a velocity below the threshold and is positioned in valid state, remove the dynamic animator's behaviors to speed up dynamic animator pausing
- */
-- (void)_removeBehaviorsIfNecessary
-{
-    // Determine if the pane is positioned in the target state
-    MSDynamicsDrawerPaneState currentPaneState;
-    CGPoint paneCenter = self.drawerViewController.paneView.center;
-    MSDynamicsDrawerDirection direction = self.drawerViewController.currentDrawerDirection;
-    BOOL isPositionedInValidState = [self.drawerViewController.paneLayout paneWithCenter:paneCenter isInValidState:&currentPaneState forDirection:direction];
-    BOOL isPositionedInTargetState = (isPositionedInValidState && (currentPaneState == self.targetPaneState));
-    // Determine if the velocity is above the removal threshold
-    CGPoint paneVelocity = [self.paneBehavior linearVelocityForItem:self.drawerViewController.paneView];
-    CGFloat largestVelocityComponent = fmaxf(fabsf(paneVelocity.x), fabsf(paneVelocity.y));
-    BOOL isBelowBehaviorRemovalVelocityThreshold = (largestVelocityComponent < MSBehaviorRemovalPaneVelocityThreshold);
-    // If both conditiosn are met, remove all behaviors
-    if (isPositionedInTargetState && isBelowBehaviorRemovalVelocityThreshold) {
-        [self.dynamicAnimator removeAllBehaviors];
     }
 }
 
