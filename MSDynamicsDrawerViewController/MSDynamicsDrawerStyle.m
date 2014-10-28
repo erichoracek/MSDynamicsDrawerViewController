@@ -573,6 +573,8 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 {
     [self.statusBarSnapshotView removeFromSuperview];
     self.statusBarSnapshotView = nil;
+    self.statusBarSnapshotStyle = MSUIStatusBarStyleNone;
+    self.statusBarSnapshotFrame = nil;
 }
 
 #pragma mark Private
@@ -619,12 +621,12 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     return self.window.windowLevel;
 }
 
-- (void)setwindowLevel:(UIWindowLevel)windowLevel
+- (void)setWindowLevel:(UIWindowLevel)windowLevel
 {
     self.window.windowLevel = windowLevel;
 }
 
-- (BOOL)dynamicsDrawerIsVisibleBelowStatusBar
+- (BOOL)paneViewIsVisibleBelowStatusBar
 {
     CGFloat maximumWindowLevel = -CGFLOAT_MAX;
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
@@ -638,16 +640,11 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     return ((maximumWindowLevel <= self.windowLevel) && (maximumWindowLevel != -CGFLOAT_MIN));
 }
 
-- (BOOL)dynamicsDrawerWindowIsAboveStatusBar
-{
-    return (self.windowLevel > UIWindowLevelStatusBar);
-}
-
 - (BOOL)canCreateStatusBarSnapshotWithStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
 {
     return (
-        [self dynamicsDrawerIsVisibleBelowStatusBar] &&
-        ![self dynamicsDrawerWindowIsAboveStatusBar] &&
+        [self paneViewIsVisibleBelowStatusBar] &&
+        ![self isWindowLited] &&
         (paneClosedFraction == 1.0) &&
         !MSStatusBarOffsetStyleWillOffset(statusBarFrame) &&
         ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) &&
@@ -655,19 +652,19 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     );
 }
 
-- (void)setWindowLifted:(BOOL)dynamicsDrawerWindowLifted
+- (void)setWindowLifted:(BOOL)windowLifted
 {
     BOOL shouldLiftWindow = (self.dynamicsDrawerViewController.currentDrawerDirection & self.direction);
-    if (!shouldLiftWindow && dynamicsDrawerWindowLifted) {
+    if (!shouldLiftWindow && windowLifted) {
         return;
     }
-    if (!_windowLifted && dynamicsDrawerWindowLifted) {
+    if (!_windowLifted && windowLifted) {
         self.originalWindowLevel = self.windowLevel;
         self.windowLevel = (UIWindowLevelStatusBar + 1.0);
-    } else if (_windowLifted && !dynamicsDrawerWindowLifted) {
+    } else if (_windowLifted && !windowLifted) {
         self.windowLevel = self.originalWindowLevel;
     }
-    _windowLifted = dynamicsDrawerWindowLifted;
+    _windowLifted = windowLifted;
 }
 
 //#define STATUS_BAR_DEBUG
