@@ -27,6 +27,8 @@
 //
 
 #import "MSMonospaceWebViewController.h"
+#import "MSAppDelegate.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 
 @implementation MSMonospaceWebViewController
 
@@ -42,6 +44,16 @@
 {
     if ([parent isKindOfClass:[UINavigationController class]]) {
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSArray *styles = [[(MSAppDelegate *)[UIApplication sharedApplication].delegate dynamicsDrawerViewController] stylesForDirection:MSDynamicsDrawerDirectionAll];
+    for (id <MSDynamicsDrawerStyle> style in styles) {
+        if ([style isKindOfClass:[MSDynamicsDrawerStatusBarOffsetStyle class]]) {
+            [(MSDynamicsDrawerStatusBarOffsetStyle *)style invalidateStatusBarSnapshot];
+        }
     }
 }
 
