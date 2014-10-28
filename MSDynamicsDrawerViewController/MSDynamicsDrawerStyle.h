@@ -179,8 +179,6 @@
 @end
 
 #warning document
-#warning fix for dark/light status bars
-#warning cache for other rotations
 @interface MSDynamicsDrawerStatusBarOffsetStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
