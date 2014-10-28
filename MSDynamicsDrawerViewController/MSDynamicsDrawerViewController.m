@@ -354,7 +354,9 @@
     
     // Remove all other pane positioning behaviors
     for (UIDynamicBehavior *currentBehavior in self._dynamicAnimator.behaviors) {
-        if ([currentBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)]) {
+        if ([currentBehavior conformsToProtocol:@protocol(MSPanePositioningBehavior)] // Is a pane positioning behavior
+            && currentBehavior != behavior) // Is not the behavior that's about to be added
+        {
             [self._dynamicAnimator removeBehavior:currentBehavior];
         }
     }
