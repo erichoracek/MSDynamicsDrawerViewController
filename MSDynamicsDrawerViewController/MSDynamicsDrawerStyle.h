@@ -178,14 +178,34 @@
 
 @end
 
-#warning document
+/**
+ Horizontally adjusts the status bar relative to the offset of the pane view controller.
+ 
+ This is accomplished by the following steps:
+ - A snapshot view of the -[UIScreen snapshotViewAfterScreenUpdates:] is taken
+ - This snapshot view is added as a subview to the -[MSDynamicsDrawerViewController paneView]
+ - This snapshot view is masked to just display the -[UIApplication statusBarFrame]
+ - The UIWindow instance that the -[MSDynamicsDrawerViewController view] instance is contained within is lifted to the -[UIWindow windowLevel] of (UIWindowLevelStatusBar + 1.0)
+ - This snapshot is taken added whenever the pane is about to open, and removed when it closes
+ 
+ When the in-call status bar is present, the above logic is not followed, and no status bar offset occurs.
+ 
+ To manually invalidate the snapshot view, invoke invalidateStatusBarSnapshot on this style instance.
+ */
 @interface MSDynamicsDrawerStatusBarOffsetStyle : NSObject <MSDynamicsDrawerStyle>
 
 /**
- Invoke this method when the status bar snapshot is stale, and should be regenerated when next possible.
+ Should be invoked when the status bar snapshot is stale, and should be regenerated when next possible.
  */
 - (void)invalidateStatusBarSnapshot;
 
 @end
 
 BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);
+/**
+ Whether the specified status bar frame would be offset by a MSDynamicsDrawerStatusBarOffsetStyle
+ 
+ In the case of the in-call status bar being present, returns NO. Otherwise, returns YES.
+ 
+ @param statusBarFrame Expecting the value from -[UIApplication statusBarFrame] or corresponding notifications.
+ */
