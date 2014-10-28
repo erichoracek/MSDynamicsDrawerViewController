@@ -288,7 +288,7 @@ CGPoint MSAttachmentAnchorPoint(MSDynamicsDrawerPaneLayout *layout, CGPoint pane
 
 static CGFloat const MSSnapBehaviorThrowDampingDefault = 0.55;
 static CGFloat const MSSnapBehaviorFrequencyDefault = 3.0;
-static CGFloat const MSSnapBehaviorThrowVelocityThresholdDefault = 500.0;
+static CGFloat const MSSnapBehaviorThrowVelocityThresholdDefault = 1500.0;
 
 - (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
 {
