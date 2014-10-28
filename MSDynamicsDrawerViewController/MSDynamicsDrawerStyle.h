@@ -201,7 +201,6 @@
 
 @end
 
-BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);
 /**
  Whether the specified status bar frame would be offset by a MSDynamicsDrawerStatusBarOffsetStyle
  
@@ -209,3 +208,4 @@ BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame)
  
  @param statusBarFrame Expecting the value from -[UIApplication statusBarFrame] or corresponding notifications.
  */
+BOOL const MSStatusBarOffsetStyleWillOffset(CGRect statusBarFrame);

@@ -731,7 +731,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 
 @end
 
-BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame)
+BOOL const MSStatusBarOffsetStyleWillOffset(CGRect statusBarFrame)
 {
     UIInterfaceOrientation statusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if ((statusBarOrientation == UIInterfaceOrientationPortrait) || (statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
