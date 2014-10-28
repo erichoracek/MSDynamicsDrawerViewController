@@ -199,6 +199,13 @@
  */
 - (void)invalidateStatusBarSnapshot;
 
+/**
+ Whether this status bar offset style is "lifting" the window that its containing MSDynamicsDrawerViewController's view is in.
+ 
+ The window is lifted to (UIWindowLevelStatusBar + 1.0) while the status bar snapshot is added to the corresponding MSDynamicsDrawerViewController instance's paneView. When the snapshot is removed, the pane is lowered again.
+ */
+@property (nonatomic, readonly, getter=isWindowLited) BOOL windowLifted;
+
 @end
 
 /**
