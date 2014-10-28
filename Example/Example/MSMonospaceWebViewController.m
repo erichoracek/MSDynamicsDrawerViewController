@@ -49,12 +49,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSArray *styles = [[(MSAppDelegate *)[UIApplication sharedApplication].delegate dynamicsDrawerViewController] stylesForDirection:MSDynamicsDrawerDirectionAll];
-    for (id <MSDynamicsDrawerStyle> style in styles) {
-        if ([style isKindOfClass:[MSDynamicsDrawerStatusBarOffsetStyle class]]) {
-            [(MSDynamicsDrawerStatusBarOffsetStyle *)style invalidateStatusBarSnapshot];
-        }
-    }
+    [super viewWillAppear:animated];
+    [self invalidateStatusBarSnapshot];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self invalidateStatusBarSnapshot];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -72,6 +74,16 @@
 }
 
 #pragma mark - MSMonospaceWebViewController
+
+- (void)invalidateStatusBarSnapshot
+{
+    NSArray *styles = [[(MSAppDelegate *)[UIApplication sharedApplication].delegate dynamicsDrawerViewController] stylesForDirection:MSDynamicsDrawerDirectionAll];
+    for (id <MSDynamicsDrawerStyle> style in styles) {
+        if ([style isKindOfClass:[MSDynamicsDrawerStatusBarOffsetStyle class]]) {
+            [(MSDynamicsDrawerStatusBarOffsetStyle *)style invalidateStatusBarSnapshot];
+        }
+    }
+}
 
 static NSString * const MSMonospaceURL = @"http://www.monospacecollective.com";
 
