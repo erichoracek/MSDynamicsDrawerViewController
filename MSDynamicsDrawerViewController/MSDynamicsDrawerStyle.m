@@ -566,6 +566,16 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
 
 #pragma mark - MSDynamicsDrawerStatusBarOffsetStyle
 
+#pragma mark Public
+
+- (void)invalidateStatusBarSnapshot
+{
+    [self.statusBarSnapshotView removeFromSuperview];
+    self.statusBarSnapshotView = nil;
+}
+
+#pragma mark Private
+
 - (void)updateStatusBarSnapshotViewIfPossibleAfterScreenUpdates:(BOOL)afterScreenUpdates withStatusBarFrame:(CGRect)statusBarFrame paneClosedFraction:(CGFloat)paneClosedFraction
 {
     // Remove the status bar snapshot if the frame has changed (and it's not an in-call status bar)
@@ -574,8 +584,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
         !CGRectEqualToRect(statusBarFrame, [self.statusBarSnapshotFrame CGRectValue]) &&
         !MSStatusBarFrameExceedsMaximumAdjustmentHeight(statusBarFrame))
     {
-        [self.statusBarSnapshotView removeFromSuperview];
-        self.statusBarSnapshotView = nil;
+        [self invalidateStatusBarSnapshot];
     }
     
     if ([self canCreateStatusBarSnapshotWithStatusBarFrame:statusBarFrame paneClosedFraction:paneClosedFraction]) {

@@ -183,6 +183,11 @@
 #warning cache for other rotations
 @interface MSDynamicsDrawerStatusBarOffsetStyle : NSObject <MSDynamicsDrawerStyle>
 
+/**
+ Invoke this method when the status bar snapshot is stale, and should be regenerated when next possible.
+ */
+- (void)invalidateStatusBarSnapshot;
+
 @end
 
 BOOL const MSStatusBarFrameExceedsMaximumAdjustmentHeight(CGRect statusBarFrame);
