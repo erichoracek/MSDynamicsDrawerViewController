@@ -97,62 +97,88 @@
 - (void)testPaneReplaceLifecycle
 {
     MSDynamicsDrawerViewController *drawerViewController = [MSDynamicsDrawerViewController new];
+    [drawerViewController setDrawerViewController:[UIViewController new] forDirection:MSDynamicsDrawerDirectionLeft];
     
     self.window = [UIWindow new];
     self.window.rootViewController = drawerViewController;
     self.window.hidden = NO;
     
     UIViewController *oldPaneViewController = [UIViewController new];
-    UIViewController *newPaneViewController = [UIViewController new];
     
-    __block BOOL willAppearInvoked = NO;
+    __block NSInteger oldPaneVCWillAppearInvocationCount = 0;
     [oldPaneViewController aspect_hookSelector:@selector(viewWillAppear:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated) {
         XCTAssertFalse(animated, @"Must be non animated");
-        willAppearInvoked = YES;
+        oldPaneVCWillAppearInvocationCount = YES;
     } error:NULL];
     
-    __block BOOL didAppearInvoked = NO;
+    __block NSInteger oldPaneVCDidAppearInvocationCount = 0;
     [oldPaneViewController aspect_hookSelector:@selector(viewDidAppear:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated) {
         XCTAssertFalse(animated, @"Must be non animated");
-        didAppearInvoked = YES;
+        oldPaneVCDidAppearInvocationCount = YES;
+    } error:NULL];
+    
+    __block NSInteger oldPaneVCWillDisappearInvocationCount = 0;
+    [oldPaneViewController aspect_hookSelector:@selector(viewWillDisappear:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated) {
+        XCTAssertTrue(animated, @"Must be animated");
+        oldPaneVCWillDisappearInvocationCount++;
+    } error:NULL];
+    
+    __block NSInteger oldPaneVCDidDisappearInvocationCount = 0;
+    [oldPaneViewController aspect_hookSelector:@selector(viewDidDisappear:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated) {
+        XCTAssertTrue(animated, @"Must be animated");
+        oldPaneVCDidDisappearInvocationCount++;
     } error:NULL];
     
     drawerViewController.paneViewController = oldPaneViewController;
     
-    XCTAssertTrue(willAppearInvoked, @"Must call will appear");
-    XCTAssertTrue(didAppearInvoked, @"Must call did appear");
+    XCTAssertEqual(oldPaneVCWillAppearInvocationCount, 1);
+    XCTAssertEqual(oldPaneVCDidAppearInvocationCount, 1);
+    XCTAssertEqual(oldPaneVCWillDisappearInvocationCount, 0);
+    XCTAssertEqual(oldPaneVCDidDisappearInvocationCount, 0);
     
-    [drawerViewController setDrawerViewController:[UIViewController new] forDirection:MSDynamicsDrawerDirectionLeft];
     [drawerViewController setPaneState:MSDynamicsDrawerPaneStateOpen inDirection:MSDynamicsDrawerDirectionLeft];
-//
-//    __block BOOL done = NO;
-//    
-//    @weakify(drawerViewController);
-//    [drawerViewController setPaneViewController:newPaneViewController animated:YES completion:^{
-//        @strongify(drawerViewController);
-//        
-//        XCTAssertEqual(oldPaneViewController.viewWillDisappearCount, 1, @"Must have viewWillDisappear invoked once");
-//        XCTAssertEqual(oldPaneViewController.viewDidDisappearCount, 1, @"Must have viewWillDisappear invoked once");
-//        XCTAssertNil(oldPaneViewController.willMoveToParentViewController, @"Old pane must will be moved to nil parent");
-//        XCTAssertNil(oldPaneViewController.didMoveToParentViewController, @"Old pane must did move to nil parent");
-//        XCTAssertNil(oldPaneViewController.parentViewController, @"Old pane should have no parent");
-//        
-//        XCTAssertEqual(newPaneViewController.viewWillAppearCount, 1, @"Must not yet have viewwillAppear invoked");
-//        XCTAssertEqual(newPaneViewController.viewDidAppearCount, 1, @"Must not yet have viewDidAppear invoked");
-//        XCTAssertEqual(newPaneViewController.willMoveToParentViewController, drawerViewController, @"New pane must will be moved to drawer parent");
-//        XCTAssertEqual(newPaneViewController.didMoveToParentViewController, drawerViewController, @"New pane must did move to drawer parent");
-//        XCTAssertEqual(drawerViewController, newPaneViewController.parentViewController, @"New pane should have drawer as parent");
-//        XCTAssertNotEqual([drawerViewController.childViewControllers indexOfObjectIdenticalTo:newPaneViewController], NSNotFound, @"Drawer view controller must have new pane as a child view controller");
-//        
-//        done = YES;
-//    }];
-//    
-//    XCTAssertTrue([self waitFor:&done timeout:2.0], @"Timed out waiting for response asynch method completion");
-}
-
-- (void)testDrawerOpenLifecycle
-{
     
+    XCTestExpectation *stateUpdateExpectation = [self expectationWithDescription:@"Replace pane completion"];
+    
+    UIViewController *newPaneViewController = [UIViewController new];
+    
+    __block NSInteger newPaneVCWillAppearInvocationCount = 0;
+    [newPaneViewController aspect_hookSelector:@selector(viewWillAppear:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated) {
+        XCTAssertTrue(animated, @"Must be animated");
+        newPaneVCWillAppearInvocationCount = YES;
+    } error:NULL];
+    
+    __block NSInteger newPaneVCDidAppearInvocationCount = 0;
+    [newPaneViewController aspect_hookSelector:@selector(viewDidAppear:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated) {
+        XCTAssertTrue(animated, @"Must be animated");
+        newPaneVCDidAppearInvocationCount = YES;
+    } error:NULL];
+    
+    @weakify(drawerViewController);
+    [drawerViewController setPaneViewController:newPaneViewController animated:YES completion:^{
+        @strongify(drawerViewController);
+
+        XCTAssertEqual(oldPaneVCWillAppearInvocationCount, 1);
+        XCTAssertEqual(oldPaneVCDidAppearInvocationCount, 1);
+        XCTAssertEqual(oldPaneVCWillDisappearInvocationCount, 1);
+        XCTAssertEqual(oldPaneVCDidDisappearInvocationCount, 1);
+        XCTAssertNil(oldPaneViewController.parentViewController, @"Old pane should have no parent");
+        
+        XCTAssertEqual(newPaneVCWillAppearInvocationCount, 1);
+        XCTAssertEqual(newPaneVCDidAppearInvocationCount, 1);
+        XCTAssertEqual(drawerViewController, newPaneViewController.parentViewController, @"New pane should have drawer as parent");
+        
+        [stateUpdateExpectation fulfill];
+    }];
+    
+    XCTAssertEqual(oldPaneVCWillDisappearInvocationCount, 1, @"Will disappear must be invoked directly following setting the new view controller");
+    XCTAssertEqual(oldPaneVCDidDisappearInvocationCount, 0, @"Did disappear must not yet be invoked directly following setting the new view controller");
+    
+    XCTAssertEqual(newPaneVCWillAppearInvocationCount, 0, @"Will appear must not yet be invoked");
+    XCTAssertEqual(newPaneVCDidAppearInvocationCount, 0, @"Did appear must not yet be invoked");
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+//    XCTAssertTrue([self waitFor:&done timeout:2.0], @"Timed out waiting for response asynch method completion");
 }
 
 @end

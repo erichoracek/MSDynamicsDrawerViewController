@@ -45,6 +45,8 @@
         UIWindow *window = [UIWindow new];
         MSDynamicsDrawerViewController *drawerViewController = [MSDynamicsDrawerViewController new];
         window.rootViewController = drawerViewController;
+        // Show the window (with the drawer as root view controller)
+        window.hidden = NO;
         
         MSTestStyle *testStyle = [MSTestStyle new];
         
@@ -58,7 +60,7 @@
             XCTAssertEqual(drawerViewController, styleDrawerViewController, @"Must be called with correct drawer");
             XCTAssertTrue((direction & styleDirection), @"Must be called with a correct direction");
             XCTAssertTrue([drawerViewController isViewLoaded], @"Drawer view controller view must be loaded at this point");
-            XCTAssertNil(drawerViewController.view.window, @"Drawer view controller view not yet have window at this point");
+            XCTAssertTrue(drawerViewController.view.window, @"Drawer view controller view have window at this point");
             willMoveInvoked = YES;
             willMoveInvocationCount++;
             willMoveDirection |= styleDirection;
@@ -66,11 +68,6 @@
         
         [drawerViewController addStyle:testStyle forDirection:direction];
 
-        XCTAssertFalse(willMoveInvoked, @"Style must be not yet have will move invoked");
-        
-        // Show the window (with the drawer as root view controller)
-        window.hidden = NO;
-        
         XCTAssertTrue(willMoveInvoked, @"Style must be added when the view has been loaded");
         XCTAssertEqual(willMoveInvocationCount, invocationCount, @"Style must be added individually for each direction it's added for");
         XCTAssertEqual(willMoveDirection, direction, @"Style must be added individually for each direction it's added for");
@@ -115,10 +112,6 @@
 
 - (void)testStyleLifecycleDrawerStates
 {
-    if (!NSClassFromString(@"XCTestExpectation")) {
-        return;
-    }
-    
     void(^transitionFromStateToStateForDirectionAnimated)(MSDynamicsDrawerPaneState, MSDynamicsDrawerPaneState, MSDynamicsDrawerDirection, BOOL) = ^(MSDynamicsDrawerPaneState fromPaneSate, MSDynamicsDrawerPaneState toPaneState, MSDynamicsDrawerDirection direction, BOOL animated) {
         
         UIWindow *window = [UIWindow new];
