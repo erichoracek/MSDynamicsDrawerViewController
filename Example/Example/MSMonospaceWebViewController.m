@@ -61,7 +61,7 @@
 
 #pragma mark - MSMonospaceWebViewController
 
-NSString * const MSMonospaceURL = @"http://www.monospacecollective.com";
+static NSString * const MSMonospaceURL = @"http://www.monospacecollective.com";
 
 - (UIWebView *)webView
 {
