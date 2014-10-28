@@ -503,6 +503,7 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarWillChangeFrame:) name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarDidChangeFrame:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarWillChangeOrientation:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
         self.statusBarSnapshotStyle = MSStatusBarStyleNone;
     }
     return self;
@@ -709,6 +710,21 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
             self.dynamicsDrawerWindowLifted = NO;
         } else {
             self.dynamicsDrawerWindowLifted = YES;
+        }
+    }
+}
+
+- (void)statusBarWillChangeOrientation:(NSNotification *)notification
+{
+    NSNumber *statusBarOrientationNumber = notification.userInfo[UIApplicationStatusBarOrientationUserInfoKey];
+    if (statusBarOrientationNumber) {
+        UIInterfaceOrientation fromStatusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
+        UIInterfaceOrientation toStatusBarOrientation = [statusBarOrientationNumber integerValue];
+        BOOL landscapeToLandscape = (UIInterfaceOrientationIsLandscape(fromStatusBarOrientation) && UIInterfaceOrientationIsLandscape(toStatusBarOrientation));
+        BOOL portraitToPortrait = (UIInterfaceOrientationIsPortrait(fromStatusBarOrientation) && UIInterfaceOrientationIsPortrait(toStatusBarOrientation));
+        // If the status bar has rotated from landscape to portrait or vice versa, invalidate snapshot
+        if (!landscapeToLandscape && !portraitToPortrait) {
+            [self invalidateStatusBarSnapshot];
         }
     }
 }
