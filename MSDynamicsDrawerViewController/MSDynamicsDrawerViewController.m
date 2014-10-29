@@ -368,13 +368,13 @@
     *pushVelocityComponent = *throwVelocityComponent;
     
     // Add the velocity vector to the pane
-    if (self._paneBehavior.dynamicAnimator != self._dynamicAnimator) {
+    if (![self._dynamicAnimator.behaviors containsObject:self._paneBehavior]) {
         [self._dynamicAnimator addBehavior:self._paneBehavior];
     }
     [self._paneBehavior addLinearVelocity:pushVelocityDirection forItem:self.paneView];
     
     // Must be after the pane receives its linear velocty
-    if (behavior.dynamicAnimator != self._dynamicAnimator) {
+    if (![self._dynamicAnimator.behaviors containsObject:behavior]) {
         [self._dynamicAnimator addBehavior:behavior];
     }
     [behavior positionPaneInState:paneState forDirection:self.currentDrawerDirection];
