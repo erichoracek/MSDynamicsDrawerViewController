@@ -380,11 +380,6 @@ typedef NS_ENUM(NSInteger, MSDynamicsDrawerPaneState) {
 - (BOOL)paneTapToCloseEnabledForDirection:(MSDynamicsDrawerDirection)direction;
 
 /**
- Whether the paneView is sliding.
- */
-@property (nonatomic, readonly) BOOL sliding;
-
-/**
  Whether the only pans that can open the drawer should be those that originate from the screen's edges.
  
  If set to `YES`, pans that originate elsewhere are ignored and have no effect on the drawer. This property is designed to mimic the behavior of the `UIScreenEdgePanGestureRecognizer` as applied to the `MSDynamicsDrawerViewController` interaction paradigm. Setting this property to `YES` yields a similar behavior to that of screen edge pans within a `UINavigationController` in iOS7+. Defaults to `NO`.

@@ -40,7 +40,6 @@
 @property (nonatomic, readwrite, setter = _setPaneView:) UIView *paneView;
 @property (nonatomic, readwrite, setter = _setPossibleDrawerDirection:) MSDynamicsDrawerDirection possibleDrawerDirection;
 @property (nonatomic, readwrite, setter = _setCurrentDrawerDirection:) MSDynamicsDrawerDirection currentDrawerDirection;
-@property (nonatomic, readwrite) BOOL sliding;
 // Internal properties
 @property (nonatomic, setter = _setIsRotating:) BOOL _rotating;
 @property (nonatomic, setter = _setVisibleDrawerViewController:) UIViewController *_visibleDrawerViewController;
@@ -540,7 +539,6 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
             [style dynamicsDrawerViewController:self didUpdatePaneClosedFraction:paneClosedFraction forDirection:self.currentDrawerDirection];
         }
     }
-    self.sliding = paneClosedFraction > 0.1 && paneClosedFraction < 0.9;
 }
 
 - (void)_stylesWillMoveToDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
