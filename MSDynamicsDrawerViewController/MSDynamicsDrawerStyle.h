@@ -215,4 +215,4 @@
  
  @param statusBarFrame Expecting the value from -[UIApplication statusBarFrame] or corresponding notifications.
  */
-BOOL const MSStatusBarOffsetStyleWillOffset(CGRect statusBarFrame);
+BOOL MSStatusBarOffsetStyleWillOffset(CGRect statusBarFrame);
