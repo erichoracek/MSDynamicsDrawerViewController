@@ -740,7 +740,29 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
         [self.dynamicAnimator removeAllBehaviors];
     }
     
+    // UIDynamics has occasional hick-ups (maybe rounding errors), that result in a small "jiggle"
+    // when the pane opens/closes, so we need to make it behave consistently.
+    [self removeSlidingPaneJiggleEffect];
+    
     [self updateStylers];
+}
+
+- (void)removeSlidingPaneJiggleEffect {
+    if (CGAffineTransformIsIdentity(self.paneView.transform)) {
+        CGRect paneFrame = self.paneView.frame;
+        const CGFloat kSlidingPaneJiggleRoom = 4.0f;
+        if ((self.paneState == MSDynamicsDrawerPaneStateClosed || self.paneState == MSDynamicsDrawerPaneStateOpen)
+            && self.potentialPaneState == MSDynamicsDrawerPaneStateOpen
+            && self.openStateRevealWidth < paneFrame.origin.x && paneFrame.origin.x <= self.openStateRevealWidth + kSlidingPaneJiggleRoom) {
+            paneFrame.origin.x = self.openStateRevealWidth;
+            self.paneView.frame = paneFrame;
+        } else if ((self.paneState == MSDynamicsDrawerPaneStateOpen || self.paneState == MSDynamicsDrawerPaneStateClosed)
+                   && self.potentialPaneState == MSDynamicsDrawerPaneStateClosed
+                   && -kSlidingPaneJiggleRoom <= paneFrame.origin.x && paneFrame.origin.x < 0) {
+            paneFrame.origin.x = 0;
+            self.paneView.frame = paneFrame;
+        }
+    }
 }
 
 - (void)setPaneState:(MSDynamicsDrawerPaneState)paneState
