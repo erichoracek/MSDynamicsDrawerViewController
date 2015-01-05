@@ -762,6 +762,14 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
                 && -self.openStateRevealWidth -kSlidingPaneJiggleRoom <= paneFrame.origin.x && paneFrame.origin.x < -self.openStateRevealWidth) {
                 paneFrame.origin.x = -self.openStateRevealWidth;
                 self.paneView.frame = paneFrame;
+            } else if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionTop)
+                       && self.openStateRevealWidth < paneFrame.origin.y && paneFrame.origin.y <= self.openStateRevealWidth + kSlidingPaneJiggleRoom) {
+                paneFrame.origin.y = self.openStateRevealWidth;
+                self.paneView.frame = paneFrame;
+            } else if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionBottom)
+                       && -self.openStateRevealWidth -kSlidingPaneJiggleRoom <= paneFrame.origin.y && paneFrame.origin.y < -self.openStateRevealWidth) {
+                paneFrame.origin.y = -self.openStateRevealWidth;
+                self.paneView.frame = paneFrame;
             }
         } else if (self.potentialPaneState == MSDynamicsDrawerPaneStateClosed) {
             if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionLeft)
@@ -771,6 +779,14 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
             } else if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionRight)
                 && 0 < paneFrame.origin.x && paneFrame.origin.x <= kSlidingPaneJiggleRoom) {
                 paneFrame.origin.x = 0;
+                self.paneView.frame = paneFrame;
+            } else if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionTop)
+                       && -kSlidingPaneJiggleRoom <= paneFrame.origin.y && paneFrame.origin.y < 0) {
+                paneFrame.origin.y = 0;
+                self.paneView.frame = paneFrame;
+            } else if ((self.currentDrawerDirection & MSDynamicsDrawerDirectionBottom)
+                       && 0 < paneFrame.origin.y && paneFrame.origin.y <= kSlidingPaneJiggleRoom) {
+                paneFrame.origin.y = 0;
                 self.paneView.frame = paneFrame;
             }
         }
