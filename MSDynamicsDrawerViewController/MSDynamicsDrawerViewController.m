@@ -1362,8 +1362,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // If the other gesture recognizer's view is a `UITableViewCell` instance's internal `UIScrollView`, require failure
-    if ([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableViewCell class]] && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) {
+    // On iOS7: If the other gesture recognizer's view is a `UITableViewCell` instance's internal `UIScrollView`, require failure
+    // On iOS8: If the other gesture recognizer's view is a `UITableViewWrapperView` instance's internal `UITableView`, require failure
+    if (([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableViewCell class]] && [otherGestureRecognizer.view isKindOfClass:[UIScrollView class]]) ||
+        ([[otherGestureRecognizer.view nextResponder] isKindOfClass:[UITableView class]] && [NSStringFromClass([otherGestureRecognizer.view class]) isEqualToString:@"UITableViewWrapperView"])) {
         return YES;
     }
     return NO;
