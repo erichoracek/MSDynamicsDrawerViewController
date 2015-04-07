@@ -338,6 +338,7 @@
 @end
 
 @implementation _MSShadowView
+@dynamic layer;
 
 + (Class)layerClass
 {
