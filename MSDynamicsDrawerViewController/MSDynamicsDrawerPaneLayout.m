@@ -8,6 +8,7 @@
 
 #import "MSDynamicsDrawerPaneLayout.h"
 #import "MSDynamicsDrawerHelperFunctions.h"
+#import <tgmath.h>
 
 @interface MSDynamicsDrawerPaneLayout ()
 
@@ -40,7 +41,7 @@
 
     CGFloat revealDistance = 0.0;
     if (closedCenterComponent && openCenterComponent) {
-        revealDistance = fabsf(*openCenterComponent - *closedCenterComponent);
+        revealDistance = fabs(*openCenterComponent - *closedCenterComponent);
     }
     return revealDistance;
 }
@@ -189,7 +190,11 @@ static CGFloat const MSRubberBandingCoefficient = .055;
     } else if (closedFraction < 0.0) {
         relevantBoundingComponent = MSPointComponentForDrawerDirection(&paneOpenCenter, direction);
     }
-    
+
+    if (!relevantBoundingComponent) {
+        return paneCenter;
+    }
+
     switch ((NSInteger)boundingStyle) {
     case MSDynamicsDrawerPaneBoundingStyleRubberBand: {
         
@@ -200,7 +205,7 @@ static CGFloat const MSRubberBandingCoefficient = .055;
         
         CGSize size = self.paneContainerView.bounds.size;
         CGFloat sizeComponent = *MSSizeComponentForDrawerDirection(&size, direction);
-        CGFloat distancePastBoundedCenter = fabsf(*paneCenterComponent - *relevantBoundingComponent);
+        CGFloat distancePastBoundedCenter = fabs(*paneCenterComponent - *relevantBoundingComponent);
         CGFloat sizeNormalizedElasticityCoefficient = (sizeComponent * MSRubberBandingCoefficient);
         CGFloat elasticOffset = (sizeNormalizedElasticityCoefficient * logf( (distancePastBoundedCenter / sizeNormalizedElasticityCoefficient) + 1.0));
         CGFloat elasticOffsetSign = ((panTranslationComponent > 0.0) ? 1.0 : -1.0);
@@ -227,7 +232,7 @@ static CGFloat const MSRubberBandingCoefficient = .055;
     CGFloat * const centerClosedComponent = MSPointComponentForDrawerDirection(&paneCenterClosed, direction);
     
     if (centerComponent && centerClosedComponent) {
-        return fabsf(*centerComponent - *centerClosedComponent);
+        return fabs(*centerComponent - *centerClosedComponent);
     }
     return 0.0;
 }
