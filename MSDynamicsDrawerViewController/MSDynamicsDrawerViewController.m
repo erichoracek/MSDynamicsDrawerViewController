@@ -32,6 +32,7 @@
 #import "UIView+ViewHierarchyAction.h"
 #import "UIPanGestureRecognizer+BeginEdges.h"
 #import "MSDynamicsDrawerHelperFunctions.h"
+#import <tgmath.h>
 
 @interface MSDynamicsDrawerViewController () <UIGestureRecognizerDelegate, UIDynamicAnimatorDelegate>
 
@@ -837,8 +838,8 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
                 direction = MSDynamicsDrawerDirectionBottom;
             }
         }
-        if (fabsf(panDelta) > maxPanDelta) {
-            maxPanDelta = fabsf(panDelta);
+        if (fabs(panDelta) > maxPanDelta) {
+            maxPanDelta = fabs(panDelta);
             panDirection = direction;
         }
     });

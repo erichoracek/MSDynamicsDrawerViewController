@@ -28,6 +28,7 @@
 
 #import "MSDynamicsDrawerBehavior.h"
 #import "MSDynamicsDrawerHelperFunctions.h"
+#import <tgmath.h>
 
 static MSDynamicsDrawerPaneState const MSDynamicsDrawerPaneStateUndefined = -1;
 static MSDynamicsDrawerDirection const MSDynamicsDrawerDirectionUndefined = -1;
@@ -88,7 +89,7 @@ static CGFloat const MSBehaviorRemovalPaneVelocityThreshold = 5.0;
     );
     // Determine if the velocity is above the removal threshold
     CGPoint paneVelocity = [self.paneBehavior linearVelocityForItem:self.drawerViewController.paneView];
-    CGFloat largestVelocityComponent = fmaxf(fabsf(paneVelocity.x), fabsf(paneVelocity.y));
+    CGFloat largestVelocityComponent = fmaxf(fabs(paneVelocity.x), fabs(paneVelocity.y));
     BOOL isBelowBehaviorRemovalVelocityThreshold = (largestVelocityComponent < MSBehaviorRemovalPaneVelocityThreshold);
     // If both conditions are met, remove all behaviors
     if (isPositionedInTargetState && isBelowBehaviorRemovalVelocityThreshold) {
@@ -350,7 +351,7 @@ static CGFloat const MSSnapBehaviorDefaultDamping = 1.0;
     
     CGPoint paneVelocity = [self.paneBehavior linearVelocityForItem:self.paneItem];
     CGFloat *paneVelocityComponent = MSPointComponentForDrawerDirection(&paneVelocity, direction);
-    self._thrown = (paneVelocityComponent && (fabsf(*paneVelocityComponent) > MSSnapBehaviorThrowVelocityThresholdDefault));
+    self._thrown = (paneVelocityComponent && (fabs(*paneVelocityComponent) > MSSnapBehaviorThrowVelocityThresholdDefault));
     
     self._snap.damping = (self._thrown ? self.throwDamping : MSSnapBehaviorDefaultDamping);
     self._snap.anchorPoint = MSAttachmentAnchorPoint(self.drawerViewController.paneLayout, self.drawerViewController.paneView.center, paneState, direction);
