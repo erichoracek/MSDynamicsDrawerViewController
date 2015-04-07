@@ -603,7 +603,6 @@ static CGFloat const MSStatusBarMaximumAdjustmentHeight = 20.0;
     }
     
     // Set the frame of the container
-    UIInterfaceOrientation statusBarOrientation = statusBarOrientation;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         self.statusBarContainerView.frame = (CGRect){CGPointZero, {CGRectGetHeight(statusBarFrame), MSStatusBarMaximumAdjustmentHeight}};
     } else if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {

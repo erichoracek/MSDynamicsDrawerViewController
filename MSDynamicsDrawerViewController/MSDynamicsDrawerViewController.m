@@ -848,7 +848,7 @@ static CGFloat const MSPaneBounceBehaviorDefaultPaneElasticity = 0.5;
 
 static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
 
-- (BOOL)_paneShouldThrowToState:(inout MSDynamicsDrawerPaneState *)state forVelocity:(CGPoint)velocity inDirection:(MSDynamicsDrawerDirection)direction;
+- (BOOL)_paneShouldThrowToState:(out MSDynamicsDrawerPaneState *)state forVelocity:(CGPoint)velocity inDirection:(MSDynamicsDrawerDirection)direction;
 {
     CGFloat * const velocityComponent = MSPointComponentForDrawerDirection(&velocity, direction);
     if (!velocityComponent || (fabs(*velocityComponent) < MSPaneThrowVelocityThreshold)) {
@@ -858,6 +858,8 @@ static CGFloat const MSPaneThrowVelocityThreshold = 100.0;
         *state = ((*velocityComponent > 0.0) ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateClosed);
     } else if (velocityComponent && (direction & (MSDynamicsDrawerDirectionBottom | MSDynamicsDrawerDirectionRight))) {
         *state = ((*velocityComponent < 0.0) ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateClosed);
+    } else {
+        return NO;
     }
     return YES;
 }

@@ -190,7 +190,11 @@ static CGFloat const MSRubberBandingCoefficient = .055;
     } else if (closedFraction < 0.0) {
         relevantBoundingComponent = MSPointComponentForDrawerDirection(&paneOpenCenter, direction);
     }
-    
+
+    if (!relevantBoundingComponent) {
+        return paneCenter;
+    }
+
     switch ((NSInteger)boundingStyle) {
     case MSDynamicsDrawerPaneBoundingStyleRubberBand: {
         
