@@ -593,10 +593,10 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
             fraction = ((self.openStateRevealWidth - self.paneView.frame.origin.x) / self.openStateRevealWidth);
             break;
         case MSDynamicsDrawerDirectionBottom:
-            fraction = (1.0 - (fabsf(self.paneView.frame.origin.y) / self.openStateRevealWidth));
+            fraction = (1.0 - (ABS(self.paneView.frame.origin.y) / self.openStateRevealWidth));
             break;
         case MSDynamicsDrawerDirectionRight:
-            fraction = (1.0 - (fabsf(self.paneView.frame.origin.x) / self.openStateRevealWidth));
+            fraction = (1.0 - (ABS(self.paneView.frame.origin.x) / self.openStateRevealWidth));
             break;
         case MSDynamicsDrawerDirectionNone:
             fraction = 1.0; // If we have no direction, we want 1.0 since the pane is closed when it has no direction
@@ -1264,9 +1264,9 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
         case UIGestureRecognizerStateEnded: {
             if (self.currentDrawerDirection != MSDynamicsDrawerDirectionNone) {
                 // If the user released the pane over the velocity threshold
-                if (fabsf(paneVelocity) > MSPaneViewVelocityThreshold) {
+                if (ABS(paneVelocity) > MSPaneViewVelocityThreshold) {
                     MSDynamicsDrawerPaneState state = [self paneStateForPanVelocity:paneVelocity];
-                    [self addDynamicsBehaviorsToCreatePaneState:state pushMagnitude:(fabsf(paneVelocity) * MSPaneViewVelocityMultiplier) pushAngle:[self gravityAngleForState:state direction:self.currentDrawerDirection] pushElasticity:self.elasticity];
+                    [self addDynamicsBehaviorsToCreatePaneState:state pushMagnitude:(ABS(paneVelocity) * MSPaneViewVelocityMultiplier) pushAngle:[self gravityAngleForState:state direction:self.currentDrawerDirection] pushElasticity:self.elasticity];
                 }
                 // If not released with a velocity over the threhold, update to nearest `paneState`
                 else {
