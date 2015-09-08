@@ -149,7 +149,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidDisappear:animated];
     if (!self.view.window) {
         [self _stylesWillMoveToDrawerViewController:nil];
         [self.paneView removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
