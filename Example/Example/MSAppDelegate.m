@@ -55,7 +55,7 @@
     [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerParallaxStyler styler]] forDirection:MSDynamicsDrawerDirectionRight];
     
 #if !defined(STORYBOARD)
-    MSMenuViewController *menuViewController = [MSMenuViewController new];
+    MSMenuViewController *menuViewController = [[MSMenuViewController alloc] initWithNibName:nil bundle:nil];
 #else
     MSMenuViewController *menuViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
 #endif

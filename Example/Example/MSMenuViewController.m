@@ -189,7 +189,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     UIViewController *paneViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.paneViewControllerIdentifiers[@(paneViewControllerType)]];
 #else
     Class paneViewControllerClass = self.paneViewControllerClasses[@(paneViewControllerType)];
-    UIViewController *paneViewController = (UIViewController *)[paneViewControllerClass new];
+    UIViewController *paneViewController = (UIViewController *)[[paneViewControllerClass alloc] initWithNibName:nil bundle:nil];
 #endif
     
     paneViewController.navigationItem.title = self.paneViewControllerTitles[@(paneViewControllerType)];
