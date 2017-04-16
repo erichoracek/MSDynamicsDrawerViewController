@@ -483,6 +483,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
 - (void)addDynamicsBehaviorsToCreatePaneState:(MSDynamicsDrawerPaneState)paneState pushMagnitude:(CGFloat)pushMagnitude pushAngle:(CGFloat)pushAngle pushElasticity:(CGFloat)elasticity
 {
     if (self.currentDrawerDirection == MSDynamicsDrawerDirectionNone) {
+        [self dynamicAnimatorDidComplete];
         return;
     }
     
@@ -577,6 +578,14 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
             return (CGFloat) ((state != MSDynamicsDrawerPaneStateClosed) ? M_PI : 0.0);
         default:
             return 0.0;
+    }
+}
+
+- (void)dynamicAnimatorDidComplete
+{
+    if (self.dynamicAnimatorCompletion) {
+        self.dynamicAnimatorCompletion();
+        self.dynamicAnimatorCompletion = nil;
     }
 }
 
@@ -1388,10 +1397,7 @@ void MSDynamicsDrawerDirectionActionForMaskedValues(NSInteger direction, MSDynam
     // Since rotation is disabled while the dynamic animator is running, we invoke this method to cause rotation to happen (if device rotation has occured during state transition)
     [UIViewController attemptRotationToDeviceOrientation];
     
-    if (self.dynamicAnimatorCompletion) {
-        self.dynamicAnimatorCompletion();
-        self.dynamicAnimatorCompletion = nil;
-    }
+    [self dynamicAnimatorDidComplete];
 }
 
 @end
