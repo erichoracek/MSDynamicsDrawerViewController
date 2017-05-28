@@ -20,6 +20,13 @@
 		};
 /* End PBXAggregateTarget section */
 
+/* Begin PBXBuildFile section */
+		94B491981EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 94B491961EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		94B4919C1EDA8247003A74A4 /* MSDynamicsDrawerStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A935DE718F1F719004F464D /* MSDynamicsDrawerStyler.m */; };
+		94B4919D1EDA824B003A74A4 /* MSDynamicsDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A935DE918F1F719004F464D /* MSDynamicsDrawerViewController.m */; };
+		94B4919E1EDA829D003A74A4 /* MSDynamicsDrawerStyler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A935DE618F1F719004F464D /* MSDynamicsDrawerStyler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3A935DE618F1F719004F464D /* MSDynamicsDrawerStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerStyler.h; sourceTree = "<group>"; };
 		3A935DE718F1F719004F464D /* MSDynamicsDrawerStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsDrawerStyler.m; sourceTree = "<group>"; };
@@ -28,13 +35,27 @@
 		3AAD490E1830929B003FAFA8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3AAD491C1830929B003FAFA8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3AAD491F1830929B003FAFA8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		94B491941EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MSDynamicsDrawerViewControllerFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94B491961EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSDynamicsDrawerViewControllerFramework.h; sourceTree = "<group>"; };
+		94B491971EDA821A003A74A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94B491901EDA821A003A74A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		3AAD49021830929B003FAFA8 = {
 			isa = PBXGroup;
 			children = (
 				3AAD49101830929B003FAFA8 /* MSDynamicsDrawerViewController */,
+				94B491951EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework */,
 				3AAD490D1830929B003FAFA8 /* Frameworks */,
 				3AAD490C1830929B003FAFA8 /* Products */,
 			);
@@ -43,6 +64,7 @@
 		3AAD490C1830929B003FAFA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				94B491941EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,7 +91,57 @@
 			path = ../MSDynamicsDrawerViewController;
 			sourceTree = SOURCE_ROOT;
 		};
+		94B491951EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework */ = {
+			isa = PBXGroup;
+			children = (
+				94B491961EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.h */,
+				94B4919B1EDA8230003A74A4 /* Supporting Files */,
+			);
+			path = MSDynamicsDrawerViewControllerFramework;
+			sourceTree = "<group>";
+		};
+		94B4919B1EDA8230003A74A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94B491971EDA821A003A74A4 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		94B491911EDA821A003A74A4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94B4919E1EDA829D003A74A4 /* MSDynamicsDrawerStyler.h in Headers */,
+				94B491981EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		94B491931EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94B4919A1EDA821A003A74A4 /* Build configuration list for PBXNativeTarget "MSDynamicsDrawerViewControllerFramework" */;
+			buildPhases = (
+				94B4918F1EDA821A003A74A4 /* Sources */,
+				94B491901EDA821A003A74A4 /* Frameworks */,
+				94B491911EDA821A003A74A4 /* Headers */,
+				94B491921EDA821A003A74A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MSDynamicsDrawerViewControllerFramework;
+			productName = MSDynamicsDrawerViewControllerFramework;
+			productReference = 94B491941EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3AAD49031830929B003FAFA8 /* Project object */ = {
@@ -77,6 +149,12 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Monospace Ltd";
+				TargetAttributes = {
+					94B491931EDA821A003A74A4 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 3AAD49061830929B003FAFA8 /* Build configuration list for PBXProject "Docs" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -91,9 +169,20 @@
 			projectRoot = "";
 			targets = (
 				3AAD493A183094D3003FAFA8 /* Docs */,
+				94B491931EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94B491921EDA821A003A74A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		3AAD493E183094E1003FAFA8 /* Documentation */ = {
@@ -112,6 +201,18 @@
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94B4918F1EDA821A003A74A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94B4919D1EDA824B003A74A4 /* MSDynamicsDrawerViewController.m in Sources */,
+				94B4919C1EDA8247003A74A4 /* MSDynamicsDrawerStyler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		3AAD492D1830929B003FAFA8 /* Release */ = {
@@ -152,6 +253,41 @@
 			};
 			name = Release;
 		};
+		94B491991EDA821A003A74A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = MSDynamicsDrawerViewControllerFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MSDynamicsDrawerViewControllerFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -170,6 +306,13 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		94B4919A1EDA821A003A74A4 /* Build configuration list for PBXNativeTarget "MSDynamicsDrawerViewControllerFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94B491991EDA821A003A74A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
