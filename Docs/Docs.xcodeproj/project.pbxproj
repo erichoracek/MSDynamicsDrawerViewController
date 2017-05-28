@@ -25,6 +25,7 @@
 		94B4919C1EDA8247003A74A4 /* MSDynamicsDrawerStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A935DE718F1F719004F464D /* MSDynamicsDrawerStyler.m */; };
 		94B4919D1EDA824B003A74A4 /* MSDynamicsDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A935DE918F1F719004F464D /* MSDynamicsDrawerViewController.m */; };
 		94B4919E1EDA829D003A74A4 /* MSDynamicsDrawerStyler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A935DE618F1F719004F464D /* MSDynamicsDrawerStyler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		94B491A11EDA878D003A74A4 /* MSDynamicsDrawerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A935DE818F1F719004F464D /* MSDynamicsDrawerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94B4919E1EDA829D003A74A4 /* MSDynamicsDrawerStyler.h in Headers */,
+				94B491A11EDA878D003A74A4 /* MSDynamicsDrawerViewController.h in Headers */,
 				94B491981EDA821A003A74A4 /* MSDynamicsDrawerViewControllerFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
