@@ -8,5 +8,5 @@ FOUNDATION_EXPORT const unsigned char MSDynamicsDrawerViewControllerFrameworkVer
 
 // In this header, you should import all the public headers of your framework using statements like #import <MSDynamicsDrawerViewControllerFramework/PublicHeader.h>
 
-<MSDynamicsDrawerViewControllerFramework/MSDynamicsDrawerStyler.h>
-<MSDynamicsDrawerViewControllerFramework/MSDynamicsDrawerViewController.h>
+#import <MSDynamicsDrawerViewControllerFramework/MSDynamicsDrawerStyler.h>
+#import <MSDynamicsDrawerViewControllerFramework/MSDynamicsDrawerViewController.h>
