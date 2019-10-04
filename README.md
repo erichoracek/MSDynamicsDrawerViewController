@@ -188,6 +188,7 @@ Requires iOS 7.0, ARC, and the QuartzCore Framework.
 # Contributing
 
 Forks, patches and other feedback are welcome.
+good job
 
 # License
 
