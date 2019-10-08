@@ -4,7 +4,7 @@
 
 ## What is it?
 
-`MSDynamicsDrawerViewController` is a container view controller that manages the presentation of a single "pane" view controller overlaid over one or two "drawer" view controllers. The drawer view controllers are hidden by default, but can be exposed by a user-initiated swipe in the direction that that drawer view controller is hidden in. It uses UIKit Dynamics for all animation—there's not a single call to `animateWithDuration:animations:` in the project.
+`MSDynamicsDrawerViewController` is a container view controller that manages the presentation of a single "pane" view controller overlaid over one or two "drawer" view controllers. The drawer view controllers are hidden by default but can be exposed by a user-initiated swipe in the direction that that drawer view controller is hidden in. It uses UIKit Dynamics for all animation—there's not a single call to `animateWithDuration:animations:` in the project.
 
 ## UIKit Dynamics?
 
@@ -58,7 +58,7 @@ Documentation for `MSDynamicsDrawerViewController` is available online via [Coco
 
 ## Xcode
 
-If you would like to install the `MSDynamicsDrawerViewController` documentation into Xcode, you can do so by first installing [Appledoc](https://github.com/tomaz/appledoc/) (`$ brew install appledoc`), and then by running the `Documentation` target in the `MSDynamicsDrawerViewController.xcodeproj` in the root of repository.
+If you would like to install the `MSDynamicsDrawerViewController` documentation into Xcode, you can do so by first installing [Appledoc](https://github.com/tomaz/appledoc/) (`$ brew install appledoc`), and then by running the `Documentation` target in the `MSDynamicsDrawerViewController.xcodeproj` in the root of the repository.
 
 # Example
 
@@ -113,7 +113,7 @@ The various methods that modify the `paneState` property are the go-to for chang
 
 ### Non-Animated
 
-If you just want to open or close the drawer without an animation and you only have one drawer view controller, use the `paneState` property:
+If you just want to open or close the drawer without animation and you only have one drawer view controller, use the `paneState` property:
 
 ```objective-c
 dynamicsDrawerViewController.paneState = MSDynamicsDrawerPaneStateOpen;
@@ -164,7 +164,7 @@ id <MSDynamicsDrawerStyler> parallaxStyler = [MSDynamicsDrawerParallaxStyler sty
 There are a few default stylers included with `MSDynamicsDrawerViewController`. The `Stylers` menu option in the example project enables you to try these individually or in combination.
 
 * **Parallax Styler** `MSDynamicsDrawerParallaxStyler`
-  Creates a parallax effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `parallaxOffsetFraction` property to change the amount of parallax that occurs.
+  It creates a parallax effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `parallaxOffsetFraction` property to change the amount of parallax that occurs.
 
 * **Fade Styler** `MSDynamicsDrawerFadeStyler`
   Fades the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedAlpha` property to change the amount of fade that occurs when the `paneView` is closed.
