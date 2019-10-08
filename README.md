@@ -164,13 +164,13 @@ id <MSDynamicsDrawerStyler> parallaxStyler = [MSDynamicsDrawerParallaxStyler sty
 There are a few default stylers included with `MSDynamicsDrawerViewController`. The `Stylers` menu option in the example project enables you to try these individually or in combination.
 
 * **Parallax Styler** `MSDynamicsDrawerParallaxStyler`
-  Creates a parallax effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `parallaxOffsetFraction` property to change the amount of parallax that occurs.
+  It creates a parallax effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `parallaxOffsetFraction` property to change the amount of parallax that occurs.
 
 * **Fade Styler** `MSDynamicsDrawerFadeStyler`
   Fades the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedAlpha` property to change the amount of fade that occurs when the `paneView` is closed.
 
 * **Scale Styler** `MSDynamicsDrawerScaleStyler`
-  Creates a zoom-in scaling effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedScale` property to change the scale that occurs when the `paneView` is closed.
+  It creates a zoom-in scaling effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedScale` property to change the scale that occurs when the `paneView` is closed.
 
 * **Drawer Resize Styler** `MSDynamicsDrawerResizeStyler`
   Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealWidth` property. Modify the `minimumResizeRevealWidth` property to change the threshold at which the resizing begins.
@@ -179,7 +179,7 @@ There are a few default stylers included with `MSDynamicsDrawerViewController`. 
 
 As user interacts with a `MSDynamicsDrawerViewController`, the styler classes that are associated with the active drawer direction are messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDrawerDirection:`. This method enables the styler to changes attributes of the `drawerView`, `paneView`, etc. relative to the `paneClosedFraction`.
 
-It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are modified internally both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
+It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are modified internally both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController`, when the frame is externally modified, is undefined.
 
 # Requirements
 
