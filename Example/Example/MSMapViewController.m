@@ -35,9 +35,17 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    self.mapView.frame = (CGRect){CGPointZero, self.view.frame.size};
-    [self.view addSubview:self.mapView];
+    self.view.backgroundColor = [UIColor colorWithRed:0.98 green:0.96 blue:0.93 alpha:1.0];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    // Add the map view as a subview only when the transition has completed to improve animation performance
+    if (!self.mapView.superview) {
+        self.mapView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+        self.mapView.frame = self.view.bounds;
+        [self.view addSubview:self.mapView];
+    }
 }
 
 #pragma mark - MSMapViewController

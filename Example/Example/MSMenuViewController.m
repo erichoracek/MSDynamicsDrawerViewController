@@ -27,7 +27,7 @@
 //
 
 #import "MSMenuViewController.h"
-#import "MSStylersViewController.h"
+#import "MSStylesViewController.h"
 #import "MSDynamicsViewController.h"
 #import "MSBounceViewController.h"
 #import "MSGesturesViewController.h"
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 {
     self.paneViewControllerType = NSUIntegerMax;
     self.paneViewControllerTitles = @{
-        @(MSPaneViewControllerTypeStylers) : @"Stylers",
+        @(MSPaneViewControllerTypeStyles) : @"Styles",
         @(MSPaneViewControllerTypeDynamics) : @"Dynamics",
         @(MSPaneViewControllerTypeBounce) : @"Bounce",
         @(MSPaneViewControllerTypeGestures) : @"Gestures",
@@ -127,7 +127,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     };
 #if !defined(STORYBOARD)
     self.paneViewControllerClasses = @{
-        @(MSPaneViewControllerTypeStylers) : [MSStylersViewController class],
+        @(MSPaneViewControllerTypeStyles) : [MSStylesViewController class],
         @(MSPaneViewControllerTypeDynamics) : [MSDynamicsViewController class],
         @(MSPaneViewControllerTypeBounce) : [MSBounceViewController class],
         @(MSPaneViewControllerTypeGestures) : [MSGesturesViewController class],
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
     };
 #else
     self.paneViewControllerIdentifiers = @{
-        @(MSPaneViewControllerTypeStylers) : @"Stylers",
+        @(MSPaneViewControllerTypeStyles) : @"Styles",
         @(MSPaneViewControllerTypeDynamics) : @"Dynamics",
         @(MSPaneViewControllerTypeBounce) : @"Bounce",
         @(MSPaneViewControllerTypeGestures) : @"Gestures",
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
         return;
     }
     
-    BOOL animateTransition = self.dynamicsDrawerViewController.paneViewController != nil;
+    BOOL animateTransition = (self.dynamicsDrawerViewController.paneViewController != nil);
     
 #if defined(STORYBOARD)
     UIViewController *paneViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.paneViewControllerIdentifiers[@(paneViewControllerType)]];
@@ -253,6 +253,7 @@ typedef NS_ENUM(NSUInteger, MSMenuViewControllerTableViewSectionType) {
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSMenuCellReuseIdentifier forIndexPath:indexPath];
     cell.textLabel.text = self.paneViewControllerTitles[@([self paneViewControllerTypeForIndexPath:indexPath])];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 

@@ -1,50 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Constants/MSDynamicsDrawerPaneState.html">
+	<File path="Protocols/MSDynamicsDrawerStyler.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/c/tdef/MSDynamicsDrawerPaneState</TokenIdentifier>
-			<Abstract type="html">The possible drawer/pane visibility states of MSDynamicsDrawerViewController.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/MSDynamicsDrawerStyler</TokenIdentifier>
+			<Abstract type="html">MSDynamicsDrawerStyler is a protocol that defines the interface for an object that can style a MSDynamicsDrawerViewController. Instances of MSDynamicsDrawerStyler are added to MSDynamicsDrawerViewController via the addStyler:forDirection: method.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
             
 			
 			<NodeRef refid="10"/>
 		</Token>
 		
 		
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerPaneStateClosed</TokenIdentifier>
-            <Abstract type="html">     The the drawer is entirely hidden by the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerPaneStateClosed</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/styler</TokenIdentifier>
+			<Abstract type="html">Creates and returns a styler with default configuration.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>+ (instancetype)styler</Declaration>
+			
+			
+			<Anchor>//api/name/styler</Anchor>
             <NodeRef refid="10"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerPaneStateOpen</TokenIdentifier>
-            <Abstract type="html">     The drawer is revealed underneath the pane to the specified open width.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerPaneStateOpen</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</TokenIdentifier>
+			<Abstract type="html">Invoked when the MSDynamicsDrawerViewController has an update to its pane closed fraction.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that is being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>paneClosedFraction</Name>
+					<Abstract type="html">The fraction that MSDynamicsDrawerViewController instance&apos;s pane is closed. 1.0 when closed, 0.0 when opened.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the MSDynamicsDrawerViewController instance is opening in. Will not be masked.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDirection:</Anchor>
             <NodeRef refid="10"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerPaneStateOpenWide</TokenIdentifier>
-            <Abstract type="html">     The drawer view is entirely visible, with the pane opened wide enough as to no longer be visible.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerPaneStateOpenWide</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/stylerWasAddedToDynamicsDrawerViewController:forDirection:</TokenIdentifier>
+			<Abstract type="html">Used to set up the appearance of the styler when it is added to a MSDynamicsDrawerViewController instance.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>- (void)stylerWasAddedToDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that is now being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the styler is being added for. Can be a masked value.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stylerWasAddedToDynamicsDrawerViewController:forDirection:</Anchor>
             <NodeRef refid="10"/>
-        </Token>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/MSDynamicsDrawerStyler/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</TokenIdentifier>
+			<Abstract type="html">Used to tear down the appearance of the styler when it is removed from a MSDynamicsDrawerViewController instance.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerStyler.h</DeclaredIn>
+			
+			<Declaration>- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dynamicsDrawerViewController</Name>
+					<Abstract type="html">The MSDynamicsDrawerViewController that was being styled by the MSDynamicsDrawerStyler instance.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the styler is being removed for. Can be a masked value.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stylerWasRemovedFromDynamicsDrawerViewController:forDirection:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
         
 	</File>
 </Tokens>

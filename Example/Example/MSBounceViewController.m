@@ -27,14 +27,15 @@
 //
 
 #import "MSBounceViewController.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerHelperFunctions.h>
 
 NSString * const MSBounceCellReuseIdentifier = @"Bounce Cell";
 NSString * const MSBounceDynamicsCellReuseIdentifier = @"Bounce Dynamics Cell";
 
 typedef NS_ENUM(NSInteger, MSBounceSectionType) {
     MSBounceSectionTypeBounce,
-    MSBounceSectionTypeBounceMagnitude,
-    MSBounceSectionTypeBounceElasticity,
+//    MSBounceSectionTypeBounceMagnitude,
+//    MSBounceSectionTypeBounceElasticity,
     MSBounceSectionTypeCount,
 };
 
@@ -54,20 +55,63 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MSBounceDynamicsCellReuseIdentifier];
 }
 
-#pragma mark - MSDynamicsViewController
+#pragma mark - MSBounceViewController
+
+- (MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+{
+    return (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+}
 
 - (void)sliderDidUpdateValue:(UISlider *)slider
 {
-    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    switch (slider.tag) {
-        case MSBounceSectionTypeBounceMagnitude:
-            dynamicsDrawerViewController.bounceMagnitude = slider.value;
-            break;
-        case MSBounceSectionTypeBounceElasticity:
-            dynamicsDrawerViewController.bounceElasticity = slider.value;
-            break;
-    }
+//    switch (slider.tag) {
+//        case MSBounceSectionTypeBounceMagnitude:
+//            dynamicsDrawerViewController.bounceMagnitude = slider.value;
+//            break;
+//        case MSBounceSectionTypeBounceElasticity:
+//            dynamicsDrawerViewController.bounceElasticity = slider.value;
+//            break;
+//    }
     [self.tableView reloadData];
+}
+
+- (NSInteger)possibleDrawerDirectionCount
+{
+    NSInteger possibleDrawerDirection = [self dynamicsDrawerViewController].possibleDrawerDirection;
+    __block NSInteger possibleDirectionCount = 0;
+    MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedDirection) {
+        possibleDirectionCount++;
+    });
+    return possibleDirectionCount;
+}
+
+- (MSDynamicsDrawerDirection)drawerDirectionForIndexPath:(NSIndexPath *)indexPath
+{
+    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
+    __block NSInteger possibleDrawerDirectionRow = 0;
+    __block MSDynamicsDrawerDirection possibleDrawerDirection = MSDynamicsDrawerDirectionNone;
+    MSDynamicsDrawerDirectionActionForMaskedValues(dynamicsDrawerViewController.possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
+        if (indexPath.row == possibleDrawerDirectionRow) {
+            possibleDrawerDirection = drawerDirection;
+        }
+        possibleDrawerDirectionRow++;
+    });
+    return possibleDrawerDirection;
+}
+
+- (NSString *)arrowStringForDirection:(MSDynamicsDrawerDirection)direction
+{
+    switch ((NSInteger)direction) {
+    case MSDynamicsDrawerDirectionLeft:
+        return @"→";
+    case MSDynamicsDrawerDirectionRight:
+        return @"←";
+    case MSDynamicsDrawerDirectionTop:
+        return @"↓";
+    case MSDynamicsDrawerDirectionBottom:
+        return @"↑";
+    }
+    return nil;
 }
 
 #pragma mark - UITableViewDataSource
@@ -80,96 +124,62 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case MSBounceSectionTypeBounce: {
-            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-            NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
-            __block NSInteger possibleDirectionCount = 0;
-            MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
-                possibleDirectionCount++;
-            });
-            return possibleDirectionCount;
-        }
-        default:
-            return 1;
+    case MSBounceSectionTypeBounce:
+        return [self possibleDrawerDirectionCount];
+    default:
+        return 1;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
-        case MSBounceSectionTypeBounce: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceCellReuseIdentifier forIndexPath:indexPath];
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            cell.textLabel.textColor = self.view.window.tintColor;
-            
-            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-            NSInteger possibleDrawerDirection = dynamicsDrawerViewController.possibleDrawerDirection;
-            __block NSInteger possibleDrawerDirectionRow = 0;
-            MSDynamicsDrawerDirectionActionForMaskedValues(possibleDrawerDirection, ^(MSDynamicsDrawerDirection maskedValue) {
-                if (indexPath.row == possibleDrawerDirectionRow) {
-                    NSString *title;
-                    switch (maskedValue) {
-                        case MSDynamicsDrawerDirectionLeft:
-                            title = @"→";
-                            break;
-                        case MSDynamicsDrawerDirectionRight:
-                            title = @"←";
-                            break;
-                        case MSDynamicsDrawerDirectionTop:
-                            title = @"↓";
-                            break;
-                        case MSDynamicsDrawerDirectionBottom:
-                            title = @"↑";
-                            break;
-                        default:
-                            break;
-                    }
-                    cell.textLabel.text = title;
-                }
-                possibleDrawerDirectionRow++;
-            });
-            return cell;
+    case MSBounceSectionTypeBounce: {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceCellReuseIdentifier forIndexPath:indexPath];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.textColor = self.view.window.tintColor;
+        cell.textLabel.text = [self arrowStringForDirection:[self drawerDirectionForIndexPath:indexPath]];
+        return cell;
+    }
+    default: {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceDynamicsCellReuseIdentifier forIndexPath:indexPath];
+        UISlider *slider = (UISlider *)cell.accessoryView;
+        if (!slider || ![slider isKindOfClass:[UISlider class]]) {
+            slider = [UISlider new];
+            [slider addTarget:self action:@selector(sliderDidUpdateValue:) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = slider;
         }
-        default: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MSBounceDynamicsCellReuseIdentifier forIndexPath:indexPath];
-            MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-            UISlider *slider = (UISlider *)cell.accessoryView;
-            if (!slider || ![slider isKindOfClass:[UISlider class]]) {
-                slider = [UISlider new];
-                [slider addTarget:self action:@selector(sliderDidUpdateValue:) forControlEvents:UIControlEventValueChanged];
-                cell.accessoryView = slider;
-            }
-            slider.frame = (CGRect){slider.frame.origin, {200.0, slider.frame.size.height}};
-            slider.tag = indexPath.section;
-            switch (indexPath.section) {
-                case MSBounceSectionTypeBounceMagnitude: {
-                    slider.minimumValue = 0.0;
-                    slider.maximumValue = 200.0;
-                    slider.value = dynamicsDrawerViewController.bounceMagnitude;
-                    break;
-                }
-                case MSBounceSectionTypeBounceElasticity: {
-                    slider.minimumValue = 0.0;
-                    slider.maximumValue = 1.0;
-                    slider.value = dynamicsDrawerViewController.bounceElasticity;
-                    break;
-                }
-            }
-            cell.textLabel.text = [NSString stringWithFormat:@"%@", @(slider.value)];
-            return cell;
-        }
+        slider.frame = (CGRect){slider.frame.origin, {200.0, slider.frame.size.height}};
+        slider.tag = indexPath.section;
+//            switch (indexPath.section) {
+//                case MSBounceSectionTypeBounceMagnitude: {
+//                    slider.minimumValue = 0.0;
+//                    slider.maximumValue = 200.0;
+//                    slider.value = dynamicsDrawerViewController.bounceMagnitude;
+//                    break;
+//                }
+//                case MSBounceSectionTypeBounceElasticity: {
+//                    slider.minimumValue = 0.0;
+//                    slider.maximumValue = 1.0;
+//                    slider.value = dynamicsDrawerViewController.bounceElasticity;
+//                    break;
+//                }
+//            }
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", @(slider.value)];
+        return cell;
+    }
     }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch (section) {
-        case MSBounceSectionTypeBounce:
-            return @"Bounce Open in Direction";
-        case MSBounceSectionTypeBounceMagnitude:
-            return @"Bounce Magnitude";
-        case MSBounceSectionTypeBounceElasticity:
-            return @"Bounce Elasticity";
+    case MSBounceSectionTypeBounce:
+        return @"Bounce Open in Direction";
+//    case MSBounceSectionTypeBounceMagnitude:
+//        return @"Bounce Magnitude";
+//    case MSBounceSectionTypeBounceElasticity:
+//        return @"Bounce Elasticity";
     }
     return nil;
 }
@@ -177,8 +187,8 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     switch (section) {
-        case MSBounceSectionTypeBounce:
-            return @"Invoke the 'bouncePaneOpenInDirection:' method to bounce the pane view open to reveal the drawer view underneath.\n\nA bounce can be used to indicate that there's a drawer view controller underneath that can be accessed by swiping, similar to the iOS lock screen camera bounce.";
+    case MSBounceSectionTypeBounce:
+        return @"Invoke the 'bouncePaneOpenInDirection:' method to bounce the pane view open to reveal the drawer view underneath.\n\nA bounce can be used to indicate that there's a drawer view controller underneath that can be accessed by swiping, similar to the iOS lock screen camera bounce.";
     }
     return nil;
 }
@@ -187,15 +197,9 @@ typedef NS_ENUM(NSInteger, MSBounceSectionType) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MSDynamicsDrawerViewController *dynamicsDrawerViewController = (MSDynamicsDrawerViewController *)self.navigationController.parentViewController;
-    __block NSInteger possibleDrawerDirectionRow = 0;
-    MSDynamicsDrawerDirectionActionForMaskedValues(dynamicsDrawerViewController.possibleDrawerDirection, ^(MSDynamicsDrawerDirection drawerDirection) {
-        if (indexPath.row == possibleDrawerDirectionRow) {
-            [dynamicsDrawerViewController bouncePaneOpenInDirection:drawerDirection allowUserInterruption:NO completion:nil];
-            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        }
-        possibleDrawerDirectionRow++;
-    });
+    MSDynamicsDrawerDirection direction = [self drawerDirectionForIndexPath:indexPath];
+    [[self dynamicsDrawerViewController] bouncePaneOpenInDirection:direction allowUserInterruption:YES completion:nil];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
