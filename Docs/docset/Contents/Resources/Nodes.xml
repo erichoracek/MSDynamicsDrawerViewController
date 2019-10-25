@@ -17,6 +17,9 @@
 						<NodeRef refid="4"/>
 						<NodeRef refid="5"/>
 						<NodeRef refid="6"/>
+						<NodeRef refid="7"/>
+						<NodeRef refid="8"/>
+						<NodeRef refid="9"/>
 						
 					</Subnodes>
 				</Node>
@@ -27,8 +30,8 @@
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
-						<NodeRef refid="7"/>
-						<NodeRef refid="8"/>
+						<NodeRef refid="10"/>
+						<NodeRef refid="11"/>
 						
 					</Subnodes>
 				</Node>
@@ -38,8 +41,8 @@
 					<Name>Constants</Name>
 					<Path>index.html</Path>
 					<Subnodes>
-						<NodeRef refid="9"/>
-						<NodeRef refid="10"/>
+						<NodeRef refid="12"/>
+						<NodeRef refid="13"/>
 						
 					</Subnodes>
 				</Node>
@@ -89,6 +92,39 @@
             
         </Node>
 		<Node id="2" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerGravityBehavior</Name>
+            <Path>Classes/MSDynamicsDrawerGravityBehavior.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerGravityBehavior.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerGravityBehavior.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerGravityBehavior.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerGravityBehavior.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="3" type="file" documentType="reference">
             <Name>MSDynamicsDrawerParallaxStyler</Name>
             <Path>Classes/MSDynamicsDrawerParallaxStyler.html</Path>
             
@@ -127,7 +163,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="3" type="file" documentType="reference">
+		<Node id="4" type="file" documentType="reference">
             <Name>MSDynamicsDrawerResizeStyler</Name>
             <Path>Classes/MSDynamicsDrawerResizeStyler.html</Path>
             
@@ -166,7 +202,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="4" type="file" documentType="reference">
+		<Node id="5" type="file" documentType="reference">
             <Name>MSDynamicsDrawerScaleStyler</Name>
             <Path>Classes/MSDynamicsDrawerScaleStyler.html</Path>
             
@@ -205,7 +241,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="5" type="file" documentType="reference">
+		<Node id="6" type="file" documentType="reference">
             <Name>MSDynamicsDrawerShadowStyler</Name>
             <Path>Classes/MSDynamicsDrawerShadowStyler.html</Path>
             
@@ -244,7 +280,40 @@
             </Subnodes>
             
         </Node>
-		<Node id="6" type="file" documentType="reference">
+		<Node id="7" type="file" documentType="reference">
+            <Name>MSDynamicsDrawerSnapBehavior</Name>
+            <Path>Classes/MSDynamicsDrawerSnapBehavior.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerSnapBehavior.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerSnapBehavior.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerSnapBehavior.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSDynamicsDrawerSnapBehavior.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="8" type="file" documentType="reference">
             <Name>MSDynamicsDrawerViewController</Name>
             <Path>Classes/MSDynamicsDrawerViewController.html</Path>
             
@@ -277,9 +346,42 @@
             </Subnodes>
             
         </Node>
+		<Node id="9" type="file" documentType="reference">
+            <Name>MSPanePositioningBehavior</Name>
+            <Path>Classes/MSPanePositioningBehavior.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/MSPanePositioningBehavior.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/MSPanePositioningBehavior.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/MSPanePositioningBehavior.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/MSPanePositioningBehavior.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
 		
 		
-        <Node id="7" type="file" documentType="reference">
+        <Node id="10" type="file" documentType="reference">
             <Name>MSDynamicsDrawerStyler</Name>
             <Path>Protocols/MSDynamicsDrawerStyler.html</Path>
             
@@ -312,7 +414,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="8" type="file" documentType="reference">
+		<Node id="11" type="file" documentType="reference">
             <Name>MSDynamicsDrawerViewControllerDelegate</Name>
             <Path>Protocols/MSDynamicsDrawerViewControllerDelegate.html</Path>
             
@@ -340,12 +442,12 @@
             
         </Node>
 		
-        <Node id="9" type="file" documentType="reference">
+        <Node id="12" type="file" documentType="reference">
             <Name>MSDynamicsDrawerDirection</Name>
             <Path>Constants/MSDynamicsDrawerDirection.html</Path>
             
         </Node>
-		<Node id="10" type="file" documentType="reference">
+		<Node id="13" type="file" documentType="reference">
             <Name>MSDynamicsDrawerPaneState</Name>
             <Path>Constants/MSDynamicsDrawerPaneState.html</Path>
             

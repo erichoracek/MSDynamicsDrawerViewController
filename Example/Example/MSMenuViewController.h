@@ -27,8 +27,8 @@
 //
 
 typedef NS_ENUM(NSUInteger, MSPaneViewControllerType) {
-    MSPaneViewControllerTypeStylers,
     MSPaneViewControllerTypeDynamics,
+    MSPaneViewControllerTypeStyles,
     MSPaneViewControllerTypeBounce,
     MSPaneViewControllerTypeGestures,
     MSPaneViewControllerTypeControls,

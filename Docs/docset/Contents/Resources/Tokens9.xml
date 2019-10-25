@@ -1,105 +1,285 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Constants/MSDynamicsDrawerDirection.html">
+	<File path="Classes/MSPanePositioningBehavior.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/c/tdef/MSDynamicsDrawerDirection</TokenIdentifier>
-			<Abstract type="html">The drawer direction defines the direction that a MSDynamicsDrawerViewController instance&apos;s paneView can be opened in.</Abstract>
-			<DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/MSPanePositioningBehavior</TokenIdentifier>
+			<Abstract type="html">The base class used to create different effects</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
             
 			
 			<NodeRef refid="9"/>
 		</Token>
 		
 		
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionNone</TokenIdentifier>
-            <Abstract type="html">     Represents the state of no direction.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionNone</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/initWithDrawerViewController:</TokenIdentifier>
+			<Abstract type="html">Initializes a pane positioning behavior with a drawer view controller.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>drawerViewController</Name>
+					<Abstract type="html">The drawer view controller whose pane you want to be subject to the positioning behavior.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The initialized pane positioning behavior, or nil if there was a problem initializing the object.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDrawerViewController:</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionTop</TokenIdentifier>
-            <Abstract type="html">     A drawer that is revealed from underneath the top edge of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionTop</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/setDrawerViewController:</TokenIdentifier>
+			<Abstract type="html">The drawer view controller that this used to position</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) MSDynamicsDrawerViewController *drawerViewController</Declaration>
+			
+			
+			<Anchor>//api/name/drawerViewController</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionLeft</TokenIdentifier>
-            <Abstract type="html">     A drawer that is revealed from underneath the left edge of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionLeft</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/drawerViewController</TokenIdentifier>
+			<Abstract type="html">The drawer view controller that this used to position</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) MSDynamicsDrawerViewController *drawerViewController</Declaration>
+			
+			
+			<Anchor>//api/name/drawerViewController</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionBottom</TokenIdentifier>
-            <Abstract type="html">     A drawer that is revealed from underneath the bottom edge of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionBottom</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/drawerViewController</TokenIdentifier>
+			<Abstract type="html">The drawer view controller that this used to position</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) MSDynamicsDrawerViewController *drawerViewController</Declaration>
+			
+			
+			<Anchor>//api/name/drawerViewController</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionRight</TokenIdentifier>
-            <Abstract type="html">     A drawer that is revealed from underneath the right edge of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionRight</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/setPane:</TokenIdentifier>
+			<Abstract type="html">The pane that this behavior is used to position.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) id&lt;UIDynamicItem&gt; pane</Declaration>
+			
+			
+			<Anchor>//api/name/pane</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionHorizontal</TokenIdentifier>
-            <Abstract type="html">     The drawers that are revealed from underneath both the left and right edges of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionHorizontal</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/pane</TokenIdentifier>
+			<Abstract type="html">The pane that this behavior is used to position.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) id&lt;UIDynamicItem&gt; pane</Declaration>
+			
+			
+			<Anchor>//api/name/pane</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionVertical</TokenIdentifier>
-            <Abstract type="html">     The drawers that are revealed from underneath both the top and bottom edges of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionVertical</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/pane</TokenIdentifier>
+			<Abstract type="html">The pane that this behavior is used to position.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) id&lt;UIDynamicItem&gt; pane</Declaration>
+			
+			
+			<Anchor>//api/name/pane</Anchor>
             <NodeRef refid="9"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/MSDynamicsDrawerDirectionAll</TokenIdentifier>
-            <Abstract type="html">     The drawers that are revealed from underneath all edges of the pane.
-     </Abstract>
-            <Declaration>MSDynamicsDrawerDirectionAll</Declaration>
-            
-            <DeclaredIn>MSDynamicsDrawerViewController.h</DeclaredIn>
-            
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/setPaneBehavior:</TokenIdentifier>
+			<Abstract type="html">The behavior that is used as the base dynamic configuration of the pane dynamic item.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/pane</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, strong, readonly) UIDynamicItemBehavior *paneBehavior</Declaration>
+			
+			
+			<Anchor>//api/name/paneBehavior</Anchor>
             <NodeRef refid="9"/>
-        </Token>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/paneBehavior</TokenIdentifier>
+			<Abstract type="html">The behavior that is used as the base dynamic configuration of the pane dynamic item.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/pane</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, strong, readonly) UIDynamicItemBehavior *paneBehavior</Declaration>
+			
+			
+			<Anchor>//api/name/paneBehavior</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/paneBehavior</TokenIdentifier>
+			<Abstract type="html">The behavior that is used as the base dynamic configuration of the pane dynamic item.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/pane</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, strong, readonly) UIDynamicItemBehavior *paneBehavior</Declaration>
+			
+			
+			<Anchor>//api/name/paneBehavior</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/setTargetPaneState:</TokenIdentifier>
+			<Abstract type="html">The state that the behavior is attempting to position the pane in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerPaneState targetPaneState</Declaration>
+			
+			
+			<Anchor>//api/name/targetPaneState</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/targetPaneState</TokenIdentifier>
+			<Abstract type="html">The state that the behavior is attempting to position the pane in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerPaneState targetPaneState</Declaration>
+			
+			
+			<Anchor>//api/name/targetPaneState</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/targetPaneState</TokenIdentifier>
+			<Abstract type="html">The state that the behavior is attempting to position the pane in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerPaneState targetPaneState</Declaration>
+			
+			
+			<Anchor>//api/name/targetPaneState</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/setTargetDirection:</TokenIdentifier>
+			<Abstract type="html">The direction that the behavior is attempting to position the pane in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection targetDirection</Declaration>
+			
+			
+			<Anchor>//api/name/targetDirection</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/targetDirection</TokenIdentifier>
+			<Abstract type="html">The direction that the behavior is attempting to position the pane in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection targetDirection</Declaration>
+			
+			
+			<Anchor>//api/name/targetDirection</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/targetDirection</TokenIdentifier>
+			<Abstract type="html">The direction that the behavior is attempting to position the pane in.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, readonly) MSDynamicsDrawerDirection targetDirection</Declaration>
+			
+			
+			<Anchor>//api/name/targetDirection</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/MSPanePositioningBehavior/positionPaneInState:forDirection:</TokenIdentifier>
+			<Abstract type="html">Positions the pane dynamic item in the desired direction with the specified state. This method is only invoked internally by the associated MSDynamicsDrawerViewController. It should not be invoked otherwise. When subclassing MSPanePositioningBehavior, this method should be overridden to adjust child behaviors to create the desired effect.</Abstract>
+			<DeclaredIn>MSDynamicsDrawerBehavior.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/targetPaneState</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instp/MSPanePositioningBehavior/targetDirection</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)positionPaneInState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>paneState</Name>
+					<Abstract type="html">The state that the pane should be positioned in. Represented as targetPaneState after this method is invoked and until this behavior is removed from its dynamic animator.</Abstract>
+				</Parameter><Parameter>
+					<Name>direction</Name>
+					<Abstract type="html">The direction that the pane should be positioned in. Represented as targetDirection after this method is invoked and until this behavior is removed from its dynamic animator.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/positionPaneInState:forDirection:</Anchor>
+            <NodeRef refid="9"/>
+		</Token>
+		
         
 	</File>
 </Tokens>

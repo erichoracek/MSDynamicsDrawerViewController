@@ -28,18 +28,30 @@
 
 #import "MSMonospaceWebViewController.h"
 
-NSString * const MSMonospaceURL = @"http://www.monospacecollective.com";
-
 @implementation MSMonospaceWebViewController
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
+    self.view.backgroundColor = [UIColor blackColor];
     [super viewDidLoad];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
-    [self.view addSubview:self.webView];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent
+{
+    if ([parent isKindOfClass:[UINavigationController class]]) {
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (!self.webView.superview) {
+        self.webView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+        self.webView.frame = self.view.bounds;
+        [self.view addSubview:self.webView];
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -49,13 +61,21 @@ NSString * const MSMonospaceURL = @"http://www.monospacecollective.com";
 
 #pragma mark - MSMonospaceWebViewController
 
+NSString * const MSMonospaceURL = @"http://www.monospacecollective.com";
+
 - (UIWebView *)webView
 {
     if (!_webView) {
-        self.webView = [UIWebView new];
-        self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        self.webView.backgroundColor = [UIColor blackColor];
-        [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:MSMonospaceURL]]];
+        self.webView = ({
+            UIWebView *webView = [UIWebView new];
+            webView.backgroundColor = [UIColor clearColor];
+            webView.opaque = NO;
+            UIEdgeInsets insets = (UIEdgeInsets){.top = ([self.topLayoutGuide length])};
+            webView.scrollView.contentInset = insets;
+            webView.scrollView.scrollIndicatorInsets = insets;
+            [webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:MSMonospaceURL]]];
+            webView;
+        });
     }
     return _webView;
 }

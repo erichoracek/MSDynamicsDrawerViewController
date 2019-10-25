@@ -26,6 +26,7 @@
 //  THE SOFTWARE.
 //
 
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 #import "MSLogoViewController.h"
 
 @implementation MSLogoViewController
@@ -35,43 +36,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.logoView.frame = self.view.bounds;
     [self.view addSubview:self.logoView];
-    [self.view addConstraints:@[[NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeRight
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeRight
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeTop
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeTop
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeBottom
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeBottom
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeHeight
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
-                                                             attribute:NSLayoutAttributeHeight
-                                                            multiplier:1.0
-                                                              constant:0.0],
-                                [NSLayoutConstraint constraintWithItem:self.logoView
-                                                             attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeHeight
-                                                            multiplier:1.0
-                                                              constant:MSDynamicsDrawerDefaultOpenStateRevealWidthHorizontal],
-                                ]];
 }
 
 #pragma mark - MSLogoViewController
@@ -79,9 +45,12 @@
 - (UIImageView *)logoView
 {
     if (!_logoView) {
-        _logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
-        _logoView.translatesAutoresizingMaskIntoConstraints = NO;
-        _logoView.contentMode = UIViewContentModeCenter;
+        self.logoView = ({
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
+            imageView.contentMode = UIViewContentModeCenter;
+            imageView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+            imageView;
+        });
     }
     return _logoView;
 }

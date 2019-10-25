@@ -26,13 +26,12 @@
 		3A3CB24C183AE98B0089BED5 /* MSMonospaceWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB7182B136300319DA5 /* MSMonospaceWebViewController.m */; };
 		3A3CB24D183AE98B0089BED5 /* MSLongTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB3182B136300319DA5 /* MSLongTableViewController.m */; };
 		3A3CB24E183AE98B0089BED5 /* MSDynamicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */; };
-		3A3CB24F183AE98B0089BED5 /* MSStylersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylersViewController.m */; };
+		3A3CB24F183AE98B0089BED5 /* MSStylesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylesViewController.m */; };
 		3A3CB251183AE98B0089BED5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4AA44D18133EB4006EC889 /* MapKit.framework */; };
 		3A3CB252183AE98B0089BED5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11672B167E8F1900DBD12B /* QuartzCore.framework */; };
 		3A3CB253183AE98B0089BED5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11669A167E8C3E00DBD12B /* UIKit.framework */; };
 		3A3CB254183AE98B0089BED5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11669C167E8C3E00DBD12B /* Foundation.framework */; };
 		3A3CB255183AE98B0089BED5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A11669E167E8C3E00DBD12B /* CoreGraphics.framework */; };
-		3A3CB256183AE98B0089BED5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC49385B7B83484EBE303C5E /* libPods.a */; };
 		3A3CB258183AE98B0089BED5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A558AC8182B13C400319DA5 /* Assets.xcassets */; };
 		3A3CB259183AE98B0089BED5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A1166A3167E8C3E00DBD12B /* InfoPlist.strings */; };
 		3A4AA44E18133EB4006EC889 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4AA44D18133EB4006EC889 /* MapKit.framework */; };
@@ -46,19 +45,20 @@
 		3A558AC4182B136300319DA5 /* MSLongTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB3182B136300319DA5 /* MSLongTableViewController.m */; };
 		3A558AC5182B136300319DA5 /* MSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB5182B136300319DA5 /* MSMapViewController.m */; };
 		3A558AC6182B136300319DA5 /* MSMonospaceWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB7182B136300319DA5 /* MSMonospaceWebViewController.m */; };
-		3A558AC7182B136300319DA5 /* MSStylersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylersViewController.m */; };
+		3A558AC7182B136300319DA5 /* MSStylesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A558AB9182B136300319DA5 /* MSStylesViewController.m */; };
 		3A558AC9182B13C400319DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A558AC8182B13C400319DA5 /* Assets.xcassets */; };
 		3A64F175182EDDFB00F00449 /* MSDynamicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */; };
 		3A7F664A18F2082E00E78146 /* MSEditableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF15311184FE70200CBDA25 /* MSEditableTableViewController.m */; };
 		3AD1E43F183AEBB40006322C /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A3CB260183AE9B40089BED5 /* Storyboard.storyboard */; };
 		3AD72A7D182CB84600B826B3 /* MSLogoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD72A7C182CB84600B826B3 /* MSLogoViewController.m */; };
 		3AF15312184FE70200CBDA25 /* MSEditableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF15311184FE70200CBDA25 /* MSEditableTableViewController.m */; };
-		64426731F992431F8994F641 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC49385B7B83484EBE303C5E /* libPods.a */; };
+		6F72E972F78F4100BB95103C /* libPods-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E01FE831E2646409FD4E2A3 /* libPods-Example.a */; };
+		CB5799B5BC1C4A31B38E6FC3 /* libPods-Storyboard Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76285ECE07244FFBA17B032B /* libPods-Storyboard Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		3A116696167E8C3E00DBD12B /* MSDynamicsDrawerViewController Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MSDynamicsDrawerViewController Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FC7C68C9B3B47DA83409069 /* Pods-Example.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.xcconfig"; path = "../Pods/Pods-Example.xcconfig"; sourceTree = "<group>"; };
+		3A116696167E8C3E00DBD12B /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A11669A167E8C3E00DBD12B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A11669C167E8C3E00DBD12B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A11669E167E8C3E00DBD12B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -91,8 +91,8 @@
 		3A558AB5182B136300319DA5 /* MSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMapViewController.m; sourceTree = "<group>"; };
 		3A558AB6182B136300319DA5 /* MSMonospaceWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMonospaceWebViewController.h; sourceTree = "<group>"; };
 		3A558AB7182B136300319DA5 /* MSMonospaceWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMonospaceWebViewController.m; sourceTree = "<group>"; };
-		3A558AB8182B136300319DA5 /* MSStylersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStylersViewController.h; sourceTree = "<group>"; };
-		3A558AB9182B136300319DA5 /* MSStylersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStylersViewController.m; sourceTree = "<group>"; };
+		3A558AB8182B136300319DA5 /* MSStylesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStylesViewController.h; sourceTree = "<group>"; };
+		3A558AB9182B136300319DA5 /* MSStylesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSStylesViewController.m; sourceTree = "<group>"; };
 		3A558AC8182B13C400319DA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A64F173182EDDFB00F00449 /* MSDynamicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDynamicsViewController.h; sourceTree = "<group>"; };
 		3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDynamicsViewController.m; sourceTree = "<group>"; };
@@ -100,7 +100,9 @@
 		3AD72A7C182CB84600B826B3 /* MSLogoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLogoViewController.m; sourceTree = "<group>"; };
 		3AF15310184FE70200CBDA25 /* MSEditableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSEditableTableViewController.h; sourceTree = "<group>"; };
 		3AF15311184FE70200CBDA25 /* MSEditableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSEditableTableViewController.m; sourceTree = "<group>"; };
-		FC49385B7B83484EBE303C5E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		76285ECE07244FFBA17B032B /* libPods-Storyboard Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storyboard Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E01FE831E2646409FD4E2A3 /* libPods-Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFF7C0F35D1E4523B3EC1651 /* Pods-Storyboard Example.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyboard Example.xcconfig"; path = "../Pods/Pods-Storyboard Example.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +115,7 @@
 				3A11669B167E8C3E00DBD12B /* UIKit.framework in Frameworks */,
 				3A11669D167E8C3E00DBD12B /* Foundation.framework in Frameworks */,
 				3A11669F167E8C3E00DBD12B /* CoreGraphics.framework in Frameworks */,
-				64426731F992431F8994F641 /* libPods.a in Frameworks */,
+				6F72E972F78F4100BB95103C /* libPods-Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +128,7 @@
 				3A3CB253183AE98B0089BED5 /* UIKit.framework in Frameworks */,
 				3A3CB254183AE98B0089BED5 /* Foundation.framework in Frameworks */,
 				3A3CB255183AE98B0089BED5 /* CoreGraphics.framework in Frameworks */,
-				3A3CB256183AE98B0089BED5 /* libPods.a in Frameworks */,
+				CB5799B5BC1C4A31B38E6FC3 /* libPods-Storyboard Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,14 +141,15 @@
 				3A1166A0167E8C3E00DBD12B /* Example */,
 				3A116699167E8C3E00DBD12B /* Frameworks */,
 				3A116697167E8C3E00DBD12B /* Products */,
-				0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */,
+				1FC7C68C9B3B47DA83409069 /* Pods-Example.xcconfig */,
+				EFF7C0F35D1E4523B3EC1651 /* Pods-Storyboard Example.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
 		3A116697167E8C3E00DBD12B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3A116696167E8C3E00DBD12B /* MSDynamicsDrawerViewController Example.app */,
+				3A116696167E8C3E00DBD12B /* Example.app */,
 				3A3CB25E183AE98B0089BED5 /* MSDynamicsDrawerViewController Storyboard Example.app */,
 			);
 			name = Products;
@@ -160,7 +163,8 @@
 				3A11669A167E8C3E00DBD12B /* UIKit.framework */,
 				3A11669C167E8C3E00DBD12B /* Foundation.framework */,
 				3A11669E167E8C3E00DBD12B /* CoreGraphics.framework */,
-				FC49385B7B83484EBE303C5E /* libPods.a */,
+				7E01FE831E2646409FD4E2A3 /* libPods-Example.a */,
+				76285ECE07244FFBA17B032B /* libPods-Storyboard Example.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -214,14 +218,14 @@
 		3A558AED182B16A200319DA5 /* Options */ = {
 			isa = PBXGroup;
 			children = (
-				3A558AB8182B136300319DA5 /* MSStylersViewController.h */,
-				3A558AB9182B136300319DA5 /* MSStylersViewController.m */,
+				3A64F173182EDDFB00F00449 /* MSDynamicsViewController.h */,
+				3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */,
+				3A558AB8182B136300319DA5 /* MSStylesViewController.h */,
+				3A558AB9182B136300319DA5 /* MSStylesViewController.m */,
 				3A558AA6182B136300319DA5 /* MSBounceViewController.h */,
 				3A558AA7182B136300319DA5 /* MSBounceViewController.m */,
 				3A558AB0182B136300319DA5 /* MSGesturesViewController.h */,
 				3A558AB1182B136300319DA5 /* MSGesturesViewController.m */,
-				3A64F173182EDDFB00F00449 /* MSDynamicsViewController.h */,
-				3A64F174182EDDFB00F00449 /* MSDynamicsViewController.m */,
 			);
 			name = Options;
 			sourceTree = "<group>";
@@ -290,7 +294,7 @@
 			);
 			name = Example;
 			productName = Example;
-			productReference = 3A116696167E8C3E00DBD12B /* MSDynamicsDrawerViewController Example.app */;
+			productReference = 3A116696167E8C3E00DBD12B /* Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3A3CB23F183AE98B0089BED5 /* Storyboard Example */ = {
@@ -389,7 +393,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Pods-Storyboard Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		AD420442A29C4DDE99A2FC7D /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -403,7 +408,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Pods-Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		C47987546ECE4163B7FC9B24 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -440,7 +446,7 @@
 				3A558AC6182B136300319DA5 /* MSMonospaceWebViewController.m in Sources */,
 				3A558AC4182B136300319DA5 /* MSLongTableViewController.m in Sources */,
 				3A64F175182EDDFB00F00449 /* MSDynamicsViewController.m in Sources */,
-				3A558AC7182B136300319DA5 /* MSStylersViewController.m in Sources */,
+				3A558AC7182B136300319DA5 /* MSStylesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,7 +468,7 @@
 				3A3CB24C183AE98B0089BED5 /* MSMonospaceWebViewController.m in Sources */,
 				3A3CB24D183AE98B0089BED5 /* MSLongTableViewController.m in Sources */,
 				3A3CB24E183AE98B0089BED5 /* MSDynamicsViewController.m in Sources */,
-				3A3CB24F183AE98B0089BED5 /* MSStylersViewController.m in Sources */,
+				3A3CB24F183AE98B0089BED5 /* MSStylesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,7 +510,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 			};
 			name = Debug;
 		};
@@ -525,42 +531,48 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		3A1166B5167E8C3E00DBD12B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */;
+			baseConfigurationReference = 1FC7C68C9B3B47DA83409069 /* Pods-Example.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		3A1166B6167E8C3E00DBD12B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */;
+			baseConfigurationReference = 1FC7C68C9B3B47DA83409069 /* Pods-Example.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		3A3CB25C183AE98B0089BED5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */;
+			baseConfigurationReference = EFF7C0F35D1E4523B3EC1651 /* Pods-Storyboard Example.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -579,7 +591,7 @@
 		};
 		3A3CB25D183AE98B0089BED5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BCBD77F8F1A4697976A8AFA /* Pods.xcconfig */;
+			baseConfigurationReference = EFF7C0F35D1E4523B3EC1651 /* Pods-Storyboard Example.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

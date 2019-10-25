@@ -28,9 +28,14 @@
 
 #import "MSAppDelegate.h"
 #import "MSMenuViewController.h"
-#import "MSDynamicsDrawerViewController.h"
-#import "MSDynamicsDrawerStyler.h"
 #import "MSLogoViewController.h"
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
+
+//#define DEBUG_DYNAMICS
+
+#ifdef DEBUG_DYNAMICS
+#import <DynamicXray/DynamicXray.h>
+#endif
 
 @interface MSAppDelegate () <MSDynamicsDrawerViewControllerDelegate>
 
@@ -50,9 +55,9 @@
     
     self.dynamicsDrawerViewController.delegate = self;
     
-    // Add some example stylers
-    [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerScaleStyler styler], [MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
-    [self.dynamicsDrawerViewController addStylersFromArray:@[[MSDynamicsDrawerParallaxStyler styler]] forDirection:MSDynamicsDrawerDirectionRight];
+    // Add some example styles
+    [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerStatusBarOffsetStyle new]] forDirection:MSDynamicsDrawerDirectionAll];
+    [self.dynamicsDrawerViewController addStyles:@[[MSDynamicsDrawerFadeStyle new]] forDirection:MSDynamicsDrawerDirectionLeft];
     
 #if !defined(STORYBOARD)
     MSMenuViewController *menuViewController = [MSMenuViewController new];
@@ -60,22 +65,28 @@
     MSMenuViewController *menuViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
 #endif
     menuViewController.dynamicsDrawerViewController = self.dynamicsDrawerViewController;
-    [self.dynamicsDrawerViewController setDrawerViewController:menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
+    UINavigationController *menuNavigationController = [[MSStatusBarOffsetDrawerNavigationController alloc] initWithRootViewController:menuViewController];
+    menuNavigationController.navigationBarHidden = YES;
+    [self.dynamicsDrawerViewController setDrawerViewController:menuNavigationController forDirection:MSDynamicsDrawerDirectionLeft preloadView:YES];
     
 #if !defined(STORYBOARD)
     MSLogoViewController *logoViewController = [MSLogoViewController new];
 #else
     MSLogoViewController *logoViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"Logo"];
 #endif
-    [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight];
+    [self.dynamicsDrawerViewController setDrawerViewController:logoViewController forDirection:MSDynamicsDrawerDirectionRight preloadView:YES];
+    [self.dynamicsDrawerViewController addStyle:[MSDynamicsDrawerResizeStyle new] forDirection:MSDynamicsDrawerDirectionRight];
     
     // Transition to the first view controller
-    [menuViewController transitionToViewController:MSPaneViewControllerTypeStylers];
+    [menuViewController transitionToViewController:0];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.dynamicsDrawerViewController;
     [self.window makeKeyAndVisible];
+    
+    // Add window background image
     [self.window addSubview:self.windowBackground];
+    self.windowBackground.frame = self.window.bounds;
     [self.window sendSubviewToBack:self.windowBackground];
     
     return YES;
@@ -87,6 +98,7 @@
 {
     if (!_windowBackground) {
         _windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Window Background"]];
+        _windowBackground.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
     }
     return _windowBackground;
 }
@@ -95,27 +107,26 @@
 {
     switch (paneState) {
         case MSDynamicsDrawerPaneStateOpen:
-            return @"MSDynamicsDrawerPaneStateOpen";
+            return @"Open";
         case MSDynamicsDrawerPaneStateClosed:
-            return @"MSDynamicsDrawerPaneStateClosed";
+            return @"Closed";
         case MSDynamicsDrawerPaneStateOpenWide:
-            return @"MSDynamicsDrawerPaneStateOpenWide";
-        default:
-            return nil;
+            return @"Open Wide";
     }
+    return nil;
 }
 
 - (NSString *)descriptionForDirection:(MSDynamicsDrawerDirection)direction
 {
     switch (direction) {
         case MSDynamicsDrawerDirectionTop:
-            return @"MSDynamicsDrawerDirectionTop";
+            return @"Top";
         case MSDynamicsDrawerDirectionLeft:
-            return @"MSDynamicsDrawerDirectionLeft";
+            return @"Left";
         case MSDynamicsDrawerDirectionBottom:
-            return @"MSDynamicsDrawerDirectionBottom";
+            return @"Bottom";
         case MSDynamicsDrawerDirectionRight:
-            return @"MSDynamicsDrawerDirectionRight";
+            return @"Right";
         default:
             return nil;
     }
@@ -125,12 +136,19 @@
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-    NSLog(@"Drawer view controller may update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    NSLog(@"May update to `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    
+#ifdef DEBUG_DYNAMICS
+    UIDynamicAnimator *dynamicAnimator = [drawerViewController performSelector:@selector(_dynamicAnimator)];
+    DynamicXray *xray = [[DynamicXray alloc] init];
+    xray.crossFade = 0.5;
+    [dynamicAnimator addBehavior:xray];
+#endif
 }
 
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
 {
-    NSLog(@"Drawer view controller did update to state `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
+    NSLog(@"Did update to `%@` for direction `%@`", [self descriptionForPaneState:paneState], [self descriptionForDirection:direction]);
 }
 
 @end
