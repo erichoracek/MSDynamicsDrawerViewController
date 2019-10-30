@@ -179,7 +179,7 @@ There are a few default stylers included with `MSDynamicsDrawerViewController`. 
 
 As user interacts with a `MSDynamicsDrawerViewController`, the styler classes that are associated with the active drawer direction are messaged via the method `dynamicsDrawerViewController:didUpdatePaneClosedFraction:forDrawerDirection:`. This method enables the styler to changes attributes of the `drawerView`, `paneView`, etc. relative to the `paneClosedFraction`.
 
-It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are modified internally both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController` when the frame is externally modified is undefined.
+It's recommended that custom stylers don't change the `frame` attribute of the `paneView` or the `drawerView` on the `MSDynamicsDrawerViewController` instance. These are modified internally both by the user's gestures and the internal UIKit Dynamics within `MSDynamicsDrawerViewController`. The behavior of `MSDynamicsDrawerViewController`, when the frame is externally modified is undefined.
 
 # Requirements
 
