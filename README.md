@@ -79,7 +79,7 @@ dynamicsDrawerViewController.paneViewController = paneViewController;
 
 ### Replacing the Pane View Controller
 
-The pane view controller can be replaced with an animation that slides the pane off to the side, replaces it with a new pane, and slides the new pane closed. See the "Replace" `.gif` above to view this animation. You can initiate this animation with the the `setPaneViewController:animated:completion:` method:
+The pane view controller can be replaced with an animation that slides the pane off to the side, replaces it with a new pane, and slides the new pane closed. See the "Replace" `.gif` above to view this animation. You can initiate this animation with the `setPaneViewController:animated:completion:` method:
 
 ```objective-c
 UIViewController *paneViewController = [UIViewController new];
