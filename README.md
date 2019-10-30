@@ -150,7 +150,7 @@ A bounce is a good way to indicate that there's a drawer view controller underne
 
 ## Stylers
 
-`MSDynamicsDrawerViewController` uses an instances of "styler" objects to create unique styles on the child view controllers updated relative to the fraction that drawers are opened/closed. These stylers conform to the `MSDynamicsDrawerStyler` protocol. Stylers can be combined (assuming they aren't overwriting identical attributes) by setting multiple stylers for a single `MSDynamicsDrawerDirection`.
+`MSDynamicsDrawerViewController` uses instances of "styler" objects to create unique styles on the child view controllers updated relative to the fraction that drawers are opened/closed. These stylers conform to the `MSDynamicsDrawerStyler` protocol. Stylers can be combined together (assuming they aren't overwriting identical attributes) by setting multiple stylers for a single `MSDynamicsDrawerDirection`.
 
 Instances of `MSDynamicsDrawerStyler` are added to `MSDynamicsDrawerViewController` via the `addStyler:forDirection:` method, and instantiated via the `styler` class method:
 
