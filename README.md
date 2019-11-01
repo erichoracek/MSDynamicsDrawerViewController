@@ -15,6 +15,7 @@
 ### Fling
 
 ![](https://raw.github.com/monospacecollective/MSDynamicsDrawerViewController/master/Screenshots/fling.gif)
+
 <!-- Remote -->
 <!-- ![](Screenshots/fling.gif) -->
 <!-- Local -->
@@ -22,6 +23,7 @@
 ### Open and Close
 
 ![](https://raw.github.com/monospacecollective/MSDynamicsDrawerViewController/master/Screenshots/open-close.gif)
+
 <!-- Remote -->
 <!-- ![](Screenshots/open-close.gif) -->
 <!-- Local -->
@@ -29,6 +31,7 @@
 ### Bounce
 
 ![](https://raw.github.com/monospacecollective/MSDynamicsDrawerViewController/master/Screenshots/bounce.gif)
+
 <!-- Remote -->
 <!-- ![](Screenshots/bounce.gif) -->
 <!-- Local -->
@@ -36,6 +39,7 @@
 ### Replace
 
 ![](https://raw.github.com/monospacecollective/MSDynamicsDrawerViewController/master/Screenshots/replace.gif)
+
 <!-- remote -->
 <!-- ![](Screenshots/Replace.gif) -->
 <!-- Local -->
@@ -44,11 +48,11 @@
 
 Add the following to your `Podfile` and run `$ pod install`.
 
-``` ruby
+```ruby
 pod 'MSDynamicsDrawerViewController'
 ```
 
- If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
+If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
 # Documentation
 
@@ -119,11 +123,11 @@ If you just want to open or close the drawer without an animation and you only h
 dynamicsDrawerViewController.paneState = MSDynamicsDrawerPaneStateOpen;
 ```
 
-If you have more than one drawer view controller, see the *multiple drawer view controllers* section below.
+If you have more than one drawer view controller, see the _multiple drawer view controllers_ section below.
 
 ### Animated
 
-If you want to make *animated* changes to the drawer visibility, use the `setPaneState:animated:allowUserInterruption:completion:` method. As with the `paneState` property, this method requires that you have added only a single drawer view controller.
+If you want to make _animated_ changes to the drawer visibility, use the `setPaneState:animated:allowUserInterruption:completion:` method. As with the `paneState` property, this method requires that you have added only a single drawer view controller.
 
 ```objective-c
 [dynamicsDrawerViewController setPaneState:MSDynamicsDrawerPaneStateOpen animated:YES allowUserInterruption:YES completion:^{
@@ -131,16 +135,16 @@ If you want to make *animated* changes to the drawer visibility, use the `setPan
 }];
 ```
 
-A key point of consideration when invoking this method is the `allowUserInterruption` parameter. If set to `NO`, the user will be able to perform gestures that "catch" the sliding pane, interrupting the transition and causing the end `paneState` to potentially differ from the value passed for the `paneState` parameter. As such, the completion block is not necessarily called when the pane state has changed—just when it has come to rest. If you require that the pane's state is updated to the specified state *without interruption*, you must pass `YES` for this parameter.
+A key point of consideration when invoking this method is the `allowUserInterruption` parameter. If set to `NO`, the user will be able to perform gestures that "catch" the sliding pane, interrupting the transition and causing the end `paneState` to potentially differ from the value passed for the `paneState` parameter. As such, the completion block is not necessarily called when the pane state has changed—just when it has come to rest. If you require that the pane's state is updated to the specified state _without interruption_, you must pass `YES` for this parameter.
 
-If you have more than one drawer view controller, see the *multiple drawer view controllers* section below.
+If you have more than one drawer view controller, see the _multiple drawer view controllers_ section below.
 
 ### With Multiple Drawer View Controllers
 
 If you have more than one drawer view controller added to your `MSDynamicsDrawerViewController` instance, you should to use the "directional" equivalents of the methods above:
 
-* **Non-Animated** `setPaneState:inDirection:`
-* **Animated** `setPaneState:inDirection:animated:allowUserInterruption:completion:`.
+-   **Non-Animated** `setPaneState:inDirection:`
+-   **Animated** `setPaneState:inDirection:animated:allowUserInterruption:completion:`.
 
 ## Bouncing the Pane Open
 
@@ -160,20 +164,20 @@ id <MSDynamicsDrawerStyler> parallaxStyler = [MSDynamicsDrawerParallaxStyler sty
 ```
 
 ### Default Styler Classes
- 
+
 There are a few default stylers included with `MSDynamicsDrawerViewController`. The `Stylers` menu option in the example project enables you to try these individually or in combination.
 
-* **Parallax Styler** `MSDynamicsDrawerParallaxStyler`
-  Creates a parallax effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `parallaxOffsetFraction` property to change the amount of parallax that occurs.
+-   **Parallax Styler** `MSDynamicsDrawerParallaxStyler`
+    Creates a parallax effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `parallaxOffsetFraction` property to change the amount of parallax that occurs.
 
-* **Fade Styler** `MSDynamicsDrawerFadeStyler`
-  Fades the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedAlpha` property to change the amount of fade that occurs when the `paneView` is closed.
+-   **Fade Styler** `MSDynamicsDrawerFadeStyler`
+    Fades the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedAlpha` property to change the amount of fade that occurs when the `paneView` is closed.
 
-* **Scale Styler** `MSDynamicsDrawerScaleStyler`
-  Creates a zoom-in scaling effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedScale` property to change the scale that occurs when the `paneView` is closed.
+-   **Scale Styler** `MSDynamicsDrawerScaleStyler`
+    Creates a zoom-in scaling effect on the `drawerView` as the frame of the `paneView` is adjusted. Modify the `closedScale` property to change the scale that occurs when the `paneView` is closed.
 
-* **Drawer Resize Styler** `MSDynamicsDrawerResizeStyler`
-  Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealWidth` property. Modify the `minimumResizeRevealWidth` property to change the threshold at which the resizing begins.
+-   **Drawer Resize Styler** `MSDynamicsDrawerResizeStyler`
+    Resizes the drawer view controller's view to fit within the visible space that a drawer is opened to as derived from the `currentRevealWidth` property. Modify the `minimumResizeRevealWidth` property to change the threshold at which the resizing begins.
 
 ### Creating a Custom Styler
 
@@ -187,7 +191,7 @@ Requires iOS 7.0, ARC, and the QuartzCore Framework.
 
 # Contributing
 
-Forks, patches and other feedback are welcome.
+Forks, patches and your feedback is welcome.
 
 # License
 
