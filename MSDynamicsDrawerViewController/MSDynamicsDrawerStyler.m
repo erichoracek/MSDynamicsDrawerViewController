@@ -27,7 +27,7 @@
 //
 
 #import "MSDynamicsDrawerStyler.h"
-
+// imported the header file
 @implementation MSDynamicsDrawerParallaxStyler
 
 #pragma mark - NSObject
@@ -47,7 +47,7 @@
 {
     return [self new];
 }
-
+// here is the dynamicsDrawerViewController function code
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
     CGFloat paneRevealWidth = [dynamicsDrawerViewController revealWidthForDirection:direction];
@@ -68,6 +68,7 @@
     dynamicsDrawerViewController.drawerView.transform = drawerViewTransform;
 }
 
+// here is the stylerWasRemovedFromDynamicsDrawerViewController function code
 - (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 0.0);
@@ -99,6 +100,7 @@
     return [self new];
 }
 
+// here is the dynamicsDrawerViewController function code
 - (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction forDirection:(MSDynamicsDrawerDirection)direction
 {
     if (direction & MSDynamicsDrawerDirectionAll) {
@@ -108,6 +110,7 @@
     }
 }
 
+// here is the stylerWasRemovedFromDynamicsDrawerViewController function code 
 - (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController forDirection:(MSDynamicsDrawerDirection)direction
 {
     dynamicsDrawerViewController.drawerView.alpha = 1.0;
